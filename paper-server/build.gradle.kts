@@ -7,6 +7,7 @@ import java.time.Instant
 import kotlin.io.path.readText
 
 plugins {
+    jacoco
     `java-library`
     `maven-publish`
     idea
@@ -170,6 +171,9 @@ dependencies {
     testImplementation("org.junit.platform:junit-platform-suite-engine:1.12.2")
     testImplementation("org.hamcrest:hamcrest:2.2")
     testImplementation("org.mockito:mockito-core:5.14.1")
+    testImplementation("org.mockito:mockito-junit-jupiter:5.14.1")
+    compileOnly("com.diffblue.cover:cover-annotations:1.6.0")
+    testImplementation("com.diffblue.cover:cover-annotations:1.6.0")
     mockitoAgent("org.mockito:mockito-core:5.14.1") { isTransitive = false } // Configure mockito agent that is needed in newer java versions
     testImplementation("org.ow2.asm:asm-tree:9.8")
     testImplementation("org.junit-pioneer:junit-pioneer:2.2.0") // CartesianTest
@@ -253,7 +257,7 @@ tasks.jar {
 }
 
 tasks.test {
-    include("**/**TestSuite.class")
+    include("**/**TestSuite.class","**/**Diffblue**.class")
     workingDir = temporaryDir
     useJUnitPlatform {
         forkEvery = 1
@@ -264,7 +268,23 @@ tasks.test {
     val provider = objects.newInstance<MockitoAgentProvider>()
     provider.fileCollection.from(mockitoAgent)
     jvmArgumentProviders.add(provider)
+   // finalizedBy tasks.jacocoTestReport
 }
+
+/*tasks.jacocoTestReport{
+    classDirectories.setFrom(
+        files(classDirectories.files.map {
+            fileTree(it).apply {
+                exclude("net/minecraft/world/level/block/Blocks.class")
+            }
+        })
+    )
+    dependsOn(tasks.test)
+    reports {
+        xml.required.set(true)
+        csv.required.set(true)
+    }
+}*/
 
 val generatedDir: java.nio.file.Path = layout.projectDirectory.dir("src/generated/java").asFile.toPath()
 idea {
