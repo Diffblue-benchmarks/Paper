@@ -1,0 +1,2 @@
+./gradlew applyPatches
+./gradlew createMojmapBundlerJar
