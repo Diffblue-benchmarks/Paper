@@ -369,20 +369,23 @@ class ConverterItemStackToDataComponentsDiffblueTest {
    * Test {@link ConverterItemStackToDataComponents#convertItem(MapType)}.
    *
    * <ul>
-   *   <li>Given {@link JsonArray#JsonArray(int)} with capacity is three.
+   *   <li>Given {@link JsonArray#JsonArray()}.
+   *   <li>When {@link JsonObject} (default constructor) add {@code Property} and {@link
+   *       JsonArray#JsonArray()}.
    * </ul>
    *
    * <p>Method under test: {@link ConverterItemStackToDataComponents#convertItem(MapType)}
    */
   @Test
-  @DisplayName("Test convertItem(MapType); given JsonArray(int) with capacity is three")
+  @DisplayName(
+      "Test convertItem(MapType); given JsonArray(); when JsonObject (default constructor) add 'Property' and JsonArray()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"MapType ConverterItemStackToDataComponents.convertItem(MapType)"})
-  void testConvertItem_givenJsonArrayWithCapacityIsThree() {
+  void testConvertItem_givenJsonArray_whenJsonObjectAddPropertyAndJsonArray() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
     JsonMapType input = new JsonMapType(map, true);
 
     // Act

@@ -56,14 +56,18 @@ class AdventureComponentDiffblueTest {
   /**
    * Test {@link AdventureComponent#getString()}.
    *
+   * <ul>
+   *   <li>Then return empty string.
+   * </ul>
+   *
    * <p>Method under test: {@link AdventureComponent#getString()}
    */
   @Test
-  @DisplayName("Test getString()")
+  @DisplayName("Test getString(); then return empty string")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"String AdventureComponent.getString()"})
-  void testGetString() {
+  void testGetString_thenReturnEmptyString() {
     // Arrange
     Component adventure = mock(Component.class);
     when(adventure.children()).thenReturn(new ArrayList<>());

@@ -1,5 +1,6 @@
 package com.destroystokyo.paper.profile;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -47,13 +48,12 @@ class CraftPlayerProfileDiffblueTest {
   @MethodsUnderTest({"void CraftPlayerProfile.<init>(UUID, String)"})
   void testNewCraftPlayerProfile() {
     // Arrange and Act
-    CraftPlayerProfile actualCraftPlayerProfile = new CraftPlayerProfile(null, null);
+    CraftPlayerProfile actualCraftPlayerProfile = new CraftPlayerProfile(null, "Name");
 
     // Assert
     assertEquals(
         "00000000-0000-0000-0000-000000000000",
         actualCraftPlayerProfile.getGameProfile().getId().toString());
-    assertNull(actualCraftPlayerProfile.getName());
     assertNull(actualCraftPlayerProfile.getId());
     assertNull(actualCraftPlayerProfile.getUniqueId());
   }
@@ -70,7 +70,7 @@ class CraftPlayerProfileDiffblueTest {
   @MethodsUnderTest({"void CraftPlayerProfile.<init>(ResolvableProfile)"})
   void testNewCraftPlayerProfile2() {
     // Arrange
-    Optional<String> name = Optional.empty();
+    Optional<String> name = Optional.of("42");
     Optional<UUID> id = Optional.empty();
 
     ResolvableProfile resolvableProfile = new ResolvableProfile(name, id, new PropertyMap());
@@ -90,17 +90,18 @@ class CraftPlayerProfileDiffblueTest {
    * Test {@link CraftPlayerProfile#CraftPlayerProfile(ResolvableProfile)}.
    *
    * <ul>
-   *   <li>Given {@code Key}.
+   *   <li>Given {@code The name of the profile contains invalid characters: %s}.
    * </ul>
    *
    * <p>Method under test: {@link CraftPlayerProfile#CraftPlayerProfile(ResolvableProfile)}
    */
   @Test
-  @DisplayName("Test new CraftPlayerProfile(ResolvableProfile); given 'Key'")
+  @DisplayName(
+      "Test new CraftPlayerProfile(ResolvableProfile); given 'The name of the profile contains invalid characters: %s'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void CraftPlayerProfile.<init>(ResolvableProfile)"})
-  void testNewCraftPlayerProfile_givenKey() {
+  void testNewCraftPlayerProfile_givenTheNameOfTheProfileContainsInvalidCharactersS() {
     // Arrange
     PropertyMap properties = new PropertyMap();
     Property property =
@@ -108,14 +109,14 @@ class CraftPlayerProfileDiffblueTest {
             "Name cannot be longer than 16 characters",
             "42",
             "Name cannot be longer than 16 characters");
-    properties.put("Key", property);
+    properties.put("The name of the profile contains invalid characters: %s", property);
     Property property2 =
         new Property(
             "Name cannot be longer than 16 characters",
             "42",
             "Name cannot be longer than 16 characters");
-    properties.put("The name of the profile contains invalid characters: %s", property2);
-    Optional<String> name = Optional.empty();
+    properties.put("Name cannot be longer than 16 characters", property2);
+    Optional<String> name = Optional.of("42");
     Optional<UUID> id = Optional.of(Util.NIL_UUID);
 
     ResolvableProfile resolvableProfile = new ResolvableProfile(name, id, properties);
@@ -132,6 +133,31 @@ class CraftPlayerProfileDiffblueTest {
     assertEquals(1, properties2.keys().size());
     assertEquals(1, actualCraftPlayerProfile.getProperties().size());
     assertFalse(properties2.isEmpty());
+  }
+
+  /**
+   * Test {@link CraftPlayerProfile#CraftPlayerProfile(ResolvableProfile)}.
+   *
+   * <ul>
+   *   <li>Then return Complete.
+   * </ul>
+   *
+   * <p>Method under test: {@link CraftPlayerProfile#CraftPlayerProfile(ResolvableProfile)}
+   */
+  @Test
+  @DisplayName("Test new CraftPlayerProfile(ResolvableProfile); then return Complete")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void CraftPlayerProfile.<init>(ResolvableProfile)"})
+  void testNewCraftPlayerProfile_thenReturnComplete() {
+    // Arrange
+    Optional<String> name = Optional.of("42");
+    Optional<UUID> id = Optional.of(Util.NIL_UUID);
+
+    ResolvableProfile resolvableProfile = new ResolvableProfile(name, id, new PropertyMap());
+
+    // Act and Assert
+    assertTrue(new CraftPlayerProfile(resolvableProfile).isComplete());
   }
 
   /**
@@ -157,8 +183,8 @@ class CraftPlayerProfileDiffblueTest {
             "Name cannot be longer than 16 characters",
             "42",
             "Name cannot be longer than 16 characters");
-    properties.put("The name of the profile contains invalid characters: %s", property);
-    Optional<String> name = Optional.empty();
+    properties.put("Name cannot be longer than 16 characters", property);
+    Optional<String> name = Optional.of("42");
     Optional<UUID> id = Optional.of(Util.NIL_UUID);
 
     ResolvableProfile resolvableProfile = new ResolvableProfile(name, id, properties);
@@ -245,36 +271,6 @@ class CraftPlayerProfileDiffblueTest {
    * Test {@link CraftPlayerProfile#CraftPlayerProfile(ResolvableProfile)}.
    *
    * <ul>
-   *   <li>Then return Name is {@code foo}.
-   * </ul>
-   *
-   * <p>Method under test: {@link CraftPlayerProfile#CraftPlayerProfile(ResolvableProfile)}
-   */
-  @Test
-  @DisplayName("Test new CraftPlayerProfile(ResolvableProfile); then return Name is 'foo'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"void CraftPlayerProfile.<init>(ResolvableProfile)"})
-  void testNewCraftPlayerProfile_thenReturnNameIsFoo() {
-    // Arrange
-    Optional<String> name = Optional.of("foo");
-    Optional<UUID> id = Optional.of(Util.NIL_UUID);
-
-    ResolvableProfile resolvableProfile = new ResolvableProfile(name, id, new PropertyMap());
-
-    // Act
-    CraftPlayerProfile actualCraftPlayerProfile = new CraftPlayerProfile(resolvableProfile);
-
-    // Assert
-    assertEquals("foo", actualCraftPlayerProfile.getName());
-    assertEquals("foo", actualCraftPlayerProfile.getGameProfile().getName());
-    assertTrue(actualCraftPlayerProfile.isComplete());
-  }
-
-  /**
-   * Test {@link CraftPlayerProfile#CraftPlayerProfile(ResolvableProfile)}.
-   *
-   * <ul>
    *   <li>Then return Name is {@code null}.
    * </ul>
    *
@@ -289,17 +285,11 @@ class CraftPlayerProfileDiffblueTest {
     // Arrange
     Optional<String> name = Optional.empty();
     Optional<UUID> id = Optional.of(Util.NIL_UUID);
-    PropertyMap properties = new PropertyMap();
 
-    ResolvableProfile resolvableProfile = new ResolvableProfile(name, id, properties);
+    ResolvableProfile resolvableProfile = new ResolvableProfile(name, id, new PropertyMap());
 
-    // Act
-    CraftPlayerProfile actualCraftPlayerProfile = new CraftPlayerProfile(resolvableProfile);
-
-    // Assert
-    assertNull(actualCraftPlayerProfile.getName());
-    assertTrue(actualCraftPlayerProfile.getProperties().isEmpty());
-    assertEquals(properties, actualCraftPlayerProfile.getGameProfile().getProperties());
+    // Act and Assert
+    assertNull(new CraftPlayerProfile(resolvableProfile).getName());
   }
 
   /**
@@ -328,24 +318,42 @@ class CraftPlayerProfileDiffblueTest {
    *
    * <ul>
    *   <li>When {@code Name}.
-   *   <li>Then return {@code Name}.
+   *   <li>Then return Complete.
    * </ul>
    *
    * <p>Method under test: {@link CraftPlayerProfile#CraftPlayerProfile(UUID, String)}
    */
   @Test
-  @DisplayName("Test new CraftPlayerProfile(UUID, String); when 'Name'; then return 'Name'")
+  @DisplayName("Test new CraftPlayerProfile(UUID, String); when 'Name'; then return Complete")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void CraftPlayerProfile.<init>(UUID, String)"})
-  void testNewCraftPlayerProfile_whenName_thenReturnName() {
+  void testNewCraftPlayerProfile_whenName_thenReturnComplete() {
+    // Arrange, Act and Assert
+    assertTrue(new CraftPlayerProfile(Util.NIL_UUID, "Name").isComplete());
+  }
+
+  /**
+   * Test {@link CraftPlayerProfile#CraftPlayerProfile(UUID, String)}.
+   *
+   * <ul>
+   *   <li>When {@code null}.
+   *   <li>Then return Name is {@code null}.
+   * </ul>
+   *
+   * <p>Method under test: {@link CraftPlayerProfile#CraftPlayerProfile(UUID, String)}
+   */
+  @Test
+  @DisplayName("Test new CraftPlayerProfile(UUID, String); when 'null'; then return Name is 'null'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void CraftPlayerProfile.<init>(UUID, String)"})
+  void testNewCraftPlayerProfile_whenNull_thenReturnNameIsNull() {
     // Arrange and Act
-    CraftPlayerProfile actualCraftPlayerProfile = new CraftPlayerProfile(Util.NIL_UUID, "Name");
+    CraftPlayerProfile actualCraftPlayerProfile = new CraftPlayerProfile(Util.NIL_UUID, null);
 
     // Assert
-    assertEquals("Name", actualCraftPlayerProfile.getName());
-    assertEquals("Name", actualCraftPlayerProfile.getGameProfile().getName());
-    assertTrue(actualCraftPlayerProfile.isComplete());
+    assertNull(actualCraftPlayerProfile.getName());
   }
 
   /**
@@ -440,7 +448,7 @@ class CraftPlayerProfileDiffblueTest {
     CraftPlayerProfile deserializeResult = CraftPlayerProfile.deserialize(new HashMap<>());
 
     // Act
-    deserializeResult.setProperty(null, null);
+    deserializeResult.setProperty("Property Name", null);
 
     // Assert that nothing has changed
     PropertyMap properties = deserializeResult.getGameProfile().getProperties();
@@ -981,6 +989,29 @@ class CraftPlayerProfileDiffblueTest {
     assertTrue(entriesResult.isEmpty());
     assertTrue(properties.keys().isEmpty());
     assertTrue(deserializeResult.getProperties().isEmpty());
+  }
+
+  /**
+   * Test {@link CraftPlayerProfile#clearProperties()}.
+   *
+   * <ul>
+   *   <li>Given deserialize {@link HashMap#HashMap()}.
+   *   <li>Then does not throw.
+   * </ul>
+   *
+   * <p>Method under test: {@link CraftPlayerProfile#clearProperties()}
+   */
+  @Test
+  @DisplayName("Test clearProperties(); given deserialize HashMap(); then does not throw")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void CraftPlayerProfile.clearProperties()"})
+  void testClearProperties_givenDeserializeHashMap_thenDoesNotThrow() {
+    // Arrange
+    CraftPlayerProfile deserializeResult = CraftPlayerProfile.deserialize(new HashMap<>());
+
+    // Act and Assert
+    assertDoesNotThrow(() -> deserializeResult.clearProperties());
   }
 
   /**

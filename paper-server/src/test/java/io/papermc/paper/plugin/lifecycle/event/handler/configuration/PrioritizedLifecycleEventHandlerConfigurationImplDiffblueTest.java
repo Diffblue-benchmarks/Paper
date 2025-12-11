@@ -49,6 +49,7 @@ class PrioritizedLifecycleEventHandlerConfigurationImplDiffblueTest {
     // Assert
     OptionalInt priorityResult = actualPrioritizedLifecycleEventHandlerConfigurationImpl.priority();
     assertEquals(0, priorityResult.getAsInt());
+    assertFalse(priorityResult.isEmpty());
     assertTrue(priorityResult.isPresent());
     assertSame(handler, actualPrioritizedLifecycleEventHandlerConfigurationImpl.handler());
   }
@@ -112,10 +113,12 @@ class PrioritizedLifecycleEventHandlerConfigurationImplDiffblueTest {
     // Act
     PrioritizedLifecycleEventHandlerConfiguration<LifecycleEventOwner> actualMonitorResult =
         prioritizedLifecycleEventHandlerConfigurationImpl.monitor();
+    OptionalInt actualPriorityResult = prioritizedLifecycleEventHandlerConfigurationImpl.priority();
 
     // Assert
     assertTrue(actualMonitorResult instanceof PrioritizedLifecycleEventHandlerConfigurationImpl);
-    assertFalse(prioritizedLifecycleEventHandlerConfigurationImpl.priority().isPresent());
+    assertFalse(actualPriorityResult.isPresent());
+    assertTrue(actualPriorityResult.isEmpty());
     assertSame(prioritizedLifecycleEventHandlerConfigurationImpl, actualMonitorResult);
   }
 }

@@ -123,6 +123,7 @@ class RegistryEntryAddEventTypeImplDiffblueTest {
                 actualNewHandlerResult)
             .priority();
     assertEquals(0, priorityResult.getAsInt());
+    assertFalse(priorityResult.isEmpty());
     assertTrue(priorityResult.isPresent());
     assertSame(
         handler,

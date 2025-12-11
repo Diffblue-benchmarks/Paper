@@ -64,6 +64,9 @@ class ConstraintsDiffblueTest {
     assertEquals("$2", type.getGenericSignature());
     assertEquals("$2", type.getTypeName());
     assertEquals(-1L, atomicLong.get());
+    assertEquals(-1L, atomicLong.getAcquire());
+    assertEquals(-1L, atomicLong.getOpaque());
+    assertEquals(-1L, atomicLong.getPlain());
     assertFalse(type.isReferenceType());
     assertFalse(type.hasHandlers());
     assertFalse(type.hasValueHandler());
@@ -297,6 +300,9 @@ class ConstraintsDiffblueTest {
     assertEquals("$2", type.getGenericSignature());
     assertEquals("$2", type.getTypeName());
     assertEquals(-1L, atomicLong.get());
+    assertEquals(-1L, atomicLong.getAcquire());
+    assertEquals(-1L, atomicLong.getOpaque());
+    assertEquals(-1L, atomicLong.getPlain());
     assertFalse(type.isReferenceType());
     assertFalse(type.hasHandlers());
     assertFalse(type.hasValueHandler());

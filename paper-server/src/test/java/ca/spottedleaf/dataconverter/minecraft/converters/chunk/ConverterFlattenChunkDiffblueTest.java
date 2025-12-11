@@ -28,8 +28,14 @@ import net.minecraft.nbt.CompoundTag;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+@ExtendWith(MockitoExtension.class)
 class ConverterFlattenChunkDiffblueTest {
+  @InjectMocks private Palette palette;
+
   /**
    * Test DataLayer {@link DataLayer#getOrCreate(byte[])}.
    *
@@ -873,7 +879,7 @@ class ConverterFlattenChunkDiffblueTest {
 
     JsonObject map = new JsonObject();
     map.addProperty("Name", "%%FILTER_ME%%");
-    map.add("%%FILTER_ME%%", new JsonArray(3));
+    map.add("%%FILTER_ME%%", new JsonArray());
 
     // Act
     section.setBlock(1, new JsonMapType(map, true));
@@ -977,6 +983,33 @@ class ConverterFlattenChunkDiffblueTest {
 
     // Assert
     assertSame(section.section, actualWriteBackToSectionResult);
+  }
+
+  /**
+   * Test Section_Palette {@link Palette#getOrCreateId(MapType)}.
+   *
+   * <ul>
+   *   <li>Given {@code Name}.
+   *   <li>Then {@link Palette} size is one.
+   * </ul>
+   *
+   * <p>Method under test: {@link Palette#getOrCreateId(MapType)}
+   */
+  @Test
+  @DisplayName(
+      "Test Section_Palette getOrCreateId(MapType); given 'Name'; then Palette size is one")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"int Palette.getOrCreateId(MapType)"})
+  void testSection_PaletteGetOrCreateId_givenName_thenPaletteSizeIsOne() {
+    // Arrange
+    JsonObject map = new JsonObject();
+    map.addProperty("Name", "%%FILTER_ME%%");
+    map.add("%%FILTER_ME%%", new JsonArray());
+
+    // Act and Assert
+    assertEquals(0, palette.getOrCreateId(new JsonMapType(map, true)));
+    assertEquals(1, palette.size());
   }
 
   /**

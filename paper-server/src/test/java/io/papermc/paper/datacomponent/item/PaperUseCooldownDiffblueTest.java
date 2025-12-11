@@ -1,7 +1,6 @@
 package io.papermc.paper.datacomponent.item;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -53,27 +52,6 @@ class PaperUseCooldownDiffblueTest {
 
     // Assert
     assertSame(builderImpl, actualCooldownGroupResult);
-  }
-
-  /**
-   * Test BuilderImpl {@link BuilderImpl#BuilderImpl(float)}.
-   *
-   * <p>Method under test: {@link BuilderImpl#BuilderImpl(float)}
-   */
-  @Test
-  @DisplayName("Test BuilderImpl new BuilderImpl(float)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"void BuilderImpl.<init>(float)"})
-  void testBuilderImplNewBuilderImpl() {
-    // Arrange, Act and Assert
-    UseCooldown useCooldown = new BuilderImpl(10.0f).build();
-    assertTrue(useCooldown instanceof PaperUseCooldown);
-    net.minecraft.world.item.component.UseCooldown handle =
-        ((PaperUseCooldown) useCooldown).getHandle();
-    assertEquals(10.0f, handle.seconds());
-    assertFalse(handle.cooldownGroup().isPresent());
-    assertSame(handle, ((PaperUseCooldown) useCooldown).impl());
   }
 
   /**

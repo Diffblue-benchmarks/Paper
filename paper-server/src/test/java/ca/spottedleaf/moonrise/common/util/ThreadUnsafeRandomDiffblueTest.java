@@ -248,12 +248,12 @@ class ThreadUnsafeRandomDiffblueTest {
     // Arrange
     ThreadUnsafeRandomPositionalFactory threadUnsafeRandomPositionalFactory =
         new ThreadUnsafeRandomPositionalFactory(42L);
-    StringBuilder stringBuilder = new StringBuilder("foo");
+    StringBuilder stringBuilder = new StringBuilder("Str");
 
     // Act
     threadUnsafeRandomPositionalFactory.parityConfigString(stringBuilder);
 
     // Assert
-    assertEquals("fooThreadUnsafeRandomPositionalFactory{42}", stringBuilder.toString());
+    assertEquals("StrThreadUnsafeRandomPositionalFactory{42}", stringBuilder.toString());
   }
 }

@@ -32,6 +32,7 @@ class UtilDiffblueTest {
 
     // Assert
     assertEquals(42, actualNegToDefResult.getAsInt());
+    assertFalse(actualNegToDefResult.isEmpty());
     assertTrue(actualNegToDefResult.isPresent());
   }
 
@@ -56,5 +57,6 @@ class UtilDiffblueTest {
 
     // Assert
     assertFalse(actualNegToDefResult.isPresent());
+    assertTrue(actualNegToDefResult.isEmpty());
   }
 }

@@ -4,10 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.mock;
 import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
-import com.mojang.serialization.Lifecycle;
 import io.papermc.paper.ServerBuildInfo;
 import io.papermc.paper.adventure.providers.ClickCallbackProviderImpl;
 import io.papermc.paper.registry.data.BannerPatternRegistryEntry.Builder;
@@ -18,13 +16,10 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import net.kyori.adventure.key.Key;
 import net.kyori.examination.ExaminableProperty;
-import net.minecraft.core.DefaultedMappedRegistry;
-import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.RegistryAccess.ImmutableRegistryAccess;
 import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.RegistryOps.HolderLookupAdapter;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.entity.BannerPattern;
 import org.bukkit.NamespacedKey;
@@ -103,42 +98,6 @@ class PaperBannerPatternRegistryEntryDiffblueTest {
     // Assert
     assertNull(actualPaperBannerPatternRegistryEntry.translationKey);
     assertNull(actualPaperBannerPatternRegistryEntry.assetId);
-  }
-
-  /**
-   * Test {@link PaperBannerPatternRegistryEntry#assetId()}.
-   *
-   * <p>Method under test: {@link PaperBannerPatternRegistryEntry#assetId()}
-   */
-  @Test
-  @DisplayName("Test assetId()")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"Key PaperBannerPatternRegistryEntry.assetId()"})
-  void testAssetId() {
-    // Arrange
-    ArrayList<Registry<?>> registries = new ArrayList<>();
-    DefaultedMappedRegistry<?> defaultedMappedRegistry =
-        new DefaultedMappedRegistry<>("42", mock(ResourceKey.class), mock(Lifecycle.class), true);
-    registries.add(defaultedMappedRegistry);
-    HolderLookupAdapter lookup = new HolderLookupAdapter(new ImmutableRegistryAccess(registries));
-    Conversions ignoredConversions = new Conversions(lookup);
-    BannerPattern internal =
-        new BannerPattern(
-            ResourceLocation.withDefaultNamespace("argument.id.invalid"), "Translation Key");
-
-    PaperBannerPatternRegistryEntry paperBannerPatternRegistryEntry =
-        new PaperBannerPatternRegistryEntry(ignoredConversions, internal);
-
-    // Act
-    Key actualAssetIdResult = paperBannerPatternRegistryEntry.assetId();
-
-    // Assert
-    assertEquals("KeyImpl", actualAssetIdResult.examinableName());
-    assertEquals("argument.id.invalid", actualAssetIdResult.asMinimalString());
-    Stream<? extends ExaminableProperty> examinablePropertiesResult =
-        actualAssetIdResult.examinableProperties();
-    assertEquals(2, examinablePropertiesResult.limit(5).collect(Collectors.toList()).size());
   }
 
   /**

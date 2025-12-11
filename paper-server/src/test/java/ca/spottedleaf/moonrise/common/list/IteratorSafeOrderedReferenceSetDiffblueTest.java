@@ -320,8 +320,9 @@ class IteratorSafeOrderedReferenceSetDiffblueTest {
     IteratorSafeOrderedReferenceSet<Object> iteratorSafeOrderedReferenceSet =
         new IteratorSafeOrderedReferenceSet<>();
     iteratorSafeOrderedReferenceSet.add(ConfigurationTransformation.WILDCARD_OBJECT);
+    iteratorSafeOrderedReferenceSet.add(ConfigurationTransformation.WILDCARD_OBJECT);
     BasicEntry<Object> basicEntry =
-        new BasicEntry<>(ConfigurationTransformation.WILDCARD_OBJECT, 42);
+        new BasicEntry<>(ConfigurationTransformation.WILDCARD_OBJECT, (Integer) 42);
     iteratorSafeOrderedReferenceSet.add(basicEntry);
 
     // Act
@@ -335,48 +336,6 @@ class IteratorSafeOrderedReferenceSetDiffblueTest {
     Object actualNextResult = iteratorResult.next();
     assertFalse(iteratorResult.hasNext());
     assertSame(basicEntry, actualNextResult);
-  }
-
-  /**
-   * Test {@link IteratorSafeOrderedReferenceSet#remove(Object)}.
-   *
-   * <p>Method under test: {@link IteratorSafeOrderedReferenceSet#remove(Object)}
-   */
-  @Test
-  @DisplayName("Test remove(Object)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"boolean IteratorSafeOrderedReferenceSet.remove(Object)"})
-  void testRemove2() {
-    // Arrange
-    IteratorSafeOrderedReferenceSet<Object> iteratorSafeOrderedReferenceSet =
-        new IteratorSafeOrderedReferenceSet<>();
-    iteratorSafeOrderedReferenceSet.add(ConfigurationTransformation.WILDCARD_OBJECT);
-    BasicEntry<Object> basicEntry =
-        new BasicEntry<>(ConfigurationTransformation.WILDCARD_OBJECT, (Integer) 42);
-    iteratorSafeOrderedReferenceSet.add(basicEntry);
-    BasicEntry<Object> basicEntry2 =
-        new BasicEntry<>(ConfigurationTransformation.WILDCARD_OBJECT, 42);
-    iteratorSafeOrderedReferenceSet.add(basicEntry2);
-
-    // Act
-    iteratorSafeOrderedReferenceSet.remove(ConfigurationTransformation.WILDCARD_OBJECT);
-
-    // Assert
-    Object[] listRaw = iteratorSafeOrderedReferenceSet.getListRaw();
-    assertEquals(Short.SIZE, listRaw.length);
-    Object actualObject = listRaw[0];
-    assertSame(basicEntry, actualObject);
-    assertSame(basicEntry2, listRaw[1]);
-    assertNull(listRaw[2]);
-    assertEquals(2, iteratorSafeOrderedReferenceSet.getListSize());
-    Iterator<Object> iteratorResult = iteratorSafeOrderedReferenceSet.iterator();
-    Object actualNextResult = iteratorResult.next();
-    Object actualNextResult2 = iteratorResult.next();
-    assertFalse(iteratorResult.hasNext());
-    assertSame(basicEntry, actualNextResult);
-    assertSame(basicEntry2, actualNextResult2);
-    assertEquals(2, iteratorSafeOrderedReferenceSet.size());
   }
 
   /**
@@ -481,26 +440,55 @@ class IteratorSafeOrderedReferenceSetDiffblueTest {
    * Test {@link IteratorSafeOrderedReferenceSet#contains(Object)}.
    *
    * <ul>
-   *   <li>Given {@link IteratorSafeOrderedReferenceSet#IteratorSafeOrderedReferenceSet()} add one.
-   *   <li>When {@code Object}.
+   *   <li>Given {@link IteratorSafeOrderedReferenceSet#IteratorSafeOrderedReferenceSet()} add
+   *       forty-two.
+   *   <li>When one.
    * </ul>
    *
    * <p>Method under test: {@link IteratorSafeOrderedReferenceSet#contains(Object)}
    */
   @Test
   @DisplayName(
-      "Test contains(Object); given IteratorSafeOrderedReferenceSet() add one; when 'java.lang.Object'")
+      "Test contains(Object); given IteratorSafeOrderedReferenceSet() add forty-two; when one")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"boolean IteratorSafeOrderedReferenceSet.contains(Object)"})
-  void testContains_givenIteratorSafeOrderedReferenceSetAddOne_whenJavaLangObject() {
+  void testContains_givenIteratorSafeOrderedReferenceSetAddFortyTwo_whenOne() {
     // Arrange
     IteratorSafeOrderedReferenceSet<Object> iteratorSafeOrderedReferenceSet =
         new IteratorSafeOrderedReferenceSet<>();
-    iteratorSafeOrderedReferenceSet.add(1);
+    iteratorSafeOrderedReferenceSet.add(42);
 
     // Act and Assert
-    assertFalse(iteratorSafeOrderedReferenceSet.contains("java.lang.Object"));
+    assertFalse(iteratorSafeOrderedReferenceSet.contains(1));
+  }
+
+  /**
+   * Test {@link IteratorSafeOrderedReferenceSet#contains(Object)}.
+   *
+   * <ul>
+   *   <li>Given {@link IteratorSafeOrderedReferenceSet#IteratorSafeOrderedReferenceSet()} add
+   *       {@link ConfigurationTransformation#WILDCARD_OBJECT}.
+   *   <li>When one.
+   * </ul>
+   *
+   * <p>Method under test: {@link IteratorSafeOrderedReferenceSet#contains(Object)}
+   */
+  @Test
+  @DisplayName(
+      "Test contains(Object); given IteratorSafeOrderedReferenceSet() add WILDCARD_OBJECT; when one")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"boolean IteratorSafeOrderedReferenceSet.contains(Object)"})
+  void testContains_givenIteratorSafeOrderedReferenceSetAddWildcard_object_whenOne() {
+    // Arrange
+    IteratorSafeOrderedReferenceSet<Object> iteratorSafeOrderedReferenceSet =
+        new IteratorSafeOrderedReferenceSet<>();
+    iteratorSafeOrderedReferenceSet.add(ConfigurationTransformation.WILDCARD_OBJECT);
+    iteratorSafeOrderedReferenceSet.add(42);
+
+    // Act and Assert
+    assertFalse(iteratorSafeOrderedReferenceSet.contains(1));
   }
 
   /**

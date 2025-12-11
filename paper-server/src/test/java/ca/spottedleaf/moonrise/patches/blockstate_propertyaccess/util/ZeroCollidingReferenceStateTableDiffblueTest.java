@@ -18,7 +18,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import net.minecraft.server.players.OldUsersConverter;
-import net.minecraft.world.level.block.state.StateHolder;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 import org.junit.jupiter.api.DisplayName;
@@ -235,6 +234,7 @@ class ZeroCollidingReferenceStateTableDiffblueTest {
     // Arrange
     ArrayList<Property<?>> properties = new ArrayList<>();
     properties.add(BooleanProperty.create("Name"));
+    properties.addAll(new ArrayList<>());
     ZeroCollidingReferenceStateTable<Object, Object> zeroCollidingReferenceStateTable =
         new ZeroCollidingReferenceStateTable<>(properties);
 
@@ -267,10 +267,12 @@ class ZeroCollidingReferenceStateTableDiffblueTest {
   @MethodsUnderTest({"boolean ZeroCollidingReferenceStateTable.hasProperty(Property)"})
   void testHasProperty_givenArrayListAddCreateName_whenPropertyMoonrise$getIdReturnOne2() {
     // Arrange
+    ArrayList<Property<?>> propertyList = new ArrayList<>();
+    propertyList.add(BooleanProperty.create("Name"));
+
     ArrayList<Property<?>> properties = new ArrayList<>();
     properties.add(BooleanProperty.create("Name"));
-    properties.add(BooleanProperty.create("Name"));
-    properties.add(BooleanProperty.create("Name"));
+    properties.addAll(propertyList);
     ZeroCollidingReferenceStateTable<Object, Object> zeroCollidingReferenceStateTable =
         new ZeroCollidingReferenceStateTable<>(properties);
 
@@ -382,72 +384,6 @@ class ZeroCollidingReferenceStateTableDiffblueTest {
   }
 
   /**
-   * Test {@link ZeroCollidingReferenceStateTable#getIndex(StateHolder)}.
-   *
-   * <ul>
-   *   <li>Given {@link HashMap#HashMap()}.
-   *   <li>When {@link StateHolder} {@link StateHolder#getValues()} return {@link
-   *       HashMap#HashMap()}.
-   *   <li>Then return zero.
-   * </ul>
-   *
-   * <p>Method under test: {@link ZeroCollidingReferenceStateTable#getIndex(StateHolder)}
-   */
-  @Test
-  @DisplayName(
-      "Test getIndex(StateHolder); given HashMap(); when StateHolder getValues() return HashMap(); then return zero")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"long ZeroCollidingReferenceStateTable.getIndex(StateHolder)"})
-  void testGetIndex_givenHashMap_whenStateHolderGetValuesReturnHashMap_thenReturnZero() {
-    // Arrange
-    ZeroCollidingReferenceStateTable<Object, Object> zeroCollidingReferenceStateTable =
-        new ZeroCollidingReferenceStateTable<>(new ArrayList<>());
-
-    StateHolder<Object, Object> stateHolder = mock(StateHolder.class);
-    Mockito.<Map<Property<?>, Comparable<?>>>when(stateHolder.getValues())
-        .thenReturn(new HashMap<>());
-
-    // Act
-    long actualIndex = zeroCollidingReferenceStateTable.getIndex(stateHolder);
-
-    // Assert
-    verify(stateHolder).getValues();
-    assertEquals(0L, actualIndex);
-  }
-
-  /**
-   * Test {@link ZeroCollidingReferenceStateTable#getIndex(StateHolder)}.
-   *
-   * <ul>
-   *   <li>Given {@link IllegalStateException#IllegalStateException()}.
-   *   <li>Then throw {@link IllegalStateException}.
-   * </ul>
-   *
-   * <p>Method under test: {@link ZeroCollidingReferenceStateTable#getIndex(StateHolder)}
-   */
-  @Test
-  @DisplayName(
-      "Test getIndex(StateHolder); given IllegalStateException(); then throw IllegalStateException")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"long ZeroCollidingReferenceStateTable.getIndex(StateHolder)"})
-  void testGetIndex_givenIllegalStateException_thenThrowIllegalStateException() {
-    // Arrange
-    ZeroCollidingReferenceStateTable<Object, Object> zeroCollidingReferenceStateTable =
-        new ZeroCollidingReferenceStateTable<>(new ArrayList<>());
-
-    StateHolder<Object, Object> stateHolder = mock(StateHolder.class);
-    Mockito.<Map<Property<?>, Comparable<?>>>when(stateHolder.getValues())
-        .thenThrow(new IllegalStateException());
-
-    // Act and Assert
-    assertThrows(
-        IllegalStateException.class, () -> zeroCollidingReferenceStateTable.getIndex(stateHolder));
-    verify(stateHolder).getValues();
-  }
-
-  /**
    * Test {@link ZeroCollidingReferenceStateTable#isLoaded()}.
    *
    * <ul>
@@ -546,7 +482,7 @@ class ZeroCollidingReferenceStateTableDiffblueTest {
    * Test {@link ZeroCollidingReferenceStateTable#get(long, Property)}.
    *
    * <ul>
-   *   <li>Given {@link ArrayList#ArrayList()} add create {@code 42}.
+   *   <li>Given {@link ArrayList#ArrayList()} add create {@code Name}.
    *   <li>When {@link Property} {@link Property#moonrise$getId()} return one.
    * </ul>
    *
@@ -554,15 +490,15 @@ class ZeroCollidingReferenceStateTableDiffblueTest {
    */
   @Test
   @DisplayName(
-      "Test get(long, Property); given ArrayList() add create '42'; when Property moonrise$getId() return one")
+      "Test get(long, Property); given ArrayList() add create 'Name'; when Property moonrise$getId() return one")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"Comparable ZeroCollidingReferenceStateTable.get(long, Property)"})
-  void testGet_givenArrayListAddCreate42_whenPropertyMoonrise$getIdReturnOne() {
+  void testGet_givenArrayListAddCreateName_whenPropertyMoonrise$getIdReturnOne() {
     // Arrange
     ArrayList<Property<?>> properties = new ArrayList<>();
     properties.add(BooleanProperty.create("Name"));
-    properties.add(BooleanProperty.create("42"));
+    properties.add(BooleanProperty.create("Name"));
     ZeroCollidingReferenceStateTable<Object, Object> zeroCollidingReferenceStateTable =
         new ZeroCollidingReferenceStateTable<>(properties);
 
@@ -582,20 +518,22 @@ class ZeroCollidingReferenceStateTableDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link ArrayList#ArrayList()} add create {@code Name}.
-   *   <li>When {@link Property} {@link Property#moonrise$getId()} return one.
+   *   <li>When zero.
+   *   <li>Then return {@code null}.
    * </ul>
    *
    * <p>Method under test: {@link ZeroCollidingReferenceStateTable#get(long, Property)}
    */
   @Test
   @DisplayName(
-      "Test get(long, Property); given ArrayList() add create 'Name'; when Property moonrise$getId() return one")
+      "Test get(long, Property); given ArrayList() add create 'Name'; when zero; then return 'null'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"Comparable ZeroCollidingReferenceStateTable.get(long, Property)"})
-  void testGet_givenArrayListAddCreateName_whenPropertyMoonrise$getIdReturnOne() {
+  void testGet_givenArrayListAddCreateName_whenZero_thenReturnNull() {
     // Arrange
     ArrayList<Property<?>> properties = new ArrayList<>();
+    properties.add(BooleanProperty.create("Name"));
     properties.add(BooleanProperty.create("Name"));
     ZeroCollidingReferenceStateTable<Object, Object> zeroCollidingReferenceStateTable =
         new ZeroCollidingReferenceStateTable<>(properties);
@@ -604,11 +542,41 @@ class ZeroCollidingReferenceStateTableDiffblueTest {
     when(property.moonrise$getId()).thenReturn(1);
 
     // Act
-    File actualGetResult = zeroCollidingReferenceStateTable.get(1L, property);
+    File actualGetResult = zeroCollidingReferenceStateTable.get(0L, property);
 
     // Assert
     verify(property).moonrise$getId();
     assertNull(actualGetResult);
+  }
+
+  /**
+   * Test {@link ZeroCollidingReferenceStateTable#get(long, Property)}.
+   *
+   * <ul>
+   *   <li>Given {@link IllegalStateException#IllegalStateException()}.
+   *   <li>Then throw {@link IllegalStateException}.
+   * </ul>
+   *
+   * <p>Method under test: {@link ZeroCollidingReferenceStateTable#get(long, Property)}
+   */
+  @Test
+  @DisplayName(
+      "Test get(long, Property); given IllegalStateException(); then throw IllegalStateException")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"Comparable ZeroCollidingReferenceStateTable.get(long, Property)"})
+  void testGet_givenIllegalStateException_thenThrowIllegalStateException() {
+    // Arrange
+    ZeroCollidingReferenceStateTable<Object, Object> zeroCollidingReferenceStateTable =
+        new ZeroCollidingReferenceStateTable<>(new ArrayList<>());
+
+    Property<File> property = mock(Property.class);
+    when(property.moonrise$getId()).thenThrow(new IllegalStateException());
+
+    // Act and Assert
+    assertThrows(
+        IllegalStateException.class, () -> zeroCollidingReferenceStateTable.get(1L, property));
+    verify(property).moonrise$getId();
   }
 
   /**
@@ -697,7 +665,49 @@ class ZeroCollidingReferenceStateTableDiffblueTest {
     // Arrange
     ArrayList<Property<?>> properties = new ArrayList<>();
     properties.add(BooleanProperty.create("Name"));
+    properties.addAll(new ArrayList<>());
+    ZeroCollidingReferenceStateTable<Object, Object> zeroCollidingReferenceStateTable =
+        new ZeroCollidingReferenceStateTable<>(properties);
+
+    Property<File> property = mock(Property.class);
+    when(property.moonrise$getIdFor(Mockito.<File>any())).thenReturn(1);
+    when(property.moonrise$getId()).thenReturn(1);
+
+    // Act
+    Object actualSetResult =
+        zeroCollidingReferenceStateTable.set(1L, property, OldUsersConverter.OLD_IPBANLIST);
+
+    // Assert
+    verify(property).moonrise$getId();
+    verify(property).moonrise$getIdFor(isA(File.class));
+    assertNull(actualSetResult);
+  }
+
+  /**
+   * Test {@link ZeroCollidingReferenceStateTable#set(long, Property, Comparable)}.
+   *
+   * <ul>
+   *   <li>Given {@link ArrayList#ArrayList()} add create {@code Name}.
+   *   <li>When {@link Property} {@link Property#moonrise$getId()} return one.
+   * </ul>
+   *
+   * <p>Method under test: {@link ZeroCollidingReferenceStateTable#set(long, Property, Comparable)}
+   */
+  @Test
+  @DisplayName(
+      "Test set(long, Property, Comparable); given ArrayList() add create 'Name'; when Property moonrise$getId() return one")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"Object ZeroCollidingReferenceStateTable.set(long, Property, Comparable)"})
+  void testSet_givenArrayListAddCreateName_whenPropertyMoonrise$getIdReturnOne2() {
+    // Arrange
+    ArrayList<Property<?>> propertyList = new ArrayList<>();
+    propertyList.add(BooleanProperty.create("Name"));
+    propertyList.add(BooleanProperty.create("Name"));
+
+    ArrayList<Property<?>> properties = new ArrayList<>();
     properties.add(BooleanProperty.create("Name"));
+    properties.addAll(propertyList);
     ZeroCollidingReferenceStateTable<Object, Object> zeroCollidingReferenceStateTable =
         new ZeroCollidingReferenceStateTable<>(properties);
 
@@ -825,9 +835,8 @@ class ZeroCollidingReferenceStateTableDiffblueTest {
    * Test {@link ZeroCollidingReferenceStateTable#trySet(long, Property, Comparable, Object)}.
    *
    * <ul>
-   *   <li>Given {@link ArrayList#ArrayList()} addAll {@link ArrayList#ArrayList()}.
-   *   <li>When {@link Long#MAX_VALUE}.
-   *   <li>Then return {@link ConfigurationTransformation#WILDCARD_OBJECT}.
+   *   <li>Given {@link ArrayList#ArrayList()} add create {@code Name}.
+   *   <li>When {@link Property} {@link Property#moonrise$getId()} return one.
    * </ul>
    *
    * <p>Method under test: {@link ZeroCollidingReferenceStateTable#trySet(long, Property,
@@ -835,18 +844,17 @@ class ZeroCollidingReferenceStateTableDiffblueTest {
    */
   @Test
   @DisplayName(
-      "Test trySet(long, Property, Comparable, Object); given ArrayList() addAll ArrayList(); when MAX_VALUE; then return WILDCARD_OBJECT")
+      "Test trySet(long, Property, Comparable, Object); given ArrayList() add create 'Name'; when Property moonrise$getId() return one")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({
     "Object ZeroCollidingReferenceStateTable.trySet(long, Property, Comparable, Object)"
   })
-  void testTrySet_givenArrayListAddAllArrayList_whenMax_value_thenReturnWildcard_object() {
+  void testTrySet_givenArrayListAddCreateName_whenPropertyMoonrise$getIdReturnOne() {
     // Arrange
     ArrayList<Property<?>> properties = new ArrayList<>();
     properties.add(BooleanProperty.create("Name"));
     properties.addAll(new ArrayList<>());
-    properties.add(BooleanProperty.create("Name"));
     ZeroCollidingReferenceStateTable<Object, Object> zeroCollidingReferenceStateTable =
         new ZeroCollidingReferenceStateTable<>(properties);
 
@@ -857,7 +865,7 @@ class ZeroCollidingReferenceStateTableDiffblueTest {
     // Act
     Object actualTrySetResult =
         zeroCollidingReferenceStateTable.trySet(
-            Long.MAX_VALUE, property, OldUsersConverter.OLD_IPBANLIST, object);
+            1L, property, OldUsersConverter.OLD_IPBANLIST, object);
 
     // Assert
     verify(property).moonrise$getId();
@@ -869,8 +877,7 @@ class ZeroCollidingReferenceStateTableDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link ArrayList#ArrayList()} add create {@code Name}.
-   *   <li>When {@link Long#MAX_VALUE}.
-   *   <li>Then return {@link ConfigurationTransformation#WILDCARD_OBJECT}.
+   *   <li>When {@link Property} {@link Property#moonrise$getId()} return one.
    * </ul>
    *
    * <p>Method under test: {@link ZeroCollidingReferenceStateTable#trySet(long, Property,
@@ -878,16 +885,20 @@ class ZeroCollidingReferenceStateTableDiffblueTest {
    */
   @Test
   @DisplayName(
-      "Test trySet(long, Property, Comparable, Object); given ArrayList() add create 'Name'; when MAX_VALUE; then return WILDCARD_OBJECT")
+      "Test trySet(long, Property, Comparable, Object); given ArrayList() add create 'Name'; when Property moonrise$getId() return one")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({
     "Object ZeroCollidingReferenceStateTable.trySet(long, Property, Comparable, Object)"
   })
-  void testTrySet_givenArrayListAddCreateName_whenMax_value_thenReturnWildcard_object() {
+  void testTrySet_givenArrayListAddCreateName_whenPropertyMoonrise$getIdReturnOne2() {
     // Arrange
+    ArrayList<Property<?>> propertyList = new ArrayList<>();
+    propertyList.add(BooleanProperty.create("Name"));
+
     ArrayList<Property<?>> properties = new ArrayList<>();
     properties.add(BooleanProperty.create("Name"));
+    properties.addAll(propertyList);
     ZeroCollidingReferenceStateTable<Object, Object> zeroCollidingReferenceStateTable =
         new ZeroCollidingReferenceStateTable<>(properties);
 
@@ -898,7 +909,7 @@ class ZeroCollidingReferenceStateTableDiffblueTest {
     // Act
     Object actualTrySetResult =
         zeroCollidingReferenceStateTable.trySet(
-            Long.MAX_VALUE, property, OldUsersConverter.OLD_IPBANLIST, object);
+            1L, property, OldUsersConverter.OLD_IPBANLIST, object);
 
     // Assert
     verify(property).moonrise$getId();
@@ -949,8 +960,7 @@ class ZeroCollidingReferenceStateTableDiffblueTest {
    *
    * <ul>
    *   <li>Given one.
-   *   <li>When one.
-   *   <li>Then return {@link ConfigurationTransformation#WILDCARD_OBJECT}.
+   *   <li>When {@link Property} {@link Property#moonrise$getId()} return one.
    * </ul>
    *
    * <p>Method under test: {@link ZeroCollidingReferenceStateTable#trySet(long, Property,
@@ -958,13 +968,13 @@ class ZeroCollidingReferenceStateTableDiffblueTest {
    */
   @Test
   @DisplayName(
-      "Test trySet(long, Property, Comparable, Object); given one; when one; then return WILDCARD_OBJECT")
+      "Test trySet(long, Property, Comparable, Object); given one; when Property moonrise$getId() return one")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({
     "Object ZeroCollidingReferenceStateTable.trySet(long, Property, Comparable, Object)"
   })
-  void testTrySet_givenOne_whenOne_thenReturnWildcard_object() {
+  void testTrySet_givenOne_whenPropertyMoonrise$getIdReturnOne() {
     // Arrange
     ZeroCollidingReferenceStateTable<Object, Object> zeroCollidingReferenceStateTable =
         new ZeroCollidingReferenceStateTable<>(new ArrayList<>());

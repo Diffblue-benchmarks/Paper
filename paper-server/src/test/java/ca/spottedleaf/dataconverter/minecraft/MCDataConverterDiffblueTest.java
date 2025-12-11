@@ -122,21 +122,24 @@ class MCDataConverterDiffblueTest {
    *
    * <ul>
    *   <li>Given empty string.
+   *   <li>When {@link JsonObject} (default constructor) add {@code 42} and {@link
+   *       JsonArray#JsonArray()}.
+   *   <li>Then return {@link JsonObject}.
    * </ul>
    *
    * <p>Method under test: {@link MCDataConverter#copy(Object)}
    */
   @Test
-  @DisplayName("Test copy(Object); given empty string")
+  @DisplayName(
+      "Test copy(Object); given empty string; when JsonObject (default constructor) add '42' and JsonArray(); then return JsonObject")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"Object MCDataConverter.copy(Object)"})
-  void testCopy_givenEmptyString() {
+  void testCopy_givenEmptyString_whenJsonObjectAdd42AndJsonArray_thenReturnJsonObject() {
     // Arrange
     JsonObject jsonObject = new JsonObject();
-    jsonObject.add("", new JsonArray(3));
-    jsonObject.add("Property", new JsonArray(3));
-    jsonObject.addProperty("42", "Value");
+    jsonObject.add("", new JsonArray());
+    jsonObject.add("42", new JsonArray());
 
     // Act
     Object actualCopyResult = MCDataConverter.copy(jsonObject);
@@ -152,22 +155,27 @@ class MCDataConverterDiffblueTest {
    * <ul>
    *   <li>Given empty string.
    *   <li>When {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
+   *   <li>Then return {@link JsonObject}.
    * </ul>
    *
    * <p>Method under test: {@link MCDataConverter#copy(Object)}
    */
   @Test
   @DisplayName(
-      "Test copy(Object); given empty string; when JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three")
+      "Test copy(Object); given empty string; when JsonObject (default constructor) add '42' and JsonArray(); then return JsonObject")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"Object MCDataConverter.copy(Object)"})
-  void testCopy_givenEmptyString_whenJsonObjectAdd42AndJsonArrayWithCapacityIsThree() {
+  void testCopy_givenEmptyString_whenJsonObjectAdd42AndJsonArray_thenReturnJsonObject2() {
     // Arrange
     JsonObject jsonObject = new JsonObject();
-    jsonObject.add("", new JsonArray(3));
-    jsonObject.add("42", new JsonArray(3));
+    jsonObject.add("", new JsonArray());
+    jsonObject.add("42", new JsonArray());
+    jsonObject.add("Property", new JsonArray());
+    jsonObject.add("", new JsonArray());
+    jsonObject.add("Property", new JsonArray());
+    jsonObject.addProperty("42", "Value");
 
     // Act
     Object actualCopyResult = MCDataConverter.copy(jsonObject);
@@ -182,27 +190,55 @@ class MCDataConverterDiffblueTest {
    *
    * <ul>
    *   <li>Given empty string.
-   *   <li>When {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *   <li>When {@link JsonObject} (default constructor) add empty string and {@link
+   *       JsonArray#JsonArray()}.
    * </ul>
    *
    * <p>Method under test: {@link MCDataConverter#copy(Object)}
    */
   @Test
   @DisplayName(
-      "Test copy(Object); given empty string; when JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three")
+      "Test copy(Object); given empty string; when JsonObject (default constructor) add empty string and JsonArray()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"Object MCDataConverter.copy(Object)"})
-  void testCopy_givenEmptyString_whenJsonObjectAdd42AndJsonArrayWithCapacityIsThree2() {
+  void testCopy_givenEmptyString_whenJsonObjectAddEmptyStringAndJsonArray() {
     // Arrange
     JsonObject jsonObject = new JsonObject();
-    jsonObject.add("", new JsonArray(3));
-    jsonObject.add("42", new JsonArray(3));
-    jsonObject.add("Property", new JsonArray(3));
-    jsonObject.add("", new JsonArray(3));
-    jsonObject.add("Property", new JsonArray(3));
+    jsonObject.add("", new JsonArray());
+    jsonObject.add("Property", new JsonArray());
     jsonObject.addProperty("42", "Value");
+
+    // Act
+    Object actualCopyResult = MCDataConverter.copy(jsonObject);
+
+    // Assert
+    assertTrue(actualCopyResult instanceof JsonObject);
+    assertEquals(jsonObject, actualCopyResult);
+  }
+
+  /**
+   * Test {@link MCDataConverter#copy(Object)}.
+   *
+   * <ul>
+   *   <li>Given {@link JsonArray#JsonArray()}.
+   *   <li>When {@link JsonObject} (default constructor) add {@code 42} and {@link
+   *       JsonArray#JsonArray()}.
+   *   <li>Then return {@link JsonObject}.
+   * </ul>
+   *
+   * <p>Method under test: {@link MCDataConverter#copy(Object)}
+   */
+  @Test
+  @DisplayName(
+      "Test copy(Object); given JsonArray(); when JsonObject (default constructor) add '42' and JsonArray(); then return JsonObject")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"Object MCDataConverter.copy(Object)"})
+  void testCopy_givenJsonArray_whenJsonObjectAdd42AndJsonArray_thenReturnJsonObject() {
+    // Arrange
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.add("42", new JsonArray());
 
     // Act
     Object actualCopyResult = MCDataConverter.copy(jsonObject);
@@ -311,24 +347,25 @@ class MCDataConverterDiffblueTest {
    * <ul>
    *   <li>Given {@code Property}.
    *   <li>When {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
+   *   <li>Then return {@link JsonObject}.
    * </ul>
    *
    * <p>Method under test: {@link MCDataConverter#copy(Object)}
    */
   @Test
   @DisplayName(
-      "Test copy(Object); given 'Property'; when JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three")
+      "Test copy(Object); given 'Property'; when JsonObject (default constructor) add '42' and JsonArray(); then return JsonObject")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"Object MCDataConverter.copy(Object)"})
-  void testCopy_givenProperty_whenJsonObjectAdd42AndJsonArrayWithCapacityIsThree() {
+  void testCopy_givenProperty_whenJsonObjectAdd42AndJsonArray_thenReturnJsonObject() {
     // Arrange
     JsonObject jsonObject = new JsonObject();
-    jsonObject.add("42", new JsonArray(3));
-    jsonObject.add("Property", new JsonArray(3));
-    jsonObject.add("", new JsonArray(3));
-    jsonObject.add("Property", new JsonArray(3));
+    jsonObject.add("42", new JsonArray());
+    jsonObject.add("Property", new JsonArray());
+    jsonObject.add("", new JsonArray());
+    jsonObject.add("Property", new JsonArray());
     jsonObject.addProperty("42", "Value");
 
     // Act
@@ -345,21 +382,21 @@ class MCDataConverterDiffblueTest {
    * <ul>
    *   <li>Given {@code Property}.
    *   <li>When {@link JsonObject} (default constructor) add {@code Property} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
    * </ul>
    *
    * <p>Method under test: {@link MCDataConverter#copy(Object)}
    */
   @Test
   @DisplayName(
-      "Test copy(Object); given 'Property'; when JsonObject (default constructor) add 'Property' and JsonArray(int) with capacity is three")
+      "Test copy(Object); given 'Property'; when JsonObject (default constructor) add 'Property' and JsonArray()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"Object MCDataConverter.copy(Object)"})
-  void testCopy_givenProperty_whenJsonObjectAddPropertyAndJsonArrayWithCapacityIsThree() {
+  void testCopy_givenProperty_whenJsonObjectAddPropertyAndJsonArray() {
     // Arrange
     JsonObject jsonObject = new JsonObject();
-    jsonObject.add("Property", new JsonArray(3));
+    jsonObject.add("Property", new JsonArray());
     jsonObject.addProperty("42", "Value");
 
     // Act
@@ -376,23 +413,23 @@ class MCDataConverterDiffblueTest {
    * <ul>
    *   <li>Given {@code Property}.
    *   <li>When {@link JsonObject} (default constructor) add {@code Property} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
    * </ul>
    *
    * <p>Method under test: {@link MCDataConverter#copy(Object)}
    */
   @Test
   @DisplayName(
-      "Test copy(Object); given 'Property'; when JsonObject (default constructor) add 'Property' and JsonArray(int) with capacity is three")
+      "Test copy(Object); given 'Property'; when JsonObject (default constructor) add 'Property' and JsonArray()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"Object MCDataConverter.copy(Object)"})
-  void testCopy_givenProperty_whenJsonObjectAddPropertyAndJsonArrayWithCapacityIsThree2() {
+  void testCopy_givenProperty_whenJsonObjectAddPropertyAndJsonArray2() {
     // Arrange
     JsonObject jsonObject = new JsonObject();
-    jsonObject.add("Property", new JsonArray(3));
-    jsonObject.add("", new JsonArray(3));
-    jsonObject.add("Property", new JsonArray(3));
+    jsonObject.add("Property", new JsonArray());
+    jsonObject.add("", new JsonArray());
+    jsonObject.add("Property", new JsonArray());
     jsonObject.addProperty("42", "Value");
 
     // Act
@@ -554,35 +591,6 @@ class MCDataConverterDiffblueTest {
     assertTrue(actualCopyResult instanceof CompoundTag);
     assertEquals(compoundTag, actualCopyResult);
     assertSame(((CompoundTag) actualCopyResult).TYPE, compoundTag.getType());
-  }
-
-  /**
-   * Test {@link MCDataConverter#copy(Object)}.
-   *
-   * <ul>
-   *   <li>When {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
-   * </ul>
-   *
-   * <p>Method under test: {@link MCDataConverter#copy(Object)}
-   */
-  @Test
-  @DisplayName(
-      "Test copy(Object); when JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"Object MCDataConverter.copy(Object)"})
-  void testCopy_whenJsonObjectAdd42AndJsonArrayWithCapacityIsThree() {
-    // Arrange
-    JsonObject jsonObject = new JsonObject();
-    jsonObject.add("42", new JsonArray(3));
-
-    // Act
-    Object actualCopyResult = MCDataConverter.copy(jsonObject);
-
-    // Assert
-    assertTrue(actualCopyResult instanceof JsonObject);
-    assertEquals(jsonObject, actualCopyResult);
   }
 
   /**
@@ -840,23 +848,26 @@ class MCDataConverterDiffblueTest {
    * Test {@link MCDataConverter#convertJson(MCDataType, JsonObject, boolean, int, int)}.
    *
    * <ul>
-   *   <li>Given {@code Property}.
+   *   <li>Given {@link JsonArray#JsonArray()}.
+   *   <li>When {@link JsonObject} (default constructor) add {@code id} and {@link
+   *       JsonArray#JsonArray()}.
    * </ul>
    *
    * <p>Method under test: {@link MCDataConverter#convertJson(MCDataType, JsonObject, boolean, int,
    * int)}
    */
   @Test
-  @DisplayName("Test convertJson(MCDataType, JsonObject, boolean, int, int); given 'Property'")
+  @DisplayName(
+      "Test convertJson(MCDataType, JsonObject, boolean, int, int); given JsonArray(); when JsonObject (default constructor) add 'id' and JsonArray()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({
     "JsonObject MCDataConverter.convertJson(MCDataType, JsonObject, boolean, int, int)"
   })
-  void testConvertJson_givenProperty() {
+  void testConvertJson_givenJsonArray_whenJsonObjectAddIdAndJsonArray() {
     // Arrange
     JsonObject data = new JsonObject();
-    data.add("Property", new JsonArray(3));
+    data.add("id", new JsonArray());
 
     // Act
     JsonObject actualConvertJsonResult =
@@ -893,8 +904,8 @@ class MCDataConverterDiffblueTest {
   void testConvertJson_givenProperty_thenJsonObjectSizeIsTwo() {
     // Arrange
     JsonObject data = new JsonObject();
-    data.add("Property", new JsonArray(3));
-    data.add("id", new JsonArray(3));
+    data.add("Property", new JsonArray());
+    data.add("id", new JsonArray());
 
     // Act
     JsonObject actualConvertJsonResult =
@@ -903,6 +914,44 @@ class MCDataConverterDiffblueTest {
     // Assert
     assertEquals(2, data.size());
     assertEquals(2, actualConvertJsonResult.size());
+    assertFalse(data.isEmpty());
+    assertFalse(actualConvertJsonResult.isEmpty());
+    JsonObject actualAsJsonObject = actualConvertJsonResult.getAsJsonObject();
+    assertSame(actualConvertJsonResult, actualAsJsonObject);
+  }
+
+  /**
+   * Test {@link MCDataConverter#convertJson(MCDataType, JsonObject, boolean, int, int)}.
+   *
+   * <ul>
+   *   <li>Given {@code Property}.
+   *   <li>When {@link JsonObject} (default constructor) add {@code Property} and {@link
+   *       JsonArray#JsonArray()}.
+   * </ul>
+   *
+   * <p>Method under test: {@link MCDataConverter#convertJson(MCDataType, JsonObject, boolean, int,
+   * int)}
+   */
+  @Test
+  @DisplayName(
+      "Test convertJson(MCDataType, JsonObject, boolean, int, int); given 'Property'; when JsonObject (default constructor) add 'Property' and JsonArray()")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({
+    "JsonObject MCDataConverter.convertJson(MCDataType, JsonObject, boolean, int, int)"
+  })
+  void testConvertJson_givenProperty_whenJsonObjectAddPropertyAndJsonArray() {
+    // Arrange
+    JsonObject data = new JsonObject();
+    data.add("Property", new JsonArray());
+
+    // Act
+    JsonObject actualConvertJsonResult =
+        MCDataConverter.convertJson(MCTypeRegistry.ENTITY, data, true, 1, 1);
+
+    // Assert
+    assertEquals(1, data.size());
+    assertEquals(1, actualConvertJsonResult.size());
     assertFalse(data.isEmpty());
     assertFalse(actualConvertJsonResult.isEmpty());
     JsonObject actualAsJsonObject = actualConvertJsonResult.getAsJsonObject();
@@ -1299,43 +1348,6 @@ class MCDataConverterDiffblueTest {
 
     // Assert
     assertEquals(data, actualConvertJsonResult);
-  }
-
-  /**
-   * Test {@link MCDataConverter#convertJson(MCDataType, JsonObject, boolean, int, int)}.
-   *
-   * <ul>
-   *   <li>When {@link JsonObject} (default constructor) add {@code id} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
-   * </ul>
-   *
-   * <p>Method under test: {@link MCDataConverter#convertJson(MCDataType, JsonObject, boolean, int,
-   * int)}
-   */
-  @Test
-  @DisplayName(
-      "Test convertJson(MCDataType, JsonObject, boolean, int, int); when JsonObject (default constructor) add 'id' and JsonArray(int) with capacity is three")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({
-    "JsonObject MCDataConverter.convertJson(MCDataType, JsonObject, boolean, int, int)"
-  })
-  void testConvertJson_whenJsonObjectAddIdAndJsonArrayWithCapacityIsThree() {
-    // Arrange
-    JsonObject data = new JsonObject();
-    data.add("id", new JsonArray(3));
-
-    // Act
-    JsonObject actualConvertJsonResult =
-        MCDataConverter.convertJson(MCTypeRegistry.ENTITY, data, true, 1, 1);
-
-    // Assert
-    assertEquals(1, data.size());
-    assertEquals(1, actualConvertJsonResult.size());
-    assertFalse(data.isEmpty());
-    assertFalse(actualConvertJsonResult.isEmpty());
-    JsonObject actualAsJsonObject = actualConvertJsonResult.getAsJsonObject();
-    assertSame(actualConvertJsonResult, actualAsJsonObject);
   }
 
   /**

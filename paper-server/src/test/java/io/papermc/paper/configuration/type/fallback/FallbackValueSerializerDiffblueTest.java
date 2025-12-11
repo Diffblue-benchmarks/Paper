@@ -1,23 +1,47 @@
 package io.papermc.paper.configuration.type.fallback;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
+import io.leangen.geantyref.TypeToken;
+import java.lang.reflect.AnnotatedType;
 import java.lang.reflect.GenericArrayType;
 import java.lang.reflect.Type;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.spigotmc.SpigotWorldConfig;
 import org.spongepowered.configurate.serialize.SerializationException;
 import org.spongepowered.configurate.transformation.ConfigurationTransformation;
 
 class FallbackValueSerializerDiffblueTest {
+  /**
+   * Test {@link FallbackValueSerializer#FallbackValueSerializer(Map)}.
+   *
+   * <p>Method under test: {@link FallbackValueSerializer#FallbackValueSerializer(Map)}
+   */
+  @Test
+  @DisplayName("Test new FallbackValueSerializer(Map)")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void FallbackValueSerializer.<init>(Map)"})
+  void testNewFallbackValueSerializer() {
+    // Arrange, Act and Assert
+    TypeToken<FallbackValue> typeResult = new FallbackValueSerializer(new HashMap<>()).type();
+    AnnotatedType annotatedType = typeResult.getAnnotatedType();
+    assertNull(annotatedType.getAnnotatedOwnerType());
+    assertEquals(annotatedType, typeResult.getCanonicalType());
+  }
+
   /**
    * Test {@link FallbackValueSerializer#deserialize(Type, Object)} with {@code Type}, {@code
    * Object}.
@@ -105,5 +129,31 @@ class FallbackValueSerializerDiffblueTest {
     // Act and Assert
     assertEquals(
         "default", fallbackValueSerializer.serialize(AutosavePeriod.def(), mock(Predicate.class)));
+  }
+
+  /**
+   * Test {@link FallbackValueSerializer#create(SpigotWorldConfig, Supplier)}.
+   *
+   * <ul>
+   *   <li>Then return type AnnotatedType AnnotatedOwnerType is {@code null}.
+   * </ul>
+   *
+   * <p>Method under test: {@link FallbackValueSerializer#create(SpigotWorldConfig, Supplier)}
+   */
+  @Test
+  @DisplayName(
+      "Test create(SpigotWorldConfig, Supplier); then return type AnnotatedType AnnotatedOwnerType is 'null'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({
+    "FallbackValueSerializer FallbackValueSerializer.create(SpigotWorldConfig, Supplier)"
+  })
+  void testCreate_thenReturnTypeAnnotatedTypeAnnotatedOwnerTypeIsNull() {
+    // Arrange, Act and Assert
+    TypeToken<FallbackValue> typeResult =
+        FallbackValueSerializer.create(mock(SpigotWorldConfig.class), mock(Supplier.class)).type();
+    AnnotatedType annotatedType = typeResult.getAnnotatedType();
+    assertNull(annotatedType.getAnnotatedOwnerType());
+    assertEquals(annotatedType, typeResult.getCanonicalType());
   }
 }

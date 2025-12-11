@@ -90,34 +90,7 @@ class ReferenceListDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link ReferenceList#ReferenceList()} add five.
-   *   <li>When {@code Obj}.
-   *   <li>Then return {@code false}.
-   * </ul>
-   *
-   * <p>Method under test: {@link ReferenceList#contains(Object)}
-   */
-  @Test
-  @DisplayName(
-      "Test contains(Object); given ReferenceList() add five; when 'Obj'; then return 'false'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"boolean ReferenceList.contains(Object)"})
-  void testContains_givenReferenceListAddFive_whenObj_thenReturnFalse() {
-    // Arrange
-    ReferenceList<Object> referenceList = new ReferenceList<>();
-    referenceList.add(ConfigurationTransformation.WILDCARD_OBJECT);
-    referenceList.add(5);
-
-    // Act and Assert
-    assertFalse(referenceList.contains("Obj"));
-  }
-
-  /**
-   * Test {@link ReferenceList#contains(Object)}.
-   *
-   * <ul>
-   *   <li>Given {@link ReferenceList#ReferenceList()} add {@code Obj}.
-   *   <li>When {@code Obj}.
+   *   <li>When five.
    *   <li>Then return {@code true}.
    * </ul>
    *
@@ -125,25 +98,25 @@ class ReferenceListDiffblueTest {
    */
   @Test
   @DisplayName(
-      "Test contains(Object); given ReferenceList() add 'Obj'; when 'Obj'; then return 'true'")
+      "Test contains(Object); given ReferenceList() add five; when five; then return 'true'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"boolean ReferenceList.contains(Object)"})
-  void testContains_givenReferenceListAddObj_whenObj_thenReturnTrue() {
+  void testContains_givenReferenceListAddFive_whenFive_thenReturnTrue() {
     // Arrange
     ReferenceList<Object> referenceList = new ReferenceList<>();
     referenceList.add(ConfigurationTransformation.WILDCARD_OBJECT);
-    referenceList.add("Obj");
+    referenceList.add(5);
 
     // Act and Assert
-    assertTrue(referenceList.contains("Obj"));
+    assertTrue(referenceList.contains(5));
   }
 
   /**
    * Test {@link ReferenceList#contains(Object)}.
    *
    * <ul>
-   *   <li>Given {@link ReferenceList#ReferenceList()} add {@code Obj}.
+   *   <li>Given {@link ReferenceList#ReferenceList()} add five.
    *   <li>When {@link ConfigurationTransformation#WILDCARD_OBJECT}.
    *   <li>Then return {@code false}.
    * </ul>
@@ -152,14 +125,14 @@ class ReferenceListDiffblueTest {
    */
   @Test
   @DisplayName(
-      "Test contains(Object); given ReferenceList() add 'Obj'; when WILDCARD_OBJECT; then return 'false'")
+      "Test contains(Object); given ReferenceList() add five; when WILDCARD_OBJECT; then return 'false'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"boolean ReferenceList.contains(Object)"})
-  void testContains_givenReferenceListAddObj_whenWildcard_object_thenReturnFalse() {
+  void testContains_givenReferenceListAddFive_whenWildcard_object_thenReturnFalse() {
     // Arrange
     ReferenceList<Object> referenceList = new ReferenceList<>();
-    referenceList.add("Obj");
+    referenceList.add(5);
 
     // Act and Assert
     assertFalse(referenceList.contains(ConfigurationTransformation.WILDCARD_OBJECT));
@@ -189,6 +162,33 @@ class ReferenceListDiffblueTest {
 
     // Act and Assert
     assertTrue(referenceList.contains(ConfigurationTransformation.WILDCARD_OBJECT));
+  }
+
+  /**
+   * Test {@link ReferenceList#contains(Object)}.
+   *
+   * <ul>
+   *   <li>Given {@link ReferenceList#ReferenceList()} add zero.
+   *   <li>When five.
+   *   <li>Then return {@code false}.
+   * </ul>
+   *
+   * <p>Method under test: {@link ReferenceList#contains(Object)}
+   */
+  @Test
+  @DisplayName(
+      "Test contains(Object); given ReferenceList() add zero; when five; then return 'false'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"boolean ReferenceList.contains(Object)"})
+  void testContains_givenReferenceListAddZero_whenFive_thenReturnFalse() {
+    // Arrange
+    ReferenceList<Object> referenceList = new ReferenceList<>();
+    referenceList.add(ConfigurationTransformation.WILDCARD_OBJECT);
+    referenceList.add(0);
+
+    // Act and Assert
+    assertFalse(referenceList.contains(5));
   }
 
   /**
@@ -244,7 +244,7 @@ class ReferenceListDiffblueTest {
    * Test {@link ReferenceList#remove(Object)}.
    *
    * <ul>
-   *   <li>Given {@link ReferenceList#ReferenceList()} add {@code Obj}.
+   *   <li>Given {@link ReferenceList#ReferenceList()} add {@code Object[]}.
    *   <li>Then {@link ReferenceList#ReferenceList()} size is one.
    * </ul>
    *
@@ -252,23 +252,23 @@ class ReferenceListDiffblueTest {
    */
   @Test
   @DisplayName(
-      "Test remove(Object); given ReferenceList() add 'Obj'; then ReferenceList() size is one")
+      "Test remove(Object); given ReferenceList() add 'java.lang.Object[]'; then ReferenceList() size is one")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"boolean ReferenceList.remove(Object)"})
-  void testRemove_givenReferenceListAddObj_thenReferenceListSizeIsOne() {
+  void testRemove_givenReferenceListAddJavaLangObject_thenReferenceListSizeIsOne() {
     // Arrange
     ReferenceList<Object> referenceList = new ReferenceList<>();
-    referenceList.add("Obj");
+    referenceList.add("java.lang.Object[]");
 
     // Act
     boolean actualRemoveResult = referenceList.remove(ConfigurationTransformation.WILDCARD_OBJECT);
 
     // Assert
     Iterator<Object> iteratorResult = referenceList.iterator();
-    assertEquals("Obj", iteratorResult.next());
+    assertEquals("java.lang.Object[]", iteratorResult.next());
     Object[] rawData = referenceList.getRawData();
-    assertEquals("Obj", rawData[0]);
+    assertEquals("java.lang.Object[]", rawData[0]);
     assertEquals(1, referenceList.size());
     assertEquals(4, rawData.length);
     assertFalse(actualRemoveResult);
@@ -330,18 +330,52 @@ class ReferenceListDiffblueTest {
     // Arrange
     ReferenceList<Object> referenceList = new ReferenceList<>();
     referenceList.add(ConfigurationTransformation.WILDCARD_OBJECT);
-    referenceList.add("Obj");
+    referenceList.add("java.lang.Object[]");
 
     // Act
     referenceList.remove(ConfigurationTransformation.WILDCARD_OBJECT);
 
     // Assert
     Iterator<Object> iteratorResult = referenceList.iterator();
-    assertEquals("Obj", iteratorResult.next());
+    assertEquals("java.lang.Object[]", iteratorResult.next());
     Object[] rawData = referenceList.getRawData();
-    assertEquals("Obj", rawData[0]);
+    assertEquals("java.lang.Object[]", rawData[0]);
     assertNull(rawData[1]);
     assertEquals(1, referenceList.size());
+    assertEquals(4, rawData.length);
+    assertFalse(iteratorResult.hasNext());
+  }
+
+  /**
+   * Test {@link ReferenceList#remove(Object)}.
+   *
+   * <ul>
+   *   <li>Given {@link ReferenceList#ReferenceList()} add zero.
+   *   <li>Then {@link ReferenceList#ReferenceList()} iterator next intValue is zero.
+   * </ul>
+   *
+   * <p>Method under test: {@link ReferenceList#remove(Object)}
+   */
+  @Test
+  @DisplayName(
+      "Test remove(Object); given ReferenceList() add zero; then ReferenceList() iterator next intValue is zero")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"boolean ReferenceList.remove(Object)"})
+  void testRemove_givenReferenceListAddZero_thenReferenceListIteratorNextIntValueIsZero() {
+    // Arrange
+    ReferenceList<Object> referenceList = new ReferenceList<>();
+    referenceList.add(ConfigurationTransformation.WILDCARD_OBJECT);
+    referenceList.add(0);
+
+    // Act
+    referenceList.remove(ConfigurationTransformation.WILDCARD_OBJECT);
+
+    // Assert
+    Iterator<Object> iteratorResult = referenceList.iterator();
+    assertEquals(0, ((Integer) iteratorResult.next()).intValue());
+    Object[] rawData = referenceList.getRawData();
+    assertEquals(0, ((Integer) rawData[0]).intValue());
     assertEquals(4, rawData.length);
     assertFalse(iteratorResult.hasNext());
   }
@@ -380,7 +414,7 @@ class ReferenceListDiffblueTest {
    * Test {@link ReferenceList#remove(Object)}.
    *
    * <ul>
-   *   <li>When {@code Obj}.
+   *   <li>When {@code Object[]}.
    *   <li>Then {@link ReferenceList#ReferenceList()} iterator next is first element.
    * </ul>
    *
@@ -388,18 +422,18 @@ class ReferenceListDiffblueTest {
    */
   @Test
   @DisplayName(
-      "Test remove(Object); when 'Obj'; then ReferenceList() iterator next is first element")
+      "Test remove(Object); when 'java.lang.Object[]'; then ReferenceList() iterator next is first element")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"boolean ReferenceList.remove(Object)"})
-  void testRemove_whenObj_thenReferenceListIteratorNextIsFirstElement() {
+  void testRemove_whenJavaLangObject_thenReferenceListIteratorNextIsFirstElement() {
     // Arrange
     ReferenceList<Object> referenceList = new ReferenceList<>();
     referenceList.add(ConfigurationTransformation.WILDCARD_OBJECT);
-    referenceList.add("Obj");
+    referenceList.add("java.lang.Object[]");
 
     // Act
-    referenceList.remove("Obj");
+    referenceList.remove("java.lang.Object[]");
 
     // Assert
     Object[] rawData = referenceList.getRawData();
@@ -417,20 +451,58 @@ class ReferenceListDiffblueTest {
    * Test {@link ReferenceList#add(Object)}.
    *
    * <ul>
-   *   <li>Given {@link ReferenceList#ReferenceList()}.
-   *   <li>When {@link ConfigurationTransformation#WILDCARD_OBJECT}.
-   *   <li>Then second element is {@code null}.
+   *   <li>Given {@link ReferenceList#ReferenceList()} add {@link
+   *       ConfigurationTransformation#WILDCARD_OBJECT}.
+   *   <li>Then {@link ReferenceList#ReferenceList()} size is one.
    * </ul>
    *
    * <p>Method under test: {@link ReferenceList#add(Object)}
    */
   @Test
   @DisplayName(
-      "Test add(Object); given ReferenceList(); when WILDCARD_OBJECT; then second element is 'null'")
+      "Test add(Object); given ReferenceList() add WILDCARD_OBJECT; then ReferenceList() size is one")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"boolean ReferenceList.add(Object)"})
-  void testAdd_givenReferenceList_whenWildcard_object_thenSecondElementIsNull() {
+  void testAdd_givenReferenceListAddWildcard_object_thenReferenceListSizeIsOne() {
+    // Arrange
+    ReferenceList<Object> referenceList = new ReferenceList<>();
+    referenceList.add(ConfigurationTransformation.WILDCARD_OBJECT);
+    Object object = ConfigurationTransformation.WILDCARD_OBJECT;
+
+    // Act and Assert
+    assertFalse(referenceList.add(object));
+    Object[] rawData = referenceList.getRawData();
+    assertEquals(4, rawData.length);
+    Object actualObject = rawData[1];
+    assertNull(actualObject);
+    assertNull(rawData[2]);
+    assertNull(rawData[3]);
+    Iterator<Object> iteratorResult = referenceList.iterator();
+    Object actualNextResult = iteratorResult.next();
+    assertFalse(iteratorResult.hasNext());
+    assertSame(object, actualNextResult);
+    assertEquals(1, referenceList.size());
+  }
+
+  /**
+   * Test {@link ReferenceList#add(Object)}.
+   *
+   * <ul>
+   *   <li>Given {@link ReferenceList#ReferenceList()}.
+   *   <li>When {@link ConfigurationTransformation#WILDCARD_OBJECT}.
+   *   <li>Then first element is {@link ConfigurationTransformation#WILDCARD_OBJECT}.
+   * </ul>
+   *
+   * <p>Method under test: {@link ReferenceList#add(Object)}
+   */
+  @Test
+  @DisplayName(
+      "Test add(Object); given ReferenceList(); when WILDCARD_OBJECT; then first element is WILDCARD_OBJECT")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"boolean ReferenceList.add(Object)"})
+  void testAdd_givenReferenceList_whenWildcard_object_thenFirstElementIsWildcard_object() {
     // Arrange
     ReferenceList<Object> referenceList = new ReferenceList<>();
     Object object = ConfigurationTransformation.WILDCARD_OBJECT;

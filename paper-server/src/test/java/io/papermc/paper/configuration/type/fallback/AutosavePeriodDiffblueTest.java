@@ -131,6 +131,7 @@ class AutosavePeriodDiffblueTest {
 
     // Assert
     assertEquals(42, actualProcessResult.getAsInt());
+    assertFalse(actualProcessResult.isEmpty());
     assertTrue(actualProcessResult.isPresent());
   }
 
@@ -150,8 +151,12 @@ class AutosavePeriodDiffblueTest {
   @ManagedByDiffblue
   @MethodsUnderTest({"OptionalInt AutosavePeriod.process(int)"})
   void testProcess_whenMinusOne_thenReturnNotPresent() {
-    // Arrange, Act and Assert
-    assertFalse(AutosavePeriod.def().process(-1).isPresent());
+    // Arrange and Act
+    OptionalInt actualProcessResult = AutosavePeriod.def().process(-1);
+
+    // Assert
+    assertFalse(actualProcessResult.isPresent());
+    assertTrue(actualProcessResult.isEmpty());
   }
 
   /**

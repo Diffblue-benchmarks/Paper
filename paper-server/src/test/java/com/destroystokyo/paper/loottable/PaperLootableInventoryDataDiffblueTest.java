@@ -201,21 +201,22 @@ class PaperLootableInventoryDataDiffblueTest {
    * Test {@link PaperLootableInventoryData#saveNbt(ValueOutput)}.
    *
    * <ul>
-   *   <li>Given {@link PaperLootableInventoryData} (default constructor).
-   *   <li>Then calls {@link TagValueOutput#discard(String)}.
+   *   <li>Given {@link PaperLootableInventoryData} (default constructor) PlayerLootedState
+   *       randomUUID is {@code false}.
    * </ul>
    *
    * <p>Method under test: {@link PaperLootableInventoryData#saveNbt(ValueOutput)}
    */
   @Test
   @DisplayName(
-      "Test saveNbt(ValueOutput); given PaperLootableInventoryData (default constructor); then calls discard(String)")
+      "Test saveNbt(ValueOutput); given PaperLootableInventoryData (default constructor) PlayerLootedState randomUUID is 'false'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void PaperLootableInventoryData.saveNbt(ValueOutput)"})
-  void testSaveNbt_givenPaperLootableInventoryData_thenCallsDiscard() {
+  void testSaveNbt_givenPaperLootableInventoryDataPlayerLootedStateRandomUUIDIsFalse() {
     // Arrange
     PaperLootableInventoryData paperLootableInventoryData = new PaperLootableInventoryData();
+    paperLootableInventoryData.setPlayerLootedState(UUID.randomUUID(), false);
 
     TagValueOutput tagValueOutput = mock(TagValueOutput.class);
     when(tagValueOutput.isEmpty()).thenReturn(true);
@@ -252,15 +253,15 @@ class PaperLootableInventoryDataDiffblueTest {
   void testSaveNbt_givenTagValueOutputIsEmptyReturnFalse_thenCallsList() {
     // Arrange
     PaperLootableInventoryData paperLootableInventoryData = new PaperLootableInventoryData();
-    paperLootableInventoryData.setPlayerLootedState(Util.NIL_UUID, true);
+    paperLootableInventoryData.setPlayerLootedState(UUID.randomUUID(), true);
 
     TypedOutputList<Object> typedOutputList = mock(TypedOutputList.class);
     doNothing().when(typedOutputList).add(Mockito.<Object>any());
 
     TagValueOutput tagValueOutput = mock(TagValueOutput.class);
+    when(tagValueOutput.isEmpty()).thenReturn(false);
     when(tagValueOutput.list(Mockito.<String>any(), Mockito.<Codec<Object>>any()))
         .thenReturn(typedOutputList);
-    when(tagValueOutput.isEmpty()).thenReturn(false);
 
     TagValueOutput output = mock(TagValueOutput.class);
     when(output.child(Mockito.<String>any())).thenReturn(tagValueOutput);
@@ -295,16 +296,16 @@ class PaperLootableInventoryDataDiffblueTest {
     // Arrange
     PaperLootableInventoryData paperLootableInventoryData = new PaperLootableInventoryData();
     paperLootableInventoryData.setNextRefill(1L);
-    paperLootableInventoryData.setPlayerLootedState(Util.NIL_UUID, true);
+    paperLootableInventoryData.setPlayerLootedState(UUID.randomUUID(), true);
 
     TypedOutputList<Object> typedOutputList = mock(TypedOutputList.class);
     doNothing().when(typedOutputList).add(Mockito.<Object>any());
 
     TagValueOutput tagValueOutput = mock(TagValueOutput.class);
     doNothing().when(tagValueOutput).putLong(Mockito.<String>any(), anyLong());
+    when(tagValueOutput.isEmpty()).thenReturn(true);
     when(tagValueOutput.list(Mockito.<String>any(), Mockito.<Codec<Object>>any()))
         .thenReturn(typedOutputList);
-    when(tagValueOutput.isEmpty()).thenReturn(true);
 
     TagValueOutput output = mock(TagValueOutput.class);
     doNothing().when(output).discard(Mockito.<String>any());
@@ -342,15 +343,15 @@ class PaperLootableInventoryDataDiffblueTest {
   void testSaveNbt_givenTypedOutputListAddDoesNothing_thenCallsDiscard() {
     // Arrange
     PaperLootableInventoryData paperLootableInventoryData = new PaperLootableInventoryData();
-    paperLootableInventoryData.setPlayerLootedState(Util.NIL_UUID, true);
+    paperLootableInventoryData.setPlayerLootedState(UUID.randomUUID(), true);
 
     TypedOutputList<Object> typedOutputList = mock(TypedOutputList.class);
     doNothing().when(typedOutputList).add(Mockito.<Object>any());
 
     TagValueOutput tagValueOutput = mock(TagValueOutput.class);
+    when(tagValueOutput.isEmpty()).thenReturn(true);
     when(tagValueOutput.list(Mockito.<String>any(), Mockito.<Codec<Object>>any()))
         .thenReturn(typedOutputList);
-    when(tagValueOutput.isEmpty()).thenReturn(true);
 
     TagValueOutput output = mock(TagValueOutput.class);
     doNothing().when(output).discard(Mockito.<String>any());

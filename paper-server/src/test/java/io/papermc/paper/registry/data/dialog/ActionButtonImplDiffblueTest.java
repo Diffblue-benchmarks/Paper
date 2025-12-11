@@ -12,14 +12,8 @@ import net.kyori.adventure.text.Component;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 
-@ExtendWith(MockitoExtension.class)
 class ActionButtonImplDiffblueTest {
-  @Mock private Component component;
-
   /**
    * Test BuilderImpl {@link BuilderImpl#build()}.
    *
@@ -42,7 +36,7 @@ class ActionButtonImplDiffblueTest {
   })
   void testBuilderImplBuild() {
     // Arrange and Act
-    ActionButton actualActionButton = new BuilderImpl(component).build();
+    ActionButton actualActionButton = new BuilderImpl(mock(Component.class)).build();
 
     // Assert
     assertTrue(actualActionButton instanceof ActionButtonImpl);

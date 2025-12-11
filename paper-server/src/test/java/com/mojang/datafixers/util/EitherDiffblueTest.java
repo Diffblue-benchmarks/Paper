@@ -69,20 +69,20 @@ class EitherDiffblueTest {
    * Test Instance {@link Instance#traverse(Applicative, Function, App)}.
    *
    * <ul>
-   *   <li>Given {@code null}.
-   *   <li>When {@link Either} {@link Either#map(Function, Function)} return {@code null}.
-   *   <li>Then return {@code null}.
+   *   <li>Given {@link App}.
+   *   <li>When {@link Either} {@link Either#map(Function, Function)} return {@link App}.
+   *   <li>Then calls {@link Either#map(Function, Function)}.
    * </ul>
    *
    * <p>Method under test: {@link Instance#traverse(Applicative, Function, App)}
    */
   @Test
   @DisplayName(
-      "Test Instance traverse(Applicative, Function, App); given 'null'; when Either map(Function, Function) return 'null'; then return 'null'")
+      "Test Instance traverse(Applicative, Function, App); given App; when Either map(Function, Function) return App; then calls map(Function, Function)")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"App Instance.traverse(Applicative, Function, App)"})
-  void testInstanceTraverse_givenNull_whenEitherMapReturnNull_thenReturnNull() {
+  void testInstanceTraverse_givenApp_whenEitherMapReturnApp_thenCallsMap() {
     // Arrange
     Instance<Object> instance = new Instance<>();
     Applicative<K1, ?> applicative = mock(Applicative.class);
@@ -91,15 +91,13 @@ class EitherDiffblueTest {
     Either<Object, Object> input = mock(Either.class);
     when(input.map(
             Mockito.<Function<Object, Object>>any(), Mockito.<Function<Object, Object>>any()))
-        .thenReturn(null);
+        .thenReturn(mock(App.class));
 
     // Act
-    App<K1, App<Mu<Object>, Object>> actualTraverseResult =
-        instance.traverse(applicative, function, input);
+    instance.traverse(applicative, function, input);
 
     // Assert
     verify(input).map(isA(Function.class), isA(Function.class));
-    assertNull(actualTraverseResult);
   }
 
   /**

@@ -1,5 +1,6 @@
 package com.mojang.datafixers;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.atLeast;
@@ -31,7 +32,9 @@ class DataFixerBuilderDiffblueTest {
   @MethodsUnderTest({"void DataFixerBuilder.<init>(int)"})
   void testNewDataFixerBuilder() {
     // Arrange, Act and Assert
-    assertTrue(new DataFixerBuilder(1).build().fixer() instanceof DataFixerUpper);
+    DataFixer fixerResult = new DataFixerBuilder(1).build().fixer();
+    assertTrue(fixerResult instanceof DataFixerUpper);
+    assertTrue(((DataFixerUpper) fixerResult).fixerVersions().isEmpty());
   }
 
   /**
@@ -322,18 +325,14 @@ class DataFixerBuilderDiffblueTest {
   /**
    * Test {@link DataFixerBuilder#addFixer(DataFix)}.
    *
-   * <ul>
-   *   <li>Given {@link DataFixerBuilder#DataFixerBuilder(int)} with dataVersion is minus one.
-   * </ul>
-   *
    * <p>Method under test: {@link DataFixerBuilder#addFixer(DataFix)}
    */
   @Test
-  @DisplayName("Test addFixer(DataFix); given DataFixerBuilder(int) with dataVersion is minus one")
+  @DisplayName("Test addFixer(DataFix)")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void DataFixerBuilder.addFixer(DataFix)"})
-  void testAddFixer_givenDataFixerBuilderWithDataVersionIsMinusOne() {
+  void testAddFixer() {
     // Arrange
     DataFixerBuilder dataFixerBuilder = new DataFixerBuilder(-1);
 
@@ -343,28 +342,30 @@ class DataFixerBuilderDiffblueTest {
     // Act
     dataFixerBuilder.addFixer(new AbstractArrowPickupFix(outputSchema));
 
-    // Assert
+    // Assert that nothing has changed
     verify(outputSchema).getVersionKey();
+    DataFixer fixerResult = dataFixerBuilder.build().fixer();
+    assertTrue(fixerResult instanceof DataFixerUpper);
+    assertTrue(((DataFixerUpper) fixerResult).fixerVersions().isEmpty());
   }
 
   /**
    * Test {@link DataFixerBuilder#addFixer(DataFix)}.
    *
    * <ul>
-   *   <li>Given one.
-   *   <li>When {@link Schema} {@link Schema#getVersionKey()} return one.
-   *   <li>Then calls {@link Schema#getVersionKey()}.
+   *   <li>Then {@link DataFixerBuilder#DataFixerBuilder(int)} with dataVersion is one build fixer
+   *       {@link DataFixerUpper}.
    * </ul>
    *
    * <p>Method under test: {@link DataFixerBuilder#addFixer(DataFix)}
    */
   @Test
   @DisplayName(
-      "Test addFixer(DataFix); given one; when Schema getVersionKey() return one; then calls getVersionKey()")
+      "Test addFixer(DataFix); then DataFixerBuilder(int) with dataVersion is one build fixer DataFixerUpper")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void DataFixerBuilder.addFixer(DataFix)"})
-  void testAddFixer_givenOne_whenSchemaGetVersionKeyReturnOne_thenCallsGetVersionKey() {
+  void testAddFixer_thenDataFixerBuilderWithDataVersionIsOneBuildFixerDataFixerUpper() {
     // Arrange
     DataFixerBuilder dataFixerBuilder = new DataFixerBuilder(1);
 
@@ -376,6 +377,9 @@ class DataFixerBuilderDiffblueTest {
 
     // Assert
     verify(outputSchema, atLeast(1)).getVersionKey();
+    DataFixer fixerResult = dataFixerBuilder.build().fixer();
+    assertTrue(fixerResult instanceof DataFixerUpper);
+    assertEquals(1, ((DataFixerUpper) fixerResult).fixerVersions().size());
   }
 
   /**
@@ -411,12 +415,8 @@ class DataFixerBuilderDiffblueTest {
 
     DataFixerUpper dataFixerUpper = new DataFixerUpper(schemas, globalList, new IntAVLTreeSet());
 
-    // Act
-    DataFixer actualFixerResult = dataFixerBuilder.new Result(dataFixerUpper).fixer();
-
-    // Assert
-    assertTrue(actualFixerResult instanceof DataFixerUpper);
-    assertSame(dataFixerUpper, actualFixerResult);
+    // Act and Assert
+    assertSame(dataFixerUpper, dataFixerBuilder.new Result(dataFixerUpper).fixer());
   }
 
   /**
@@ -438,8 +438,6 @@ class DataFixerBuilderDiffblueTest {
     DataFixerUpper dataFixerUpper = new DataFixerUpper(schemas, globalList, new IntAVLTreeSet());
 
     // Act and Assert
-    DataFixer fixerResult = dataFixerBuilder.new Result(dataFixerUpper).fixer();
-    assertTrue(fixerResult instanceof DataFixerUpper);
-    assertSame(dataFixerUpper, fixerResult);
+    assertSame(dataFixerUpper, dataFixerBuilder.new Result(dataFixerUpper).fixer());
   }
 }

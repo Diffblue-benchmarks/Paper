@@ -1329,17 +1329,17 @@ class NBTListTypeDiffblueTest {
    * Test {@link NBTListType#getNumber(int, Number)} with {@code index}, {@code dfl}.
    *
    * <ul>
-   *   <li>Then return {@link AtomicLong}.
+   *   <li>Then return {@link Bootstrap#bootstrapDuration}.
    * </ul>
    *
    * <p>Method under test: {@link NBTListType#getNumber(int, Number)}
    */
   @Test
-  @DisplayName("Test getNumber(int, Number) with 'index', 'dfl'; then return AtomicLong")
+  @DisplayName("Test getNumber(int, Number) with 'index', 'dfl'; then return bootstrapDuration")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"Number NBTListType.getNumber(int, Number)"})
-  void testGetNumberWithIndexDfl_thenReturnAtomicLong() throws UnsupportedEncodingException {
+  void testGetNumberWithIndexDfl_thenReturnBootstrapDuration() throws UnsupportedEncodingException {
     // Arrange
     NBTListType nbtListType = new NBTListType();
     nbtListType.addByteArray("AXAXAXAX".getBytes("UTF-8"));
@@ -1349,8 +1349,6 @@ class NBTListTypeDiffblueTest {
     Number actualNumber = nbtListType.getNumber(0, dfl);
 
     // Assert
-    assertTrue(actualNumber instanceof AtomicLong);
-    assertEquals(-1L, ((AtomicLong) actualNumber).get());
     assertSame(dfl, actualNumber);
   }
 

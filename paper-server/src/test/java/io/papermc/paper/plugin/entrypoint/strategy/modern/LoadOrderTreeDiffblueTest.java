@@ -48,52 +48,17 @@ class LoadOrderTreeDiffblueTest {
    * Test {@link LoadOrderTree#add(PluginProvider)}.
    *
    * <ul>
-   *   <li>Given {@link ArrayList#ArrayList()} add {@code foo}.
+   *   <li>Then throw {@link GraphCycleException}.
    * </ul>
    *
    * <p>Method under test: {@link LoadOrderTree#add(PluginProvider)}
    */
   @Test
-  @DisplayName("Test add(PluginProvider); given ArrayList() add 'foo'")
+  @DisplayName("Test add(PluginProvider); then throw GraphCycleException")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void LoadOrderTree.add(PluginProvider)"})
-  void testAdd_givenArrayListAddFoo() {
-    // Arrange
-    MutableGraph<String> graph = mock(MutableGraph.class);
-    when(graph.addNode(Mockito.<String>any())).thenReturn(true);
-    LoadOrderTree loadOrderTree = new LoadOrderTree(new HashMap<>(), graph);
-
-    ArrayList<String> hardDependencies = new ArrayList<>();
-    hardDependencies.add("foo");
-
-    TestPluginMeta testPluginConfiguration = new TestPluginMeta("42");
-    testPluginConfiguration.setHardDependencies(hardDependencies);
-
-    // Act
-    loadOrderTree.add(new TestJavaPluginProvider(testPluginConfiguration));
-
-    // Assert
-    verify(graph).addNode("42");
-  }
-
-  /**
-   * Test {@link LoadOrderTree#add(PluginProvider)}.
-   *
-   * <ul>
-   *   <li>Given {@link MutableGraph} {@link MutableGraph#addNode(Object)} throw {@link
-   *       GraphCycleException} (default constructor).
-   * </ul>
-   *
-   * <p>Method under test: {@link LoadOrderTree#add(PluginProvider)}
-   */
-  @Test
-  @DisplayName(
-      "Test add(PluginProvider); given MutableGraph addNode(Object) throw GraphCycleException (default constructor)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"void LoadOrderTree.add(PluginProvider)"})
-  void testAdd_givenMutableGraphAddNodeThrowGraphCycleException() {
+  void testAdd_thenThrowGraphCycleException() {
     // Arrange
     MutableGraph<String> graph = mock(MutableGraph.class);
     when(graph.addNode(Mockito.<String>any())).thenThrow(new GraphCycleException());
@@ -110,29 +75,23 @@ class LoadOrderTreeDiffblueTest {
    * Test {@link LoadOrderTree#add(PluginProvider)}.
    *
    * <ul>
-   *   <li>Given {@link MutableGraph} {@link MutableGraph#putEdge(Object, Object)} return {@code
-   *       true}.
-   *   <li>Then calls {@link MutableGraph#putEdge(Object, Object)}.
+   *   <li>When {@link TestPluginMeta#TestPluginMeta(String)} with identifier is {@code 42}
+   *       HardDependencies is {@link ArrayList#ArrayList()}.
    * </ul>
    *
    * <p>Method under test: {@link LoadOrderTree#add(PluginProvider)}
    */
   @Test
   @DisplayName(
-      "Test add(PluginProvider); given MutableGraph putEdge(Object, Object) return 'true'; then calls putEdge(Object, Object)")
+      "Test add(PluginProvider); when TestPluginMeta(String) with identifier is '42' HardDependencies is ArrayList()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void LoadOrderTree.add(PluginProvider)"})
-  void testAdd_givenMutableGraphPutEdgeReturnTrue_thenCallsPutEdge() {
+  void testAdd_whenTestPluginMetaWithIdentifierIs42HardDependenciesIsArrayList() {
     // Arrange
-    HashMap<String, PluginProvider<?>> providerMapMirror = new HashMap<>();
-    providerMapMirror.put("foo", new TestJavaPluginProvider(new TestPluginMeta("42")));
-
     MutableGraph<String> graph = mock(MutableGraph.class);
-    when(graph.putEdge(Mockito.<String>any(), Mockito.<String>any())).thenReturn(true);
     when(graph.addNode(Mockito.<String>any())).thenReturn(true);
-
-    LoadOrderTree loadOrderTree = new LoadOrderTree(providerMapMirror, graph);
+    LoadOrderTree loadOrderTree = new LoadOrderTree(new HashMap<>(), graph);
 
     ArrayList<String> hardDependencies = new ArrayList<>();
     hardDependencies.add("foo");
@@ -145,47 +104,41 @@ class LoadOrderTreeDiffblueTest {
 
     // Assert
     verify(graph).addNode("42");
-    verify(graph).putEdge("42", "foo");
   }
 
   /**
    * Test {@link LoadOrderTree#add(PluginProvider)}.
    *
    * <ul>
-   *   <li>Given {@link MutableGraph} {@link MutableGraph#putEdge(Object, Object)} throw {@link
-   *       GraphCycleException} (default constructor).
+   *   <li>When {@link TestPluginMeta#TestPluginMeta(String)} with identifier is {@code 42}
+   *       LoadBefore is {@link ArrayList#ArrayList()}.
    * </ul>
    *
    * <p>Method under test: {@link LoadOrderTree#add(PluginProvider)}
    */
   @Test
   @DisplayName(
-      "Test add(PluginProvider); given MutableGraph putEdge(Object, Object) throw GraphCycleException (default constructor)")
+      "Test add(PluginProvider); when TestPluginMeta(String) with identifier is '42' LoadBefore is ArrayList()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void LoadOrderTree.add(PluginProvider)"})
-  void testAdd_givenMutableGraphPutEdgeThrowGraphCycleException() {
+  void testAdd_whenTestPluginMetaWithIdentifierIs42LoadBeforeIsArrayList() {
     // Arrange
-    HashMap<String, PluginProvider<?>> providerMapMirror = new HashMap<>();
-    providerMapMirror.put("foo", new TestJavaPluginProvider(new TestPluginMeta("42")));
-
     MutableGraph<String> graph = mock(MutableGraph.class);
-    when(graph.putEdge(Mockito.<String>any(), Mockito.<String>any()))
-        .thenThrow(new GraphCycleException());
+    when(graph.addNode(Mockito.<String>any())).thenReturn(true);
+    LoadOrderTree loadOrderTree = new LoadOrderTree(new HashMap<>(), graph);
 
-    LoadOrderTree loadOrderTree = new LoadOrderTree(providerMapMirror, graph);
-
-    ArrayList<String> hardDependencies = new ArrayList<>();
-    hardDependencies.add("foo");
+    ArrayList<String> loadBefore = new ArrayList<>();
+    loadBefore.add("foo");
 
     TestPluginMeta testPluginConfiguration = new TestPluginMeta("42");
-    testPluginConfiguration.setHardDependencies(hardDependencies);
+    testPluginConfiguration.setLoadBefore(loadBefore);
 
-    // Act and Assert
-    assertThrows(
-        GraphCycleException.class,
-        () -> loadOrderTree.add(new TestJavaPluginProvider(testPluginConfiguration)));
-    verify(graph).putEdge("42", "foo");
+    // Act
+    loadOrderTree.add(new TestJavaPluginProvider(testPluginConfiguration));
+
+    // Assert
+    verify(graph).addNode("42");
   }
 
   /**

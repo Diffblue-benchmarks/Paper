@@ -17,10 +17,10 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import com.mojang.authlib.properties.PropertyMap;
 import io.papermc.paper.ServerBuildInfo;
+import io.papermc.paper.datacomponent.item.BannerPatternLayers.Builder;
 import io.papermc.paper.datacomponent.item.PaperFireworks.BuilderImpl;
 import io.papermc.paper.datacomponent.item.PaperItemTool.PaperRule;
 import io.papermc.paper.datacomponent.item.Tool.Rule;
-import io.papermc.paper.datacomponent.item.WrittenBookContent.Builder;
 import io.papermc.paper.registry.set.NamedRegistryKeySetImpl;
 import io.papermc.paper.registry.set.RegistryKeySet;
 import io.papermc.paper.text.Filtered;
@@ -453,8 +453,8 @@ class ItemComponentTypesBridgesImplDiffblueTest {
    * Test {@link ItemComponentTypesBridgesImpl#writtenBookContent(Filtered, String)}.
    *
    * <ul>
-   *   <li>Given {@code null}.
-   *   <li>Then return not build Handle title filtered Present.
+   *   <li>Given {@code Filtered}.
+   *   <li>Then build return {@link PaperWrittenBookContent}.
    * </ul>
    *
    * <p>Method under test: {@link ItemComponentTypesBridgesImpl#writtenBookContent(Filtered,
@@ -462,58 +462,13 @@ class ItemComponentTypesBridgesImplDiffblueTest {
    */
   @Test
   @DisplayName(
-      "Test writtenBookContent(Filtered, String); given 'null'; then return not build Handle title filtered Present")
+      "Test writtenBookContent(Filtered, String); given 'Filtered'; then build return PaperWrittenBookContent")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
-  @MethodsUnderTest({"Builder ItemComponentTypesBridgesImpl.writtenBookContent(Filtered, String)"})
-  void testWrittenBookContent_givenNull_thenReturnNotBuildHandleTitleFilteredPresent() {
-    // Arrange
-    ItemComponentTypesBridgesImpl itemComponentTypesBridgesImpl =
-        new ItemComponentTypesBridgesImpl();
-
-    Filtered<String> title = mock(Filtered.class);
-    when(title.filtered()).thenReturn(null);
-    when(title.raw()).thenReturn("Raw");
-
-    // Act
-    Builder actualWrittenBookContentResult =
-        itemComponentTypesBridgesImpl.writtenBookContent(title, "JaneDoe");
-
-    // Assert
-    verify(title, atLeast(1)).filtered();
-    verify(title, atLeast(1)).raw();
-    WrittenBookContent writtenBookContent = actualWrittenBookContentResult.build();
-    assertTrue(writtenBookContent instanceof PaperWrittenBookContent);
-    assertTrue(actualWrittenBookContentResult instanceof PaperWrittenBookContent.BuilderImpl);
-    net.minecraft.world.item.component.WrittenBookContent handle =
-        ((PaperWrittenBookContent) writtenBookContent).getHandle();
-    assertEquals("JaneDoe", handle.author());
-    Filterable<String> titleResult = handle.title();
-    assertEquals("Raw", titleResult.raw());
-    assertEquals(0, handle.generation());
-    assertFalse(titleResult.filtered().isPresent());
-    assertFalse(handle.resolved());
-    assertTrue(handle.pages().isEmpty());
-    assertSame(handle, ((PaperWrittenBookContent) writtenBookContent).impl());
-  }
-
-  /**
-   * Test {@link ItemComponentTypesBridgesImpl#writtenBookContent(Filtered, String)}.
-   *
-   * <ul>
-   *   <li>Then return build Handle title filtered is {@code Filtered}.
-   * </ul>
-   *
-   * <p>Method under test: {@link ItemComponentTypesBridgesImpl#writtenBookContent(Filtered,
-   * String)}
-   */
-  @Test
-  @DisplayName(
-      "Test writtenBookContent(Filtered, String); then return build Handle title filtered is 'Filtered'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"Builder ItemComponentTypesBridgesImpl.writtenBookContent(Filtered, String)"})
-  void testWrittenBookContent_thenReturnBuildHandleTitleFilteredIsFiltered() {
+  @MethodsUnderTest({
+    "WrittenBookContent.Builder ItemComponentTypesBridgesImpl.writtenBookContent(Filtered, String)"
+  })
+  void testWrittenBookContent_givenFiltered_thenBuildReturnPaperWrittenBookContent() {
     // Arrange
     ItemComponentTypesBridgesImpl itemComponentTypesBridgesImpl =
         new ItemComponentTypesBridgesImpl();
@@ -523,7 +478,7 @@ class ItemComponentTypesBridgesImplDiffblueTest {
     when(title.raw()).thenReturn("Raw");
 
     // Act
-    Builder actualWrittenBookContentResult =
+    WrittenBookContent.Builder actualWrittenBookContentResult =
         itemComponentTypesBridgesImpl.writtenBookContent(title, "JaneDoe");
 
     // Assert
@@ -736,12 +691,10 @@ class ItemComponentTypesBridgesImplDiffblueTest {
   @DisplayName("Test bannerPatternLayers()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
-  @MethodsUnderTest({
-    "BannerPatternLayers.Builder ItemComponentTypesBridgesImpl.bannerPatternLayers()"
-  })
+  @MethodsUnderTest({"Builder ItemComponentTypesBridgesImpl.bannerPatternLayers()"})
   void testBannerPatternLayers() {
     // Arrange and Act
-    BannerPatternLayers.Builder actualBannerPatternLayersResult =
+    Builder actualBannerPatternLayersResult =
         new ItemComponentTypesBridgesImpl().bannerPatternLayers();
 
     // Assert

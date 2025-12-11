@@ -11,6 +11,9 @@ import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
 import io.papermc.paper.plugin.entrypoint.classloader.PaperPluginClassLoader;
 import io.papermc.paper.plugin.provider.classloader.ConfiguredPluginClassLoader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.nio.file.Paths;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -33,7 +36,7 @@ class SimpleListPluginClassLoaderGroupDiffblueTest {
   @MethodsUnderTest({
     "Class SimpleListPluginClassLoaderGroup.getClassByName(String, boolean, ConfiguredPluginClassLoader)"
   })
-  void testGetClassByName() throws ClassNotFoundException {
+  void testGetClassByName() throws ClassNotFoundException, MalformedURLException {
     // Arrange
     PaperPluginClassLoader configuredPluginClassLoader = mock(PaperPluginClassLoader.class);
     Mockito.<Class<?>>when(
@@ -43,10 +46,18 @@ class SimpleListPluginClassLoaderGroupDiffblueTest {
 
     GlobalPluginClassLoaderGroup globalPluginClassLoaderGroup = new GlobalPluginClassLoaderGroup();
     globalPluginClassLoaderGroup.add(configuredPluginClassLoader);
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
+    URL[] urlArray =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray);
+    URL[] urlArray2 =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray2);
+    URL[] urlArray3 =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray3);
+    URL[] urlArray4 =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray4);
 
     PaperPluginClassLoader requester = mock(PaperPluginClassLoader.class);
     Mockito.<Class<?>>when(
@@ -84,11 +95,15 @@ class SimpleListPluginClassLoaderGroupDiffblueTest {
     "Class SimpleListPluginClassLoaderGroup.getClassByName(String, boolean, ConfiguredPluginClassLoader)"
   })
   void testGetClassByName_givenGlobalPluginClassLoaderGroup_thenReturnNull()
-      throws ClassNotFoundException {
+      throws ClassNotFoundException, MalformedURLException {
     // Arrange
     GlobalPluginClassLoaderGroup globalPluginClassLoaderGroup = new GlobalPluginClassLoaderGroup();
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
+    URL[] urlArray =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray);
+    URL[] urlArray2 =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray2);
 
     PaperPluginClassLoader requester = mock(PaperPluginClassLoader.class);
     Mockito.<Class<?>>when(
@@ -126,11 +141,15 @@ class SimpleListPluginClassLoaderGroupDiffblueTest {
     "Class SimpleListPluginClassLoaderGroup.getClassByName(String, boolean, ConfiguredPluginClassLoader)"
   })
   void testGetClassByName_givenObject_whenPaperPluginClassLoaderLoadClassReturnObject()
-      throws ClassNotFoundException {
+      throws ClassNotFoundException, MalformedURLException {
     // Arrange
     GlobalPluginClassLoaderGroup globalPluginClassLoaderGroup = new GlobalPluginClassLoaderGroup();
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
+    URL[] urlArray =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray);
+    URL[] urlArray2 =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray2);
 
     PaperPluginClassLoader requester = mock(PaperPluginClassLoader.class);
     Class<Object> forNameResult = Object.class;
@@ -169,7 +188,7 @@ class SimpleListPluginClassLoaderGroupDiffblueTest {
     "Class SimpleListPluginClassLoaderGroup.getClassByName(String, boolean, ConfiguredPluginClassLoader)"
   })
   void testGetClassByName_givenPaperPluginClassLoaderLoadClassReturnObject()
-      throws ClassNotFoundException {
+      throws ClassNotFoundException, MalformedURLException {
     // Arrange
     PaperPluginClassLoader configuredPluginClassLoader = mock(PaperPluginClassLoader.class);
     Class<Object> forNameResult = Object.class;
@@ -180,10 +199,18 @@ class SimpleListPluginClassLoaderGroupDiffblueTest {
 
     GlobalPluginClassLoaderGroup globalPluginClassLoaderGroup = new GlobalPluginClassLoaderGroup();
     globalPluginClassLoaderGroup.add(configuredPluginClassLoader);
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
+    URL[] urlArray =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray);
+    URL[] urlArray2 =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray2);
+    URL[] urlArray3 =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray3);
+    URL[] urlArray4 =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray4);
 
     PaperPluginClassLoader requester = mock(PaperPluginClassLoader.class);
     Mockito.<Class<?>>when(
@@ -221,11 +248,16 @@ class SimpleListPluginClassLoaderGroupDiffblueTest {
   @MethodsUnderTest({
     "Class SimpleListPluginClassLoaderGroup.lookupClass(String, boolean, ConfiguredPluginClassLoader)"
   })
-  void testLookupClass_givenJavaLangObject_thenReturnObject() throws ClassNotFoundException {
+  void testLookupClass_givenJavaLangObject_thenReturnObject()
+      throws ClassNotFoundException, MalformedURLException {
     // Arrange
     GlobalPluginClassLoaderGroup globalPluginClassLoaderGroup = new GlobalPluginClassLoaderGroup();
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
+    URL[] urlArray =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray);
+    URL[] urlArray2 =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray2);
 
     PaperPluginClassLoader current = mock(PaperPluginClassLoader.class);
     Class<Object> forNameResult = Object.class;
@@ -258,11 +290,16 @@ class SimpleListPluginClassLoaderGroupDiffblueTest {
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void SimpleListPluginClassLoaderGroup.add(ConfiguredPluginClassLoader)"})
-  void testAdd_thenGlobalPluginClassLoaderGroupClassLoadersSizeIsOne() {
+  void testAdd_thenGlobalPluginClassLoaderGroupClassLoadersSizeIsOne()
+      throws MalformedURLException {
     // Arrange
     GlobalPluginClassLoaderGroup globalPluginClassLoaderGroup = new GlobalPluginClassLoaderGroup();
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
+    URL[] urlArray =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray);
+    URL[] urlArray2 =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray2);
 
     // Act
     globalPluginClassLoaderGroup.add(null);

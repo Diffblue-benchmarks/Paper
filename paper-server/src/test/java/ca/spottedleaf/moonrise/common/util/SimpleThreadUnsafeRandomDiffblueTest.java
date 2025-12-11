@@ -109,6 +109,51 @@ class SimpleThreadUnsafeRandomDiffblueTest {
    * Test {@link SimpleThreadUnsafeRandom#nextGaussian()}.
    *
    * <ul>
+   *   <li>Given {@link SimpleThreadUnsafeRandom#SimpleThreadUnsafeRandom(long)} with seed is
+   *       forty-two.
+   * </ul>
+   *
+   * <p>Method under test: {@link SimpleThreadUnsafeRandom#nextGaussian()}
+   */
+  @Test
+  @DisplayName("Test nextGaussian(); given SimpleThreadUnsafeRandom(long) with seed is forty-two")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"double SimpleThreadUnsafeRandom.nextGaussian()"})
+  void testNextGaussian_givenSimpleThreadUnsafeRandomWithSeedIsFortyTwo() {
+    // Arrange, Act and Assert
+    assertEquals(1.1419052490389525d, new SimpleThreadUnsafeRandom(42L).nextGaussian());
+  }
+
+  /**
+   * Test {@link SimpleThreadUnsafeRandom#nextGaussian()}.
+   *
+   * <ul>
+   *   <li>Given {@link SimpleThreadUnsafeRandom#SimpleThreadUnsafeRandom(long)} with seed is
+   *       forty-two Seed is forty-two.
+   * </ul>
+   *
+   * <p>Method under test: {@link SimpleThreadUnsafeRandom#nextGaussian()}
+   */
+  @Test
+  @DisplayName(
+      "Test nextGaussian(); given SimpleThreadUnsafeRandom(long) with seed is forty-two Seed is forty-two")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"double SimpleThreadUnsafeRandom.nextGaussian()"})
+  void testNextGaussian_givenSimpleThreadUnsafeRandomWithSeedIsFortyTwoSeedIsFortyTwo() {
+    // Arrange
+    SimpleThreadUnsafeRandom simpleThreadUnsafeRandom = new SimpleThreadUnsafeRandom(42L);
+    simpleThreadUnsafeRandom.setSeed(42L);
+
+    // Act and Assert
+    assertEquals(1.1419052490389525d, simpleThreadUnsafeRandom.nextGaussian());
+  }
+
+  /**
+   * Test {@link SimpleThreadUnsafeRandom#nextGaussian()}.
+   *
+   * <ul>
    *   <li>Then return {@code 1.785331448791184}.
    * </ul>
    *
@@ -120,27 +165,12 @@ class SimpleThreadUnsafeRandomDiffblueTest {
   @ManagedByDiffblue
   @MethodsUnderTest({"double SimpleThreadUnsafeRandom.nextGaussian()"})
   void testNextGaussian_thenReturn1785331448791184() {
-    // Arrange, Act and Assert
-    assertEquals(1.785331448791184d, new SimpleThreadUnsafeRandom(-1L).nextGaussian());
-  }
+    // Arrange
+    SimpleThreadUnsafeRandom simpleThreadUnsafeRandom = new SimpleThreadUnsafeRandom(42L);
+    simpleThreadUnsafeRandom.setSeed(-1L);
 
-  /**
-   * Test {@link SimpleThreadUnsafeRandom#nextGaussian()}.
-   *
-   * <ul>
-   *   <li>Then return {@code 1.1419052490389525}.
-   * </ul>
-   *
-   * <p>Method under test: {@link SimpleThreadUnsafeRandom#nextGaussian()}
-   */
-  @Test
-  @DisplayName("Test nextGaussian(); then return '1.1419052490389525'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"double SimpleThreadUnsafeRandom.nextGaussian()"})
-  void testNextGaussian_thenReturn11419052490389525() {
-    // Arrange, Act and Assert
-    assertEquals(1.1419052490389525d, new SimpleThreadUnsafeRandom(42L).nextGaussian());
+    // Act and Assert
+    assertEquals(1.785331448791184d, simpleThreadUnsafeRandom.nextGaussian());
   }
 
   /**
@@ -286,12 +316,12 @@ class SimpleThreadUnsafeRandomDiffblueTest {
     // Arrange
     SimpleRandomPositionalFactory simpleRandomPositionalFactory =
         new SimpleRandomPositionalFactory(42L);
-    StringBuilder stringBuilder = new StringBuilder("foo");
+    StringBuilder stringBuilder = new StringBuilder("Str");
 
     // Act
     simpleRandomPositionalFactory.parityConfigString(stringBuilder);
 
     // Assert
-    assertEquals("fooSimpleRandomPositionalFactory{42}", stringBuilder.toString());
+    assertEquals("StrSimpleRandomPositionalFactory{42}", stringBuilder.toString());
   }
 }

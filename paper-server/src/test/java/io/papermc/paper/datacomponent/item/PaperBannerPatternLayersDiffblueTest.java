@@ -4,12 +4,42 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
+import io.papermc.paper.datacomponent.item.BannerPatternLayers.Builder;
 import io.papermc.paper.datacomponent.item.PaperBannerPatternLayers.BuilderImpl;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 class PaperBannerPatternLayersDiffblueTest {
+  /**
+   * Test BuilderImpl {@link BuilderImpl#addAll(List)}.
+   *
+   * <ul>
+   *   <li>When {@link ArrayList#ArrayList()}.
+   *   <li>Then return {@link BuilderImpl} (default constructor).
+   * </ul>
+   *
+   * <p>Method under test: {@link BuilderImpl#addAll(List)}
+   */
+  @Test
+  @DisplayName(
+      "Test BuilderImpl addAll(List); when ArrayList(); then return BuilderImpl (default constructor)")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"Builder BuilderImpl.addAll(List)"})
+  void testBuilderImplAddAll_whenArrayList_thenReturnBuilderImpl() {
+    // Arrange
+    BuilderImpl builderImpl = new BuilderImpl();
+
+    // Act
+    Builder actualAddAllResult = builderImpl.addAll(new ArrayList<>());
+
+    // Assert
+    assertSame(builderImpl, actualAddAllResult);
+  }
+
   /**
    * Test BuilderImpl {@link BuilderImpl#build()}.
    *
@@ -94,7 +124,7 @@ class PaperBannerPatternLayersDiffblueTest {
       "Test patterns(); given PaperBannerPatternLayers(BannerPatternLayers) with impl is EMPTY; then return Empty")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
-  @MethodsUnderTest({"java.util.List PaperBannerPatternLayers.patterns()"})
+  @MethodsUnderTest({"List PaperBannerPatternLayers.patterns()"})
   void testPatterns_givenPaperBannerPatternLayersWithImplIsEmpty_thenReturnEmpty() {
     // Arrange, Act and Assert
     assertTrue(

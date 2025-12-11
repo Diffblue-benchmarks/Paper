@@ -193,36 +193,6 @@ class MCDataTypeDiffblueTest {
    * {@code toVersion}.
    *
    * <ul>
-   *   <li>Given {@link IDDataType#IDDataType(String)} with name is {@code Equipment}.
-   * </ul>
-   *
-   * <p>Method under test: {@link MCDataType#convert(MapType, long, long)}
-   */
-  @Test
-  @DisplayName(
-      "Test convert(MapType, long, long) with 'data', 'fromVersion', 'toVersion'; given IDDataType(String) with name is 'Equipment'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"MapType MCDataType.convert(MapType, long, long)"})
-  void testConvertWithDataFromVersionToVersion_givenIDDataTypeWithNameIsEquipment() {
-    // Arrange
-    IDDataType idDataType = new IDDataType("Equipment");
-    NBTMapType data = new NBTMapType();
-
-    // Act and Assert
-    assertNull(idDataType.convert(data, 1L, Long.MAX_VALUE));
-    assertEquals(0, data.size());
-    CompoundTag tag = data.getTag();
-    assertEquals(0, tag.size());
-    assertTrue(data.isEmpty());
-    assertTrue(tag.isEmpty());
-  }
-
-  /**
-   * Test {@link MCDataType#convert(MapType, long, long)} with {@code data}, {@code fromVersion},
-   * {@code toVersion}.
-   *
-   * <ul>
    *   <li>Given {@link MCTypeRegistry#LEVEL}.
    *   <li>Then {@link NBTMapType#NBTMapType()} size is one.
    * </ul>

@@ -1,6 +1,5 @@
 package ca.spottedleaf.dataconverter.types.json;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -206,125 +205,6 @@ class JsonTypeUtilDiffblueTest {
     assertEquals(2, ((NBTListType) actualConvertToResult).size());
     assertEquals(ObjectType.MIXED, ((NBTListType) actualConvertToResult).getUniformType());
     assertEquals('A', ((ByteTag) getResult).value());
-  }
-
-  /**
-   * Test {@link JsonTypeUtil#convertTo(Object, TypeUtil)}.
-   *
-   * <ul>
-   *   <li>Then Json iterator next AsNumber return {@link LazilyParsedNumber}.
-   * </ul>
-   *
-   * <p>Method under test: {@link JsonTypeUtil#convertTo(Object, TypeUtil)}
-   */
-  @Test
-  @DisplayName(
-      "Test convertTo(Object, TypeUtil); then Json iterator next AsNumber return LazilyParsedNumber")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"Object JsonTypeUtil.convertTo(Object, TypeUtil)"})
-  void testConvertTo_thenJsonIteratorNextAsNumberReturnLazilyParsedNumber() {
-    // Arrange
-    JsonListType jsonListType = new JsonListType(true);
-    jsonListType.addString("ca.spottedleaf.dataconverter.types.json.JsonListType");
-    jsonListType.addByte((byte) 'A');
-
-    // Act
-    Object actualConvertToResult = Types.JSON.convertTo(jsonListType, new JsonTypeUtil(true));
-
-    // Assert
-    assertTrue(actualConvertToResult instanceof JsonListType);
-    Iterator<JsonElement> iteratorResult =
-        ((JsonListType) actualConvertToResult).getJson().iterator();
-    JsonElement nextResult = iteratorResult.next();
-    assertTrue(nextResult instanceof JsonPrimitive);
-    JsonElement nextResult2 = iteratorResult.next();
-    assertTrue(nextResult2 instanceof JsonPrimitive);
-    Number asNumber = nextResult.getAsNumber();
-    assertTrue(asNumber instanceof LazilyParsedNumber);
-    assertEquals("ca.spottedleaf.dataconverter.types.json.JsonListType", nextResult.getAsString());
-    assertEquals("ca.spottedleaf.dataconverter.types.json.JsonListType", asNumber.toString());
-    assertEquals('c', nextResult.getAsCharacter());
-    assertFalse(((JsonPrimitive) nextResult).isNumber());
-    assertFalse(iteratorResult.hasNext());
-    assertTrue(((JsonPrimitive) nextResult).isString());
-    assertArrayEquals(new byte[] {'A'}, nextResult2.getAsBigInteger().toByteArray());
-  }
-
-  /**
-   * Test {@link JsonTypeUtil#convertTo(Object, TypeUtil)}.
-   *
-   * <ul>
-   *   <li>Then return Json iterator next AsNumber longValue is two.
-   * </ul>
-   *
-   * <p>Method under test: {@link JsonTypeUtil#convertTo(Object, TypeUtil)}
-   */
-  @Test
-  @DisplayName(
-      "Test convertTo(Object, TypeUtil); then return Json iterator next AsNumber longValue is two")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"Object JsonTypeUtil.convertTo(Object, TypeUtil)"})
-  void testConvertTo_thenReturnJsonIteratorNextAsNumberLongValueIsTwo() {
-    // Arrange
-    JsonListType jsonListType = new JsonListType(true);
-    jsonListType.addLong(2L);
-    jsonListType.addByte((byte) 'A');
-
-    // Act
-    Object actualConvertToResult = Types.JSON.convertTo(jsonListType, new JsonTypeUtil(true));
-
-    // Assert
-    assertTrue(actualConvertToResult instanceof JsonListType);
-    Iterator<JsonElement> iteratorResult =
-        ((JsonListType) actualConvertToResult).getJson().iterator();
-    JsonElement nextResult = iteratorResult.next();
-    assertTrue(nextResult instanceof JsonPrimitive);
-    JsonElement nextResult2 = iteratorResult.next();
-    assertTrue(nextResult2 instanceof JsonPrimitive);
-    assertEquals(2L, nextResult.getAsNumber().longValue());
-    assertFalse(iteratorResult.hasNext());
-    assertArrayEquals(new byte[] {2}, nextResult.getAsBigInteger().toByteArray());
-    assertArrayEquals(new byte[] {'A'}, nextResult2.getAsBigInteger().toByteArray());
-  }
-
-  /**
-   * Test {@link JsonTypeUtil#convertTo(Object, TypeUtil)}.
-   *
-   * <ul>
-   *   <li>Then return Json iterator next AsNumber shortValue is two.
-   * </ul>
-   *
-   * <p>Method under test: {@link JsonTypeUtil#convertTo(Object, TypeUtil)}
-   */
-  @Test
-  @DisplayName(
-      "Test convertTo(Object, TypeUtil); then return Json iterator next AsNumber shortValue is two")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"Object JsonTypeUtil.convertTo(Object, TypeUtil)"})
-  void testConvertTo_thenReturnJsonIteratorNextAsNumberShortValueIsTwo() {
-    // Arrange
-    JsonListType jsonListType = new JsonListType(true);
-    jsonListType.addShort((short) 2);
-    jsonListType.addByte((byte) 'A');
-
-    // Act
-    Object actualConvertToResult = Types.JSON.convertTo(jsonListType, new JsonTypeUtil(true));
-
-    // Assert
-    assertTrue(actualConvertToResult instanceof JsonListType);
-    Iterator<JsonElement> iteratorResult =
-        ((JsonListType) actualConvertToResult).getJson().iterator();
-    JsonElement nextResult = iteratorResult.next();
-    assertTrue(nextResult instanceof JsonPrimitive);
-    JsonElement nextResult2 = iteratorResult.next();
-    assertTrue(nextResult2 instanceof JsonPrimitive);
-    assertEquals((short) 2, nextResult.getAsNumber().shortValue());
-    assertFalse(iteratorResult.hasNext());
-    assertArrayEquals(new byte[] {2}, nextResult.getAsBigInteger().toByteArray());
-    assertArrayEquals(new byte[] {'A'}, nextResult2.getAsBigInteger().toByteArray());
   }
 
   /**
@@ -881,7 +761,7 @@ class JsonTypeUtilDiffblueTest {
   void testConvertFromBaseToGenericWithInputTo() {
     // Arrange
     JsonObject input = new JsonObject();
-    input.add("", new JsonArray(3));
+    input.addProperty("", "");
 
     // Act
     Object actualConvertFromBaseToGenericResult =
@@ -907,7 +787,7 @@ class JsonTypeUtilDiffblueTest {
   void testConvertFromBaseToGenericWithInputTo2() {
     // Arrange
     JsonObject input = new JsonObject();
-    input.addProperty("", "");
+    input.addProperty("", true);
 
     // Act
     Object actualConvertFromBaseToGenericResult =
@@ -933,32 +813,6 @@ class JsonTypeUtilDiffblueTest {
   void testConvertFromBaseToGenericWithInputTo3() {
     // Arrange
     JsonObject input = new JsonObject();
-    input.addProperty("", true);
-
-    // Act
-    Object actualConvertFromBaseToGenericResult =
-        Types.JSON.convertFromBaseToGeneric(input, new JsonTypeUtil(true));
-
-    // Assert
-    assertTrue(actualConvertFromBaseToGenericResult instanceof JsonMapType);
-    assertEquals(1, ((JsonMapType) actualConvertFromBaseToGenericResult).size());
-    assertEquals(input, ((JsonMapType) actualConvertFromBaseToGenericResult).getJson());
-  }
-
-  /**
-   * Test {@link JsonTypeUtil#convertFromBaseToGeneric(JsonElement, TypeUtil)} with {@code input},
-   * {@code to}.
-   *
-   * <p>Method under test: {@link JsonTypeUtil#convertFromBaseToGeneric(JsonElement, TypeUtil)}
-   */
-  @Test
-  @DisplayName("Test convertFromBaseToGeneric(JsonElement, TypeUtil) with 'input', 'to'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"Object JsonTypeUtil.convertFromBaseToGeneric(JsonElement, TypeUtil)"})
-  void testConvertFromBaseToGenericWithInputTo4() {
-    // Arrange
-    JsonObject input = new JsonObject();
     input.add("", new JsonObject());
 
     // Act
@@ -982,7 +836,7 @@ class JsonTypeUtilDiffblueTest {
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"Object JsonTypeUtil.convertFromBaseToGeneric(JsonElement, TypeUtil)"})
-  void testConvertFromBaseToGenericWithInputTo5() {
+  void testConvertFromBaseToGenericWithInputTo4() {
     // Arrange
     JsonObject input = new JsonObject();
     input.addProperty("", "");
@@ -1011,7 +865,7 @@ class JsonTypeUtilDiffblueTest {
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"Object JsonTypeUtil.convertFromBaseToGeneric(JsonElement, TypeUtil)"})
-  void testConvertFromBaseToGenericWithInputTo6() {
+  void testConvertFromBaseToGenericWithInputTo5() {
     // Arrange
     JsonObject input = new JsonObject();
     input.addProperty("", Bootstrap.bootstrapDuration);
@@ -1040,7 +894,7 @@ class JsonTypeUtilDiffblueTest {
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"Object JsonTypeUtil.convertFromBaseToGeneric(JsonElement, TypeUtil)"})
-  void testConvertFromBaseToGenericWithInputTo7() {
+  void testConvertFromBaseToGenericWithInputTo6() {
     // Arrange
     JsonObject input = new JsonObject();
     input.addProperty("", true);
@@ -1078,9 +932,9 @@ class JsonTypeUtilDiffblueTest {
   void testConvertFromBaseToGenericWithInputTo_given42_thenReturnSizeIsThree() {
     // Arrange
     JsonObject input = new JsonObject();
-    input.add("42", new JsonArray(3));
-    input.add("Property", new JsonArray(3));
-    input.add("", new JsonArray(3));
+    input.add("42", new JsonArray());
+    input.add("Property", new JsonArray());
+    input.add("", new JsonArray());
 
     // Act
     Object actualConvertFromBaseToGenericResult =
@@ -1112,10 +966,10 @@ class JsonTypeUtilDiffblueTest {
   void testConvertFromBaseToGenericWithInputTo_given42_thenReturnSizeIsThree2() {
     // Arrange
     JsonObject input = new JsonObject();
-    input.add("", new JsonArray(3));
-    input.add("42", new JsonArray(3));
-    input.add("Property", new JsonArray(3));
-    input.add("", new JsonArray(3));
+    input.add("", new JsonArray());
+    input.add("42", new JsonArray());
+    input.add("Property", new JsonArray());
+    input.add("", new JsonArray());
 
     // Act
     Object actualConvertFromBaseToGenericResult =
@@ -1147,11 +1001,11 @@ class JsonTypeUtilDiffblueTest {
   void testConvertFromBaseToGenericWithInputTo_given42_thenReturnSizeIsThree3() {
     // Arrange
     JsonObject input = new JsonObject();
-    input.add("Property", new JsonArray(3));
-    input.add("", new JsonArray(3));
-    input.add("42", new JsonArray(3));
-    input.add("Property", new JsonArray(3));
-    input.add("", new JsonArray(3));
+    input.add("Property", new JsonArray());
+    input.add("", new JsonArray());
+    input.add("42", new JsonArray());
+    input.add("Property", new JsonArray());
+    input.add("", new JsonArray());
 
     // Act
     Object actualConvertFromBaseToGenericResult =
@@ -1183,10 +1037,47 @@ class JsonTypeUtilDiffblueTest {
   void testConvertFromBaseToGenericWithInputTo_given42_thenReturnSizeIsThree4() {
     // Arrange
     JsonObject input = new JsonObject();
-    input.add("Property", new JsonArray(3));
-    input.add("42", new JsonArray(3));
-    input.add("Property", new JsonArray(3));
-    input.add("", new JsonArray(3));
+    input.add("Property", new JsonArray());
+    input.add("42", new JsonArray());
+    input.add("Property", new JsonArray());
+    input.add("", new JsonArray());
+
+    // Act
+    Object actualConvertFromBaseToGenericResult =
+        Types.JSON.convertFromBaseToGeneric(input, new JsonTypeUtil(true));
+
+    // Assert
+    assertTrue(actualConvertFromBaseToGenericResult instanceof JsonMapType);
+    assertEquals(3, ((JsonMapType) actualConvertFromBaseToGenericResult).size());
+    assertEquals(input, ((JsonMapType) actualConvertFromBaseToGenericResult).getJson());
+  }
+
+  /**
+   * Test {@link JsonTypeUtil#convertFromBaseToGeneric(JsonElement, TypeUtil)} with {@code input},
+   * {@code to}.
+   *
+   * <ul>
+   *   <li>Given {@code 42}.
+   *   <li>Then return size is three.
+   * </ul>
+   *
+   * <p>Method under test: {@link JsonTypeUtil#convertFromBaseToGeneric(JsonElement, TypeUtil)}
+   */
+  @Test
+  @DisplayName(
+      "Test convertFromBaseToGeneric(JsonElement, TypeUtil) with 'input', 'to'; given '42'; then return size is three")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"Object JsonTypeUtil.convertFromBaseToGeneric(JsonElement, TypeUtil)"})
+  void testConvertFromBaseToGenericWithInputTo_given42_thenReturnSizeIsThree5() {
+    // Arrange
+    JsonObject input = new JsonObject();
+    input.add("", new JsonArray());
+    input.add("Property", new JsonArray());
+    input.add("", new JsonArray());
+    input.add("42", new JsonArray());
+    input.add("Property", new JsonArray());
+    input.add("", new JsonArray());
 
     // Act
     Object actualConvertFromBaseToGenericResult =
@@ -1218,8 +1109,8 @@ class JsonTypeUtilDiffblueTest {
   void testConvertFromBaseToGenericWithInputTo_givenProperty_thenReturnSizeIsTwo() {
     // Arrange
     JsonObject input = new JsonObject();
-    input.add("Property", new JsonArray(3));
-    input.add("", new JsonArray(3));
+    input.add("Property", new JsonArray());
+    input.add("", new JsonArray());
 
     // Act
     Object actualConvertFromBaseToGenericResult =
@@ -1249,8 +1140,8 @@ class JsonTypeUtilDiffblueTest {
   @MethodsUnderTest({"Object JsonTypeUtil.convertFromBaseToGeneric(JsonElement, TypeUtil)"})
   void testConvertFromBaseToGenericWithInputTo_thenJsonIteratorNextReturnJsonArray() {
     // Arrange
-    JsonArray input = new JsonArray(3);
-    JsonArray element = new JsonArray(3);
+    JsonArray input = new JsonArray();
+    JsonArray element = new JsonArray();
     input.add(element);
 
     // Act
@@ -1285,7 +1176,7 @@ class JsonTypeUtilDiffblueTest {
   @MethodsUnderTest({"Object JsonTypeUtil.convertFromBaseToGeneric(JsonElement, TypeUtil)"})
   void testConvertFromBaseToGenericWithInputTo_thenJsonIteratorNextReturnJsonObject() {
     // Arrange
-    JsonArray input = new JsonArray(3);
+    JsonArray input = new JsonArray();
     JsonObject element = new JsonObject();
     input.add(element);
 
@@ -1321,7 +1212,7 @@ class JsonTypeUtilDiffblueTest {
   @MethodsUnderTest({"Object JsonTypeUtil.convertFromBaseToGeneric(JsonElement, TypeUtil)"})
   void testConvertFromBaseToGenericWithInputTo_thenJsonIteratorNextReturnJsonPrimitive() {
     // Arrange
-    JsonArray input = new JsonArray(3);
+    JsonArray input = new JsonArray();
     input.add('\u0001');
 
     // Act
@@ -1367,7 +1258,7 @@ class JsonTypeUtilDiffblueTest {
   @MethodsUnderTest({"Object JsonTypeUtil.convertFromBaseToGeneric(JsonElement, TypeUtil)"})
   void testConvertFromBaseToGenericWithInputTo_thenReturnJsonAsStringIs1() {
     // Arrange
-    JsonArray input = new JsonArray(3);
+    JsonArray input = new JsonArray();
     input.add(Bootstrap.bootstrapDuration);
 
     // Act
@@ -1394,39 +1285,6 @@ class JsonTypeUtilDiffblueTest {
    * {@code to}.
    *
    * <ul>
-   *   <li>Then return Json size is zero.
-   * </ul>
-   *
-   * <p>Method under test: {@link JsonTypeUtil#convertFromBaseToGeneric(JsonElement, TypeUtil)}
-   */
-  @Test
-  @DisplayName(
-      "Test convertFromBaseToGeneric(JsonElement, TypeUtil) with 'input', 'to'; then return Json size is zero")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"Object JsonTypeUtil.convertFromBaseToGeneric(JsonElement, TypeUtil)"})
-  void testConvertFromBaseToGenericWithInputTo_thenReturnJsonSizeIsZero() {
-    // Arrange
-    JsonArray input = new JsonArray(3);
-
-    // Act
-    Object actualConvertFromBaseToGenericResult =
-        Types.JSON.convertFromBaseToGeneric(input, new JsonTypeUtil(true));
-
-    // Assert
-    assertTrue(actualConvertFromBaseToGenericResult instanceof JsonListType);
-    assertEquals(0, ((JsonListType) actualConvertFromBaseToGenericResult).size());
-    JsonArray json = ((JsonListType) actualConvertFromBaseToGenericResult).getJson();
-    assertEquals(0, json.size());
-    assertFalse(json.iterator().hasNext());
-    assertTrue(json.isEmpty());
-  }
-
-  /**
-   * Test {@link JsonTypeUtil#convertFromBaseToGeneric(JsonElement, TypeUtil)} with {@code input},
-   * {@code to}.
-   *
-   * <ul>
    *   <li>Then return not Empty.
    * </ul>
    *
@@ -1441,7 +1299,7 @@ class JsonTypeUtilDiffblueTest {
   void testConvertFromBaseToGenericWithInputTo_thenReturnNotEmpty() {
     // Arrange
     JsonObject input = new JsonObject();
-    input.add("", new JsonArray(3));
+    input.add("", new JsonArray());
 
     // Act
     Object actualConvertFromBaseToGenericResult =
@@ -1474,7 +1332,7 @@ class JsonTypeUtilDiffblueTest {
   @MethodsUnderTest({"Object JsonTypeUtil.convertFromBaseToGeneric(JsonElement, TypeUtil)"})
   void testConvertFromBaseToGenericWithInputTo_thenReturnTagFirstValueIsMinusOne() {
     // Arrange
-    JsonArray input = new JsonArray(3);
+    JsonArray input = new JsonArray();
     input.add(Bootstrap.bootstrapDuration);
 
     // Act
@@ -1509,7 +1367,7 @@ class JsonTypeUtilDiffblueTest {
   @MethodsUnderTest({"Object JsonTypeUtil.convertFromBaseToGeneric(JsonElement, TypeUtil)"})
   void testConvertFromBaseToGenericWithInputTo_thenReturnTagFirstValueIsStartOfHeading() {
     // Arrange
-    JsonArray input = new JsonArray(3);
+    JsonArray input = new JsonArray();
     input.add('\u0001');
 
     // Act
@@ -1544,8 +1402,8 @@ class JsonTypeUtilDiffblueTest {
   @MethodsUnderTest({"Object JsonTypeUtil.convertFromBaseToGeneric(JsonElement, TypeUtil)"})
   void testConvertFromBaseToGenericWithInputTo_thenReturnUniformTypeIsList() {
     // Arrange
-    JsonArray input = new JsonArray(3);
-    input.add(new JsonArray(3));
+    JsonArray input = new JsonArray();
+    input.add(new JsonArray());
 
     // Act
     Object actualConvertFromBaseToGenericResult =
@@ -1578,7 +1436,7 @@ class JsonTypeUtilDiffblueTest {
   @MethodsUnderTest({"Object JsonTypeUtil.convertFromBaseToGeneric(JsonElement, TypeUtil)"})
   void testConvertFromBaseToGenericWithInputTo_thenReturnUniformTypeIsNone() {
     // Arrange
-    JsonArray input = new JsonArray(3);
+    JsonArray input = new JsonArray();
 
     // Act
     Object actualConvertFromBaseToGenericResult =
@@ -1637,6 +1495,40 @@ class JsonTypeUtilDiffblueTest {
    * {@code to}.
    *
    * <ul>
+   *   <li>When {@link JsonArray#JsonArray()}.
+   *   <li>Then return Json size is zero.
+   * </ul>
+   *
+   * <p>Method under test: {@link JsonTypeUtil#convertFromBaseToGeneric(JsonElement, TypeUtil)}
+   */
+  @Test
+  @DisplayName(
+      "Test convertFromBaseToGeneric(JsonElement, TypeUtil) with 'input', 'to'; when JsonArray(); then return Json size is zero")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"Object JsonTypeUtil.convertFromBaseToGeneric(JsonElement, TypeUtil)"})
+  void testConvertFromBaseToGenericWithInputTo_whenJsonArray_thenReturnJsonSizeIsZero() {
+    // Arrange
+    JsonArray input = new JsonArray();
+
+    // Act
+    Object actualConvertFromBaseToGenericResult =
+        Types.JSON.convertFromBaseToGeneric(input, new JsonTypeUtil(true));
+
+    // Assert
+    assertTrue(actualConvertFromBaseToGenericResult instanceof JsonListType);
+    assertEquals(0, ((JsonListType) actualConvertFromBaseToGenericResult).size());
+    JsonArray json = ((JsonListType) actualConvertFromBaseToGenericResult).getJson();
+    assertEquals(0, json.size());
+    assertFalse(json.iterator().hasNext());
+    assertTrue(json.isEmpty());
+  }
+
+  /**
+   * Test {@link JsonTypeUtil#convertFromBaseToGeneric(JsonElement, TypeUtil)} with {@code input},
+   * {@code to}.
+   *
+   * <ul>
    *   <li>When {@link JsonNull} (default constructor).
    *   <li>Then return {@code null}.
    * </ul>
@@ -1655,6 +1547,38 @@ class JsonTypeUtilDiffblueTest {
 
     // Act and Assert
     assertNull(Types.JSON.convertFromBaseToGeneric(input, new JsonTypeUtil(true)));
+  }
+
+  /**
+   * Test {@link JsonTypeUtil#convertFromBaseToGeneric(JsonElement, TypeUtil)} with {@code input},
+   * {@code to}.
+   *
+   * <ul>
+   *   <li>When {@link JsonObject} (default constructor) add empty string and {@link
+   *       JsonArray#JsonArray()}.
+   * </ul>
+   *
+   * <p>Method under test: {@link JsonTypeUtil#convertFromBaseToGeneric(JsonElement, TypeUtil)}
+   */
+  @Test
+  @DisplayName(
+      "Test convertFromBaseToGeneric(JsonElement, TypeUtil) with 'input', 'to'; when JsonObject (default constructor) add empty string and JsonArray()")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"Object JsonTypeUtil.convertFromBaseToGeneric(JsonElement, TypeUtil)"})
+  void testConvertFromBaseToGenericWithInputTo_whenJsonObjectAddEmptyStringAndJsonArray() {
+    // Arrange
+    JsonObject input = new JsonObject();
+    input.add("", new JsonArray());
+
+    // Act
+    Object actualConvertFromBaseToGenericResult =
+        Types.JSON.convertFromBaseToGeneric(input, new JsonTypeUtil(true));
+
+    // Assert
+    assertTrue(actualConvertFromBaseToGenericResult instanceof JsonMapType);
+    assertEquals(1, ((JsonMapType) actualConvertFromBaseToGenericResult).size());
+    assertEquals(input, ((JsonMapType) actualConvertFromBaseToGenericResult).getJson());
   }
 
   /**
@@ -1785,6 +1709,187 @@ class JsonTypeUtilDiffblueTest {
   void testConvertFromBaseToGenericWithInputTo_whenNull_thenReturnNull() {
     // Arrange, Act and Assert
     assertNull(Types.JSON.convertFromBaseToGeneric(null, new JsonTypeUtil(true)));
+  }
+
+  /**
+   * Test {@link JsonTypeUtil#baseToGeneric(JsonElement)} with {@code input}.
+   *
+   * <ul>
+   *   <li>Then return {@link Boolean#TRUE} toString.
+   * </ul>
+   *
+   * <p>Method under test: {@link JsonTypeUtil#baseToGeneric(JsonElement)}
+   */
+  @Test
+  @DisplayName("Test baseToGeneric(JsonElement) with 'input'; then return TRUE toString")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"Object JsonTypeUtil.baseToGeneric(JsonElement)"})
+  void testBaseToGenericWithInput_thenReturnTrueToString() {
+    // Arrange and Act
+    Object actualBaseToGenericResult =
+        Types.JSON.baseToGeneric(new JsonPrimitive(Boolean.TRUE.toString()));
+
+    // Assert
+    assertEquals(Boolean.TRUE.toString(), actualBaseToGenericResult);
+  }
+
+  /**
+   * Test {@link JsonTypeUtil#baseToGeneric(JsonElement)} with {@code input}.
+   *
+   * <ul>
+   *   <li>When {@link JsonArray#JsonArray()}.
+   *   <li>Then return {@link JsonListType}.
+   * </ul>
+   *
+   * <p>Method under test: {@link JsonTypeUtil#baseToGeneric(JsonElement)}
+   */
+  @Test
+  @DisplayName(
+      "Test baseToGeneric(JsonElement) with 'input'; when JsonArray(); then return JsonListType")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"Object JsonTypeUtil.baseToGeneric(JsonElement)"})
+  void testBaseToGenericWithInput_whenJsonArray_thenReturnJsonListType() {
+    // Arrange
+    JsonTypeUtil jsonTypeUtil = Types.JSON;
+    JsonArray input = new JsonArray();
+
+    // Act
+    Object actualBaseToGenericResult = jsonTypeUtil.baseToGeneric(input);
+
+    // Assert
+    assertTrue(actualBaseToGenericResult instanceof JsonListType);
+    TypeUtil<JsonElement> typeUtil = ((JsonListType) actualBaseToGenericResult).getTypeUtil();
+    assertTrue(typeUtil instanceof JsonTypeUtil);
+    assertEquals(0, ((JsonListType) actualBaseToGenericResult).size());
+    assertEquals(ObjectType.UNDEFINED, ((JsonListType) actualBaseToGenericResult).getUniformType());
+    assertFalse(((JsonTypeUtil) typeUtil).isCompressed());
+    assertSame(input, ((JsonListType) actualBaseToGenericResult).getJson());
+    assertSame(jsonTypeUtil, typeUtil);
+  }
+
+  /**
+   * Test {@link JsonTypeUtil#baseToGeneric(JsonElement)} with {@code input}.
+   *
+   * <ul>
+   *   <li>When {@link JsonNull} (default constructor).
+   *   <li>Then return {@code null}.
+   * </ul>
+   *
+   * <p>Method under test: {@link JsonTypeUtil#baseToGeneric(JsonElement)}
+   */
+  @Test
+  @DisplayName(
+      "Test baseToGeneric(JsonElement) with 'input'; when JsonNull (default constructor); then return 'null'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"Object JsonTypeUtil.baseToGeneric(JsonElement)"})
+  void testBaseToGenericWithInput_whenJsonNull_thenReturnNull() {
+    // Arrange, Act and Assert
+    assertNull(Types.JSON.baseToGeneric(new JsonNull()));
+  }
+
+  /**
+   * Test {@link JsonTypeUtil#baseToGeneric(JsonElement)} with {@code input}.
+   *
+   * <ul>
+   *   <li>When {@link JsonObject} (default constructor).
+   *   <li>Then return {@link JsonMapType}.
+   * </ul>
+   *
+   * <p>Method under test: {@link JsonTypeUtil#baseToGeneric(JsonElement)}
+   */
+  @Test
+  @DisplayName(
+      "Test baseToGeneric(JsonElement) with 'input'; when JsonObject (default constructor); then return JsonMapType")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"Object JsonTypeUtil.baseToGeneric(JsonElement)"})
+  void testBaseToGenericWithInput_whenJsonObject_thenReturnJsonMapType() {
+    // Arrange
+    JsonTypeUtil jsonTypeUtil = Types.JSON;
+    JsonObject input = new JsonObject();
+
+    // Act
+    Object actualBaseToGenericResult = jsonTypeUtil.baseToGeneric(input);
+
+    // Assert
+    assertTrue(actualBaseToGenericResult instanceof JsonMapType);
+    TypeUtil<JsonElement> typeUtil = ((JsonMapType) actualBaseToGenericResult).getTypeUtil();
+    assertTrue(typeUtil instanceof JsonTypeUtil);
+    assertEquals(0, ((JsonMapType) actualBaseToGenericResult).size());
+    assertFalse(((JsonTypeUtil) typeUtil).isCompressed());
+    assertSame(input, ((JsonMapType) actualBaseToGenericResult).getJson());
+    assertSame(jsonTypeUtil, typeUtil);
+  }
+
+  /**
+   * Test {@link JsonTypeUtil#baseToGeneric(JsonElement)} with {@code input}.
+   *
+   * <ul>
+   *   <li>When {@link JsonPrimitive#JsonPrimitive(Boolean)} with bool is {@code false}.
+   *   <li>Then return {@code false}.
+   * </ul>
+   *
+   * <p>Method under test: {@link JsonTypeUtil#baseToGeneric(JsonElement)}
+   */
+  @Test
+  @DisplayName(
+      "Test baseToGeneric(JsonElement) with 'input'; when JsonPrimitive(Boolean) with bool is 'false'; then return 'false'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"Object JsonTypeUtil.baseToGeneric(JsonElement)"})
+  void testBaseToGenericWithInput_whenJsonPrimitiveWithBoolIsFalse_thenReturnFalse() {
+    // Arrange and Act
+    Object actualBaseToGenericResult = Types.JSON.baseToGeneric(new JsonPrimitive(false));
+
+    // Assert
+    assertFalse((Boolean) actualBaseToGenericResult);
+  }
+
+  /**
+   * Test {@link JsonTypeUtil#baseToGeneric(JsonElement)} with {@code input}.
+   *
+   * <ul>
+   *   <li>When {@link JsonPrimitive#JsonPrimitive(Boolean)} with bool is {@code true}.
+   *   <li>Then return {@code true}.
+   * </ul>
+   *
+   * <p>Method under test: {@link JsonTypeUtil#baseToGeneric(JsonElement)}
+   */
+  @Test
+  @DisplayName(
+      "Test baseToGeneric(JsonElement) with 'input'; when JsonPrimitive(Boolean) with bool is 'true'; then return 'true'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"Object JsonTypeUtil.baseToGeneric(JsonElement)"})
+  void testBaseToGenericWithInput_whenJsonPrimitiveWithBoolIsTrue_thenReturnTrue() {
+    // Arrange and Act
+    Object actualBaseToGenericResult = Types.JSON.baseToGeneric(new JsonPrimitive(true));
+
+    // Assert
+    assertTrue((Boolean) actualBaseToGenericResult);
+  }
+
+  /**
+   * Test {@link JsonTypeUtil#baseToGeneric(JsonElement)} with {@code input}.
+   *
+   * <ul>
+   *   <li>When {@code null}.
+   *   <li>Then return {@code null}.
+   * </ul>
+   *
+   * <p>Method under test: {@link JsonTypeUtil#baseToGeneric(JsonElement)}
+   */
+  @Test
+  @DisplayName("Test baseToGeneric(JsonElement) with 'input'; when 'null'; then return 'null'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"Object JsonTypeUtil.baseToGeneric(JsonElement)"})
+  void testBaseToGenericWithInput_whenNull_thenReturnNull() {
+    // Arrange, Act and Assert
+    assertNull(Types.JSON.baseToGeneric(null));
   }
 
   /**

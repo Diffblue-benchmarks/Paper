@@ -1,5 +1,6 @@
 package com.destroystokyo.paper;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -29,6 +30,30 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 class MetricsDiffblueTest {
+  /**
+   * Test {@link Metrics#addCustomChart(CustomChart)}.
+   *
+   * <ul>
+   *   <li>Then does not throw.
+   * </ul>
+   *
+   * <p>Method under test: {@link Metrics#addCustomChart(CustomChart)}
+   */
+  @Test
+  @DisplayName("Test addCustomChart(CustomChart); then does not throw")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void Metrics.addCustomChart(CustomChart)"})
+  void testAddCustomChart_thenDoesNotThrow() {
+    // Arrange
+    Metrics metrics =
+        new Metrics("Name", "01234567-89AB-CDEF-FEDC-BA9876543210", true, Logger.getGlobal());
+    AdvancedBarChart chart = new AdvancedBarChart("42", mock(Callable.class));
+
+    // Act and Assert
+    assertDoesNotThrow(() -> metrics.addCustomChart(chart));
+  }
+
   /**
    * Test {@link Metrics#addCustomChart(CustomChart)}.
    *
@@ -88,7 +113,7 @@ class MetricsDiffblueTest {
    * Test AdvancedBarChart {@link AdvancedBarChart#getChartData()}.
    *
    * <ul>
-   *   <li>Given {@link HashMap#HashMap()} {@code foo} is empty array of {@code int}.
+   *   <li>Given {@link HashMap#HashMap()} {@code Key} is empty array of {@code int}.
    *   <li>Then return {@code null}.
    * </ul>
    *
@@ -96,15 +121,15 @@ class MetricsDiffblueTest {
    */
   @Test
   @DisplayName(
-      "Test AdvancedBarChart getChartData(); given HashMap() 'foo' is empty array of int; then return 'null'")
+      "Test AdvancedBarChart getChartData(); given HashMap() 'Key' is empty array of int; then return 'null'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"JSONObject AdvancedBarChart.getChartData()"})
-  void testAdvancedBarChartGetChartData_givenHashMapFooIsEmptyArrayOfInt_thenReturnNull()
+  void testAdvancedBarChartGetChartData_givenHashMapKeyIsEmptyArrayOfInt_thenReturnNull()
       throws Exception {
     // Arrange
     HashMap<String, int[]> stringIntArrayMap = new HashMap<>();
-    stringIntArrayMap.put("foo", new int[] {});
+    stringIntArrayMap.put("Key", new int[] {});
 
     Callable<Map<String, int[]>> callable = mock(Callable.class);
     when(callable.call()).thenReturn(stringIntArrayMap);
@@ -135,7 +160,7 @@ class MetricsDiffblueTest {
   void testAdvancedBarChartGetChartData_thenReturnSizeIsOne() throws Exception {
     // Arrange
     HashMap<String, int[]> stringIntArrayMap = new HashMap<>();
-    stringIntArrayMap.put("foo", new int[] {1, 0, 1, 0});
+    stringIntArrayMap.put("Key", new int[] {42, 1, 42, 1});
 
     Callable<Map<String, int[]>> callable = mock(Callable.class);
     when(callable.call()).thenReturn(stringIntArrayMap);
@@ -148,13 +173,13 @@ class MetricsDiffblueTest {
     verify(callable).call();
     assertEquals(1, actualChartData.size());
     Object getResult = actualChartData.get("values");
-    JSONArray getResult2 = ((Map<String, JSONArray>) getResult).get("foo");
+    JSONArray getResult2 = ((Map<String, JSONArray>) getResult).get("Key");
     assertEquals(4, getResult2.size());
-    assertEquals(0, ((Integer) getResult2.get(1)).intValue());
-    assertEquals(0, ((Integer) getResult2.get(3)).intValue());
-    assertEquals(1, ((Integer) getResult2.get(0)).intValue());
-    assertEquals(1, ((Integer) getResult2.get(2)).intValue());
+    assertEquals(1, ((Integer) getResult2.get(1)).intValue());
+    assertEquals(1, ((Integer) getResult2.get(3)).intValue());
     assertEquals(1, ((Map<String, JSONArray>) getResult).size());
+    assertEquals(42, ((Integer) getResult2.get(0)).intValue());
+    assertEquals(42, ((Integer) getResult2.get(2)).intValue());
   }
 
   /**
@@ -257,7 +282,7 @@ class MetricsDiffblueTest {
    * Test AdvancedPie {@link AdvancedPie#getChartData()}.
    *
    * <ul>
-   *   <li>Given {@link HashMap#HashMap()} {@code foo} is one.
+   *   <li>Given {@link HashMap#HashMap()} {@code Key} is forty-two.
    *   <li>Then return size is one.
    * </ul>
    *
@@ -265,14 +290,15 @@ class MetricsDiffblueTest {
    */
   @Test
   @DisplayName(
-      "Test AdvancedPie getChartData(); given HashMap() 'foo' is one; then return size is one")
+      "Test AdvancedPie getChartData(); given HashMap() 'Key' is forty-two; then return size is one")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"JSONObject AdvancedPie.getChartData()"})
-  void testAdvancedPieGetChartData_givenHashMapFooIsOne_thenReturnSizeIsOne() throws Exception {
+  void testAdvancedPieGetChartData_givenHashMapKeyIsFortyTwo_thenReturnSizeIsOne()
+      throws Exception {
     // Arrange
     HashMap<String, Integer> stringIntegerMap = new HashMap<>();
-    stringIntegerMap.put("foo", 1);
+    stringIntegerMap.put("Key", 42);
 
     Callable<Map<String, Integer>> callable = mock(Callable.class);
     when(callable.call()).thenReturn(stringIntegerMap);
@@ -285,15 +311,15 @@ class MetricsDiffblueTest {
     verify(callable).call();
     assertEquals(1, actualChartData.size());
     Object getResult = actualChartData.get("values");
-    assertEquals(1, ((Map<String, Integer>) getResult).get("foo").intValue());
     assertEquals(1, ((Map<String, Integer>) getResult).size());
+    assertEquals(42, ((Map<String, Integer>) getResult).get("Key").intValue());
   }
 
   /**
    * Test AdvancedPie {@link AdvancedPie#getChartData()}.
    *
    * <ul>
-   *   <li>Given {@link HashMap#HashMap()} {@code foo} is one.
+   *   <li>Given {@link HashMap#HashMap()} {@code Key} is forty-two.
    *   <li>Then return size is one.
    * </ul>
    *
@@ -301,19 +327,20 @@ class MetricsDiffblueTest {
    */
   @Test
   @DisplayName(
-      "Test AdvancedPie getChartData(); given HashMap() 'foo' is one; then return size is one")
+      "Test AdvancedPie getChartData(); given HashMap() 'Key' is forty-two; then return size is one")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"JSONObject AdvancedPie.getChartData()"})
-  void testAdvancedPieGetChartData_givenHashMapFooIsOne_thenReturnSizeIsOne2() throws Exception {
+  void testAdvancedPieGetChartData_givenHashMapKeyIsFortyTwo_thenReturnSizeIsOne2()
+      throws Exception {
     // Arrange
     BiFunction<String, Integer, Integer> biFunction = mock(BiFunction.class);
     when(biFunction.apply(Mockito.<String>any(), Mockito.<Integer>any())).thenReturn(0);
 
     HashMap<String, Integer> stringIntegerMap = new HashMap<>();
-    stringIntegerMap.put("42", -1);
+    stringIntegerMap.put("42", 1);
     stringIntegerMap.replaceAll(biFunction);
-    stringIntegerMap.put("foo", 1);
+    stringIntegerMap.put("Key", 42);
 
     Callable<Map<String, Integer>> callable = mock(Callable.class);
     when(callable.call()).thenReturn(stringIntegerMap);
@@ -324,37 +351,37 @@ class MetricsDiffblueTest {
 
     // Assert
     verify(callable).call();
-    verify(biFunction).apply("42", -1);
+    verify(biFunction).apply("42", 1);
     assertEquals(1, actualChartData.size());
     Object getResult = actualChartData.get("values");
-    assertEquals(1, ((Map<String, Integer>) getResult).get("foo").intValue());
     assertEquals(1, ((Map<String, Integer>) getResult).size());
+    assertEquals(42, ((Map<String, Integer>) getResult).get("Key").intValue());
   }
 
   /**
    * Test AdvancedPie {@link AdvancedPie#getChartData()}.
    *
    * <ul>
-   *   <li>Given {@link HashMap#HashMap()} {@code foo} is zero.
+   *   <li>Given {@link HashMap#HashMap()} {@code Key} is zero.
    *   <li>Then return {@code null}.
    * </ul>
    *
    * <p>Method under test: {@link AdvancedPie#getChartData()}
    */
   @Test
-  @DisplayName("Test AdvancedPie getChartData(); given HashMap() 'foo' is zero; then return 'null'")
+  @DisplayName("Test AdvancedPie getChartData(); given HashMap() 'Key' is zero; then return 'null'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"JSONObject AdvancedPie.getChartData()"})
-  void testAdvancedPieGetChartData_givenHashMapFooIsZero_thenReturnNull() throws Exception {
+  void testAdvancedPieGetChartData_givenHashMapKeyIsZero_thenReturnNull() throws Exception {
     // Arrange
     BiFunction<String, Integer, Integer> biFunction = mock(BiFunction.class);
     when(biFunction.apply(Mockito.<String>any(), Mockito.<Integer>any())).thenReturn(0);
 
     HashMap<String, Integer> stringIntegerMap = new HashMap<>();
-    stringIntegerMap.put("42", -1);
+    stringIntegerMap.put("42", 1);
     stringIntegerMap.replaceAll(biFunction);
-    stringIntegerMap.put("foo", 0);
+    stringIntegerMap.put("Key", 0);
 
     Callable<Map<String, Integer>> callable = mock(Callable.class);
     when(callable.call()).thenReturn(stringIntegerMap);
@@ -365,7 +392,7 @@ class MetricsDiffblueTest {
 
     // Assert
     verify(callable).call();
-    verify(biFunction).apply("42", -1);
+    verify(biFunction).apply("42", 1);
     assertNull(actualChartData);
   }
 
@@ -471,40 +498,7 @@ class MetricsDiffblueTest {
    * Test DrilldownPie {@link DrilldownPie#getChartData()}.
    *
    * <ul>
-   *   <li>Given {@link HashMap#HashMap()} {@code foo} is {@link HashMap#HashMap()}.
-   *   <li>Then return {@code null}.
-   * </ul>
-   *
-   * <p>Method under test: {@link DrilldownPie#getChartData()}
-   */
-  @Test
-  @DisplayName(
-      "Test DrilldownPie getChartData(); given HashMap() 'foo' is HashMap(); then return 'null'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"JSONObject DrilldownPie.getChartData()"})
-  void testDrilldownPieGetChartData_givenHashMapFooIsHashMap_thenReturnNull() throws Exception {
-    // Arrange
-    HashMap<String, Map<String, Integer>> stringMapMap = new HashMap<>();
-    stringMapMap.put("foo", new HashMap<>());
-
-    Callable<Map<String, Map<String, Integer>>> callable = mock(Callable.class);
-    when(callable.call()).thenReturn(stringMapMap);
-    DrilldownPie drilldownPie = new DrilldownPie("42", callable);
-
-    // Act
-    JSONObject actualChartData = drilldownPie.getChartData();
-
-    // Assert
-    verify(callable).call();
-    assertNull(actualChartData);
-  }
-
-  /**
-   * Test DrilldownPie {@link DrilldownPie#getChartData()}.
-   *
-   * <ul>
-   *   <li>Given {@link HashMap#HashMap()} {@code foo} is one.
+   *   <li>Given {@link HashMap#HashMap()} {@code Key} is forty-two.
    *   <li>Then return size is one.
    * </ul>
    *
@@ -512,17 +506,18 @@ class MetricsDiffblueTest {
    */
   @Test
   @DisplayName(
-      "Test DrilldownPie getChartData(); given HashMap() 'foo' is one; then return size is one")
+      "Test DrilldownPie getChartData(); given HashMap() 'Key' is forty-two; then return size is one")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"JSONObject DrilldownPie.getChartData()"})
-  void testDrilldownPieGetChartData_givenHashMapFooIsOne_thenReturnSizeIsOne() throws Exception {
+  void testDrilldownPieGetChartData_givenHashMapKeyIsFortyTwo_thenReturnSizeIsOne()
+      throws Exception {
     // Arrange
     HashMap<String, Integer> stringIntegerMap = new HashMap<>();
-    stringIntegerMap.put("foo", 1);
+    stringIntegerMap.put("Key", 42);
 
     HashMap<String, Map<String, Integer>> stringMapMap = new HashMap<>();
-    stringMapMap.put("foo", stringIntegerMap);
+    stringMapMap.put("Key", stringIntegerMap);
 
     Callable<Map<String, Map<String, Integer>>> callable = mock(Callable.class);
     when(callable.call()).thenReturn(stringMapMap);
@@ -535,6 +530,39 @@ class MetricsDiffblueTest {
     verify(callable).call();
     assertEquals(1, actualChartData.size());
     assertEquals(stringMapMap, actualChartData.get("values"));
+  }
+
+  /**
+   * Test DrilldownPie {@link DrilldownPie#getChartData()}.
+   *
+   * <ul>
+   *   <li>Given {@link HashMap#HashMap()} {@code Key} is {@link HashMap#HashMap()}.
+   *   <li>Then return {@code null}.
+   * </ul>
+   *
+   * <p>Method under test: {@link DrilldownPie#getChartData()}
+   */
+  @Test
+  @DisplayName(
+      "Test DrilldownPie getChartData(); given HashMap() 'Key' is HashMap(); then return 'null'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"JSONObject DrilldownPie.getChartData()"})
+  void testDrilldownPieGetChartData_givenHashMapKeyIsHashMap_thenReturnNull() throws Exception {
+    // Arrange
+    HashMap<String, Map<String, Integer>> stringMapMap = new HashMap<>();
+    stringMapMap.put("Key", new HashMap<>());
+
+    Callable<Map<String, Map<String, Integer>>> callable = mock(Callable.class);
+    when(callable.call()).thenReturn(stringMapMap);
+    DrilldownPie drilldownPie = new DrilldownPie("42", callable);
+
+    // Act
+    JSONObject actualChartData = drilldownPie.getChartData();
+
+    // Assert
+    verify(callable).call();
+    assertNull(actualChartData);
   }
 
   /**
@@ -638,7 +666,7 @@ class MetricsDiffblueTest {
    * Test MultiLineChart {@link MultiLineChart#getChartData()}.
    *
    * <ul>
-   *   <li>Given {@link HashMap#HashMap()} {@code foo} is one.
+   *   <li>Given {@link HashMap#HashMap()} {@code Key} is forty-two.
    *   <li>Then return size is one.
    * </ul>
    *
@@ -646,14 +674,15 @@ class MetricsDiffblueTest {
    */
   @Test
   @DisplayName(
-      "Test MultiLineChart getChartData(); given HashMap() 'foo' is one; then return size is one")
+      "Test MultiLineChart getChartData(); given HashMap() 'Key' is forty-two; then return size is one")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"JSONObject MultiLineChart.getChartData()"})
-  void testMultiLineChartGetChartData_givenHashMapFooIsOne_thenReturnSizeIsOne() throws Exception {
+  void testMultiLineChartGetChartData_givenHashMapKeyIsFortyTwo_thenReturnSizeIsOne()
+      throws Exception {
     // Arrange
     HashMap<String, Integer> stringIntegerMap = new HashMap<>();
-    stringIntegerMap.put("foo", 1);
+    stringIntegerMap.put("Key", 42);
 
     Callable<Map<String, Integer>> callable = mock(Callable.class);
     when(callable.call()).thenReturn(stringIntegerMap);
@@ -666,15 +695,15 @@ class MetricsDiffblueTest {
     verify(callable).call();
     assertEquals(1, actualChartData.size());
     Object getResult = actualChartData.get("values");
-    assertEquals(1, ((Map<String, Integer>) getResult).get("foo").intValue());
     assertEquals(1, ((Map<String, Integer>) getResult).size());
+    assertEquals(42, ((Map<String, Integer>) getResult).get("Key").intValue());
   }
 
   /**
    * Test MultiLineChart {@link MultiLineChart#getChartData()}.
    *
    * <ul>
-   *   <li>Given {@link HashMap#HashMap()} {@code foo} is one.
+   *   <li>Given {@link HashMap#HashMap()} {@code Key} is forty-two.
    *   <li>Then return size is one.
    * </ul>
    *
@@ -682,19 +711,20 @@ class MetricsDiffblueTest {
    */
   @Test
   @DisplayName(
-      "Test MultiLineChart getChartData(); given HashMap() 'foo' is one; then return size is one")
+      "Test MultiLineChart getChartData(); given HashMap() 'Key' is forty-two; then return size is one")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"JSONObject MultiLineChart.getChartData()"})
-  void testMultiLineChartGetChartData_givenHashMapFooIsOne_thenReturnSizeIsOne2() throws Exception {
+  void testMultiLineChartGetChartData_givenHashMapKeyIsFortyTwo_thenReturnSizeIsOne2()
+      throws Exception {
     // Arrange
     BiFunction<String, Integer, Integer> biFunction = mock(BiFunction.class);
     when(biFunction.apply(Mockito.<String>any(), Mockito.<Integer>any())).thenReturn(0);
 
     HashMap<String, Integer> stringIntegerMap = new HashMap<>();
-    stringIntegerMap.put("42", -1);
+    stringIntegerMap.put("42", 1);
     stringIntegerMap.replaceAll(biFunction);
-    stringIntegerMap.put("foo", 1);
+    stringIntegerMap.put("Key", 42);
 
     Callable<Map<String, Integer>> callable = mock(Callable.class);
     when(callable.call()).thenReturn(stringIntegerMap);
@@ -705,18 +735,18 @@ class MetricsDiffblueTest {
 
     // Assert
     verify(callable).call();
-    verify(biFunction).apply("42", -1);
+    verify(biFunction).apply("42", 1);
     assertEquals(1, actualChartData.size());
     Object getResult = actualChartData.get("values");
-    assertEquals(1, ((Map<String, Integer>) getResult).get("foo").intValue());
     assertEquals(1, ((Map<String, Integer>) getResult).size());
+    assertEquals(42, ((Map<String, Integer>) getResult).get("Key").intValue());
   }
 
   /**
    * Test MultiLineChart {@link MultiLineChart#getChartData()}.
    *
    * <ul>
-   *   <li>Given {@link HashMap#HashMap()} {@code foo} is zero.
+   *   <li>Given {@link HashMap#HashMap()} {@code Key} is zero.
    *   <li>Then return {@code null}.
    * </ul>
    *
@@ -724,19 +754,19 @@ class MetricsDiffblueTest {
    */
   @Test
   @DisplayName(
-      "Test MultiLineChart getChartData(); given HashMap() 'foo' is zero; then return 'null'")
+      "Test MultiLineChart getChartData(); given HashMap() 'Key' is zero; then return 'null'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"JSONObject MultiLineChart.getChartData()"})
-  void testMultiLineChartGetChartData_givenHashMapFooIsZero_thenReturnNull() throws Exception {
+  void testMultiLineChartGetChartData_givenHashMapKeyIsZero_thenReturnNull() throws Exception {
     // Arrange
     BiFunction<String, Integer, Integer> biFunction = mock(BiFunction.class);
     when(biFunction.apply(Mockito.<String>any(), Mockito.<Integer>any())).thenReturn(0);
 
     HashMap<String, Integer> stringIntegerMap = new HashMap<>();
-    stringIntegerMap.put("42", -1);
+    stringIntegerMap.put("42", 1);
     stringIntegerMap.replaceAll(biFunction);
-    stringIntegerMap.put("foo", 0);
+    stringIntegerMap.put("Key", 0);
 
     Callable<Map<String, Integer>> callable = mock(Callable.class);
     when(callable.call()).thenReturn(stringIntegerMap);
@@ -747,7 +777,7 @@ class MetricsDiffblueTest {
 
     // Assert
     verify(callable).call();
-    verify(biFunction).apply("42", -1);
+    verify(biFunction).apply("42", 1);
     assertNull(actualChartData);
   }
 
@@ -853,7 +883,7 @@ class MetricsDiffblueTest {
    * Test SimpleBarChart {@link SimpleBarChart#getChartData()}.
    *
    * <ul>
-   *   <li>Given {@link HashMap#HashMap()} {@code foo} is one.
+   *   <li>Given {@link HashMap#HashMap()} {@code Key} is forty-two.
    *   <li>Then return size is one.
    * </ul>
    *
@@ -861,14 +891,15 @@ class MetricsDiffblueTest {
    */
   @Test
   @DisplayName(
-      "Test SimpleBarChart getChartData(); given HashMap() 'foo' is one; then return size is one")
+      "Test SimpleBarChart getChartData(); given HashMap() 'Key' is forty-two; then return size is one")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"JSONObject SimpleBarChart.getChartData()"})
-  void testSimpleBarChartGetChartData_givenHashMapFooIsOne_thenReturnSizeIsOne() throws Exception {
+  void testSimpleBarChartGetChartData_givenHashMapKeyIsFortyTwo_thenReturnSizeIsOne()
+      throws Exception {
     // Arrange
     HashMap<String, Integer> stringIntegerMap = new HashMap<>();
-    stringIntegerMap.put("foo", 1);
+    stringIntegerMap.put("Key", 42);
 
     Callable<Map<String, Integer>> callable = mock(Callable.class);
     when(callable.call()).thenReturn(stringIntegerMap);
@@ -881,10 +912,10 @@ class MetricsDiffblueTest {
     verify(callable).call();
     assertEquals(1, actualChartData.size());
     Object getResult = actualChartData.get("values");
-    JSONArray getResult2 = ((Map<String, JSONArray>) getResult).get("foo");
+    JSONArray getResult2 = ((Map<String, JSONArray>) getResult).get("Key");
     assertEquals(1, getResult2.size());
-    assertEquals(1, ((Integer) getResult2.get(0)).intValue());
     assertEquals(1, ((Map<String, JSONArray>) getResult).size());
+    assertEquals(42, ((Integer) getResult2.get(0)).intValue());
   }
 
   /**

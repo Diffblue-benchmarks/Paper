@@ -5,18 +5,37 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.isA;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
 import io.papermc.paper.plugin.provider.configuration.type.DependencyConfiguration;
+import io.papermc.paper.plugin.provider.configuration.type.DependencyConfiguration.LoadOrder;
+import io.papermc.paper.plugin.provider.configuration.type.PluginDependencyLifeCycle;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.bukkit.craftbukkit.util.ApiVersion;
 import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.PluginLoadOrder;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+@ExtendWith(MockitoExtension.class)
 class PaperPluginMetaDiffblueTest {
+  @Mock private ApiVersion apiVersion;
+
+  @Mock private Map<PluginDependencyLifeCycle, Map<String, DependencyConfiguration>> map;
+
+  @InjectMocks private PaperPluginMeta paperPluginMeta;
+
   /**
    * Test new {@link PaperPluginMeta} (default constructor).
    *
@@ -64,7 +83,7 @@ class PaperPluginMetaDiffblueTest {
    * Test {@link PaperPluginMeta#setName(String)}.
    *
    * <ul>
-   *   <li>When {@code Name}.
+   *   <li>Given {@link PaperPluginMeta} (default constructor).
    *   <li>Then {@link PaperPluginMeta} (default constructor) DisplayName is {@code Name vnull}.
    * </ul>
    *
@@ -72,11 +91,11 @@ class PaperPluginMetaDiffblueTest {
    */
   @Test
   @DisplayName(
-      "Test setName(String); when 'Name'; then PaperPluginMeta (default constructor) DisplayName is 'Name vnull'")
+      "Test setName(String); given PaperPluginMeta (default constructor); then PaperPluginMeta (default constructor) DisplayName is 'Name vnull'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void PaperPluginMeta.setName(String)"})
-  void testSetName_whenName_thenPaperPluginMetaDisplayNameIsNameVnull() {
+  void testSetName_givenPaperPluginMeta_thenPaperPluginMetaDisplayNameIsNameVnull() {
     // Arrange
     PaperPluginMeta paperPluginMeta = new PaperPluginMeta();
 
@@ -93,6 +112,7 @@ class PaperPluginMetaDiffblueTest {
    * Test {@link PaperPluginMeta#setVersion(String)}.
    *
    * <ul>
+   *   <li>Given {@link PaperPluginMeta} (default constructor).
    *   <li>When {@code 1.0.2}.
    *   <li>Then {@link PaperPluginMeta} (default constructor) Version is {@code 1.0.2}.
    * </ul>
@@ -101,11 +121,11 @@ class PaperPluginMetaDiffblueTest {
    */
   @Test
   @DisplayName(
-      "Test setVersion(String); when '1.0.2'; then PaperPluginMeta (default constructor) Version is '1.0.2'")
+      "Test setVersion(String); given PaperPluginMeta (default constructor); when '1.0.2'; then PaperPluginMeta (default constructor) Version is '1.0.2'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void PaperPluginMeta.setVersion(String)"})
-  void testSetVersion_when102_thenPaperPluginMetaVersionIs102() {
+  void testSetVersion_givenPaperPluginMeta_when102_thenPaperPluginMetaVersionIs102() {
     // Arrange
     PaperPluginMeta paperPluginMeta = new PaperPluginMeta();
 
@@ -128,8 +148,141 @@ class PaperPluginMetaDiffblueTest {
   @ManagedByDiffblue
   @MethodsUnderTest({"List PaperPluginMeta.getPluginDependencies()"})
   void testGetPluginDependencies() {
+    // Arrange
+    HashMap<String, DependencyConfiguration> stringDependencyConfigurationMap = new HashMap<>();
+    stringDependencyConfigurationMap.put(
+        "42", new DependencyConfiguration(LoadOrder.BEFORE, true, true));
+    stringDependencyConfigurationMap.put(
+        "Key", new DependencyConfiguration(LoadOrder.BEFORE, false, true));
+    when(map.getOrDefault(
+            Mockito.<Object>any(), Mockito.<Map<String, DependencyConfiguration>>any()))
+        .thenReturn(stringDependencyConfigurationMap);
+
+    // Act
+    List<String> actualPluginDependencies = paperPluginMeta.getPluginDependencies();
+
+    // Assert
+    verify(map).getOrDefault(isA(Object.class), isA(Map.class));
+    assertEquals(1, actualPluginDependencies.size());
+    assertEquals("42", actualPluginDependencies.get(0));
+  }
+
+  /**
+   * Test {@link PaperPluginMeta#getPluginDependencies()}.
+   *
+   * <p>Method under test: {@link PaperPluginMeta#getPluginDependencies()}
+   */
+  @Test
+  @DisplayName("Test getPluginDependencies()")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"List PaperPluginMeta.getPluginDependencies()"})
+  void testGetPluginDependencies2() {
+    // Arrange
+    HashMap<String, DependencyConfiguration> stringDependencyConfigurationMap = new HashMap<>();
+    stringDependencyConfigurationMap.put(
+        "42", new DependencyConfiguration(LoadOrder.BEFORE, true, true));
+    stringDependencyConfigurationMap.put(
+        "Key", new DependencyConfiguration(LoadOrder.BEFORE, true, false));
+    when(map.getOrDefault(
+            Mockito.<Object>any(), Mockito.<Map<String, DependencyConfiguration>>any()))
+        .thenReturn(stringDependencyConfigurationMap);
+
+    // Act
+    List<String> actualPluginDependencies = paperPluginMeta.getPluginDependencies();
+
+    // Assert
+    verify(map).getOrDefault(isA(Object.class), isA(Map.class));
+    assertEquals(1, actualPluginDependencies.size());
+    assertEquals("42", actualPluginDependencies.get(0));
+  }
+
+  /**
+   * Test {@link PaperPluginMeta#getPluginDependencies()}.
+   *
+   * <ul>
+   *   <li>Given {@link PaperPluginMeta} (default constructor).
+   *   <li>Then return Empty.
+   * </ul>
+   *
+   * <p>Method under test: {@link PaperPluginMeta#getPluginDependencies()}
+   */
+  @Test
+  @DisplayName(
+      "Test getPluginDependencies(); given PaperPluginMeta (default constructor); then return Empty")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"List PaperPluginMeta.getPluginDependencies()"})
+  void testGetPluginDependencies_givenPaperPluginMeta_thenReturnEmpty() {
     // Arrange, Act and Assert
     assertTrue(new PaperPluginMeta().getPluginDependencies().isEmpty());
+  }
+
+  /**
+   * Test {@link PaperPluginMeta#getPluginDependencies()}.
+   *
+   * <ul>
+   *   <li>Then return first is {@code Key}.
+   * </ul>
+   *
+   * <p>Method under test: {@link PaperPluginMeta#getPluginDependencies()}
+   */
+  @Test
+  @DisplayName("Test getPluginDependencies(); then return first is 'Key'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"List PaperPluginMeta.getPluginDependencies()"})
+  void testGetPluginDependencies_thenReturnFirstIsKey() {
+    // Arrange
+    HashMap<String, DependencyConfiguration> stringDependencyConfigurationMap = new HashMap<>();
+    stringDependencyConfigurationMap.put(
+        "Key", new DependencyConfiguration(LoadOrder.BEFORE, true, true));
+    when(map.getOrDefault(
+            Mockito.<Object>any(), Mockito.<Map<String, DependencyConfiguration>>any()))
+        .thenReturn(stringDependencyConfigurationMap);
+
+    // Act
+    List<String> actualPluginDependencies = paperPluginMeta.getPluginDependencies();
+
+    // Assert
+    verify(map).getOrDefault(isA(Object.class), isA(Map.class));
+    assertEquals(1, actualPluginDependencies.size());
+    assertEquals("Key", actualPluginDependencies.get(0));
+  }
+
+  /**
+   * Test {@link PaperPluginMeta#getPluginDependencies()}.
+   *
+   * <ul>
+   *   <li>Then return size is two.
+   * </ul>
+   *
+   * <p>Method under test: {@link PaperPluginMeta#getPluginDependencies()}
+   */
+  @Test
+  @DisplayName("Test getPluginDependencies(); then return size is two")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"List PaperPluginMeta.getPluginDependencies()"})
+  void testGetPluginDependencies_thenReturnSizeIsTwo() {
+    // Arrange
+    HashMap<String, DependencyConfiguration> stringDependencyConfigurationMap = new HashMap<>();
+    stringDependencyConfigurationMap.put(
+        "42", new DependencyConfiguration(LoadOrder.BEFORE, true, true));
+    stringDependencyConfigurationMap.put(
+        "Key", new DependencyConfiguration(LoadOrder.BEFORE, true, true));
+    when(map.getOrDefault(
+            Mockito.<Object>any(), Mockito.<Map<String, DependencyConfiguration>>any()))
+        .thenReturn(stringDependencyConfigurationMap);
+
+    // Act
+    List<String> actualPluginDependencies = paperPluginMeta.getPluginDependencies();
+
+    // Assert
+    verify(map).getOrDefault(isA(Object.class), isA(Map.class));
+    assertEquals(2, actualPluginDependencies.size());
+    assertEquals("42", actualPluginDependencies.get(0));
+    assertEquals("Key", actualPluginDependencies.get(1));
   }
 
   /**
@@ -143,8 +296,133 @@ class PaperPluginMetaDiffblueTest {
   @ManagedByDiffblue
   @MethodsUnderTest({"List PaperPluginMeta.getPluginSoftDependencies()"})
   void testGetPluginSoftDependencies() {
+    // Arrange
+    HashMap<String, DependencyConfiguration> stringDependencyConfigurationMap = new HashMap<>();
+    stringDependencyConfigurationMap.put(
+        "Key", new DependencyConfiguration(LoadOrder.BEFORE, true, true));
+    when(map.getOrDefault(
+            Mockito.<Object>any(), Mockito.<Map<String, DependencyConfiguration>>any()))
+        .thenReturn(stringDependencyConfigurationMap);
+
+    // Act
+    List<String> actualPluginSoftDependencies = paperPluginMeta.getPluginSoftDependencies();
+
+    // Assert
+    verify(map).getOrDefault(isA(Object.class), isA(Map.class));
+    assertTrue(actualPluginSoftDependencies.isEmpty());
+  }
+
+  /**
+   * Test {@link PaperPluginMeta#getPluginSoftDependencies()}.
+   *
+   * <p>Method under test: {@link PaperPluginMeta#getPluginSoftDependencies()}
+   */
+  @Test
+  @DisplayName("Test getPluginSoftDependencies()")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"List PaperPluginMeta.getPluginSoftDependencies()"})
+  void testGetPluginSoftDependencies2() {
+    // Arrange
+    HashMap<String, DependencyConfiguration> stringDependencyConfigurationMap = new HashMap<>();
+    stringDependencyConfigurationMap.put(
+        "42", new DependencyConfiguration(LoadOrder.BEFORE, true, true));
+    stringDependencyConfigurationMap.put(
+        "Key", new DependencyConfiguration(LoadOrder.BEFORE, true, true));
+    when(map.getOrDefault(
+            Mockito.<Object>any(), Mockito.<Map<String, DependencyConfiguration>>any()))
+        .thenReturn(stringDependencyConfigurationMap);
+
+    // Act
+    List<String> actualPluginSoftDependencies = paperPluginMeta.getPluginSoftDependencies();
+
+    // Assert
+    verify(map).getOrDefault(isA(Object.class), isA(Map.class));
+    assertTrue(actualPluginSoftDependencies.isEmpty());
+  }
+
+  /**
+   * Test {@link PaperPluginMeta#getPluginSoftDependencies()}.
+   *
+   * <p>Method under test: {@link PaperPluginMeta#getPluginSoftDependencies()}
+   */
+  @Test
+  @DisplayName("Test getPluginSoftDependencies()")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"List PaperPluginMeta.getPluginSoftDependencies()"})
+  void testGetPluginSoftDependencies3() {
+    // Arrange
+    HashMap<String, DependencyConfiguration> stringDependencyConfigurationMap = new HashMap<>();
+    stringDependencyConfigurationMap.put(
+        "42", new DependencyConfiguration(LoadOrder.BEFORE, true, true));
+    stringDependencyConfigurationMap.put(
+        "Key", new DependencyConfiguration(LoadOrder.BEFORE, false, false));
+    when(map.getOrDefault(
+            Mockito.<Object>any(), Mockito.<Map<String, DependencyConfiguration>>any()))
+        .thenReturn(stringDependencyConfigurationMap);
+
+    // Act
+    List<String> actualPluginSoftDependencies = paperPluginMeta.getPluginSoftDependencies();
+
+    // Assert
+    verify(map).getOrDefault(isA(Object.class), isA(Map.class));
+    assertTrue(actualPluginSoftDependencies.isEmpty());
+  }
+
+  /**
+   * Test {@link PaperPluginMeta#getPluginSoftDependencies()}.
+   *
+   * <ul>
+   *   <li>Given {@link PaperPluginMeta} (default constructor).
+   *   <li>Then return Empty.
+   * </ul>
+   *
+   * <p>Method under test: {@link PaperPluginMeta#getPluginSoftDependencies()}
+   */
+  @Test
+  @DisplayName(
+      "Test getPluginSoftDependencies(); given PaperPluginMeta (default constructor); then return Empty")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"List PaperPluginMeta.getPluginSoftDependencies()"})
+  void testGetPluginSoftDependencies_givenPaperPluginMeta_thenReturnEmpty() {
     // Arrange, Act and Assert
     assertTrue(new PaperPluginMeta().getPluginSoftDependencies().isEmpty());
+  }
+
+  /**
+   * Test {@link PaperPluginMeta#getPluginSoftDependencies()}.
+   *
+   * <ul>
+   *   <li>Then return size is one.
+   * </ul>
+   *
+   * <p>Method under test: {@link PaperPluginMeta#getPluginSoftDependencies()}
+   */
+  @Test
+  @DisplayName("Test getPluginSoftDependencies(); then return size is one")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"List PaperPluginMeta.getPluginSoftDependencies()"})
+  void testGetPluginSoftDependencies_thenReturnSizeIsOne() {
+    // Arrange
+    HashMap<String, DependencyConfiguration> stringDependencyConfigurationMap = new HashMap<>();
+    stringDependencyConfigurationMap.put(
+        "42", new DependencyConfiguration(LoadOrder.BEFORE, true, true));
+    stringDependencyConfigurationMap.put(
+        "Key", new DependencyConfiguration(LoadOrder.BEFORE, false, true));
+    when(map.getOrDefault(
+            Mockito.<Object>any(), Mockito.<Map<String, DependencyConfiguration>>any()))
+        .thenReturn(stringDependencyConfigurationMap);
+
+    // Act
+    List<String> actualPluginSoftDependencies = paperPluginMeta.getPluginSoftDependencies();
+
+    // Assert
+    verify(map).getOrDefault(isA(Object.class), isA(Map.class));
+    assertEquals(1, actualPluginSoftDependencies.size());
+    assertEquals("Key", actualPluginSoftDependencies.get(0));
   }
 
   /**
@@ -158,8 +436,104 @@ class PaperPluginMetaDiffblueTest {
   @ManagedByDiffblue
   @MethodsUnderTest({"List PaperPluginMeta.getLoadBeforePlugins()"})
   void testGetLoadBeforePlugins() {
+    // Arrange
+    HashMap<String, DependencyConfiguration> stringDependencyConfigurationMap = new HashMap<>();
+    stringDependencyConfigurationMap.put(
+        "Key", new DependencyConfiguration(LoadOrder.BEFORE, true, true));
+    when(map.getOrDefault(
+            Mockito.<Object>any(), Mockito.<Map<String, DependencyConfiguration>>any()))
+        .thenReturn(stringDependencyConfigurationMap);
+
+    // Act
+    List<String> actualLoadBeforePlugins = paperPluginMeta.getLoadBeforePlugins();
+
+    // Assert
+    verify(map).getOrDefault(isA(Object.class), isA(Map.class));
+    assertTrue(actualLoadBeforePlugins.isEmpty());
+  }
+
+  /**
+   * Test {@link PaperPluginMeta#getLoadBeforePlugins()}.
+   *
+   * <p>Method under test: {@link PaperPluginMeta#getLoadBeforePlugins()}
+   */
+  @Test
+  @DisplayName("Test getLoadBeforePlugins()")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"List PaperPluginMeta.getLoadBeforePlugins()"})
+  void testGetLoadBeforePlugins2() {
+    // Arrange
+    HashMap<String, DependencyConfiguration> stringDependencyConfigurationMap = new HashMap<>();
+    stringDependencyConfigurationMap.put(
+        "42", new DependencyConfiguration(LoadOrder.BEFORE, true, true));
+    stringDependencyConfigurationMap.put(
+        "Key", new DependencyConfiguration(LoadOrder.BEFORE, true, true));
+    when(map.getOrDefault(
+            Mockito.<Object>any(), Mockito.<Map<String, DependencyConfiguration>>any()))
+        .thenReturn(stringDependencyConfigurationMap);
+
+    // Act
+    List<String> actualLoadBeforePlugins = paperPluginMeta.getLoadBeforePlugins();
+
+    // Assert
+    verify(map).getOrDefault(isA(Object.class), isA(Map.class));
+    assertTrue(actualLoadBeforePlugins.isEmpty());
+  }
+
+  /**
+   * Test {@link PaperPluginMeta#getLoadBeforePlugins()}.
+   *
+   * <ul>
+   *   <li>Given {@link PaperPluginMeta} (default constructor).
+   *   <li>Then return Empty.
+   * </ul>
+   *
+   * <p>Method under test: {@link PaperPluginMeta#getLoadBeforePlugins()}
+   */
+  @Test
+  @DisplayName(
+      "Test getLoadBeforePlugins(); given PaperPluginMeta (default constructor); then return Empty")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"List PaperPluginMeta.getLoadBeforePlugins()"})
+  void testGetLoadBeforePlugins_givenPaperPluginMeta_thenReturnEmpty() {
     // Arrange, Act and Assert
     assertTrue(new PaperPluginMeta().getLoadBeforePlugins().isEmpty());
+  }
+
+  /**
+   * Test {@link PaperPluginMeta#getLoadBeforePlugins()}.
+   *
+   * <ul>
+   *   <li>Then return size is one.
+   * </ul>
+   *
+   * <p>Method under test: {@link PaperPluginMeta#getLoadBeforePlugins()}
+   */
+  @Test
+  @DisplayName("Test getLoadBeforePlugins(); then return size is one")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"List PaperPluginMeta.getLoadBeforePlugins()"})
+  void testGetLoadBeforePlugins_thenReturnSizeIsOne() {
+    // Arrange
+    HashMap<String, DependencyConfiguration> stringDependencyConfigurationMap = new HashMap<>();
+    stringDependencyConfigurationMap.put(
+        "42", new DependencyConfiguration(LoadOrder.BEFORE, true, true));
+    stringDependencyConfigurationMap.put(
+        "Key", new DependencyConfiguration(LoadOrder.AFTER, true, true));
+    when(map.getOrDefault(
+            Mockito.<Object>any(), Mockito.<Map<String, DependencyConfiguration>>any()))
+        .thenReturn(stringDependencyConfigurationMap);
+
+    // Act
+    List<String> actualLoadBeforePlugins = paperPluginMeta.getLoadBeforePlugins();
+
+    // Assert
+    verify(map).getOrDefault(isA(Object.class), isA(Map.class));
+    assertEquals(1, actualLoadBeforePlugins.size());
+    assertEquals("Key", actualLoadBeforePlugins.get(0));
   }
 
   /**
@@ -173,8 +547,111 @@ class PaperPluginMetaDiffblueTest {
   @ManagedByDiffblue
   @MethodsUnderTest({"List PaperPluginMeta.getLoadAfterPlugins()"})
   void testGetLoadAfterPlugins() {
+    // Arrange
+    HashMap<String, DependencyConfiguration> stringDependencyConfigurationMap = new HashMap<>();
+    stringDependencyConfigurationMap.put(
+        "42", new DependencyConfiguration(LoadOrder.BEFORE, true, true));
+    stringDependencyConfigurationMap.put(
+        "Key", new DependencyConfiguration(LoadOrder.AFTER, true, true));
+    when(map.getOrDefault(
+            Mockito.<Object>any(), Mockito.<Map<String, DependencyConfiguration>>any()))
+        .thenReturn(stringDependencyConfigurationMap);
+
+    // Act
+    List<String> actualLoadAfterPlugins = paperPluginMeta.getLoadAfterPlugins();
+
+    // Assert
+    verify(map).getOrDefault(isA(Object.class), isA(Map.class));
+    assertEquals(1, actualLoadAfterPlugins.size());
+    assertEquals("42", actualLoadAfterPlugins.get(0));
+  }
+
+  /**
+   * Test {@link PaperPluginMeta#getLoadAfterPlugins()}.
+   *
+   * <ul>
+   *   <li>Given {@link PaperPluginMeta} (default constructor).
+   *   <li>Then return Empty.
+   * </ul>
+   *
+   * <p>Method under test: {@link PaperPluginMeta#getLoadAfterPlugins()}
+   */
+  @Test
+  @DisplayName(
+      "Test getLoadAfterPlugins(); given PaperPluginMeta (default constructor); then return Empty")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"List PaperPluginMeta.getLoadAfterPlugins()"})
+  void testGetLoadAfterPlugins_givenPaperPluginMeta_thenReturnEmpty() {
     // Arrange, Act and Assert
     assertTrue(new PaperPluginMeta().getLoadAfterPlugins().isEmpty());
+  }
+
+  /**
+   * Test {@link PaperPluginMeta#getLoadAfterPlugins()}.
+   *
+   * <ul>
+   *   <li>Then return first is {@code Key}.
+   * </ul>
+   *
+   * <p>Method under test: {@link PaperPluginMeta#getLoadAfterPlugins()}
+   */
+  @Test
+  @DisplayName("Test getLoadAfterPlugins(); then return first is 'Key'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"List PaperPluginMeta.getLoadAfterPlugins()"})
+  void testGetLoadAfterPlugins_thenReturnFirstIsKey() {
+    // Arrange
+    HashMap<String, DependencyConfiguration> stringDependencyConfigurationMap = new HashMap<>();
+    stringDependencyConfigurationMap.put(
+        "Key", new DependencyConfiguration(LoadOrder.BEFORE, true, true));
+    when(map.getOrDefault(
+            Mockito.<Object>any(), Mockito.<Map<String, DependencyConfiguration>>any()))
+        .thenReturn(stringDependencyConfigurationMap);
+
+    // Act
+    List<String> actualLoadAfterPlugins = paperPluginMeta.getLoadAfterPlugins();
+
+    // Assert
+    verify(map).getOrDefault(isA(Object.class), isA(Map.class));
+    assertEquals(1, actualLoadAfterPlugins.size());
+    assertEquals("Key", actualLoadAfterPlugins.get(0));
+  }
+
+  /**
+   * Test {@link PaperPluginMeta#getLoadAfterPlugins()}.
+   *
+   * <ul>
+   *   <li>Then return size is two.
+   * </ul>
+   *
+   * <p>Method under test: {@link PaperPluginMeta#getLoadAfterPlugins()}
+   */
+  @Test
+  @DisplayName("Test getLoadAfterPlugins(); then return size is two")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"List PaperPluginMeta.getLoadAfterPlugins()"})
+  void testGetLoadAfterPlugins_thenReturnSizeIsTwo() {
+    // Arrange
+    HashMap<String, DependencyConfiguration> stringDependencyConfigurationMap = new HashMap<>();
+    stringDependencyConfigurationMap.put(
+        "42", new DependencyConfiguration(LoadOrder.BEFORE, true, true));
+    stringDependencyConfigurationMap.put(
+        "Key", new DependencyConfiguration(LoadOrder.BEFORE, true, true));
+    when(map.getOrDefault(
+            Mockito.<Object>any(), Mockito.<Map<String, DependencyConfiguration>>any()))
+        .thenReturn(stringDependencyConfigurationMap);
+
+    // Act
+    List<String> actualLoadAfterPlugins = paperPluginMeta.getLoadAfterPlugins();
+
+    // Assert
+    verify(map).getOrDefault(isA(Object.class), isA(Map.class));
+    assertEquals(2, actualLoadAfterPlugins.size());
+    assertEquals("42", actualLoadAfterPlugins.get(0));
+    assertEquals("Key", actualLoadAfterPlugins.get(1));
   }
 
   /**
@@ -309,5 +786,27 @@ class PaperPluginMetaDiffblueTest {
   void testGetPermissionDefault() {
     // Arrange, Act and Assert
     assertEquals(PermissionDefault.OP, new PaperPluginMeta().getPermissionDefault());
+  }
+
+  /**
+   * Test {@link PaperPluginMeta#getAPIVersion()}.
+   *
+   * <p>Method under test: {@link PaperPluginMeta#getAPIVersion()}
+   */
+  @Test
+  @DisplayName("Test getAPIVersion()")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"String PaperPluginMeta.getAPIVersion()"})
+  void testGetAPIVersion() {
+    // Arrange
+    when(apiVersion.getVersionString()).thenReturn("1.0.2");
+
+    // Act
+    String actualAPIVersion = paperPluginMeta.getAPIVersion();
+
+    // Assert
+    verify(apiVersion).getVersionString();
+    assertEquals("1.0.2", actualAPIVersion);
   }
 }

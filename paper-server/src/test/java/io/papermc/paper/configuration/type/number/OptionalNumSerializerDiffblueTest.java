@@ -1,6 +1,5 @@
 package io.papermc.paper.configuration.type.number;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -22,18 +21,18 @@ class OptionalNumSerializerDiffblueTest {
    * AnnotatedType}, {@code Object}.
    *
    * <ul>
-   *   <li>Then return not value Present.
+   *   <li>Then return value is empty.
    * </ul>
    *
    * <p>Method under test: {@link OptionalNumSerializer#deserialize(AnnotatedType, Object)}
    */
   @Test
   @DisplayName(
-      "Test deserialize(AnnotatedType, Object) with 'AnnotatedType', 'Object'; then return not value Present")
+      "Test deserialize(AnnotatedType, Object) with 'AnnotatedType', 'Object'; then return value is empty")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"Object OptionalNumSerializer.deserialize(AnnotatedType, Object)"})
-  void testDeserializeWithAnnotatedTypeObject_thenReturnNotValuePresent()
+  void testDeserializeWithAnnotatedTypeObject_thenReturnValueIsEmpty()
       throws SerializationException {
     // Arrange
     DoubleOr doubleOr = mock(DoubleOr.class);
@@ -49,7 +48,6 @@ class OptionalNumSerializerDiffblueTest {
 
     // Assert
     verify(doubleOr).value();
-    assertFalse(actualValueResult.isPresent());
     assertSame(emptyResult, actualValueResult);
   }
 }

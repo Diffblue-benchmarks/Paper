@@ -6,18 +6,79 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import ca.spottedleaf.concurrentutil.util.Priority;
 import ca.spottedleaf.moonrise.patches.chunk_system.io.MoonriseRegionFileIO.RegionFileData;
 import ca.spottedleaf.moonrise.patches.chunk_system.io.MoonriseRegionFileIO.RegionFileType;
 import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
+import java.util.ArrayList;
+import net.minecraft.gametest.framework.GameTestServer;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.RunningOnDifferentThreadException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 class MoonriseRegionFileIODiffblueTest {
+  /**
+   * Test {@link MoonriseRegionFileIO#flush(MinecraftServer)} with {@code server}.
+   *
+   * <ul>
+   *   <li>Given {@link ArrayList#ArrayList()}.
+   *   <li>When {@link GameTestServer} {@link GameTestServer#getAllLevels()} return {@link
+   *       ArrayList#ArrayList()}.
+   * </ul>
+   *
+   * <p>Method under test: {@link MoonriseRegionFileIO#flush(MinecraftServer)}
+   */
+  @Test
+  @DisplayName(
+      "Test flush(MinecraftServer) with 'server'; given ArrayList(); when GameTestServer getAllLevels() return ArrayList()")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void MoonriseRegionFileIO.flush(MinecraftServer)"})
+  void testFlushWithServer_givenArrayList_whenGameTestServerGetAllLevelsReturnArrayList() {
+    // Arrange
+    GameTestServer server = mock(GameTestServer.class);
+    when(server.getAllLevels()).thenReturn(new ArrayList<>());
+
+    // Act
+    MoonriseRegionFileIO.flush(server);
+
+    // Assert
+    verify(server).getAllLevels();
+  }
+
+  /**
+   * Test {@link MoonriseRegionFileIO#flush(MinecraftServer)} with {@code server}.
+   *
+   * <ul>
+   *   <li>Given {@link IllegalStateException#IllegalStateException()}.
+   *   <li>Then throw {@link IllegalStateException}.
+   * </ul>
+   *
+   * <p>Method under test: {@link MoonriseRegionFileIO#flush(MinecraftServer)}
+   */
+  @Test
+  @DisplayName(
+      "Test flush(MinecraftServer) with 'server'; given IllegalStateException(); then throw IllegalStateException")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void MoonriseRegionFileIO.flush(MinecraftServer)"})
+  void testFlushWithServer_givenIllegalStateException_thenThrowIllegalStateException() {
+    // Arrange
+    GameTestServer server = mock(GameTestServer.class);
+    when(server.getAllLevels()).thenThrow(new IllegalStateException());
+
+    // Act and Assert
+    assertThrows(IllegalStateException.class, () -> MoonriseRegionFileIO.flush(server));
+    verify(server).getAllLevels();
+  }
+
   /**
    * Test {@link MoonriseRegionFileIO#getIOBlockingPriorityForCurrentThread()}.
    *

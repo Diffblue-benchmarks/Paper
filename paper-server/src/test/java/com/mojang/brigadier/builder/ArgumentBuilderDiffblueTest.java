@@ -3,8 +3,10 @@ package com.mojang.brigadier.builder;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.isA;
+import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -23,10 +25,19 @@ import java.util.function.Predicate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.spongepowered.configurate.transformation.ConfigurationTransformation;
 
+@ExtendWith(MockitoExtension.class)
 class ArgumentBuilderDiffblueTest {
+  @Mock private CommandNode<Object> commandNode;
+
+  @InjectMocks private LiteralArgumentBuilder<Object> literalArgumentBuilder;
+
   /**
    * Test {@link ArgumentBuilder#defaultRequirement()}.
    *
@@ -189,6 +200,55 @@ class ArgumentBuilderDiffblueTest {
   }
 
   /**
+   * Test {@link ArgumentBuilder#then(CommandNode)} with {@code CommandNode}.
+   *
+   * <ul>
+   *   <li>Then return {@link LiteralArgumentBuilder}.
+   * </ul>
+   *
+   * <p>Method under test: {@link ArgumentBuilder#then(CommandNode)}
+   */
+  @Test
+  @DisplayName("Test then(CommandNode) with 'CommandNode'; then return LiteralArgumentBuilder")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"ArgumentBuilder ArgumentBuilder.then(CommandNode)"})
+  void testThenWithCommandNode_thenReturnLiteralArgumentBuilder() {
+    // Arrange
+    when(commandNode.getName()).thenReturn("Name");
+
+    // Act
+    LiteralArgumentBuilder<Object> actualThenResult = literalArgumentBuilder.then(commandNode);
+
+    // Assert
+    verify(commandNode, atLeast(1)).getName();
+    assertSame(literalArgumentBuilder, actualThenResult);
+  }
+
+  /**
+   * Test {@link ArgumentBuilder#then(CommandNode)} with {@code CommandNode}.
+   *
+   * <ul>
+   *   <li>Then throw {@link IllegalStateException}.
+   * </ul>
+   *
+   * <p>Method under test: {@link ArgumentBuilder#then(CommandNode)}
+   */
+  @Test
+  @DisplayName("Test then(CommandNode) with 'CommandNode'; then throw IllegalStateException")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"ArgumentBuilder ArgumentBuilder.then(CommandNode)"})
+  void testThenWithCommandNode_thenThrowIllegalStateException() {
+    // Arrange
+    when(commandNode.getName()).thenThrow(new IllegalStateException());
+
+    // Act and Assert
+    assertThrows(IllegalStateException.class, () -> literalArgumentBuilder.then(commandNode));
+    verify(commandNode).getName();
+  }
+
+  /**
    * Test {@link ArgumentBuilder#getArguments()}.
    *
    * <p>Method under test: {@link ArgumentBuilder#getArguments()}
@@ -232,18 +292,14 @@ class ArgumentBuilderDiffblueTest {
   /**
    * Test {@link ArgumentBuilder#getCommand()}.
    *
-   * <ul>
-   *   <li>Then return {@code null}.
-   * </ul>
-   *
    * <p>Method under test: {@link ArgumentBuilder#getCommand()}
    */
   @Test
-  @DisplayName("Test getCommand(); then return 'null'")
+  @DisplayName("Test getCommand()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"Command ArgumentBuilder.getCommand()"})
-  void testGetCommand_thenReturnNull() {
+  void testGetCommand() {
     // Arrange
     LiteralArgumentBuilder<Object> literalResult = LiteralArgumentBuilder.literal("Name");
 
@@ -610,18 +666,14 @@ class ArgumentBuilderDiffblueTest {
   /**
    * Test {@link ArgumentBuilder#getRedirectModifier()}.
    *
-   * <ul>
-   *   <li>Then return {@code null}.
-   * </ul>
-   *
    * <p>Method under test: {@link ArgumentBuilder#getRedirectModifier()}
    */
   @Test
-  @DisplayName("Test getRedirectModifier(); then return 'null'")
+  @DisplayName("Test getRedirectModifier()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"RedirectModifier ArgumentBuilder.getRedirectModifier()"})
-  void testGetRedirectModifier_thenReturnNull() {
+  void testGetRedirectModifier() {
     // Arrange
     LiteralArgumentBuilder<Object> literalResult = LiteralArgumentBuilder.literal("Name");
 

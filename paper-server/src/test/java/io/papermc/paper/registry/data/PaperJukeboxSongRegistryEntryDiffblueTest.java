@@ -87,6 +87,7 @@ class PaperJukeboxSongRegistryEntryDiffblueTest {
     OptionalInt optionalInt = actualPaperJukeboxSongRegistryEntry.comparatorOutput;
     assertEquals(1, optionalInt.getAsInt());
     assertEquals(10.0f, actualPaperJukeboxSongRegistryEntry.lengthInSeconds.floatValue());
+    assertFalse(optionalInt.isEmpty());
     assertTrue(optionalInt.isPresent());
     assertSame(soundEvent, holder.value());
     net.minecraft.network.chat.Component expectedDescriptionResult =
@@ -127,7 +128,9 @@ class PaperJukeboxSongRegistryEntryDiffblueTest {
     assertNull(actualPaperJukeboxSongRegistryEntry.lengthInSeconds);
     assertNull(actualPaperJukeboxSongRegistryEntry.soundEvent);
     assertNull(actualPaperJukeboxSongRegistryEntry.description);
-    assertFalse(actualPaperJukeboxSongRegistryEntry.comparatorOutput.isPresent());
+    OptionalInt optionalInt = actualPaperJukeboxSongRegistryEntry.comparatorOutput;
+    assertFalse(optionalInt.isPresent());
+    assertTrue(optionalInt.isEmpty());
   }
 
   /**
@@ -270,6 +273,7 @@ class PaperJukeboxSongRegistryEntryDiffblueTest {
     OptionalInt optionalInt = actualPaperBuilder.comparatorOutput;
     assertEquals(1, optionalInt.getAsInt());
     assertEquals(10.0f, actualPaperBuilder.lengthInSeconds.floatValue());
+    assertFalse(optionalInt.isEmpty());
     assertTrue(optionalInt.isPresent());
     assertSame(soundEvent, holder.value());
     net.minecraft.network.chat.Component expectedDescriptionResult = actualPaperBuilder.description;
@@ -306,7 +310,9 @@ class PaperJukeboxSongRegistryEntryDiffblueTest {
     assertNull(actualPaperBuilder.lengthInSeconds);
     assertNull(actualPaperBuilder.soundEvent);
     assertNull(actualPaperBuilder.description);
-    assertFalse(actualPaperBuilder.comparatorOutput.isPresent());
+    OptionalInt optionalInt = actualPaperBuilder.comparatorOutput;
+    assertFalse(optionalInt.isPresent());
+    assertTrue(optionalInt.isEmpty());
   }
 
   /**

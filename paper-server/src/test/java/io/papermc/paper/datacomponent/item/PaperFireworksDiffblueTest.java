@@ -8,6 +8,7 @@ import com.diffblue.cover.annotations.MethodsUnderTest;
 import io.papermc.paper.datacomponent.item.Fireworks.Builder;
 import io.papermc.paper.datacomponent.item.PaperFireworks.BuilderImpl;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -101,5 +102,97 @@ class PaperFireworksDiffblueTest {
     assertEquals(0, handle.flightDuration());
     assertTrue(handle.explosions().isEmpty());
     assertSame(handle, ((PaperFireworks) fireworks).impl());
+  }
+
+  /**
+   * Test {@link PaperFireworks#getHandle()}.
+   *
+   * <p>Method under test: {@link PaperFireworks#getHandle()}
+   */
+  @Test
+  @DisplayName("Test getHandle()")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"net.minecraft.world.item.component.Fireworks PaperFireworks.getHandle()"})
+  void testGetHandle() {
+    // Arrange
+    net.minecraft.world.item.component.Fireworks impl =
+        new net.minecraft.world.item.component.Fireworks(1, new ArrayList<>());
+
+    // Act and Assert
+    assertSame(impl, new PaperFireworks(impl).getHandle());
+  }
+
+  /**
+   * Test {@link PaperFireworks#effects()}.
+   *
+   * <ul>
+   *   <li>Given {@link net.minecraft.world.item.component.Fireworks#Fireworks(int, List)} with
+   *       flightDuration is one and explosions is {@link ArrayList#ArrayList()}.
+   * </ul>
+   *
+   * <p>Method under test: {@link PaperFireworks#effects()}
+   */
+  @Test
+  @DisplayName(
+      "Test effects(); given Fireworks(int, List) with flightDuration is one and explosions is ArrayList()")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"List PaperFireworks.effects()"})
+  void testEffects_givenFireworksWithFlightDurationIsOneAndExplosionsIsArrayList() {
+    // Arrange
+    net.minecraft.world.item.component.Fireworks impl =
+        new net.minecraft.world.item.component.Fireworks(1, new ArrayList<>());
+
+    // Act and Assert
+    assertTrue(new PaperFireworks(impl).effects().isEmpty());
+  }
+
+  /**
+   * Test {@link PaperFireworks#effects()}.
+   *
+   * <ul>
+   *   <li>Given {@link net.minecraft.world.item.component.Fireworks#Fireworks(int, List)} with
+   *       flightDuration is one and explosions is {@link LinkedList#LinkedList()}.
+   * </ul>
+   *
+   * <p>Method under test: {@link PaperFireworks#effects()}
+   */
+  @Test
+  @DisplayName(
+      "Test effects(); given Fireworks(int, List) with flightDuration is one and explosions is LinkedList()")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"List PaperFireworks.effects()"})
+  void testEffects_givenFireworksWithFlightDurationIsOneAndExplosionsIsLinkedList() {
+    // Arrange
+    net.minecraft.world.item.component.Fireworks impl =
+        new net.minecraft.world.item.component.Fireworks(1, new LinkedList<>());
+
+    // Act and Assert
+    assertTrue(new PaperFireworks(impl).effects().isEmpty());
+  }
+
+  /**
+   * Test {@link PaperFireworks#flightDuration()}.
+   *
+   * <ul>
+   *   <li>Then return one.
+   * </ul>
+   *
+   * <p>Method under test: {@link PaperFireworks#flightDuration()}
+   */
+  @Test
+  @DisplayName("Test flightDuration(); then return one")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"int PaperFireworks.flightDuration()"})
+  void testFlightDuration_thenReturnOne() {
+    // Arrange
+    net.minecraft.world.item.component.Fireworks impl =
+        new net.minecraft.world.item.component.Fireworks(1, new ArrayList<>());
+
+    // Act and Assert
+    assertEquals(1, new PaperFireworks(impl).flightDuration());
   }
 }

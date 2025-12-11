@@ -64,13 +64,9 @@ class PaperReflectionDiffblueTest {
     PaperReflection paperReflection = new PaperReflection();
     Class<Object> clazz = Object.class;
     Class<Object> forNameResult = Object.class;
-    Class<?>[] parameterTypes = new Class[] {forNameResult};
 
     // Act and Assert
-    assertEquals("Name", paperReflection.mapDeclaredMethodName(clazz, "Name", parameterTypes));
-    assertEquals(1, parameterTypes.length);
-    Class<Object> expectedResultClass = Object.class;
-    assertEquals(expectedResultClass, parameterTypes[0]);
+    assertEquals("Name", paperReflection.mapDeclaredMethodName(clazz, "Name", forNameResult));
   }
 
   /**
@@ -93,13 +89,9 @@ class PaperReflectionDiffblueTest {
     PaperReflection paperReflection = new PaperReflection();
     Class<Object> clazz = Object.class;
     Class<Object> forNameResult = Object.class;
-    Class<?>[] parameterTypes = new Class[] {forNameResult};
 
     // Act and Assert
-    assertEquals("Name", paperReflection.mapMethodName(clazz, "Name", parameterTypes));
-    assertEquals(1, parameterTypes.length);
-    Class<Object> expectedResultClass = Object.class;
-    assertEquals(expectedResultClass, parameterTypes[0]);
+    assertEquals("Name", paperReflection.mapMethodName(clazz, "Name", forNameResult));
   }
 
   /**

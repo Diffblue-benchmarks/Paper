@@ -43,20 +43,20 @@ class IntOrDiffblueTest {
    * Test Disabled {@link Disabled#enabled()}.
    *
    * <ul>
-   *   <li>Given {@link OptionalInt} with four.
+   *   <li>Given {@link OptionalInt} with forty-two.
    *   <li>Then return {@code true}.
    * </ul>
    *
    * <p>Method under test: {@link Disabled#enabled()}
    */
   @Test
-  @DisplayName("Test Disabled enabled(); given OptionalInt with four; then return 'true'")
+  @DisplayName("Test Disabled enabled(); given OptionalInt with forty-two; then return 'true'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"boolean Disabled.enabled()"})
-  void testDisabledEnabled_givenOptionalIntWithFour_thenReturnTrue() {
+  void testDisabledEnabled_givenOptionalIntWithFortyTwo_thenReturnTrue() {
     // Arrange
-    OptionalInt value = OptionalInt.of(4);
+    OptionalInt value = OptionalInt.of(42);
 
     // Act and Assert
     assertTrue(new Disabled(value).enabled());
@@ -103,7 +103,7 @@ class IntOrDiffblueTest {
   @MethodsUnderTest({"boolean Disabled.test(IntPredicate)"})
   void testDisabledTest_givenFalse_whenIntPredicateTestReturnFalse_thenReturnFalse() {
     // Arrange
-    OptionalInt value = OptionalInt.of(1);
+    OptionalInt value = OptionalInt.of(42);
     Disabled disabled = new Disabled(value);
 
     IntPredicate predicate = mock(IntPredicate.class);
@@ -113,7 +113,7 @@ class IntOrDiffblueTest {
     boolean actualTestResult = disabled.test(predicate);
 
     // Assert
-    verify(predicate).test(1);
+    verify(predicate).test(42);
     assertFalse(actualTestResult);
   }
 
@@ -136,7 +136,7 @@ class IntOrDiffblueTest {
   @MethodsUnderTest({"boolean Disabled.test(IntPredicate)"})
   void testDisabledTest_givenTrue_whenIntPredicateTestReturnTrue_thenReturnTrue() {
     // Arrange
-    OptionalInt value = OptionalInt.of(1);
+    OptionalInt value = OptionalInt.of(42);
     Disabled disabled = new Disabled(value);
 
     IntPredicate predicate = mock(IntPredicate.class);
@@ -146,7 +146,7 @@ class IntOrDiffblueTest {
     boolean actualTestResult = disabled.test(predicate);
 
     // Assert
-    verify(predicate).test(1);
+    verify(predicate).test(42);
     assertTrue(actualTestResult);
   }
 
@@ -195,47 +195,20 @@ class IntOrDiffblueTest {
    * Test {@link IntOr#isDefined()}.
    *
    * <ul>
-   *   <li>Given {@link IntOr} {@link IntOr#isDefined()} return {@code true}.
-   *   <li>Then calls {@link IntOr#isDefined()}.
-   * </ul>
-   *
-   * <p>Method under test: {@link IntOr#isDefined()}
-   */
-  @Test
-  @DisplayName("Test isDefined(); given IntOr isDefined() return 'true'; then calls isDefined()")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"boolean IntOr.isDefined()"})
-  void testIsDefined_givenIntOrIsDefinedReturnTrue_thenCallsIsDefined() {
-    // Arrange
-    IntOr intOr = mock(IntOr.class);
-    when(intOr.isDefined()).thenReturn(true);
-
-    // Act
-    intOr.isDefined();
-
-    // Assert
-    verify(intOr).isDefined();
-  }
-
-  /**
-   * Test {@link IntOr#isDefined()}.
-   *
-   * <ul>
-   *   <li>Given {@link OptionalInt} with four.
+   *   <li>Given {@link OptionalInt} with forty-two.
    *   <li>Then return {@code true}.
    * </ul>
    *
    * <p>Method under test: {@link IntOr#isDefined()}
    */
   @Test
-  @DisplayName("Test isDefined(); given OptionalInt with four; then return 'true'")
+  @DisplayName("Test isDefined(); given OptionalInt with forty-two; then return 'true'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"boolean IntOr.isDefined()"})
-  void testIsDefined_givenOptionalIntWithFour_thenReturnTrue() {
+  void testIsDefined_givenOptionalIntWithFortyTwo_thenReturnTrue() {
     // Arrange
-    OptionalInt value = OptionalInt.of(4);
+    OptionalInt value = OptionalInt.of(42);
 
     // Act and Assert
     assertTrue(new Default(value).isDefined());
@@ -245,22 +218,22 @@ class IntOrDiffblueTest {
    * Test {@link IntOr#intValue()}.
    *
    * <ul>
-   *   <li>Given {@link OptionalInt} with one.
-   *   <li>Then return one.
+   *   <li>Given {@link OptionalInt} with forty-two.
+   *   <li>Then return forty-two.
    * </ul>
    *
    * <p>Method under test: {@link IntOr#intValue()}
    */
   @Test
-  @DisplayName("Test intValue(); given OptionalInt with one; then return one")
+  @DisplayName("Test intValue(); given OptionalInt with forty-two; then return forty-two")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"int IntOr.intValue()"})
-  void testIntValue_givenOptionalIntWithOne_thenReturnOne() {
+  void testIntValue_givenOptionalIntWithFortyTwo_thenReturnFortyTwo() {
     // Arrange
-    OptionalInt value = OptionalInt.of(1);
+    OptionalInt value = OptionalInt.of(42);
 
     // Act and Assert
-    assertEquals(1, new Default(value).intValue());
+    assertEquals(42, new Default(value).intValue());
   }
 }

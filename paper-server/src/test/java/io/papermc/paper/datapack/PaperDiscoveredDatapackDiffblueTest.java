@@ -25,6 +25,7 @@ import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.Pack.Metadata;
 import net.minecraft.server.packs.repository.Pack.Position;
 import net.minecraft.server.packs.repository.PackCompatibility;
+import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.server.players.OldUsersConverter;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.flag.FeatureFlags;
@@ -382,5 +383,40 @@ class PaperDiscoveredDatapackDiffblueTest {
     assertTrue(actualSource instanceof DatapackSourceImpl);
     assertEquals("plugin", ((DatapackSourceImpl) actualSource).name());
     assertEquals("plugin", actualSource.toString());
+  }
+
+  /**
+   * Test {@link PaperDiscoveredDatapack#getSource()}.
+   *
+   * <ul>
+   *   <li>Then return {@code null}.
+   * </ul>
+   *
+   * <p>Method under test: {@link PaperDiscoveredDatapack#getSource()}
+   */
+  @Test
+  @DisplayName("Test getSource(); then return 'null'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"DatapackSource PaperDiscoveredDatapack.getSource()"})
+  void testGetSource_thenReturnNull() {
+    // Arrange
+    AdventureComponent title = new AdventureComponent(mock(Component.class));
+    PackSource source = mock(PackSource.class);
+    KnownPack knownPack = new KnownPack("Namespace", "42", "1.0.2");
+    Optional<KnownPack> knownPackInfo = Optional.of(knownPack);
+
+    PackLocationInfo location = new PackLocationInfo("42", title, source, knownPackInfo);
+    FileResourcesSupplier resources = new FileResourcesSupplier(OldUsersConverter.OLD_IPBANLIST);
+    AdventureComponent description = new AdventureComponent(mock(Component.class));
+    Metadata metadata =
+        new Metadata(
+            description, PackCompatibility.TOO_OLD, FeatureFlags.DEFAULT_FLAGS, new ArrayList<>());
+
+    Pack pack =
+        new Pack(location, resources, metadata, new PackSelectionConfig(true, Position.TOP, true));
+
+    // Act and Assert
+    assertNull(new PaperDiscoveredDatapack(pack).getSource());
   }
 }

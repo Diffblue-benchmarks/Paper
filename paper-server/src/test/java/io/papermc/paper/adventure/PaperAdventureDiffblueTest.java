@@ -692,18 +692,18 @@ class PaperAdventureDiffblueTest {
    * Test {@link PaperAdventure#asAdventure(ResourceLocation)} with {@code key}.
    *
    * <ul>
-   *   <li>Then return examinableName is {@code KeyImpl}.
+   *   <li>Then return asMinimalString is {@code argument.id.invalid}.
    * </ul>
    *
    * <p>Method under test: {@link PaperAdventure#asAdventure(ResourceLocation)}
    */
   @Test
   @DisplayName(
-      "Test asAdventure(ResourceLocation) with 'key'; then return examinableName is 'KeyImpl'")
+      "Test asAdventure(ResourceLocation) with 'key'; then return asMinimalString is 'argument.id.invalid'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"Key PaperAdventure.asAdventure(ResourceLocation)"})
-  void testAsAdventureWithKey_thenReturnExaminableNameIsKeyImpl() {
+  void testAsAdventureWithKey_thenReturnAsMinimalStringIsArgumentIdInvalid() {
     // Arrange and Act
     Key actualAsAdventureResult =
         PaperAdventure.asAdventure(ResourceLocation.withDefaultNamespace("argument.id.invalid"));
@@ -711,6 +711,35 @@ class PaperAdventureDiffblueTest {
     // Assert
     assertEquals("KeyImpl", actualAsAdventureResult.examinableName());
     assertEquals("argument.id.invalid", actualAsAdventureResult.asMinimalString());
+    Stream<? extends ExaminableProperty> examinablePropertiesResult =
+        actualAsAdventureResult.examinableProperties();
+    assertEquals(2, examinablePropertiesResult.limit(5).collect(Collectors.toList()).size());
+  }
+
+  /**
+   * Test {@link PaperAdventure#asAdventure(ResourceLocation)} with {@code key}.
+   *
+   * <ul>
+   *   <li>When withDefaultNamespace {@code 42}.
+   *   <li>Then return asMinimalString is {@code 42}.
+   * </ul>
+   *
+   * <p>Method under test: {@link PaperAdventure#asAdventure(ResourceLocation)}
+   */
+  @Test
+  @DisplayName(
+      "Test asAdventure(ResourceLocation) with 'key'; when withDefaultNamespace '42'; then return asMinimalString is '42'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"Key PaperAdventure.asAdventure(ResourceLocation)"})
+  void testAsAdventureWithKey_whenWithDefaultNamespace42_thenReturnAsMinimalStringIs42() {
+    // Arrange and Act
+    Key actualAsAdventureResult =
+        PaperAdventure.asAdventure(ResourceLocation.withDefaultNamespace("42"));
+
+    // Assert
+    assertEquals("42", actualAsAdventureResult.asMinimalString());
+    assertEquals("KeyImpl", actualAsAdventureResult.examinableName());
     Stream<? extends ExaminableProperty> examinablePropertiesResult =
         actualAsAdventureResult.examinableProperties();
     assertEquals(2, examinablePropertiesResult.limit(5).collect(Collectors.toList()).size());
@@ -2013,17 +2042,51 @@ class PaperAdventureDiffblueTest {
    * Test {@link PaperAdventure#asAdventureKey(ResourceKey)}.
    *
    * <ul>
-   *   <li>Then return examinableName is {@code KeyImpl}.
+   *   <li>Given withDefaultNamespace {@code 42}.
+   *   <li>Then return asMinimalString is {@code 42}.
    * </ul>
    *
    * <p>Method under test: {@link PaperAdventure#asAdventureKey(ResourceKey)}
    */
   @Test
-  @DisplayName("Test asAdventureKey(ResourceKey); then return examinableName is 'KeyImpl'")
+  @DisplayName(
+      "Test asAdventureKey(ResourceKey); given withDefaultNamespace '42'; then return asMinimalString is '42'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"Key PaperAdventure.asAdventureKey(ResourceKey)"})
-  void testAsAdventureKey_thenReturnExaminableNameIsKeyImpl() {
+  void testAsAdventureKey_givenWithDefaultNamespace42_thenReturnAsMinimalStringIs42() {
+    // Arrange
+    ResourceKey<?> key = mock(ResourceKey.class);
+    when(key.location()).thenReturn(ResourceLocation.withDefaultNamespace("42"));
+
+    // Act
+    Key actualAsAdventureKeyResult = PaperAdventure.asAdventureKey(key);
+
+    // Assert
+    verify(key).location();
+    assertEquals("42", actualAsAdventureKeyResult.asMinimalString());
+    assertEquals("KeyImpl", actualAsAdventureKeyResult.examinableName());
+    Stream<? extends ExaminableProperty> examinablePropertiesResult =
+        actualAsAdventureKeyResult.examinableProperties();
+    assertEquals(2, examinablePropertiesResult.limit(5).collect(Collectors.toList()).size());
+  }
+
+  /**
+   * Test {@link PaperAdventure#asAdventureKey(ResourceKey)}.
+   *
+   * <ul>
+   *   <li>Then return asMinimalString is {@code argument.id.invalid}.
+   * </ul>
+   *
+   * <p>Method under test: {@link PaperAdventure#asAdventureKey(ResourceKey)}
+   */
+  @Test
+  @DisplayName(
+      "Test asAdventureKey(ResourceKey); then return asMinimalString is 'argument.id.invalid'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"Key PaperAdventure.asAdventureKey(ResourceKey)"})
+  void testAsAdventureKey_thenReturnAsMinimalStringIsArgumentIdInvalid() {
     // Arrange
     ResourceKey<?> key = mock(ResourceKey.class);
     when(key.location()).thenReturn(ResourceLocation.withDefaultNamespace("argument.id.invalid"));

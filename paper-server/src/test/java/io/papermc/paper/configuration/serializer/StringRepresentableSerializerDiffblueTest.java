@@ -2,13 +2,16 @@ package io.papermc.paper.configuration.serializer;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.mock;
 import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
 import com.fasterxml.jackson.databind.type.PlaceholderForType;
 import com.mojang.serialization.codecs.KeyDispatchCodec;
+import io.leangen.geantyref.TypeToken;
 import io.papermc.paper.adventure.AdventureCodecs;
 import io.papermc.paper.adventure.AdventureCodecs.ClickEventType;
+import java.lang.reflect.AnnotatedType;
 import java.lang.reflect.Type;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -20,6 +23,25 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 class StringRepresentableSerializerDiffblueTest {
+  /**
+   * Test new {@link StringRepresentableSerializer} (default constructor).
+   *
+   * <p>Method under test: default or parameterless constructor of {@link
+   * StringRepresentableSerializer}
+   */
+  @Test
+  @DisplayName("Test new StringRepresentableSerializer (default constructor)")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void StringRepresentableSerializer.<init>()"})
+  void testNewStringRepresentableSerializer() {
+    // Arrange, Act and Assert
+    TypeToken<StringRepresentable> typeResult = new StringRepresentableSerializer().type();
+    AnnotatedType annotatedType = typeResult.getAnnotatedType();
+    assertNull(annotatedType.getAnnotatedOwnerType());
+    assertEquals(annotatedType, typeResult.getCanonicalType());
+  }
+
   /**
    * Test {@link StringRepresentableSerializer#isValidFor(Type)}.
    *

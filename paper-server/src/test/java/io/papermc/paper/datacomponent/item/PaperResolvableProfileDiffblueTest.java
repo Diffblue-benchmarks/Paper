@@ -743,7 +743,7 @@ class PaperResolvableProfileDiffblueTest {
     // Arrange
     PropertyMap properties = new PropertyMap();
     properties.put("Key", null);
-    Optional<String> name = Optional.of("foo");
+    Optional<String> name = Optional.of("42");
     Optional<UUID> id = Optional.of(Util.NIL_UUID);
 
     net.minecraft.world.item.component.ResolvableProfile impl =
@@ -800,7 +800,7 @@ class PaperResolvableProfileDiffblueTest {
     PropertyMap properties = new PropertyMap();
     Property property = new Property("Name", "42", "Signature");
     properties.put("Key", property);
-    Optional<String> name = Optional.of("foo");
+    Optional<String> name = Optional.of("42");
     Optional<UUID> id = Optional.of(Util.NIL_UUID);
 
     net.minecraft.world.item.component.ResolvableProfile impl =
@@ -814,8 +814,8 @@ class PaperResolvableProfileDiffblueTest {
     Collection<Entry<String, Property>> entriesResult = properties2.entries();
     assertEquals(1, entriesResult.size());
     assertTrue(entriesResult instanceof Set);
-    assertEquals("foo", getResult.getName());
-    assertEquals("foo", gameProfile.getName());
+    assertEquals("42", getResult.getName());
+    assertEquals("42", gameProfile.getName());
     assertEquals(1, properties2.size());
     assertEquals(1, properties2.keys().size());
     assertEquals(1, getResult.getProperties().size());

@@ -2314,7 +2314,7 @@ class WalkerUtilsDiffblueTest {
     type.addStructureWalker(0, walker);
 
     JsonObject map = new JsonObject();
-    map.add("", new JsonArray(3));
+    map.add("", new JsonArray());
     map.add("Property", new JsonObject());
 
     // Act
@@ -2340,7 +2340,7 @@ class WalkerUtilsDiffblueTest {
   void testConvertValuesWithTypeDataPathFromVersionToVersion() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     MapType data = mock(MapType.class);
     when(data.getMap(Mockito.<String>any())).thenReturn(new JsonMapType(map, true));

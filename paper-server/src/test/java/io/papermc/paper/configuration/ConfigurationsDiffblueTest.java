@@ -1,11 +1,13 @@
 package io.papermc.paper.configuration;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.isA;
+import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -16,6 +18,7 @@ import io.papermc.paper.configuration.Configurations.ContextKey;
 import io.papermc.paper.configuration.Configurations.ContextMap;
 import io.papermc.paper.configuration.Configurations.ContextMap.Builder;
 import java.io.IOException;
+import java.lang.reflect.AnnotatedType;
 import java.lang.reflect.Type;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -61,7 +64,10 @@ class ConfigurationsDiffblueTest {
 
     // Assert
     assertEquals("Name", actualContextKey.name());
-    assertSame(type, actualContextKey.type().getType());
+    TypeToken<Object> typeResult = actualContextKey.type();
+    AnnotatedType annotatedType = typeResult.getAnnotatedType();
+    assertNull(annotatedType.getAnnotatedOwnerType());
+    assertEquals(annotatedType, typeResult.getCanonicalType());
   }
 
   /**
@@ -76,7 +82,8 @@ class ConfigurationsDiffblueTest {
   @MethodsUnderTest({"String ContextKey.toString()"})
   void testContextKeyToString() {
     // Arrange
-    ContextKey<Object> contextKey = new ContextKey<>((TypeToken<Object>) null, "Name");
+    Class<Object> type = Object.class;
+    ContextKey<Object> contextKey = new ContextKey<>(type, "Name");
 
     // Act and Assert
     assertEquals("ContextKey{Name}", contextKey.toString());
@@ -229,7 +236,7 @@ class ConfigurationsDiffblueTest {
     CheckedFunction<ConfigurationNode, Object, SerializationException> actualCreatorResult =
         Configurations.creator(type, false);
     ConfigurationNode configurationNode = mock(ConfigurationNode.class);
-    when(configurationNode.require(Mockito.<Class<Object>>any()))
+    when(configurationNode.require(Object.class))
         .thenReturn(ConfigurationTransformation.WILDCARD_OBJECT);
     actualCreatorResult.apply(configurationNode);
 
@@ -241,18 +248,19 @@ class ConfigurationsDiffblueTest {
    * Test {@link Configurations#creator(Class, boolean)}.
    *
    * <ul>
-   *   <li>When {@code true}.
+   *   <li>When {@code Object}.
    *   <li>Then calls {@link ConfigurationNode#set(Type, Object)}.
    * </ul>
    *
    * <p>Method under test: {@link Configurations#creator(Class, boolean)}
    */
   @Test
-  @DisplayName("Test creator(Class, boolean); when 'true'; then calls set(Type, Object)")
+  @DisplayName(
+      "Test creator(Class, boolean); when 'java.lang.Object'; then calls set(Type, Object)")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"CheckedFunction Configurations.creator(Class, boolean)"})
-  void testCreator_whenTrue_thenCallsSet() throws Exception {
+  void testCreator_whenJavaLangObject_thenCallsSet() throws Exception {
     // Arrange
     Class<Object> type = Object.class;
 
@@ -262,7 +270,7 @@ class ConfigurationsDiffblueTest {
     ConfigurationNode configurationNode = mock(ConfigurationNode.class);
     when(configurationNode.set(Mockito.<Type>any(), Mockito.<Object>any()))
         .thenReturn(mock(ConfigurationNode.class));
-    when(configurationNode.require(Mockito.<Class<Object>>any()))
+    when(configurationNode.require(Object.class))
         .thenReturn(ConfigurationTransformation.WILDCARD_OBJECT);
     actualCreatorResult.apply(configurationNode);
 
@@ -275,18 +283,42 @@ class ConfigurationsDiffblueTest {
    * Test {@link Configurations#creator(Class, boolean)}.
    *
    * <ul>
-   *   <li>When {@code true}.
+   *   <li>When {@code Object}.
+   *   <li>Then does not throw.
+   * </ul>
+   *
+   * <p>Method under test: {@link Configurations#creator(Class, boolean)}
+   */
+  @Test
+  @DisplayName("Test creator(Class, boolean); when 'java.lang.Object'; then does not throw")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"CheckedFunction Configurations.creator(Class, boolean)"})
+  void testCreator_whenJavaLangObject_thenDoesNotThrow() {
+    // Arrange
+    Class<Object> type = Object.class;
+
+    // Act
+    assertDoesNotThrow(() -> Configurations.creator(type, true));
+  }
+
+  /**
+   * Test {@link Configurations#creator(Class, boolean)}.
+   *
+   * <ul>
+   *   <li>When {@code Object}.
    *   <li>Then throw {@link IllegalStateException}.
    * </ul>
    *
    * <p>Method under test: {@link Configurations#creator(Class, boolean)}
    */
   @Test
-  @DisplayName("Test creator(Class, boolean); when 'true'; then throw IllegalStateException")
+  @DisplayName(
+      "Test creator(Class, boolean); when 'java.lang.Object'; then throw IllegalStateException")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"CheckedFunction Configurations.creator(Class, boolean)"})
-  void testCreator_whenTrue_thenThrowIllegalStateException() throws Exception {
+  void testCreator_whenJavaLangObject_thenThrowIllegalStateException() throws Exception {
     // Arrange
     Class<Object> type = Object.class;
 
@@ -294,12 +326,39 @@ class ConfigurationsDiffblueTest {
     CheckedFunction<ConfigurationNode, Object, SerializationException> actualCreatorResult =
         Configurations.creator(type, true);
     ConfigurationNode configurationNode = mock(ConfigurationNode.class);
-    when(configurationNode.require(Mockito.<Class<Object>>any()))
-        .thenThrow(new IllegalStateException());
+    when(configurationNode.require(Object.class)).thenThrow(new IllegalStateException());
 
     // Assert
     assertThrows(IllegalStateException.class, () -> actualCreatorResult.apply(configurationNode));
     verify(configurationNode).require(isA(Class.class));
+  }
+
+  /**
+   * Test {@link Configurations#creator(Class, boolean)}.
+   *
+   * <ul>
+   *   <li>When {@code null}.
+   *   <li>Then throw {@link IllegalStateException}.
+   * </ul>
+   *
+   * <p>Method under test: {@link Configurations#creator(Class, boolean)}
+   */
+  @Test
+  @DisplayName("Test creator(Class, boolean); when 'null'; then throw IllegalStateException")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"CheckedFunction Configurations.creator(Class, boolean)"})
+  void testCreator_whenNull_thenThrowIllegalStateException() throws Exception {
+    // Arrange and Act
+    CheckedFunction<ConfigurationNode, Object, SerializationException> actualCreatorResult =
+        Configurations.creator(null, true);
+    ConfigurationNode configurationNode = mock(ConfigurationNode.class);
+    when(configurationNode.set(Mockito.<Type>any(), Mockito.<Object>any()))
+        .thenThrow(new IllegalStateException());
+
+    // Assert
+    assertThrows(IllegalStateException.class, () -> actualCreatorResult.apply(configurationNode));
+    verify(configurationNode).set((Type) isNull(), (Object) isNull());
   }
 
   /**
@@ -333,6 +392,30 @@ class ConfigurationsDiffblueTest {
     assertThrows(IllegalStateException.class, () -> actualReloaderResult.apply(configurationNode));
     verify(configurationNode).options();
     verify(configurationOptions).serializers();
+  }
+
+  /**
+   * Test {@link Configurations#reloader(Class, Object)}.
+   *
+   * <ul>
+   *   <li>When {@code Object}.
+   *   <li>Then does not throw.
+   * </ul>
+   *
+   * <p>Method under test: {@link Configurations#reloader(Class, Object)}
+   */
+  @Test
+  @DisplayName("Test reloader(Class, Object); when 'java.lang.Object'; then does not throw")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"CheckedFunction Configurations.reloader(Class, Object)"})
+  void testReloader_whenJavaLangObject_thenDoesNotThrow() {
+    // Arrange
+    Class<Object> type = Object.class;
+
+    // Act
+    assertDoesNotThrow(
+        () -> Configurations.reloader(type, ConfigurationTransformation.WILDCARD_OBJECT));
   }
 
   /**
@@ -389,8 +472,7 @@ class ConfigurationsDiffblueTest {
 
     CheckedFunction<ConfigurationNode, GlobalConfiguration, SerializationException> creator =
         mock(CheckedFunction.class);
-    when(creator.apply(Mockito.<ConfigurationNode>any()))
-        .thenThrow(new ConfigurateException("An error occurred"));
+    when(creator.apply(Mockito.<ConfigurationNode>any())).thenThrow(new ConfigurateException());
 
     // Act and Assert
     assertThrows(

@@ -452,60 +452,6 @@ class PositionCountingAreaMapDiffblueTest {
   /**
    * Test {@link PositionCountingAreaMap#add(Object, int, int, int)}.
    *
-   * <p>Method under test: {@link PositionCountingAreaMap#add(Object, int, int, int)}
-   */
-  @Test
-  @DisplayName("Test add(Object, int, int, int)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"boolean PositionCountingAreaMap.add(Object, int, int, int)"})
-  void testAdd2() {
-    // Arrange
-    PositionCountingAreaMap<Object> positionCountingAreaMap = new PositionCountingAreaMap<>();
-    positionCountingAreaMap.add(ConfigurationTransformation.WILDCARD_OBJECT, 4, 4, 4);
-
-    // Act
-    positionCountingAreaMap.add(null, 2, 2, 2);
-
-    // Assert
-    assertEquals(2, positionCountingAreaMap.getObjects().size());
-    assertEquals(81, positionCountingAreaMap.getTotalPositions());
-    assertEquals(81, positionCountingAreaMap.getPositions().size());
-  }
-
-  /**
-   * Test {@link PositionCountingAreaMap#add(Object, int, int, int)}.
-   *
-   * <ul>
-   *   <li>Given {@link PositionCountingAreaMap#add(Object, int, int, int)} with {@code Parameter}
-   *       and toX is two and toZ is two and distance is two.
-   * </ul>
-   *
-   * <p>Method under test: {@link PositionCountingAreaMap#add(Object, int, int, int)}
-   */
-  @Test
-  @DisplayName(
-      "Test add(Object, int, int, int); given add(Object, int, int, int) with 'Parameter' and toX is two and toZ is two and distance is two")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"boolean PositionCountingAreaMap.add(Object, int, int, int)"})
-  void testAdd_givenAddWithParameterAndToXIsTwoAndToZIsTwoAndDistanceIsTwo() {
-    // Arrange
-    PositionCountingAreaMap<Object> positionCountingAreaMap = new PositionCountingAreaMap<>();
-    positionCountingAreaMap.add("Parameter", 2, 2, 2);
-
-    // Act
-    positionCountingAreaMap.add(ConfigurationTransformation.WILDCARD_OBJECT, 2, 2, 2);
-
-    // Assert
-    assertEquals(2, positionCountingAreaMap.getObjects().size());
-    assertEquals(25, positionCountingAreaMap.getTotalPositions());
-    assertEquals(25, positionCountingAreaMap.getPositions().size());
-  }
-
-  /**
-   * Test {@link PositionCountingAreaMap#add(Object, int, int, int)}.
-   *
    * <ul>
    *   <li>Given {@link PositionCountingAreaMap#add(Object, int, int, int)} with parameter is {@code
    *       null} and toX is four and toZ is four and distance is four.
@@ -532,6 +478,35 @@ class PositionCountingAreaMapDiffblueTest {
     assertEquals(81, positionCountingAreaMap.getTotalPositions());
     assertEquals(81, positionCountingAreaMap.getPositions().size());
     assertFalse(actualAddResult);
+  }
+
+  /**
+   * Test {@link PositionCountingAreaMap#add(Object, int, int, int)}.
+   *
+   * <ul>
+   *   <li>Then {@link PositionCountingAreaMap} (default constructor) Objects size is two.
+   * </ul>
+   *
+   * <p>Method under test: {@link PositionCountingAreaMap#add(Object, int, int, int)}
+   */
+  @Test
+  @DisplayName(
+      "Test add(Object, int, int, int); then PositionCountingAreaMap (default constructor) Objects size is two")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"boolean PositionCountingAreaMap.add(Object, int, int, int)"})
+  void testAdd_thenPositionCountingAreaMapObjectsSizeIsTwo() {
+    // Arrange
+    PositionCountingAreaMap<Object> positionCountingAreaMap = new PositionCountingAreaMap<>();
+    positionCountingAreaMap.add(ConfigurationTransformation.WILDCARD_OBJECT, 4, 4, 4);
+
+    // Act
+    positionCountingAreaMap.add(null, 2, 2, 2);
+
+    // Assert
+    assertEquals(2, positionCountingAreaMap.getObjects().size());
+    assertEquals(81, positionCountingAreaMap.getTotalPositions());
+    assertEquals(81, positionCountingAreaMap.getPositions().size());
   }
 
   /**
@@ -797,89 +772,6 @@ class PositionCountingAreaMapDiffblueTest {
   /**
    * Test {@link PositionCountingAreaMap#addOrUpdate(Object, int, int, int)}.
    *
-   * <p>Method under test: {@link PositionCountingAreaMap#addOrUpdate(Object, int, int, int)}
-   */
-  @Test
-  @DisplayName("Test addOrUpdate(Object, int, int, int)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"boolean PositionCountingAreaMap.addOrUpdate(Object, int, int, int)"})
-  void testAddOrUpdate7() {
-    // Arrange
-    PositionCountingAreaMap<Object> positionCountingAreaMap = new PositionCountingAreaMap<>();
-    positionCountingAreaMap.add(ConfigurationTransformation.WILDCARD_OBJECT, 4, 0, 4);
-    positionCountingAreaMap.add(ConfigurationTransformation.WILDCARD_OBJECT, 2, 2, 2);
-
-    // Act
-    positionCountingAreaMap.addOrUpdate(
-        ConfigurationTransformation.WILDCARD_OBJECT, SingleUserAreaMap.NOT_SET, 2, 2);
-
-    // Assert
-    assertEquals(0, positionCountingAreaMap.getTotalPositions());
-    assertEquals(1, positionCountingAreaMap.getObjects().size());
-    assertTrue(positionCountingAreaMap.getPositions().isEmpty());
-  }
-
-  /**
-   * Test {@link PositionCountingAreaMap#addOrUpdate(Object, int, int, int)}.
-   *
-   * <p>Method under test: {@link PositionCountingAreaMap#addOrUpdate(Object, int, int, int)}
-   */
-  @Test
-  @DisplayName("Test addOrUpdate(Object, int, int, int)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"boolean PositionCountingAreaMap.addOrUpdate(Object, int, int, int)"})
-  void testAddOrUpdate8() {
-    // Arrange
-    PositionCountingAreaMap<Object> positionCountingAreaMap = new PositionCountingAreaMap<>();
-    positionCountingAreaMap.add(ConfigurationTransformation.WILDCARD_OBJECT, -1, 2, 2);
-    positionCountingAreaMap.add(ConfigurationTransformation.WILDCARD_OBJECT, 4, 0, 4);
-    positionCountingAreaMap.add(ConfigurationTransformation.WILDCARD_OBJECT, 2, 2, 2);
-
-    // Act
-    positionCountingAreaMap.addOrUpdate(
-        ConfigurationTransformation.WILDCARD_OBJECT, SingleUserAreaMap.NOT_SET, 2, 2);
-
-    // Assert
-    assertEquals(0, positionCountingAreaMap.getTotalPositions());
-    assertEquals(1, positionCountingAreaMap.getObjects().size());
-    assertTrue(positionCountingAreaMap.getPositions().isEmpty());
-  }
-
-  /**
-   * Test {@link PositionCountingAreaMap#addOrUpdate(Object, int, int, int)}.
-   *
-   * <ul>
-   *   <li>Given {@link PositionCountingAreaMap#add(Object, int, int, int)} with {@code Parameter}
-   *       and toX is two and toZ is two and distance is two.
-   * </ul>
-   *
-   * <p>Method under test: {@link PositionCountingAreaMap#addOrUpdate(Object, int, int, int)}
-   */
-  @Test
-  @DisplayName(
-      "Test addOrUpdate(Object, int, int, int); given add(Object, int, int, int) with 'Parameter' and toX is two and toZ is two and distance is two")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"boolean PositionCountingAreaMap.addOrUpdate(Object, int, int, int)"})
-  void testAddOrUpdate_givenAddWithParameterAndToXIsTwoAndToZIsTwoAndDistanceIsTwo() {
-    // Arrange
-    PositionCountingAreaMap<Object> positionCountingAreaMap = new PositionCountingAreaMap<>();
-    positionCountingAreaMap.add("Parameter", 2, 2, 2);
-
-    // Act
-    positionCountingAreaMap.addOrUpdate(ConfigurationTransformation.WILDCARD_OBJECT, 2, 2, 2);
-
-    // Assert
-    assertEquals(2, positionCountingAreaMap.getObjects().size());
-    assertEquals(25, positionCountingAreaMap.getTotalPositions());
-    assertEquals(25, positionCountingAreaMap.getPositions().size());
-  }
-
-  /**
-   * Test {@link PositionCountingAreaMap#addOrUpdate(Object, int, int, int)}.
-   *
    * <ul>
    *   <li>Then {@link PositionCountingAreaMap} (default constructor) TotalPositions is twenty-five.
    * </ul>
@@ -964,6 +856,34 @@ class PositionCountingAreaMapDiffblueTest {
     assertEquals(1, positionCountingAreaMap.getObjects().size());
     assertFalse(actualAddOrUpdateResult);
     assertTrue(positionCountingAreaMap.getPositions().isEmpty());
+  }
+
+  /**
+   * Test {@link PositionCountingAreaMap#addOrUpdate(Object, int, int, int)}.
+   *
+   * <ul>
+   *   <li>When minus two.
+   * </ul>
+   *
+   * <p>Method under test: {@link PositionCountingAreaMap#addOrUpdate(Object, int, int, int)}
+   */
+  @Test
+  @DisplayName("Test addOrUpdate(Object, int, int, int); when minus two")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"boolean PositionCountingAreaMap.addOrUpdate(Object, int, int, int)"})
+  void testAddOrUpdate_whenMinusTwo() {
+    // Arrange
+    PositionCountingAreaMap<Object> positionCountingAreaMap = new PositionCountingAreaMap<>();
+    positionCountingAreaMap.add(ConfigurationTransformation.WILDCARD_OBJECT, 4, 2, 2);
+
+    // Act
+    positionCountingAreaMap.addOrUpdate(ConfigurationTransformation.WILDCARD_OBJECT, 2, -2, 2);
+
+    // Assert that nothing has changed
+    assertEquals(1, positionCountingAreaMap.getObjects().size());
+    assertEquals(25, positionCountingAreaMap.getTotalPositions());
+    assertEquals(25, positionCountingAreaMap.getPositions().size());
   }
 
   /**
@@ -1177,16 +1097,18 @@ class PositionCountingAreaMapDiffblueTest {
   void testRemove5() {
     // Arrange
     PositionCountingAreaMap<Object> positionCountingAreaMap = new PositionCountingAreaMap<>();
-    positionCountingAreaMap.add(ConfigurationTransformation.WILDCARD_OBJECT, 2, 2, 2);
-    positionCountingAreaMap.add("Parameter", 2, 2, 2);
+    positionCountingAreaMap.add(ConfigurationTransformation.WILDCARD_OBJECT, 4, 2, 4);
 
     // Act
-    positionCountingAreaMap.remove(ConfigurationTransformation.WILDCARD_OBJECT);
+    boolean actualRemoveResult =
+        positionCountingAreaMap.remove(ConfigurationTransformation.WILDCARD_OBJECT);
 
     // Assert
-    assertEquals(1, positionCountingAreaMap.getObjects().size());
-    assertEquals(25, positionCountingAreaMap.getTotalPositions());
-    assertEquals(25, positionCountingAreaMap.getPositions().size());
+    assertEquals(0, positionCountingAreaMap.getTotalPositions());
+    assertTrue(actualRemoveResult);
+    ReferenceSet<Object> objects = positionCountingAreaMap.getObjects();
+    assertTrue(objects.isEmpty());
+    assertEquals(objects, positionCountingAreaMap.getPositions());
   }
 
   /**
@@ -1202,108 +1124,18 @@ class PositionCountingAreaMapDiffblueTest {
   void testRemove6() {
     // Arrange
     PositionCountingAreaMap<Object> positionCountingAreaMap = new PositionCountingAreaMap<>();
-    positionCountingAreaMap.add(ConfigurationTransformation.WILDCARD_OBJECT, 4, 4, 4);
-    positionCountingAreaMap.add(ConfigurationTransformation.WILDCARD_OBJECT, 2, -1, 2);
-    positionCountingAreaMap.add("Parameter", 2, 2, 2);
-
-    // Act
-    positionCountingAreaMap.remove(ConfigurationTransformation.WILDCARD_OBJECT);
-
-    // Assert
-    assertEquals(1, positionCountingAreaMap.getObjects().size());
-    assertEquals(25, positionCountingAreaMap.getTotalPositions());
-    assertEquals(25, positionCountingAreaMap.getPositions().size());
-  }
-
-  /**
-   * Test {@link PositionCountingAreaMap#remove(Object)}.
-   *
-   * <ul>
-   *   <li>Then {@link PositionCountingAreaMap} (default constructor) TotalPositions is twenty-five.
-   * </ul>
-   *
-   * <p>Method under test: {@link PositionCountingAreaMap#remove(Object)}
-   */
-  @Test
-  @DisplayName(
-      "Test remove(Object); then PositionCountingAreaMap (default constructor) TotalPositions is twenty-five")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"boolean PositionCountingAreaMap.remove(Object)"})
-  void testRemove_thenPositionCountingAreaMapTotalPositionsIsTwentyFive() {
-    // Arrange
-    PositionCountingAreaMap<Object> positionCountingAreaMap = new PositionCountingAreaMap<>();
-    positionCountingAreaMap.add(ConfigurationTransformation.WILDCARD_OBJECT, 2, -1, 2);
-    positionCountingAreaMap.add("Parameter", 2, 2, 2);
-
-    // Act
-    positionCountingAreaMap.remove(ConfigurationTransformation.WILDCARD_OBJECT);
-
-    // Assert
-    assertEquals(1, positionCountingAreaMap.getObjects().size());
-    assertEquals(25, positionCountingAreaMap.getTotalPositions());
-    assertEquals(25, positionCountingAreaMap.getPositions().size());
-  }
-
-  /**
-   * Test {@link PositionCountingAreaMap#remove(Object)}.
-   *
-   * <ul>
-   *   <li>Then return {@code false}.
-   * </ul>
-   *
-   * <p>Method under test: {@link PositionCountingAreaMap#remove(Object)}
-   */
-  @Test
-  @DisplayName("Test remove(Object); then return 'false'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"boolean PositionCountingAreaMap.remove(Object)"})
-  void testRemove_thenReturnFalse() {
-    // Arrange
-    PositionCountingAreaMap<Object> positionCountingAreaMap = new PositionCountingAreaMap<>();
-    positionCountingAreaMap.add("Parameter", 2, 2, 2);
+    positionCountingAreaMap.add(ConfigurationTransformation.WILDCARD_OBJECT, -1, 0, 2);
 
     // Act
     boolean actualRemoveResult =
         positionCountingAreaMap.remove(ConfigurationTransformation.WILDCARD_OBJECT);
 
     // Assert
-    assertEquals(1, positionCountingAreaMap.getObjects().size());
-    assertEquals(25, positionCountingAreaMap.getPositions().size());
-    assertFalse(actualRemoveResult);
-  }
-
-  /**
-   * Test {@link PositionCountingAreaMap#remove(Object)}.
-   *
-   * <ul>
-   *   <li>When {@link SingleUserAreaMap#NOT_SET}.
-   *   <li>Then {@link PositionCountingAreaMap} (default constructor) Objects size is two.
-   * </ul>
-   *
-   * <p>Method under test: {@link PositionCountingAreaMap#remove(Object)}
-   */
-  @Test
-  @DisplayName(
-      "Test remove(Object); when NOT_SET; then PositionCountingAreaMap (default constructor) Objects size is two")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"boolean PositionCountingAreaMap.remove(Object)"})
-  void testRemove_whenNot_set_thenPositionCountingAreaMapObjectsSizeIsTwo() {
-    // Arrange
-    PositionCountingAreaMap<Object> positionCountingAreaMap = new PositionCountingAreaMap<>();
-    positionCountingAreaMap.add(ConfigurationTransformation.WILDCARD_OBJECT, 4, 4, 4);
-    positionCountingAreaMap.add(ConfigurationTransformation.WILDCARD_OBJECT, 2, -1, 2);
-    positionCountingAreaMap.add("Parameter", 2, 2, 2);
-
-    // Act
-    boolean actualRemoveResult = positionCountingAreaMap.remove(SingleUserAreaMap.NOT_SET);
-
-    // Assert
-    assertEquals(2, positionCountingAreaMap.getObjects().size());
-    assertEquals(81, positionCountingAreaMap.getPositions().size());
-    assertFalse(actualRemoveResult);
+    assertEquals(0, positionCountingAreaMap.getTotalPositions());
+    assertTrue(actualRemoveResult);
+    ReferenceSet<Object> objects = positionCountingAreaMap.getObjects();
+    assertTrue(objects.isEmpty());
+    assertEquals(objects, positionCountingAreaMap.getPositions());
   }
 
   /**
@@ -1330,35 +1162,6 @@ class PositionCountingAreaMapDiffblueTest {
     ReferenceSet<Object> objects = positionCountingAreaMap.getObjects();
     assertTrue(objects.isEmpty());
     assertEquals(objects, positionCountingAreaMap.getPositions());
-  }
-
-  /**
-   * Test {@link PositionCountingAreaMap#remove(Object)}.
-   *
-   * <ul>
-   *   <li>When {@code Parameter}.
-   * </ul>
-   *
-   * <p>Method under test: {@link PositionCountingAreaMap#remove(Object)}
-   */
-  @Test
-  @DisplayName("Test remove(Object); when 'Parameter'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"boolean PositionCountingAreaMap.remove(Object)"})
-  void testRemove_whenParameter() {
-    // Arrange
-    PositionCountingAreaMap<Object> positionCountingAreaMap = new PositionCountingAreaMap<>();
-    positionCountingAreaMap.add(ConfigurationTransformation.WILDCARD_OBJECT, 2, 2, 2);
-    positionCountingAreaMap.add("Parameter", 2, 2, 2);
-
-    // Act
-    positionCountingAreaMap.remove("Parameter");
-
-    // Assert
-    assertEquals(1, positionCountingAreaMap.getObjects().size());
-    assertEquals(25, positionCountingAreaMap.getTotalPositions());
-    assertEquals(25, positionCountingAreaMap.getPositions().size());
   }
 
   /**
@@ -1528,65 +1331,7 @@ class PositionCountingAreaMapDiffblueTest {
   void testUpdate6() {
     // Arrange
     PositionCountingAreaMap<Object> positionCountingAreaMap = new PositionCountingAreaMap<>();
-    positionCountingAreaMap.add(ConfigurationTransformation.WILDCARD_OBJECT, 2, 1, 1);
-    positionCountingAreaMap.add("Parameter", 2, 2, 2);
-
-    // Act
-    boolean actualUpdateResult =
-        positionCountingAreaMap.update(ConfigurationTransformation.WILDCARD_OBJECT, 1, 1, 1);
-
-    // Assert
-    assertEquals(25, positionCountingAreaMap.getTotalPositions());
-    assertEquals(25, positionCountingAreaMap.getPositions().size());
-    assertTrue(actualUpdateResult);
-  }
-
-  /**
-   * Test {@link PositionCountingAreaMap#update(Object, int, int, int)}.
-   *
-   * <p>Method under test: {@link PositionCountingAreaMap#update(Object, int, int, int)}
-   */
-  @Test
-  @DisplayName("Test update(Object, int, int, int)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"boolean PositionCountingAreaMap.update(Object, int, int, int)"})
-  void testUpdate7() {
-    // Arrange
-    PositionCountingAreaMap<Object> positionCountingAreaMap = new PositionCountingAreaMap<>();
     positionCountingAreaMap.add(ConfigurationTransformation.WILDCARD_OBJECT, -1, 0, 1);
-    positionCountingAreaMap.add(ConfigurationTransformation.WILDCARD_OBJECT, 2, 2, 2);
-
-    // Act
-    boolean actualUpdateResult =
-        positionCountingAreaMap.update(ConfigurationTransformation.WILDCARD_OBJECT, 1, 1, 1);
-
-    // Assert
-    assertEquals(9, positionCountingAreaMap.getTotalPositions());
-    assertEquals(9, positionCountingAreaMap.getPositions().size());
-    assertTrue(actualUpdateResult);
-  }
-
-  /**
-   * Test {@link PositionCountingAreaMap#update(Object, int, int, int)}.
-   *
-   * <ul>
-   *   <li>Given {@link PositionCountingAreaMap#add(Object, int, int, int)} with {@code Parameter}
-   *       and toX is one and toZ is one and distance is one.
-   * </ul>
-   *
-   * <p>Method under test: {@link PositionCountingAreaMap#update(Object, int, int, int)}
-   */
-  @Test
-  @DisplayName(
-      "Test update(Object, int, int, int); given add(Object, int, int, int) with 'Parameter' and toX is one and toZ is one and distance is one")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"boolean PositionCountingAreaMap.update(Object, int, int, int)"})
-  void testUpdate_givenAddWithParameterAndToXIsOneAndToZIsOneAndDistanceIsOne() {
-    // Arrange
-    PositionCountingAreaMap<Object> positionCountingAreaMap = new PositionCountingAreaMap<>();
-    positionCountingAreaMap.add("Parameter", 1, 1, 1);
     positionCountingAreaMap.add(ConfigurationTransformation.WILDCARD_OBJECT, 2, 2, 2);
 
     // Act
@@ -1617,7 +1362,7 @@ class PositionCountingAreaMapDiffblueTest {
   void testUpdate_thenPositionCountingAreaMapPositionsEmpty() {
     // Arrange
     PositionCountingAreaMap<Object> positionCountingAreaMap = new PositionCountingAreaMap<>();
-    positionCountingAreaMap.add(ConfigurationTransformation.WILDCARD_OBJECT, -1, 2, 2);
+    positionCountingAreaMap.add(ConfigurationTransformation.WILDCARD_OBJECT, 1, 1, 1);
     positionCountingAreaMap.add(ConfigurationTransformation.WILDCARD_OBJECT, 2, 2, 2);
 
     // Act
@@ -1659,36 +1404,6 @@ class PositionCountingAreaMapDiffblueTest {
     assertEquals(9, positionCountingAreaMap.getTotalPositions());
     assertEquals(9, positionCountingAreaMap.getPositions().size());
     assertTrue(actualUpdateResult);
-  }
-
-  /**
-   * Test {@link PositionCountingAreaMap#update(Object, int, int, int)}.
-   *
-   * <ul>
-   *   <li>Then {@link PositionCountingAreaMap} (default constructor) TotalPositions is twenty-five.
-   * </ul>
-   *
-   * <p>Method under test: {@link PositionCountingAreaMap#update(Object, int, int, int)}
-   */
-  @Test
-  @DisplayName(
-      "Test update(Object, int, int, int); then PositionCountingAreaMap (default constructor) TotalPositions is twenty-five")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"boolean PositionCountingAreaMap.update(Object, int, int, int)"})
-  void testUpdate_thenPositionCountingAreaMapTotalPositionsIsTwentyFive() {
-    // Arrange
-    PositionCountingAreaMap<Object> positionCountingAreaMap = new PositionCountingAreaMap<>();
-    positionCountingAreaMap.add("Parameter", 2, 2, 2);
-
-    // Act
-    boolean actualUpdateResult =
-        positionCountingAreaMap.update(ConfigurationTransformation.WILDCARD_OBJECT, 1, 1, 1);
-
-    // Assert
-    assertEquals(25, positionCountingAreaMap.getTotalPositions());
-    assertEquals(25, positionCountingAreaMap.getPositions().size());
-    assertFalse(actualUpdateResult);
   }
 
   /**

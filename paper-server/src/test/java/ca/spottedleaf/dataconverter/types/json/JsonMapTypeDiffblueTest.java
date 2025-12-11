@@ -297,20 +297,23 @@ class JsonMapTypeDiffblueTest {
    * Test {@link JsonMapType#isEmpty()}.
    *
    * <ul>
+   *   <li>Given {@link JsonObject} (default constructor) add {@code Property} and {@link
+   *       JsonArray#JsonArray()}.
    *   <li>Then return {@code false}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#isEmpty()}
    */
   @Test
-  @DisplayName("Test isEmpty(); then return 'false'")
+  @DisplayName(
+      "Test isEmpty(); given JsonObject (default constructor) add 'Property' and JsonArray(); then return 'false'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"boolean JsonMapType.isEmpty()"})
-  void testIsEmpty_thenReturnFalse() {
+  void testIsEmpty_givenJsonObjectAddPropertyAndJsonArray_thenReturnFalse() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertFalse(new JsonMapType(map, true).isEmpty());
@@ -368,20 +371,23 @@ class JsonMapTypeDiffblueTest {
    * Test {@link JsonMapType#keys()}.
    *
    * <ul>
+   *   <li>Given {@link JsonObject} (default constructor) add {@code Property} and {@link
+   *       JsonArray#JsonArray()}.
    *   <li>Then return size is one.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#keys()}
    */
   @Test
-  @DisplayName("Test keys(); then return size is one")
+  @DisplayName(
+      "Test keys(); given JsonObject (default constructor) add 'Property' and JsonArray(); then return size is one")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"Set JsonMapType.keys()"})
-  void testKeys_thenReturnSizeIsOne() {
+  void testKeys_givenJsonObjectAddPropertyAndJsonArray_thenReturnSizeIsOne() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act
     Set<String> actualKeysResult = new JsonMapType(map, true).keys();
@@ -395,22 +401,20 @@ class JsonMapTypeDiffblueTest {
    * Test {@link JsonMapType#copy()}.
    *
    * <ul>
-   *   <li>Given {@link JsonArray#JsonArray(int)} with capacity is three add {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *   <li>Given {@link JsonArray#JsonArray()} add {@link JsonArray#JsonArray()}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#copy()}
    */
   @Test
-  @DisplayName(
-      "Test copy(); given JsonArray(int) with capacity is three add JsonArray(int) with capacity is three")
+  @DisplayName("Test copy(); given JsonArray() add JsonArray()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"MapType JsonMapType.copy()"})
-  void testCopy_givenJsonArrayWithCapacityIsThreeAddJsonArrayWithCapacityIsThree() {
+  void testCopy_givenJsonArrayAddJsonArray() {
     // Arrange
-    JsonArray value = new JsonArray(3);
-    value.add(new JsonArray(3));
+    JsonArray value = new JsonArray();
+    value.add(new JsonArray());
     value.add(true);
 
     JsonObject map = new JsonObject();
@@ -429,21 +433,19 @@ class JsonMapTypeDiffblueTest {
    * Test {@link JsonMapType#copy()}.
    *
    * <ul>
-   *   <li>Given {@link JsonArray#JsonArray(int)} with capacity is three add {@link JsonObject}
-   *       (default constructor).
+   *   <li>Given {@link JsonArray#JsonArray()} add {@link JsonObject} (default constructor).
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#copy()}
    */
   @Test
-  @DisplayName(
-      "Test copy(); given JsonArray(int) with capacity is three add JsonObject (default constructor)")
+  @DisplayName("Test copy(); given JsonArray() add JsonObject (default constructor)")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"MapType JsonMapType.copy()"})
-  void testCopy_givenJsonArrayWithCapacityIsThreeAddJsonObject() {
+  void testCopy_givenJsonArrayAddJsonObject() {
     // Arrange
-    JsonArray value = new JsonArray(3);
+    JsonArray value = new JsonArray();
     value.add(new JsonObject());
     value.add(true);
 
@@ -463,19 +465,19 @@ class JsonMapTypeDiffblueTest {
    * Test {@link JsonMapType#copy()}.
    *
    * <ul>
-   *   <li>Given {@link JsonArray#JsonArray(int)} with capacity is three add {@code true}.
+   *   <li>Given {@link JsonArray#JsonArray()} add {@code true}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#copy()}
    */
   @Test
-  @DisplayName("Test copy(); given JsonArray(int) with capacity is three add 'true'")
+  @DisplayName("Test copy(); given JsonArray() add 'true'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"MapType JsonMapType.copy()"})
-  void testCopy_givenJsonArrayWithCapacityIsThreeAddTrue() {
+  void testCopy_givenJsonArrayAddTrue() {
     // Arrange
-    JsonArray value = new JsonArray(3);
+    JsonArray value = new JsonArray();
     value.add(true);
 
     JsonObject map = new JsonObject();
@@ -495,22 +497,21 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#copy()}
    */
   @Test
-  @DisplayName(
-      "Test copy(); given JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three")
+  @DisplayName("Test copy(); given JsonObject (default constructor) add '42' and JsonArray()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"MapType JsonMapType.copy()"})
-  void testCopy_givenJsonObjectAdd42AndJsonArrayWithCapacityIsThree() {
+  void testCopy_givenJsonObjectAdd42AndJsonArray() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -526,24 +527,23 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#copy()}
    */
   @Test
-  @DisplayName(
-      "Test copy(); given JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three")
+  @DisplayName("Test copy(); given JsonObject (default constructor) add '42' and JsonArray()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"MapType JsonMapType.copy()"})
-  void testCopy_givenJsonObjectAdd42AndJsonArrayWithCapacityIsThree2() {
+  void testCopy_givenJsonObjectAdd42AndJsonArray2() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("", new JsonArray(3));
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("", new JsonArray());
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -559,25 +559,24 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#copy()}
    */
   @Test
-  @DisplayName(
-      "Test copy(); given JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three")
+  @DisplayName("Test copy(); given JsonObject (default constructor) add '42' and JsonArray()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"MapType JsonMapType.copy()"})
-  void testCopy_givenJsonObjectAdd42AndJsonArrayWithCapacityIsThree3() {
+  void testCopy_givenJsonObjectAdd42AndJsonArray3() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
-    map.add("42", new JsonArray(3));
-    map.add("", new JsonArray(3));
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
+    map.add("42", new JsonArray());
+    map.add("", new JsonArray());
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -593,23 +592,23 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add empty string and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#copy()}
    */
   @Test
   @DisplayName(
-      "Test copy(); given JsonObject (default constructor) add empty string and JsonArray(int) with capacity is three")
+      "Test copy(); given JsonObject (default constructor) add empty string and JsonArray()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"MapType JsonMapType.copy()"})
-  void testCopy_givenJsonObjectAddEmptyStringAndJsonArrayWithCapacityIsThree() {
+  void testCopy_givenJsonObjectAddEmptyStringAndJsonArray() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("", new JsonArray(3));
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("", new JsonArray());
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -625,24 +624,24 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add empty string and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#copy()}
    */
   @Test
   @DisplayName(
-      "Test copy(); given JsonObject (default constructor) add empty string and JsonArray(int) with capacity is three")
+      "Test copy(); given JsonObject (default constructor) add empty string and JsonArray()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"MapType JsonMapType.copy()"})
-  void testCopy_givenJsonObjectAddEmptyStringAndJsonArrayWithCapacityIsThree2() {
+  void testCopy_givenJsonObjectAddEmptyStringAndJsonArray2() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
-    map.add("", new JsonArray(3));
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
+    map.add("", new JsonArray());
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -671,7 +670,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.addProperty("42", "Value");
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -699,9 +698,9 @@ class JsonMapTypeDiffblueTest {
   void testCopy_givenJsonObjectAddProperty42AndValue2() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
     map.addProperty("42", "Value");
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -729,10 +728,10 @@ class JsonMapTypeDiffblueTest {
   void testCopy_givenJsonObjectAddProperty42AndValue3() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("", new JsonArray());
+    map.add("Property", new JsonArray());
     map.addProperty("42", "Value");
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -748,21 +747,20 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add {@code Property} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#copy()}
    */
   @Test
-  @DisplayName(
-      "Test copy(); given JsonObject (default constructor) add 'Property' and JsonArray(int) with capacity is three")
+  @DisplayName("Test copy(); given JsonObject (default constructor) add 'Property' and JsonArray()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"MapType JsonMapType.copy()"})
-  void testCopy_givenJsonObjectAddPropertyAndJsonArrayWithCapacityIsThree() {
+  void testCopy_givenJsonObjectAddPropertyAndJsonArray() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -919,7 +917,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("String"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertFalse(new JsonMapType(map, false).hasKey("42", ObjectType.NONE));
@@ -930,25 +928,27 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
+   *   <li>When {@code 42}.
+   *   <li>Then return {@code false}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#hasKey(String, ObjectType)}
    */
   @Test
   @DisplayName(
-      "Test hasKey(String, ObjectType) with 'key', 'type'; given JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three")
+      "Test hasKey(String, ObjectType) with 'key', 'type'; given JsonObject (default constructor) add '42' and JsonArray(); when '42'; then return 'false'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"boolean JsonMapType.hasKey(String, ObjectType)"})
-  void testHasKeyWithKeyType_givenJsonObjectAdd42AndJsonArrayWithCapacityIsThree() {
+  void testHasKeyWithKeyType_givenJsonObjectAdd42AndJsonArray_when42_thenReturnFalse() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
 
     // Act and Assert
-    assertFalse(new JsonMapType(map, true).hasKey("Key", ObjectType.NONE));
+    assertFalse(new JsonMapType(map, true).hasKey("42", ObjectType.NONE));
   }
 
   /**
@@ -956,26 +956,27 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
-   *   <li>When {@code 42}.
+   *       JsonArray#JsonArray()}.
+   *   <li>When {@code Key}.
+   *   <li>Then return {@code false}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#hasKey(String, ObjectType)}
    */
   @Test
   @DisplayName(
-      "Test hasKey(String, ObjectType) with 'key', 'type'; given JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three; when '42'")
+      "Test hasKey(String, ObjectType) with 'key', 'type'; given JsonObject (default constructor) add '42' and JsonArray(); when 'Key'; then return 'false'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"boolean JsonMapType.hasKey(String, ObjectType)"})
-  void testHasKeyWithKeyType_givenJsonObjectAdd42AndJsonArrayWithCapacityIsThree_when42() {
+  void testHasKeyWithKeyType_givenJsonObjectAdd42AndJsonArray_whenKey_thenReturnFalse() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
 
     // Act and Assert
-    assertFalse(new JsonMapType(map, true).hasKey("42", ObjectType.NONE));
+    assertFalse(new JsonMapType(map, true).hasKey("Key", ObjectType.NONE));
   }
 
   /**
@@ -1000,7 +1001,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonObject());
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertFalse(new JsonMapType(map, true).hasKey("42", ObjectType.NONE));
@@ -1027,7 +1028,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive(true));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertFalse(new JsonMapType(map, true).hasKey("42", ObjectType.NONE));
@@ -1054,7 +1055,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("String"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertFalse(new JsonMapType(map, true).hasKey("42", ObjectType.NONE));
@@ -1081,7 +1082,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", null);
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertFalse(new JsonMapType(map, true).hasKey("42", ObjectType.NONE));
@@ -1107,7 +1108,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive(true));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertTrue(new JsonMapType(map, true).hasKey("42", ObjectType.BYTE));
@@ -1132,7 +1133,7 @@ class JsonMapTypeDiffblueTest {
   void testHasKeyWithKeyType_whenKey_thenReturnFalse() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertFalse(new JsonMapType(map, true).hasKey("Key", ObjectType.NONE));
@@ -1157,9 +1158,9 @@ class JsonMapTypeDiffblueTest {
   void testHasKeyWithKeyType_whenUndefined_thenReturnTrue() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
     map.add("42", new JsonPrimitive(true));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertTrue(new JsonMapType(map, true).hasKey("42", ObjectType.UNDEFINED));
@@ -1214,22 +1215,52 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
+   *   <li>When {@code 42}.
+   *   <li>Then return {@code true}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#hasKey(String)}
    */
   @Test
   @DisplayName(
-      "Test hasKey(String) with 'key'; given JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three")
+      "Test hasKey(String) with 'key'; given JsonObject (default constructor) add '42' and JsonArray(); when '42'; then return 'true'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"boolean JsonMapType.hasKey(String)"})
-  void testHasKeyWithKey_givenJsonObjectAdd42AndJsonArrayWithCapacityIsThree() {
+  void testHasKeyWithKey_givenJsonObjectAdd42AndJsonArray_when42_thenReturnTrue() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
+
+    // Act and Assert
+    assertTrue(new JsonMapType(map, true).hasKey("42"));
+  }
+
+  /**
+   * Test {@link JsonMapType#hasKey(String)} with {@code key}.
+   *
+   * <ul>
+   *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
+   *       JsonArray#JsonArray()}.
+   *   <li>When {@code Key}.
+   *   <li>Then return {@code false}.
+   * </ul>
+   *
+   * <p>Method under test: {@link JsonMapType#hasKey(String)}
+   */
+  @Test
+  @DisplayName(
+      "Test hasKey(String) with 'key'; given JsonObject (default constructor) add '42' and JsonArray(); when 'Key'; then return 'false'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"boolean JsonMapType.hasKey(String)"})
+  void testHasKeyWithKey_givenJsonObjectAdd42AndJsonArray_whenKey_thenReturnFalse() {
+    // Arrange
+    JsonObject map = new JsonObject();
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertFalse(new JsonMapType(map, true).hasKey("Key"));
@@ -1240,49 +1271,26 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add {@code Property} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
+   *   <li>When {@code Key}.
+   *   <li>Then return {@code false}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#hasKey(String)}
    */
   @Test
   @DisplayName(
-      "Test hasKey(String) with 'key'; given JsonObject (default constructor) add 'Property' and JsonArray(int) with capacity is three")
+      "Test hasKey(String) with 'key'; given JsonObject (default constructor) add 'Property' and JsonArray(); when 'Key'; then return 'false'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"boolean JsonMapType.hasKey(String)"})
-  void testHasKeyWithKey_givenJsonObjectAddPropertyAndJsonArrayWithCapacityIsThree() {
+  void testHasKeyWithKey_givenJsonObjectAddPropertyAndJsonArray_whenKey_thenReturnFalse() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertFalse(new JsonMapType(map, true).hasKey("Key"));
-  }
-
-  /**
-   * Test {@link JsonMapType#hasKey(String)} with {@code key}.
-   *
-   * <ul>
-   *   <li>When {@code 42}.
-   *   <li>Then return {@code true}.
-   * </ul>
-   *
-   * <p>Method under test: {@link JsonMapType#hasKey(String)}
-   */
-  @Test
-  @DisplayName("Test hasKey(String) with 'key'; when '42'; then return 'true'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"boolean JsonMapType.hasKey(String)"})
-  void testHasKeyWithKey_when42_thenReturnTrue() {
-    // Arrange
-    JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
-
-    // Act and Assert
-    assertTrue(new JsonMapType(map, true).hasKey("42"));
   }
 
   /**
@@ -1290,22 +1298,22 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add empty string and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#remove(String)}
    */
   @Test
   @DisplayName(
-      "Test remove(String); given JsonObject (default constructor) add empty string and JsonArray(int) with capacity is three")
+      "Test remove(String); given JsonObject (default constructor) add empty string and JsonArray()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void JsonMapType.remove(String)"})
-  void testRemove_givenJsonObjectAddEmptyStringAndJsonArrayWithCapacityIsThree() {
+  void testRemove_givenJsonObjectAddEmptyStringAndJsonArray() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -1363,7 +1371,7 @@ class JsonMapTypeDiffblueTest {
   void testRemove_thenJsonMapTypeWithMapIsJsonObjectAndCompressedIsTrueSizeIsOne() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -1393,8 +1401,8 @@ class JsonMapTypeDiffblueTest {
   void testRemove_thenJsonMapTypeWithMapIsJsonObjectAndCompressedIsTrueSizeIsTwo() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -1424,9 +1432,9 @@ class JsonMapTypeDiffblueTest {
   void testRemove_thenJsonMapTypeWithMapIsJsonObjectAndCompressedIsTrueSizeIsTwo2() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("", new JsonArray(3));
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("", new JsonArray());
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -1457,8 +1465,8 @@ class JsonMapTypeDiffblueTest {
   void testRemove_when42_thenJsonMapTypeWithMapIsJsonObjectAndCompressedIsTrueSizeIsOne() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -1489,9 +1497,9 @@ class JsonMapTypeDiffblueTest {
   void testRemove_when42_thenJsonMapTypeWithMapIsJsonObjectAndCompressedIsTrueSizeIsOne2() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -1519,9 +1527,9 @@ class JsonMapTypeDiffblueTest {
   void testRemove_whenEmptyString() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("", new JsonArray(3));
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("", new JsonArray());
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -1581,23 +1589,62 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
-   *   <li>When {@code Key}.
+   *       JsonArray#JsonArray()}.
+   *   <li>When {@code 42}.
+   *   <li>Then return {@link JsonListType}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#getGeneric(String)}
    */
   @Test
   @DisplayName(
-      "Test getGeneric(String); given JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three; when 'Key'")
+      "Test getGeneric(String); given JsonObject (default constructor) add '42' and JsonArray(); when '42'; then return JsonListType")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"Object JsonMapType.getGeneric(String)"})
-  void testGetGeneric_givenJsonObjectAdd42AndJsonArrayWithCapacityIsThree_whenKey() {
+  void testGetGeneric_givenJsonObjectAdd42AndJsonArray_when42_thenReturnJsonListType() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    JsonArray value = new JsonArray();
+    map.add("42", value);
+    map.add("Property", new JsonArray());
+
+    // Act
+    Object actualGeneric = new JsonMapType(map, true).getGeneric("42");
+
+    // Assert
+    assertTrue(actualGeneric instanceof JsonListType);
+    TypeUtil<JsonElement> typeUtil = ((JsonListType) actualGeneric).getTypeUtil();
+    assertTrue(typeUtil instanceof JsonTypeUtil);
+    assertEquals(0, ((JsonListType) actualGeneric).size());
+    assertEquals(ObjectType.UNDEFINED, ((JsonListType) actualGeneric).getUniformType());
+    assertTrue(((JsonTypeUtil) typeUtil).isCompressed());
+    assertSame(value, ((JsonListType) actualGeneric).getJson());
+  }
+
+  /**
+   * Test {@link JsonMapType#getGeneric(String)}.
+   *
+   * <ul>
+   *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
+   *       JsonArray#JsonArray()}.
+   *   <li>When {@code Key}.
+   *   <li>Then return {@code null}.
+   * </ul>
+   *
+   * <p>Method under test: {@link JsonMapType#getGeneric(String)}
+   */
+  @Test
+  @DisplayName(
+      "Test getGeneric(String); given JsonObject (default constructor) add '42' and JsonArray(); when 'Key'; then return 'null'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"Object JsonMapType.getGeneric(String)"})
+  void testGetGeneric_givenJsonObjectAdd42AndJsonArray_whenKey_thenReturnNull() {
+    // Arrange
+    JsonObject map = new JsonObject();
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertNull(new JsonMapType(map, true).getGeneric("Key"));
@@ -1626,7 +1673,7 @@ class JsonMapTypeDiffblueTest {
     JsonObject map = new JsonObject();
     JsonObject value = new JsonObject();
     map.add("42", value);
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act
     Object actualGeneric = new JsonMapType(map, true).getGeneric("42");
@@ -1661,7 +1708,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", null);
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertNull(new JsonMapType(map, true).getGeneric("42"));
@@ -1671,40 +1718,8 @@ class JsonMapTypeDiffblueTest {
    * Test {@link JsonMapType#getGeneric(String)}.
    *
    * <ul>
-   *   <li>Then return {@link JsonListType}.
-   * </ul>
-   *
-   * <p>Method under test: {@link JsonMapType#getGeneric(String)}
-   */
-  @Test
-  @DisplayName("Test getGeneric(String); then return JsonListType")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"Object JsonMapType.getGeneric(String)"})
-  void testGetGeneric_thenReturnJsonListType() {
-    // Arrange
-    JsonObject map = new JsonObject();
-    JsonArray value = new JsonArray(3);
-    map.add("42", value);
-    map.add("Property", new JsonArray(3));
-
-    // Act
-    Object actualGeneric = new JsonMapType(map, true).getGeneric("42");
-
-    // Assert
-    assertTrue(actualGeneric instanceof JsonListType);
-    TypeUtil<JsonElement> typeUtil = ((JsonListType) actualGeneric).getTypeUtil();
-    assertTrue(typeUtil instanceof JsonTypeUtil);
-    assertEquals(0, ((JsonListType) actualGeneric).size());
-    assertEquals(ObjectType.UNDEFINED, ((JsonListType) actualGeneric).getUniformType());
-    assertTrue(((JsonTypeUtil) typeUtil).isCompressed());
-    assertSame(value, ((JsonListType) actualGeneric).getJson());
-  }
-
-  /**
-   * Test {@link JsonMapType#getGeneric(String)}.
-   *
-   * <ul>
+   *   <li>Given {@link JsonObject} (default constructor) add {@code Property} and {@link
+   *       JsonArray#JsonArray()}.
    *   <li>When {@code Key}.
    *   <li>Then return {@code null}.
    * </ul>
@@ -1712,14 +1727,15 @@ class JsonMapTypeDiffblueTest {
    * <p>Method under test: {@link JsonMapType#getGeneric(String)}
    */
   @Test
-  @DisplayName("Test getGeneric(String); when 'Key'; then return 'null'")
+  @DisplayName(
+      "Test getGeneric(String); given JsonObject (default constructor) add 'Property' and JsonArray(); when 'Key'; then return 'null'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"Object JsonMapType.getGeneric(String)"})
-  void testGetGeneric_whenKey_thenReturnNull() {
+  void testGetGeneric_givenJsonObjectAddPropertyAndJsonArray_whenKey_thenReturnNull() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertNull(new JsonMapType(map, true).getGeneric("Key"));
@@ -1749,8 +1765,6 @@ class JsonMapTypeDiffblueTest {
     Number actualNumber = new JsonMapType(true).getNumber("Key", dfl);
 
     // Assert
-    assertTrue(actualNumber instanceof AtomicLong);
-    assertEquals(-1L, ((AtomicLong) actualNumber).get());
     assertSame(dfl, actualNumber);
   }
 
@@ -1774,15 +1788,13 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("String"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
     AtomicLong dfl = Bootstrap.bootstrapDuration;
 
     // Act
     Number actualNumber = new JsonMapType(map, false).getNumber("42", dfl);
 
     // Assert
-    assertTrue(actualNumber instanceof AtomicLong);
-    assertEquals(-1L, ((AtomicLong) actualNumber).get());
     assertSame(dfl, actualNumber);
   }
 
@@ -1791,62 +1803,59 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#getNumber(String, Number)}
    */
   @Test
   @DisplayName(
-      "Test getNumber(String, Number) with 'key', 'dfl'; given JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three")
+      "Test getNumber(String, Number) with 'key', 'dfl'; given JsonObject (default constructor) add '42' and JsonArray()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"Number JsonMapType.getNumber(String, Number)"})
-  void testGetNumberWithKeyDfl_givenJsonObjectAdd42AndJsonArrayWithCapacityIsThree() {
+  void testGetNumberWithKeyDfl_givenJsonObjectAdd42AndJsonArray() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
-    AtomicLong dfl = Bootstrap.bootstrapDuration;
-
-    // Act
-    Number actualNumber = new JsonMapType(map, true).getNumber("Key", dfl);
-
-    // Assert
-    assertTrue(actualNumber instanceof AtomicLong);
-    assertEquals(-1L, ((AtomicLong) actualNumber).get());
-    assertSame(dfl, actualNumber);
-  }
-
-  /**
-   * Test {@link JsonMapType#getNumber(String, Number)} with {@code key}, {@code dfl}.
-   *
-   * <ul>
-   *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
-   * </ul>
-   *
-   * <p>Method under test: {@link JsonMapType#getNumber(String, Number)}
-   */
-  @Test
-  @DisplayName(
-      "Test getNumber(String, Number) with 'key', 'dfl'; given JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"Number JsonMapType.getNumber(String, Number)"})
-  void testGetNumberWithKeyDfl_givenJsonObjectAdd42AndJsonArrayWithCapacityIsThree2() {
-    // Arrange
-    JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     AtomicLong dfl = Bootstrap.bootstrapDuration;
 
     // Act
     Number actualNumber = new JsonMapType(map, true).getNumber("42", dfl);
 
     // Assert
-    assertTrue(actualNumber instanceof AtomicLong);
-    assertEquals(-1L, ((AtomicLong) actualNumber).get());
+    assertSame(dfl, actualNumber);
+  }
+
+  /**
+   * Test {@link JsonMapType#getNumber(String, Number)} with {@code key}, {@code dfl}.
+   *
+   * <ul>
+   *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
+   *       JsonArray#JsonArray()}.
+   *   <li>When {@code Key}.
+   * </ul>
+   *
+   * <p>Method under test: {@link JsonMapType#getNumber(String, Number)}
+   */
+  @Test
+  @DisplayName(
+      "Test getNumber(String, Number) with 'key', 'dfl'; given JsonObject (default constructor) add '42' and JsonArray(); when 'Key'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"Number JsonMapType.getNumber(String, Number)"})
+  void testGetNumberWithKeyDfl_givenJsonObjectAdd42AndJsonArray_whenKey() {
+    // Arrange
+    JsonObject map = new JsonObject();
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
+    AtomicLong dfl = Bootstrap.bootstrapDuration;
+
+    // Act
+    Number actualNumber = new JsonMapType(map, true).getNumber("Key", dfl);
+
+    // Assert
     assertSame(dfl, actualNumber);
   }
 
@@ -1868,7 +1877,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive(true));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(
@@ -1894,7 +1903,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive(false));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(
@@ -1921,7 +1930,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("42"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(
@@ -1946,7 +1955,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("String"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertNull(new JsonMapType(map, true).getNumber("42", Bootstrap.bootstrapDuration));
@@ -1957,29 +1966,27 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>When {@code Key}.
-   *   <li>Then return {@link AtomicLong}.
+   *   <li>Then return {@link Bootstrap#bootstrapDuration}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#getNumber(String, Number)}
    */
   @Test
   @DisplayName(
-      "Test getNumber(String, Number) with 'key', 'dfl'; when 'Key'; then return AtomicLong")
+      "Test getNumber(String, Number) with 'key', 'dfl'; when 'Key'; then return bootstrapDuration")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"Number JsonMapType.getNumber(String, Number)"})
-  void testGetNumberWithKeyDfl_whenKey_thenReturnAtomicLong() {
+  void testGetNumberWithKeyDfl_whenKey_thenReturnBootstrapDuration() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
     AtomicLong dfl = Bootstrap.bootstrapDuration;
 
     // Act
     Number actualNumber = new JsonMapType(map, true).getNumber("Key", dfl);
 
     // Assert
-    assertTrue(actualNumber instanceof AtomicLong);
-    assertEquals(-1L, ((AtomicLong) actualNumber).get());
     assertSame(dfl, actualNumber);
   }
 
@@ -2025,7 +2032,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("String"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertNull(new JsonMapType(map, false).getNumber("42"));
@@ -2036,22 +2043,24 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
+   *   <li>When {@code 42}.
+   *   <li>Then return {@code null}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#getNumber(String)}
    */
   @Test
   @DisplayName(
-      "Test getNumber(String) with 'key'; given JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three")
+      "Test getNumber(String) with 'key'; given JsonObject (default constructor) add '42' and JsonArray(); when '42'; then return 'null'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"Number JsonMapType.getNumber(String)"})
-  void testGetNumberWithKey_givenJsonObjectAdd42AndJsonArrayWithCapacityIsThree() {
+  void testGetNumberWithKey_givenJsonObjectAdd42AndJsonArray_when42_thenReturnNull() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertNull(new JsonMapType(map, true).getNumber("42"));
@@ -2062,23 +2071,24 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
    *   <li>When {@code Key}.
+   *   <li>Then return {@code null}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#getNumber(String)}
    */
   @Test
   @DisplayName(
-      "Test getNumber(String) with 'key'; given JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three; when 'Key'")
+      "Test getNumber(String) with 'key'; given JsonObject (default constructor) add '42' and JsonArray(); when 'Key'; then return 'null'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"Number JsonMapType.getNumber(String)"})
-  void testGetNumberWithKey_givenJsonObjectAdd42AndJsonArrayWithCapacityIsThree_whenKey() {
+  void testGetNumberWithKey_givenJsonObjectAdd42AndJsonArray_whenKey_thenReturnNull() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertNull(new JsonMapType(map, true).getNumber("Key"));
@@ -2104,7 +2114,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("String"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertNull(new JsonMapType(map, true).getNumber("42"));
@@ -2128,7 +2138,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive(true));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals((byte) 1, new JsonMapType(map, true).getNumber("42").byteValue());
@@ -2152,7 +2162,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive(false));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals((byte) 0, new JsonMapType(map, true).getNumber("42").byteValue());
@@ -2176,7 +2186,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("42"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(42, new JsonMapType(map, true).getNumber("42").intValue());
@@ -2200,29 +2210,10 @@ class JsonMapTypeDiffblueTest {
   void testGetNumberWithKey_whenKey_thenReturnNull() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertNull(new JsonMapType(map, true).getNumber("Key"));
-  }
-
-  /**
-   * Test {@link JsonMapType#getBoolean(String, boolean)} with {@code key}, {@code dfl}.
-   *
-   * <p>Method under test: {@link JsonMapType#getBoolean(String, boolean)}
-   */
-  @Test
-  @DisplayName("Test getBoolean(String, boolean) with 'key', 'dfl'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"boolean JsonMapType.getBoolean(String, boolean)"})
-  void testGetBooleanWithKeyDfl() {
-    // Arrange
-    JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
-
-    // Act and Assert
-    assertTrue(new JsonMapType(map, true).getBoolean("Key", true));
   }
 
   /**
@@ -2272,25 +2263,27 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
+   *   <li>When {@code 42}.
+   *   <li>Then return {@code true}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#getBoolean(String, boolean)}
    */
   @Test
   @DisplayName(
-      "Test getBoolean(String, boolean) with 'key', 'dfl'; given JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three")
+      "Test getBoolean(String, boolean) with 'key', 'dfl'; given JsonObject (default constructor) add '42' and JsonArray(); when '42'; then return 'true'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"boolean JsonMapType.getBoolean(String, boolean)"})
-  void testGetBooleanWithKeyDfl_givenJsonObjectAdd42AndJsonArrayWithCapacityIsThree() {
+  void testGetBooleanWithKeyDfl_givenJsonObjectAdd42AndJsonArray_when42_thenReturnTrue() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
 
     // Act and Assert
-    assertTrue(new JsonMapType(map, true).getBoolean("Key", true));
+    assertTrue(new JsonMapType(map, true).getBoolean("42", true));
   }
 
   /**
@@ -2298,25 +2291,27 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
+   *   <li>When {@code Key}.
+   *   <li>Then return {@code true}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#getBoolean(String, boolean)}
    */
   @Test
   @DisplayName(
-      "Test getBoolean(String, boolean) with 'key', 'dfl'; given JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three")
+      "Test getBoolean(String, boolean) with 'key', 'dfl'; given JsonObject (default constructor) add '42' and JsonArray(); when 'Key'; then return 'true'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"boolean JsonMapType.getBoolean(String, boolean)"})
-  void testGetBooleanWithKeyDfl_givenJsonObjectAdd42AndJsonArrayWithCapacityIsThree2() {
+  void testGetBooleanWithKeyDfl_givenJsonObjectAdd42AndJsonArray_whenKey_thenReturnTrue() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
 
     // Act and Assert
-    assertTrue(new JsonMapType(map, true).getBoolean("42", true));
+    assertTrue(new JsonMapType(map, true).getBoolean("Key", true));
   }
 
   /**
@@ -2339,7 +2334,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive(true));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertTrue(new JsonMapType(map, true).getBoolean("42", true));
@@ -2366,10 +2361,36 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("String"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertTrue(new JsonMapType(map, true).getBoolean("42", true));
+  }
+
+  /**
+   * Test {@link JsonMapType#getBoolean(String, boolean)} with {@code key}, {@code dfl}.
+   *
+   * <ul>
+   *   <li>Given {@link JsonObject} (default constructor) add {@code Property} and {@link
+   *       JsonArray#JsonArray()}.
+   *   <li>When {@code Key}.
+   * </ul>
+   *
+   * <p>Method under test: {@link JsonMapType#getBoolean(String, boolean)}
+   */
+  @Test
+  @DisplayName(
+      "Test getBoolean(String, boolean) with 'key', 'dfl'; given JsonObject (default constructor) add 'Property' and JsonArray(); when 'Key'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"boolean JsonMapType.getBoolean(String, boolean)"})
+  void testGetBooleanWithKeyDfl_givenJsonObjectAddPropertyAndJsonArray_whenKey() {
+    // Arrange
+    JsonObject map = new JsonObject();
+    map.add("Property", new JsonArray());
+
+    // Act and Assert
+    assertTrue(new JsonMapType(map, true).getBoolean("Key", true));
   }
 
   /**
@@ -2440,25 +2461,27 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
+   *   <li>When {@code 42}.
+   *   <li>Then return {@code false}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#getBoolean(String)}
    */
   @Test
   @DisplayName(
-      "Test getBoolean(String) with 'key'; given JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three")
+      "Test getBoolean(String) with 'key'; given JsonObject (default constructor) add '42' and JsonArray(); when '42'; then return 'false'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"boolean JsonMapType.getBoolean(String)"})
-  void testGetBooleanWithKey_givenJsonObjectAdd42AndJsonArrayWithCapacityIsThree() {
+  void testGetBooleanWithKey_givenJsonObjectAdd42AndJsonArray_when42_thenReturnFalse() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
 
     // Act and Assert
-    assertFalse(new JsonMapType(map, true).getBoolean("Key"));
+    assertFalse(new JsonMapType(map, true).getBoolean("42"));
   }
 
   /**
@@ -2466,26 +2489,27 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
-   *   <li>When {@code 42}.
+   *       JsonArray#JsonArray()}.
+   *   <li>When {@code Key}.
+   *   <li>Then return {@code false}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#getBoolean(String)}
    */
   @Test
   @DisplayName(
-      "Test getBoolean(String) with 'key'; given JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three; when '42'")
+      "Test getBoolean(String) with 'key'; given JsonObject (default constructor) add '42' and JsonArray(); when 'Key'; then return 'false'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"boolean JsonMapType.getBoolean(String)"})
-  void testGetBooleanWithKey_givenJsonObjectAdd42AndJsonArrayWithCapacityIsThree_when42() {
+  void testGetBooleanWithKey_givenJsonObjectAdd42AndJsonArray_whenKey_thenReturnFalse() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
 
     // Act and Assert
-    assertFalse(new JsonMapType(map, true).getBoolean("42"));
+    assertFalse(new JsonMapType(map, true).getBoolean("Key"));
   }
 
   /**
@@ -2509,10 +2533,36 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("String"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertFalse(new JsonMapType(map, true).getBoolean("42"));
+  }
+
+  /**
+   * Test {@link JsonMapType#getBoolean(String)} with {@code key}.
+   *
+   * <ul>
+   *   <li>Given {@link JsonObject} (default constructor) add {@code Property} and {@link
+   *       JsonArray#JsonArray()}.
+   *   <li>When {@code Key}.
+   * </ul>
+   *
+   * <p>Method under test: {@link JsonMapType#getBoolean(String)}
+   */
+  @Test
+  @DisplayName(
+      "Test getBoolean(String) with 'key'; given JsonObject (default constructor) add 'Property' and JsonArray(); when 'Key'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"boolean JsonMapType.getBoolean(String)"})
+  void testGetBooleanWithKey_givenJsonObjectAddPropertyAndJsonArray_whenKey() {
+    // Arrange
+    JsonObject map = new JsonObject();
+    map.add("Property", new JsonArray());
+
+    // Act and Assert
+    assertFalse(new JsonMapType(map, true).getBoolean("Key"));
   }
 
   /**
@@ -2533,33 +2583,10 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive(true));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertTrue(new JsonMapType(map, true).getBoolean("42"));
-  }
-
-  /**
-   * Test {@link JsonMapType#getBoolean(String)} with {@code key}.
-   *
-   * <ul>
-   *   <li>When {@code Key}.
-   * </ul>
-   *
-   * <p>Method under test: {@link JsonMapType#getBoolean(String)}
-   */
-  @Test
-  @DisplayName("Test getBoolean(String) with 'key'; when 'Key'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"boolean JsonMapType.getBoolean(String)"})
-  void testGetBooleanWithKey_whenKey() {
-    // Arrange
-    JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
-
-    // Act and Assert
-    assertFalse(new JsonMapType(map, true).getBoolean("Key"));
   }
 
   /**
@@ -2567,22 +2594,22 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add empty string and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#setBoolean(String, boolean)}
    */
   @Test
   @DisplayName(
-      "Test setBoolean(String, boolean); given JsonObject (default constructor) add empty string and JsonArray(int) with capacity is three")
+      "Test setBoolean(String, boolean); given JsonObject (default constructor) add empty string and JsonArray()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void JsonMapType.setBoolean(String, boolean)"})
-  void testSetBoolean_givenJsonObjectAddEmptyStringAndJsonArrayWithCapacityIsThree() {
+  void testSetBoolean_givenJsonObjectAddEmptyStringAndJsonArray() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("", new JsonArray(3));
-    map.add("42", new JsonArray(3));
+    map.add("", new JsonArray());
+    map.add("42", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -2600,23 +2627,23 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add empty string and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#setBoolean(String, boolean)}
    */
   @Test
   @DisplayName(
-      "Test setBoolean(String, boolean); given JsonObject (default constructor) add empty string and JsonArray(int) with capacity is three")
+      "Test setBoolean(String, boolean); given JsonObject (default constructor) add empty string and JsonArray()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void JsonMapType.setBoolean(String, boolean)"})
-  void testSetBoolean_givenJsonObjectAddEmptyStringAndJsonArrayWithCapacityIsThree2() {
+  void testSetBoolean_givenJsonObjectAddEmptyStringAndJsonArray2() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("", new JsonArray(3));
-    map.add("42", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("", new JsonArray());
+    map.add("42", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -2678,9 +2705,9 @@ class JsonMapTypeDiffblueTest {
   void testSetBoolean_thenJsonMapTypeWithMapIsJsonObjectAndCompressedIsTrueSizeIsFour() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("", new JsonArray(3));
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("", new JsonArray());
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -2712,8 +2739,8 @@ class JsonMapTypeDiffblueTest {
   void testSetBoolean_thenJsonMapTypeWithMapIsJsonObjectAndCompressedIsTrueSizeIsThree() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -2745,9 +2772,9 @@ class JsonMapTypeDiffblueTest {
   void testSetBoolean_thenJsonMapTypeWithMapIsJsonObjectAndCompressedIsTrueSizeIsThree2() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -2779,7 +2806,7 @@ class JsonMapTypeDiffblueTest {
   void testSetBoolean_thenJsonMapTypeWithMapIsJsonObjectAndCompressedIsTrueSizeIsTwo() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -2811,7 +2838,7 @@ class JsonMapTypeDiffblueTest {
   void testSetBoolean_thenJsonMapTypeWithMapIsJsonObjectAndCompressedIsTrueSizeIsTwo2() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
+    map.add("42", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -2841,8 +2868,8 @@ class JsonMapTypeDiffblueTest {
   void testSetBoolean_when42() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -2872,9 +2899,9 @@ class JsonMapTypeDiffblueTest {
   void testSetBoolean_whenEmptyString() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -2951,7 +2978,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("String"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals('A', new JsonMapType(map, false).getByte("42", (byte) 'A'));
@@ -2962,25 +2989,27 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
+   *   <li>When {@code 42}.
+   *   <li>Then return {@code A}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#getByte(String, byte)}
    */
   @Test
   @DisplayName(
-      "Test getByte(String, byte) with 'key', 'dfl'; given JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three")
+      "Test getByte(String, byte) with 'key', 'dfl'; given JsonObject (default constructor) add '42' and JsonArray(); when '42'; then return 'A'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"byte JsonMapType.getByte(String, byte)"})
-  void testGetByteWithKeyDfl_givenJsonObjectAdd42AndJsonArrayWithCapacityIsThree() {
+  void testGetByteWithKeyDfl_givenJsonObjectAdd42AndJsonArray_when42_thenReturnA() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
 
     // Act and Assert
-    assertEquals('A', new JsonMapType(map, true).getByte("Key", (byte) 'A'));
+    assertEquals('A', new JsonMapType(map, true).getByte("42", (byte) 'A'));
   }
 
   /**
@@ -2988,26 +3017,27 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
-   *   <li>When {@code 42}.
+   *       JsonArray#JsonArray()}.
+   *   <li>When {@code Key}.
+   *   <li>Then return {@code A}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#getByte(String, byte)}
    */
   @Test
   @DisplayName(
-      "Test getByte(String, byte) with 'key', 'dfl'; given JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three; when '42'")
+      "Test getByte(String, byte) with 'key', 'dfl'; given JsonObject (default constructor) add '42' and JsonArray(); when 'Key'; then return 'A'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"byte JsonMapType.getByte(String, byte)"})
-  void testGetByteWithKeyDfl_givenJsonObjectAdd42AndJsonArrayWithCapacityIsThree_when42() {
+  void testGetByteWithKeyDfl_givenJsonObjectAdd42AndJsonArray_whenKey_thenReturnA() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
 
     // Act and Assert
-    assertEquals('A', new JsonMapType(map, true).getByte("42", (byte) 'A'));
+    assertEquals('A', new JsonMapType(map, true).getByte("Key", (byte) 'A'));
   }
 
   /**
@@ -3031,7 +3061,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("String"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals('A', new JsonMapType(map, true).getByte("42", (byte) 'A'));
@@ -3055,7 +3085,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("42"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals('*', new JsonMapType(map, true).getByte("42", (byte) 'A'));
@@ -3079,7 +3109,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive(true));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals((byte) 1, new JsonMapType(map, true).getByte("42", (byte) 'A'));
@@ -3103,7 +3133,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive(false));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals((byte) 0, new JsonMapType(map, true).getByte("42", (byte) 'A'));
@@ -3127,7 +3157,7 @@ class JsonMapTypeDiffblueTest {
   void testGetByteWithKeyDfl_whenKey_thenReturnA() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals('A', new JsonMapType(map, true).getByte("Key", (byte) 'A'));
@@ -3197,7 +3227,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("String"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals((byte) 0, new JsonMapType(map, false).getByte("42"));
@@ -3208,23 +3238,24 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
    *   <li>When {@code 42}.
+   *   <li>Then return zero.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#getByte(String)}
    */
   @Test
   @DisplayName(
-      "Test getByte(String) with 'key'; given JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three; when '42'")
+      "Test getByte(String) with 'key'; given JsonObject (default constructor) add '42' and JsonArray(); when '42'; then return zero")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"byte JsonMapType.getByte(String)"})
-  void testGetByteWithKey_givenJsonObjectAdd42AndJsonArrayWithCapacityIsThree_when42() {
+  void testGetByteWithKey_givenJsonObjectAdd42AndJsonArray_when42_thenReturnZero() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals((byte) 0, new JsonMapType(map, true).getByte("42"));
@@ -3235,23 +3266,24 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
    *   <li>When {@code Key}.
+   *   <li>Then return zero.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#getByte(String)}
    */
   @Test
   @DisplayName(
-      "Test getByte(String) with 'key'; given JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three; when 'Key'")
+      "Test getByte(String) with 'key'; given JsonObject (default constructor) add '42' and JsonArray(); when 'Key'; then return zero")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"byte JsonMapType.getByte(String)"})
-  void testGetByteWithKey_givenJsonObjectAdd42AndJsonArrayWithCapacityIsThree_whenKey() {
+  void testGetByteWithKey_givenJsonObjectAdd42AndJsonArray_whenKey_thenReturnZero() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals((byte) 0, new JsonMapType(map, true).getByte("Key"));
@@ -3278,7 +3310,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive(false));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals((byte) 0, new JsonMapType(map, true).getByte("42"));
@@ -3305,7 +3337,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("String"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals((byte) 0, new JsonMapType(map, true).getByte("42"));
@@ -3329,7 +3361,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("42"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals('*', new JsonMapType(map, true).getByte("42"));
@@ -3353,7 +3385,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive(true));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals((byte) 1, new JsonMapType(map, true).getByte("42"));
@@ -3376,7 +3408,7 @@ class JsonMapTypeDiffblueTest {
   void testGetByteWithKey_whenKey() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals((byte) 0, new JsonMapType(map, true).getByte("Key"));
@@ -3387,22 +3419,22 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add empty string and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#setByte(String, byte)}
    */
   @Test
   @DisplayName(
-      "Test setByte(String, byte); given JsonObject (default constructor) add empty string and JsonArray(int) with capacity is three")
+      "Test setByte(String, byte); given JsonObject (default constructor) add empty string and JsonArray()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void JsonMapType.setByte(String, byte)"})
-  void testSetByte_givenJsonObjectAddEmptyStringAndJsonArrayWithCapacityIsThree() {
+  void testSetByte_givenJsonObjectAddEmptyStringAndJsonArray() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("", new JsonArray(3));
-    map.add("42", new JsonArray(3));
+    map.add("", new JsonArray());
+    map.add("42", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -3420,23 +3452,23 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add empty string and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#setByte(String, byte)}
    */
   @Test
   @DisplayName(
-      "Test setByte(String, byte); given JsonObject (default constructor) add empty string and JsonArray(int) with capacity is three")
+      "Test setByte(String, byte); given JsonObject (default constructor) add empty string and JsonArray()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void JsonMapType.setByte(String, byte)"})
-  void testSetByte_givenJsonObjectAddEmptyStringAndJsonArrayWithCapacityIsThree2() {
+  void testSetByte_givenJsonObjectAddEmptyStringAndJsonArray2() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("", new JsonArray(3));
-    map.add("42", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("", new JsonArray());
+    map.add("42", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -3498,9 +3530,9 @@ class JsonMapTypeDiffblueTest {
   void testSetByte_thenJsonMapTypeWithMapIsJsonObjectAndCompressedIsTrueSizeIsFour() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("", new JsonArray(3));
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("", new JsonArray());
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -3532,8 +3564,8 @@ class JsonMapTypeDiffblueTest {
   void testSetByte_thenJsonMapTypeWithMapIsJsonObjectAndCompressedIsTrueSizeIsThree() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -3565,9 +3597,9 @@ class JsonMapTypeDiffblueTest {
   void testSetByte_thenJsonMapTypeWithMapIsJsonObjectAndCompressedIsTrueSizeIsThree2() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -3599,7 +3631,7 @@ class JsonMapTypeDiffblueTest {
   void testSetByte_thenJsonMapTypeWithMapIsJsonObjectAndCompressedIsTrueSizeIsTwo() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -3631,7 +3663,7 @@ class JsonMapTypeDiffblueTest {
   void testSetByte_thenJsonMapTypeWithMapIsJsonObjectAndCompressedIsTrueSizeIsTwo2() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
+    map.add("42", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -3661,8 +3693,8 @@ class JsonMapTypeDiffblueTest {
   void testSetByte_when42() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -3692,9 +3724,9 @@ class JsonMapTypeDiffblueTest {
   void testSetByte_whenEmptyString() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -3769,7 +3801,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("String"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals((short) 1, new JsonMapType(map, false).getShort("42", (short) 1));
@@ -3780,25 +3812,27 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
+   *   <li>When {@code 42}.
+   *   <li>Then return one.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#getShort(String, short)}
    */
   @Test
   @DisplayName(
-      "Test getShort(String, short) with 'key', 'dfl'; given JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three")
+      "Test getShort(String, short) with 'key', 'dfl'; given JsonObject (default constructor) add '42' and JsonArray(); when '42'; then return one")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"short JsonMapType.getShort(String, short)"})
-  void testGetShortWithKeyDfl_givenJsonObjectAdd42AndJsonArrayWithCapacityIsThree() {
+  void testGetShortWithKeyDfl_givenJsonObjectAdd42AndJsonArray_when42_thenReturnOne() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
 
     // Act and Assert
-    assertEquals((short) 1, new JsonMapType(map, true).getShort("Key", (short) 1));
+    assertEquals((short) 1, new JsonMapType(map, true).getShort("42", (short) 1));
   }
 
   /**
@@ -3806,25 +3840,27 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
+   *   <li>When {@code Key}.
+   *   <li>Then return one.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#getShort(String, short)}
    */
   @Test
   @DisplayName(
-      "Test getShort(String, short) with 'key', 'dfl'; given JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three")
+      "Test getShort(String, short) with 'key', 'dfl'; given JsonObject (default constructor) add '42' and JsonArray(); when 'Key'; then return one")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"short JsonMapType.getShort(String, short)"})
-  void testGetShortWithKeyDfl_givenJsonObjectAdd42AndJsonArrayWithCapacityIsThree2() {
+  void testGetShortWithKeyDfl_givenJsonObjectAdd42AndJsonArray_whenKey_thenReturnOne() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
 
     // Act and Assert
-    assertEquals((short) 1, new JsonMapType(map, true).getShort("42", (short) 1));
+    assertEquals((short) 1, new JsonMapType(map, true).getShort("Key", (short) 1));
   }
 
   /**
@@ -3848,7 +3884,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive(true));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals((short) 1, new JsonMapType(map, true).getShort("42", (short) 1));
@@ -3875,7 +3911,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("String"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals((short) 1, new JsonMapType(map, true).getShort("42", (short) 1));
@@ -3899,7 +3935,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("42"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals((short) 42, new JsonMapType(map, true).getShort("42", (short) 1));
@@ -3923,7 +3959,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive(false));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals((short) 0, new JsonMapType(map, true).getShort("42", (short) 1));
@@ -3946,7 +3982,7 @@ class JsonMapTypeDiffblueTest {
   void testGetShortWithKeyDfl_whenKey() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals((short) 1, new JsonMapType(map, true).getShort("Key", (short) 1));
@@ -4016,7 +4052,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("String"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals((short) 0, new JsonMapType(map, false).getShort("42"));
@@ -4027,23 +4063,24 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
    *   <li>When {@code 42}.
+   *   <li>Then return zero.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#getShort(String)}
    */
   @Test
   @DisplayName(
-      "Test getShort(String) with 'key'; given JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three; when '42'")
+      "Test getShort(String) with 'key'; given JsonObject (default constructor) add '42' and JsonArray(); when '42'; then return zero")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"short JsonMapType.getShort(String)"})
-  void testGetShortWithKey_givenJsonObjectAdd42AndJsonArrayWithCapacityIsThree_when42() {
+  void testGetShortWithKey_givenJsonObjectAdd42AndJsonArray_when42_thenReturnZero() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals((short) 0, new JsonMapType(map, true).getShort("42"));
@@ -4054,23 +4091,24 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
    *   <li>When {@code Key}.
+   *   <li>Then return zero.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#getShort(String)}
    */
   @Test
   @DisplayName(
-      "Test getShort(String) with 'key'; given JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three; when 'Key'")
+      "Test getShort(String) with 'key'; given JsonObject (default constructor) add '42' and JsonArray(); when 'Key'; then return zero")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"short JsonMapType.getShort(String)"})
-  void testGetShortWithKey_givenJsonObjectAdd42AndJsonArrayWithCapacityIsThree_whenKey() {
+  void testGetShortWithKey_givenJsonObjectAdd42AndJsonArray_whenKey_thenReturnZero() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals((short) 0, new JsonMapType(map, true).getShort("Key"));
@@ -4097,7 +4135,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive(false));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals((short) 0, new JsonMapType(map, true).getShort("42"));
@@ -4124,7 +4162,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("String"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals((short) 0, new JsonMapType(map, true).getShort("42"));
@@ -4148,7 +4186,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("42"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals((short) 42, new JsonMapType(map, true).getShort("42"));
@@ -4172,7 +4210,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive(true));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals((short) 1, new JsonMapType(map, true).getShort("42"));
@@ -4195,7 +4233,7 @@ class JsonMapTypeDiffblueTest {
   void testGetShortWithKey_whenKey() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals((short) 0, new JsonMapType(map, true).getShort("Key"));
@@ -4206,22 +4244,22 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add empty string and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#setShort(String, short)}
    */
   @Test
   @DisplayName(
-      "Test setShort(String, short); given JsonObject (default constructor) add empty string and JsonArray(int) with capacity is three")
+      "Test setShort(String, short); given JsonObject (default constructor) add empty string and JsonArray()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void JsonMapType.setShort(String, short)"})
-  void testSetShort_givenJsonObjectAddEmptyStringAndJsonArrayWithCapacityIsThree() {
+  void testSetShort_givenJsonObjectAddEmptyStringAndJsonArray() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("", new JsonArray(3));
-    map.add("42", new JsonArray(3));
+    map.add("", new JsonArray());
+    map.add("42", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -4239,23 +4277,23 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add empty string and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#setShort(String, short)}
    */
   @Test
   @DisplayName(
-      "Test setShort(String, short); given JsonObject (default constructor) add empty string and JsonArray(int) with capacity is three")
+      "Test setShort(String, short); given JsonObject (default constructor) add empty string and JsonArray()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void JsonMapType.setShort(String, short)"})
-  void testSetShort_givenJsonObjectAddEmptyStringAndJsonArrayWithCapacityIsThree2() {
+  void testSetShort_givenJsonObjectAddEmptyStringAndJsonArray2() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("", new JsonArray(3));
-    map.add("42", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("", new JsonArray());
+    map.add("42", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -4317,9 +4355,9 @@ class JsonMapTypeDiffblueTest {
   void testSetShort_thenJsonMapTypeWithMapIsJsonObjectAndCompressedIsTrueSizeIsFour() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("", new JsonArray(3));
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("", new JsonArray());
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -4351,8 +4389,8 @@ class JsonMapTypeDiffblueTest {
   void testSetShort_thenJsonMapTypeWithMapIsJsonObjectAndCompressedIsTrueSizeIsThree() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -4384,9 +4422,9 @@ class JsonMapTypeDiffblueTest {
   void testSetShort_thenJsonMapTypeWithMapIsJsonObjectAndCompressedIsTrueSizeIsThree2() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -4418,7 +4456,7 @@ class JsonMapTypeDiffblueTest {
   void testSetShort_thenJsonMapTypeWithMapIsJsonObjectAndCompressedIsTrueSizeIsTwo() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -4450,7 +4488,7 @@ class JsonMapTypeDiffblueTest {
   void testSetShort_thenJsonMapTypeWithMapIsJsonObjectAndCompressedIsTrueSizeIsTwo2() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
+    map.add("42", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -4480,8 +4518,8 @@ class JsonMapTypeDiffblueTest {
   void testSetShort_when42() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -4511,9 +4549,9 @@ class JsonMapTypeDiffblueTest {
   void testSetShort_whenEmptyString() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -4590,7 +4628,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("String"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(1, new JsonMapType(map, false).getInt("42", 1));
@@ -4601,23 +4639,24 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
    *   <li>When {@code 42}.
+   *   <li>Then return one.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#getInt(String, int)}
    */
   @Test
   @DisplayName(
-      "Test getInt(String, int) with 'key', 'dfl'; given JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three; when '42'")
+      "Test getInt(String, int) with 'key', 'dfl'; given JsonObject (default constructor) add '42' and JsonArray(); when '42'; then return one")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"int JsonMapType.getInt(String, int)"})
-  void testGetIntWithKeyDfl_givenJsonObjectAdd42AndJsonArrayWithCapacityIsThree_when42() {
+  void testGetIntWithKeyDfl_givenJsonObjectAdd42AndJsonArray_when42_thenReturnOne() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(1, new JsonMapType(map, true).getInt("42", 1));
@@ -4628,23 +4667,24 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
    *   <li>When {@code Key}.
+   *   <li>Then return one.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#getInt(String, int)}
    */
   @Test
   @DisplayName(
-      "Test getInt(String, int) with 'key', 'dfl'; given JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three; when 'Key'")
+      "Test getInt(String, int) with 'key', 'dfl'; given JsonObject (default constructor) add '42' and JsonArray(); when 'Key'; then return one")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"int JsonMapType.getInt(String, int)"})
-  void testGetIntWithKeyDfl_givenJsonObjectAdd42AndJsonArrayWithCapacityIsThree_whenKey() {
+  void testGetIntWithKeyDfl_givenJsonObjectAdd42AndJsonArray_whenKey_thenReturnOne() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(1, new JsonMapType(map, true).getInt("Key", 1));
@@ -4671,7 +4711,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive(true));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(1, new JsonMapType(map, true).getInt("42", 1));
@@ -4698,7 +4738,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("String"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(1, new JsonMapType(map, true).getInt("42", 1));
@@ -4722,7 +4762,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("42"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(42, new JsonMapType(map, true).getInt("42", 1));
@@ -4746,7 +4786,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive(false));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(0, new JsonMapType(map, true).getInt("42", 1));
@@ -4769,7 +4809,7 @@ class JsonMapTypeDiffblueTest {
   void testGetIntWithKeyDfl_whenKey() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(1, new JsonMapType(map, true).getInt("Key", 1));
@@ -4840,7 +4880,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("String"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(0, new JsonMapType(map, false).getInt("42"));
@@ -4866,7 +4906,7 @@ class JsonMapTypeDiffblueTest {
   void testGetIntWithKey_givenJsonMapTypeWithMapIsJsonObjectAndCompressedIsTrue_whenKey() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(0, new JsonMapType(map, true).getInt("Key"));
@@ -4877,23 +4917,24 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
    *   <li>When {@code 42}.
+   *   <li>Then return zero.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#getInt(String)}
    */
   @Test
   @DisplayName(
-      "Test getInt(String) with 'key'; given JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three; when '42'")
+      "Test getInt(String) with 'key'; given JsonObject (default constructor) add '42' and JsonArray(); when '42'; then return zero")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"int JsonMapType.getInt(String)"})
-  void testGetIntWithKey_givenJsonObjectAdd42AndJsonArrayWithCapacityIsThree_when42() {
+  void testGetIntWithKey_givenJsonObjectAdd42AndJsonArray_when42_thenReturnZero() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(0, new JsonMapType(map, true).getInt("42"));
@@ -4904,23 +4945,24 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
    *   <li>When {@code Key}.
+   *   <li>Then return zero.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#getInt(String)}
    */
   @Test
   @DisplayName(
-      "Test getInt(String) with 'key'; given JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three; when 'Key'")
+      "Test getInt(String) with 'key'; given JsonObject (default constructor) add '42' and JsonArray(); when 'Key'; then return zero")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"int JsonMapType.getInt(String)"})
-  void testGetIntWithKey_givenJsonObjectAdd42AndJsonArrayWithCapacityIsThree_whenKey() {
+  void testGetIntWithKey_givenJsonObjectAdd42AndJsonArray_whenKey_thenReturnZero() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(0, new JsonMapType(map, true).getInt("Key"));
@@ -4947,7 +4989,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive(false));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(0, new JsonMapType(map, true).getInt("42"));
@@ -4974,7 +5016,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("String"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(0, new JsonMapType(map, true).getInt("42"));
@@ -4998,7 +5040,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("42"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(42, new JsonMapType(map, true).getInt("42"));
@@ -5022,7 +5064,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive(true));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(1, new JsonMapType(map, true).getInt("42"));
@@ -5033,22 +5075,22 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add empty string and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#setInt(String, int)}
    */
   @Test
   @DisplayName(
-      "Test setInt(String, int); given JsonObject (default constructor) add empty string and JsonArray(int) with capacity is three")
+      "Test setInt(String, int); given JsonObject (default constructor) add empty string and JsonArray()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void JsonMapType.setInt(String, int)"})
-  void testSetInt_givenJsonObjectAddEmptyStringAndJsonArrayWithCapacityIsThree() {
+  void testSetInt_givenJsonObjectAddEmptyStringAndJsonArray() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("", new JsonArray(3));
-    map.add("42", new JsonArray(3));
+    map.add("", new JsonArray());
+    map.add("42", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -5066,23 +5108,23 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add empty string and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#setInt(String, int)}
    */
   @Test
   @DisplayName(
-      "Test setInt(String, int); given JsonObject (default constructor) add empty string and JsonArray(int) with capacity is three")
+      "Test setInt(String, int); given JsonObject (default constructor) add empty string and JsonArray()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void JsonMapType.setInt(String, int)"})
-  void testSetInt_givenJsonObjectAddEmptyStringAndJsonArrayWithCapacityIsThree2() {
+  void testSetInt_givenJsonObjectAddEmptyStringAndJsonArray2() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("", new JsonArray(3));
-    map.add("42", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("", new JsonArray());
+    map.add("42", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -5144,9 +5186,9 @@ class JsonMapTypeDiffblueTest {
   void testSetInt_thenJsonMapTypeWithMapIsJsonObjectAndCompressedIsTrueSizeIsFour() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("", new JsonArray(3));
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("", new JsonArray());
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -5178,8 +5220,8 @@ class JsonMapTypeDiffblueTest {
   void testSetInt_thenJsonMapTypeWithMapIsJsonObjectAndCompressedIsTrueSizeIsThree() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -5211,9 +5253,9 @@ class JsonMapTypeDiffblueTest {
   void testSetInt_thenJsonMapTypeWithMapIsJsonObjectAndCompressedIsTrueSizeIsThree2() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -5245,7 +5287,7 @@ class JsonMapTypeDiffblueTest {
   void testSetInt_thenJsonMapTypeWithMapIsJsonObjectAndCompressedIsTrueSizeIsTwo() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -5277,7 +5319,7 @@ class JsonMapTypeDiffblueTest {
   void testSetInt_thenJsonMapTypeWithMapIsJsonObjectAndCompressedIsTrueSizeIsTwo2() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
+    map.add("42", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -5310,8 +5352,8 @@ class JsonMapTypeDiffblueTest {
   void testSetInt_when42_thenJsonMapTypeWithMapIsJsonObjectAndCompressedIsTrueSizeIsTwo() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -5341,9 +5383,9 @@ class JsonMapTypeDiffblueTest {
   void testSetInt_whenEmptyString() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -5419,7 +5461,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("String"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(1L, new JsonMapType(map, false).getLong("42", 1L));
@@ -5430,25 +5472,27 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
+   *   <li>When {@code 42}.
+   *   <li>Then return one.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#getLong(String, long)}
    */
   @Test
   @DisplayName(
-      "Test getLong(String, long) with 'key', 'dfl'; given JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three")
+      "Test getLong(String, long) with 'key', 'dfl'; given JsonObject (default constructor) add '42' and JsonArray(); when '42'; then return one")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"long JsonMapType.getLong(String, long)"})
-  void testGetLongWithKeyDfl_givenJsonObjectAdd42AndJsonArrayWithCapacityIsThree() {
+  void testGetLongWithKeyDfl_givenJsonObjectAdd42AndJsonArray_when42_thenReturnOne() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
 
     // Act and Assert
-    assertEquals(1L, new JsonMapType(map, true).getLong("Key", 1L));
+    assertEquals(1L, new JsonMapType(map, true).getLong("42", 1L));
   }
 
   /**
@@ -5456,26 +5500,27 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
-   *   <li>When {@code 42}.
+   *       JsonArray#JsonArray()}.
+   *   <li>When {@code Key}.
+   *   <li>Then return one.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#getLong(String, long)}
    */
   @Test
   @DisplayName(
-      "Test getLong(String, long) with 'key', 'dfl'; given JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three; when '42'")
+      "Test getLong(String, long) with 'key', 'dfl'; given JsonObject (default constructor) add '42' and JsonArray(); when 'Key'; then return one")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"long JsonMapType.getLong(String, long)"})
-  void testGetLongWithKeyDfl_givenJsonObjectAdd42AndJsonArrayWithCapacityIsThree_when42() {
+  void testGetLongWithKeyDfl_givenJsonObjectAdd42AndJsonArray_whenKey_thenReturnOne() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
 
     // Act and Assert
-    assertEquals(1L, new JsonMapType(map, true).getLong("42", 1L));
+    assertEquals(1L, new JsonMapType(map, true).getLong("Key", 1L));
   }
 
   /**
@@ -5499,7 +5544,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive(true));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(1L, new JsonMapType(map, true).getLong("42", 1L));
@@ -5526,7 +5571,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("String"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(1L, new JsonMapType(map, true).getLong("42", 1L));
@@ -5550,7 +5595,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("42"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(42L, new JsonMapType(map, true).getLong("42", 1L));
@@ -5574,7 +5619,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive(false));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(0L, new JsonMapType(map, true).getLong("42", 1L));
@@ -5597,7 +5642,7 @@ class JsonMapTypeDiffblueTest {
   void testGetLongWithKeyDfl_whenKey() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(1L, new JsonMapType(map, true).getLong("Key", 1L));
@@ -5667,7 +5712,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("String"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(0L, new JsonMapType(map, false).getLong("42"));
@@ -5678,23 +5723,24 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
    *   <li>When {@code 42}.
+   *   <li>Then return zero.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#getLong(String)}
    */
   @Test
   @DisplayName(
-      "Test getLong(String) with 'key'; given JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three; when '42'")
+      "Test getLong(String) with 'key'; given JsonObject (default constructor) add '42' and JsonArray(); when '42'; then return zero")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"long JsonMapType.getLong(String)"})
-  void testGetLongWithKey_givenJsonObjectAdd42AndJsonArrayWithCapacityIsThree_when42() {
+  void testGetLongWithKey_givenJsonObjectAdd42AndJsonArray_when42_thenReturnZero() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(0L, new JsonMapType(map, true).getLong("42"));
@@ -5705,23 +5751,24 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
    *   <li>When {@code Key}.
+   *   <li>Then return zero.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#getLong(String)}
    */
   @Test
   @DisplayName(
-      "Test getLong(String) with 'key'; given JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three; when 'Key'")
+      "Test getLong(String) with 'key'; given JsonObject (default constructor) add '42' and JsonArray(); when 'Key'; then return zero")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"long JsonMapType.getLong(String)"})
-  void testGetLongWithKey_givenJsonObjectAdd42AndJsonArrayWithCapacityIsThree_whenKey() {
+  void testGetLongWithKey_givenJsonObjectAdd42AndJsonArray_whenKey_thenReturnZero() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(0L, new JsonMapType(map, true).getLong("Key"));
@@ -5748,7 +5795,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive(false));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(0L, new JsonMapType(map, true).getLong("42"));
@@ -5775,7 +5822,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("String"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(0L, new JsonMapType(map, true).getLong("42"));
@@ -5799,7 +5846,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("42"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(42L, new JsonMapType(map, true).getLong("42"));
@@ -5823,7 +5870,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive(true));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(1L, new JsonMapType(map, true).getLong("42"));
@@ -5846,7 +5893,7 @@ class JsonMapTypeDiffblueTest {
   void testGetLongWithKey_whenKey() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(0L, new JsonMapType(map, true).getLong("Key"));
@@ -5857,22 +5904,22 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add empty string and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#setLong(String, long)}
    */
   @Test
   @DisplayName(
-      "Test setLong(String, long); given JsonObject (default constructor) add empty string and JsonArray(int) with capacity is three")
+      "Test setLong(String, long); given JsonObject (default constructor) add empty string and JsonArray()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void JsonMapType.setLong(String, long)"})
-  void testSetLong_givenJsonObjectAddEmptyStringAndJsonArrayWithCapacityIsThree() {
+  void testSetLong_givenJsonObjectAddEmptyStringAndJsonArray() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("", new JsonArray(3));
-    map.add("42", new JsonArray(3));
+    map.add("", new JsonArray());
+    map.add("42", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -5890,23 +5937,23 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add empty string and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#setLong(String, long)}
    */
   @Test
   @DisplayName(
-      "Test setLong(String, long); given JsonObject (default constructor) add empty string and JsonArray(int) with capacity is three")
+      "Test setLong(String, long); given JsonObject (default constructor) add empty string and JsonArray()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void JsonMapType.setLong(String, long)"})
-  void testSetLong_givenJsonObjectAddEmptyStringAndJsonArrayWithCapacityIsThree2() {
+  void testSetLong_givenJsonObjectAddEmptyStringAndJsonArray2() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("", new JsonArray(3));
-    map.add("42", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("", new JsonArray());
+    map.add("42", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -5968,9 +6015,9 @@ class JsonMapTypeDiffblueTest {
   void testSetLong_thenJsonMapTypeWithMapIsJsonObjectAndCompressedIsTrueSizeIsFour() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("", new JsonArray(3));
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("", new JsonArray());
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -6002,8 +6049,8 @@ class JsonMapTypeDiffblueTest {
   void testSetLong_thenJsonMapTypeWithMapIsJsonObjectAndCompressedIsTrueSizeIsThree() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -6035,9 +6082,9 @@ class JsonMapTypeDiffblueTest {
   void testSetLong_thenJsonMapTypeWithMapIsJsonObjectAndCompressedIsTrueSizeIsThree2() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -6069,7 +6116,7 @@ class JsonMapTypeDiffblueTest {
   void testSetLong_thenJsonMapTypeWithMapIsJsonObjectAndCompressedIsTrueSizeIsTwo() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -6101,7 +6148,7 @@ class JsonMapTypeDiffblueTest {
   void testSetLong_thenJsonMapTypeWithMapIsJsonObjectAndCompressedIsTrueSizeIsTwo2() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
+    map.add("42", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -6131,8 +6178,8 @@ class JsonMapTypeDiffblueTest {
   void testSetLong_when42() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -6162,9 +6209,9 @@ class JsonMapTypeDiffblueTest {
   void testSetLong_whenEmptyString() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -6239,7 +6286,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("String"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(10.0f, new JsonMapType(map, false).getFloat("42", 10.0f));
@@ -6250,25 +6297,27 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
+   *   <li>When {@code 42}.
+   *   <li>Then return ten.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#getFloat(String, float)}
    */
   @Test
   @DisplayName(
-      "Test getFloat(String, float) with 'key', 'dfl'; given JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three")
+      "Test getFloat(String, float) with 'key', 'dfl'; given JsonObject (default constructor) add '42' and JsonArray(); when '42'; then return ten")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"float JsonMapType.getFloat(String, float)"})
-  void testGetFloatWithKeyDfl_givenJsonObjectAdd42AndJsonArrayWithCapacityIsThree() {
+  void testGetFloatWithKeyDfl_givenJsonObjectAdd42AndJsonArray_when42_thenReturnTen() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
 
     // Act and Assert
-    assertEquals(10.0f, new JsonMapType(map, true).getFloat("Key", 10.0f));
+    assertEquals(10.0f, new JsonMapType(map, true).getFloat("42", 10.0f));
   }
 
   /**
@@ -6276,25 +6325,27 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
+   *   <li>When {@code Key}.
+   *   <li>Then return ten.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#getFloat(String, float)}
    */
   @Test
   @DisplayName(
-      "Test getFloat(String, float) with 'key', 'dfl'; given JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three")
+      "Test getFloat(String, float) with 'key', 'dfl'; given JsonObject (default constructor) add '42' and JsonArray(); when 'Key'; then return ten")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"float JsonMapType.getFloat(String, float)"})
-  void testGetFloatWithKeyDfl_givenJsonObjectAdd42AndJsonArrayWithCapacityIsThree2() {
+  void testGetFloatWithKeyDfl_givenJsonObjectAdd42AndJsonArray_whenKey_thenReturnTen() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
 
     // Act and Assert
-    assertEquals(10.0f, new JsonMapType(map, true).getFloat("42", 10.0f));
+    assertEquals(10.0f, new JsonMapType(map, true).getFloat("Key", 10.0f));
   }
 
   /**
@@ -6318,7 +6369,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("String"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(10.0f, new JsonMapType(map, true).getFloat("42", 10.0f));
@@ -6342,7 +6393,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("42"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(42.0f, new JsonMapType(map, true).getFloat("42", 10.0f));
@@ -6366,7 +6417,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive(true));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(1.0f, new JsonMapType(map, true).getFloat("42", 10.0f));
@@ -6390,7 +6441,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive(false));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(0.0f, new JsonMapType(map, true).getFloat("42", 10.0f));
@@ -6414,7 +6465,7 @@ class JsonMapTypeDiffblueTest {
   void testGetFloatWithKeyDfl_whenKey_thenReturnTen() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(10.0f, new JsonMapType(map, true).getFloat("Key", 10.0f));
@@ -6484,7 +6535,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("String"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(0.0f, new JsonMapType(map, false).getFloat("42"));
@@ -6495,23 +6546,24 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
    *   <li>When {@code 42}.
+   *   <li>Then return zero.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#getFloat(String)}
    */
   @Test
   @DisplayName(
-      "Test getFloat(String) with 'key'; given JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three; when '42'")
+      "Test getFloat(String) with 'key'; given JsonObject (default constructor) add '42' and JsonArray(); when '42'; then return zero")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"float JsonMapType.getFloat(String)"})
-  void testGetFloatWithKey_givenJsonObjectAdd42AndJsonArrayWithCapacityIsThree_when42() {
+  void testGetFloatWithKey_givenJsonObjectAdd42AndJsonArray_when42_thenReturnZero() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(0.0f, new JsonMapType(map, true).getFloat("42"));
@@ -6522,23 +6574,24 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
    *   <li>When {@code Key}.
+   *   <li>Then return zero.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#getFloat(String)}
    */
   @Test
   @DisplayName(
-      "Test getFloat(String) with 'key'; given JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three; when 'Key'")
+      "Test getFloat(String) with 'key'; given JsonObject (default constructor) add '42' and JsonArray(); when 'Key'; then return zero")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"float JsonMapType.getFloat(String)"})
-  void testGetFloatWithKey_givenJsonObjectAdd42AndJsonArrayWithCapacityIsThree_whenKey() {
+  void testGetFloatWithKey_givenJsonObjectAdd42AndJsonArray_whenKey_thenReturnZero() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(0.0f, new JsonMapType(map, true).getFloat("Key"));
@@ -6565,7 +6618,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive(false));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(0.0f, new JsonMapType(map, true).getFloat("42"));
@@ -6592,7 +6645,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("String"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(0.0f, new JsonMapType(map, true).getFloat("42"));
@@ -6616,7 +6669,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("42"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(42.0f, new JsonMapType(map, true).getFloat("42"));
@@ -6640,7 +6693,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive(true));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(1.0f, new JsonMapType(map, true).getFloat("42"));
@@ -6663,7 +6716,7 @@ class JsonMapTypeDiffblueTest {
   void testGetFloatWithKey_whenKey() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(0.0f, new JsonMapType(map, true).getFloat("Key"));
@@ -6674,22 +6727,22 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add empty string and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#setFloat(String, float)}
    */
   @Test
   @DisplayName(
-      "Test setFloat(String, float); given JsonObject (default constructor) add empty string and JsonArray(int) with capacity is three")
+      "Test setFloat(String, float); given JsonObject (default constructor) add empty string and JsonArray()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void JsonMapType.setFloat(String, float)"})
-  void testSetFloat_givenJsonObjectAddEmptyStringAndJsonArrayWithCapacityIsThree() {
+  void testSetFloat_givenJsonObjectAddEmptyStringAndJsonArray() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("", new JsonArray(3));
-    map.add("42", new JsonArray(3));
+    map.add("", new JsonArray());
+    map.add("42", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -6707,23 +6760,23 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add empty string and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#setFloat(String, float)}
    */
   @Test
   @DisplayName(
-      "Test setFloat(String, float); given JsonObject (default constructor) add empty string and JsonArray(int) with capacity is three")
+      "Test setFloat(String, float); given JsonObject (default constructor) add empty string and JsonArray()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void JsonMapType.setFloat(String, float)"})
-  void testSetFloat_givenJsonObjectAddEmptyStringAndJsonArrayWithCapacityIsThree2() {
+  void testSetFloat_givenJsonObjectAddEmptyStringAndJsonArray2() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("", new JsonArray(3));
-    map.add("42", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("", new JsonArray());
+    map.add("42", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -6785,9 +6838,9 @@ class JsonMapTypeDiffblueTest {
   void testSetFloat_thenJsonMapTypeWithMapIsJsonObjectAndCompressedIsTrueSizeIsFour() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("", new JsonArray(3));
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("", new JsonArray());
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -6819,8 +6872,8 @@ class JsonMapTypeDiffblueTest {
   void testSetFloat_thenJsonMapTypeWithMapIsJsonObjectAndCompressedIsTrueSizeIsThree() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -6852,9 +6905,9 @@ class JsonMapTypeDiffblueTest {
   void testSetFloat_thenJsonMapTypeWithMapIsJsonObjectAndCompressedIsTrueSizeIsThree2() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -6886,7 +6939,7 @@ class JsonMapTypeDiffblueTest {
   void testSetFloat_thenJsonMapTypeWithMapIsJsonObjectAndCompressedIsTrueSizeIsTwo() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -6918,7 +6971,7 @@ class JsonMapTypeDiffblueTest {
   void testSetFloat_thenJsonMapTypeWithMapIsJsonObjectAndCompressedIsTrueSizeIsTwo2() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
+    map.add("42", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -6948,8 +7001,8 @@ class JsonMapTypeDiffblueTest {
   void testSetFloat_when42() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -6979,9 +7032,9 @@ class JsonMapTypeDiffblueTest {
   void testSetFloat_whenEmptyString() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -7056,7 +7109,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("String"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(10.0d, new JsonMapType(map, false).getDouble("42", 10.0d));
@@ -7067,25 +7120,27 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
+   *   <li>When {@code 42}.
+   *   <li>Then return ten.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#getDouble(String, double)}
    */
   @Test
   @DisplayName(
-      "Test getDouble(String, double) with 'key', 'dfl'; given JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three")
+      "Test getDouble(String, double) with 'key', 'dfl'; given JsonObject (default constructor) add '42' and JsonArray(); when '42'; then return ten")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"double JsonMapType.getDouble(String, double)"})
-  void testGetDoubleWithKeyDfl_givenJsonObjectAdd42AndJsonArrayWithCapacityIsThree() {
+  void testGetDoubleWithKeyDfl_givenJsonObjectAdd42AndJsonArray_when42_thenReturnTen() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
 
     // Act and Assert
-    assertEquals(10.0d, new JsonMapType(map, true).getDouble("Key", 10.0d));
+    assertEquals(10.0d, new JsonMapType(map, true).getDouble("42", 10.0d));
   }
 
   /**
@@ -7093,25 +7148,27 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
+   *   <li>When {@code Key}.
+   *   <li>Then return ten.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#getDouble(String, double)}
    */
   @Test
   @DisplayName(
-      "Test getDouble(String, double) with 'key', 'dfl'; given JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three")
+      "Test getDouble(String, double) with 'key', 'dfl'; given JsonObject (default constructor) add '42' and JsonArray(); when 'Key'; then return ten")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"double JsonMapType.getDouble(String, double)"})
-  void testGetDoubleWithKeyDfl_givenJsonObjectAdd42AndJsonArrayWithCapacityIsThree2() {
+  void testGetDoubleWithKeyDfl_givenJsonObjectAdd42AndJsonArray_whenKey_thenReturnTen() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
 
     // Act and Assert
-    assertEquals(10.0d, new JsonMapType(map, true).getDouble("42", 10.0d));
+    assertEquals(10.0d, new JsonMapType(map, true).getDouble("Key", 10.0d));
   }
 
   /**
@@ -7135,7 +7192,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("String"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(10.0d, new JsonMapType(map, true).getDouble("42", 10.0d));
@@ -7159,7 +7216,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("42"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(42.0d, new JsonMapType(map, true).getDouble("42", 10.0d));
@@ -7183,7 +7240,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive(true));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(1.0d, new JsonMapType(map, true).getDouble("42", 10.0d));
@@ -7207,7 +7264,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive(false));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(0.0d, new JsonMapType(map, true).getDouble("42", 10.0d));
@@ -7231,7 +7288,7 @@ class JsonMapTypeDiffblueTest {
   void testGetDoubleWithKeyDfl_whenKey_thenReturnTen() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(10.0d, new JsonMapType(map, true).getDouble("Key", 10.0d));
@@ -7300,7 +7357,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("String"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(0.0d, new JsonMapType(map, false).getDouble("42"));
@@ -7311,23 +7368,24 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
    *   <li>When {@code 42}.
+   *   <li>Then return zero.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#getDouble(String)}
    */
   @Test
   @DisplayName(
-      "Test getDouble(String) with 'key'; given JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three; when '42'")
+      "Test getDouble(String) with 'key'; given JsonObject (default constructor) add '42' and JsonArray(); when '42'; then return zero")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"double JsonMapType.getDouble(String)"})
-  void testGetDoubleWithKey_givenJsonObjectAdd42AndJsonArrayWithCapacityIsThree_when42() {
+  void testGetDoubleWithKey_givenJsonObjectAdd42AndJsonArray_when42_thenReturnZero() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(0.0d, new JsonMapType(map, true).getDouble("42"));
@@ -7338,23 +7396,24 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
    *   <li>When {@code Key}.
+   *   <li>Then return zero.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#getDouble(String)}
    */
   @Test
   @DisplayName(
-      "Test getDouble(String) with 'key'; given JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three; when 'Key'")
+      "Test getDouble(String) with 'key'; given JsonObject (default constructor) add '42' and JsonArray(); when 'Key'; then return zero")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"double JsonMapType.getDouble(String)"})
-  void testGetDoubleWithKey_givenJsonObjectAdd42AndJsonArrayWithCapacityIsThree_whenKey() {
+  void testGetDoubleWithKey_givenJsonObjectAdd42AndJsonArray_whenKey_thenReturnZero() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(0.0d, new JsonMapType(map, true).getDouble("Key"));
@@ -7381,7 +7440,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive(false));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(0.0d, new JsonMapType(map, true).getDouble("42"));
@@ -7408,7 +7467,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("String"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(0.0d, new JsonMapType(map, true).getDouble("42"));
@@ -7432,7 +7491,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("42"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(42.0d, new JsonMapType(map, true).getDouble("42"));
@@ -7456,7 +7515,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive(true));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(1.0d, new JsonMapType(map, true).getDouble("42"));
@@ -7479,7 +7538,7 @@ class JsonMapTypeDiffblueTest {
   void testGetDoubleWithKey_whenKey() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(0.0d, new JsonMapType(map, true).getDouble("Key"));
@@ -7490,22 +7549,22 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add empty string and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#setDouble(String, double)}
    */
   @Test
   @DisplayName(
-      "Test setDouble(String, double); given JsonObject (default constructor) add empty string and JsonArray(int) with capacity is three")
+      "Test setDouble(String, double); given JsonObject (default constructor) add empty string and JsonArray()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void JsonMapType.setDouble(String, double)"})
-  void testSetDouble_givenJsonObjectAddEmptyStringAndJsonArrayWithCapacityIsThree() {
+  void testSetDouble_givenJsonObjectAddEmptyStringAndJsonArray() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("", new JsonArray(3));
-    map.add("42", new JsonArray(3));
+    map.add("", new JsonArray());
+    map.add("42", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -7523,23 +7582,23 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add empty string and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#setDouble(String, double)}
    */
   @Test
   @DisplayName(
-      "Test setDouble(String, double); given JsonObject (default constructor) add empty string and JsonArray(int) with capacity is three")
+      "Test setDouble(String, double); given JsonObject (default constructor) add empty string and JsonArray()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void JsonMapType.setDouble(String, double)"})
-  void testSetDouble_givenJsonObjectAddEmptyStringAndJsonArrayWithCapacityIsThree2() {
+  void testSetDouble_givenJsonObjectAddEmptyStringAndJsonArray2() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("", new JsonArray(3));
-    map.add("42", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("", new JsonArray());
+    map.add("42", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -7601,9 +7660,9 @@ class JsonMapTypeDiffblueTest {
   void testSetDouble_thenJsonMapTypeWithMapIsJsonObjectAndCompressedIsTrueSizeIsFour() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("", new JsonArray(3));
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("", new JsonArray());
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -7635,8 +7694,8 @@ class JsonMapTypeDiffblueTest {
   void testSetDouble_thenJsonMapTypeWithMapIsJsonObjectAndCompressedIsTrueSizeIsThree() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -7668,9 +7727,9 @@ class JsonMapTypeDiffblueTest {
   void testSetDouble_thenJsonMapTypeWithMapIsJsonObjectAndCompressedIsTrueSizeIsThree2() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -7702,7 +7761,7 @@ class JsonMapTypeDiffblueTest {
   void testSetDouble_thenJsonMapTypeWithMapIsJsonObjectAndCompressedIsTrueSizeIsTwo() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -7734,7 +7793,7 @@ class JsonMapTypeDiffblueTest {
   void testSetDouble_thenJsonMapTypeWithMapIsJsonObjectAndCompressedIsTrueSizeIsTwo2() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
+    map.add("42", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -7764,8 +7823,8 @@ class JsonMapTypeDiffblueTest {
   void testSetDouble_when42() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -7795,9 +7854,9 @@ class JsonMapTypeDiffblueTest {
   void testSetDouble_whenEmptyString() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -8053,22 +8112,23 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
+   *   <li>Then return {@code null}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#getListUnchecked(String)}
    */
   @Test
   @DisplayName(
-      "Test getListUnchecked(String) with 'key'; given JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three")
+      "Test getListUnchecked(String) with 'key'; given JsonObject (default constructor) add '42' and JsonArray(); then return 'null'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"ListType JsonMapType.getListUnchecked(String)"})
-  void testGetListUncheckedWithKey_givenJsonObjectAdd42AndJsonArrayWithCapacityIsThree() {
+  void testGetListUncheckedWithKey_givenJsonObjectAdd42AndJsonArray_thenReturnNull() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertNull(new JsonMapType(map, true).getListUnchecked("Key"));
@@ -8091,7 +8151,7 @@ class JsonMapTypeDiffblueTest {
   void testGetListUncheckedWithKey_thenReturnNull() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertNull(new JsonMapType(map, true).getListUnchecked("Key"));
@@ -8115,9 +8175,9 @@ class JsonMapTypeDiffblueTest {
   void testGetListUncheckedWithKey_when42_thenReturnJsonListType() {
     // Arrange
     JsonObject map = new JsonObject();
-    JsonArray value = new JsonArray(3);
+    JsonArray value = new JsonArray();
     map.add("42", value);
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act
     ListType actualListUnchecked = new JsonMapType(map, true).getListUnchecked("42");
@@ -8153,7 +8213,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = mock(JsonObject.class);
     doNothing().when(map).add(Mockito.<String>any(), Mockito.<JsonElement>any());
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -8196,22 +8256,23 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
+   *   <li>Then return {@link NBTMapType#NBTMapType()}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#getMap(String, MapType)}
    */
   @Test
   @DisplayName(
-      "Test getMap(String, MapType) with 'key', 'dfl'; given JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three")
+      "Test getMap(String, MapType) with 'key', 'dfl'; given JsonObject (default constructor) add '42' and JsonArray(); then return NBTMapType()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"MapType JsonMapType.getMap(String, MapType)"})
-  void testGetMapWithKeyDfl_givenJsonObjectAdd42AndJsonArrayWithCapacityIsThree() {
+  void testGetMapWithKeyDfl_givenJsonObjectAdd42AndJsonArray_thenReturnNBTMapType() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
     NBTMapType dfl = new NBTMapType();
 
@@ -8227,7 +8288,7 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
    *   <li>When {@code 42}.
    * </ul>
    *
@@ -8235,15 +8296,15 @@ class JsonMapTypeDiffblueTest {
    */
   @Test
   @DisplayName(
-      "Test getMap(String, MapType) with 'key', 'dfl'; given JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three; when '42'")
+      "Test getMap(String, MapType) with 'key', 'dfl'; given JsonObject (default constructor) add '42' and JsonArray(); when '42'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"MapType JsonMapType.getMap(String, MapType)"})
-  void testGetMapWithKeyDfl_givenJsonObjectAdd42AndJsonArrayWithCapacityIsThree_when42() {
+  void testGetMapWithKeyDfl_givenJsonObjectAdd42AndJsonArray_when42() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
     NBTMapType dfl = new NBTMapType();
 
@@ -8276,7 +8337,7 @@ class JsonMapTypeDiffblueTest {
     JsonObject map = new JsonObject();
     JsonObject value = new JsonObject();
     map.add("42", value);
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -8296,20 +8357,23 @@ class JsonMapTypeDiffblueTest {
    * Test {@link JsonMapType#getMap(String, MapType)} with {@code key}, {@code dfl}.
    *
    * <ul>
+   *   <li>Given {@link JsonObject} (default constructor) add {@code Property} and {@link
+   *       JsonArray#JsonArray()}.
    *   <li>Then return {@link NBTMapType#NBTMapType()}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#getMap(String, MapType)}
    */
   @Test
-  @DisplayName("Test getMap(String, MapType) with 'key', 'dfl'; then return NBTMapType()")
+  @DisplayName(
+      "Test getMap(String, MapType) with 'key', 'dfl'; given JsonObject (default constructor) add 'Property' and JsonArray(); then return NBTMapType()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"MapType JsonMapType.getMap(String, MapType)"})
-  void testGetMapWithKeyDfl_thenReturnNBTMapType() {
+  void testGetMapWithKeyDfl_givenJsonObjectAddPropertyAndJsonArray_thenReturnNBTMapType() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
     NBTMapType dfl = new NBTMapType();
 
@@ -8347,25 +8411,27 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
+   *   <li>When {@code 42}.
+   *   <li>Then return {@code null}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#getMap(String)}
    */
   @Test
   @DisplayName(
-      "Test getMap(String) with 'key'; given JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three")
+      "Test getMap(String) with 'key'; given JsonObject (default constructor) add '42' and JsonArray(); when '42'; then return 'null'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"MapType JsonMapType.getMap(String)"})
-  void testGetMapWithKey_givenJsonObjectAdd42AndJsonArrayWithCapacityIsThree() {
+  void testGetMapWithKey_givenJsonObjectAdd42AndJsonArray_when42_thenReturnNull() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
 
     // Act and Assert
-    assertNull(new JsonMapType(map, true).getMap("Key"));
+    assertNull(new JsonMapType(map, true).getMap("42"));
   }
 
   /**
@@ -8373,26 +8439,27 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
-   *   <li>When {@code 42}.
+   *       JsonArray#JsonArray()}.
+   *   <li>When {@code Key}.
+   *   <li>Then return {@code null}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#getMap(String)}
    */
   @Test
   @DisplayName(
-      "Test getMap(String) with 'key'; given JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three; when '42'")
+      "Test getMap(String) with 'key'; given JsonObject (default constructor) add '42' and JsonArray(); when 'Key'; then return 'null'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"MapType JsonMapType.getMap(String)"})
-  void testGetMapWithKey_givenJsonObjectAdd42AndJsonArrayWithCapacityIsThree_when42() {
+  void testGetMapWithKey_givenJsonObjectAdd42AndJsonArray_whenKey_thenReturnNull() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
 
     // Act and Assert
-    assertNull(new JsonMapType(map, true).getMap("42"));
+    assertNull(new JsonMapType(map, true).getMap("Key"));
   }
 
   /**
@@ -8418,7 +8485,7 @@ class JsonMapTypeDiffblueTest {
     JsonObject map = new JsonObject();
     JsonObject value = new JsonObject();
     map.add("42", value);
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act
     MapType actualMap = new JsonMapType(map, true).getMap("42");
@@ -8437,20 +8504,24 @@ class JsonMapTypeDiffblueTest {
    * Test {@link JsonMapType#getMap(String)} with {@code key}.
    *
    * <ul>
+   *   <li>Given {@link JsonObject} (default constructor) add {@code Property} and {@link
+   *       JsonArray#JsonArray()}.
+   *   <li>When {@code Key}.
    *   <li>Then return {@code null}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#getMap(String)}
    */
   @Test
-  @DisplayName("Test getMap(String) with 'key'; then return 'null'")
+  @DisplayName(
+      "Test getMap(String) with 'key'; given JsonObject (default constructor) add 'Property' and JsonArray(); when 'Key'; then return 'null'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"MapType JsonMapType.getMap(String)"})
-  void testGetMapWithKey_thenReturnNull() {
+  void testGetMapWithKey_givenJsonObjectAddPropertyAndJsonArray_whenKey_thenReturnNull() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertNull(new JsonMapType(map, true).getMap("Key"));
@@ -8476,7 +8547,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = mock(JsonObject.class);
     doNothing().when(map).add(Mockito.<String>any(), Mockito.<JsonElement>any());
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -8527,7 +8598,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive(true));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals("Dfl", new JsonMapType(map, false).getString("42", "Dfl"));
@@ -8538,25 +8609,27 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
+   *   <li>When {@code 42}.
+   *   <li>Then return {@code Dfl}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#getString(String, String)}
    */
   @Test
   @DisplayName(
-      "Test getString(String, String) with 'key', 'dfl'; given JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three")
+      "Test getString(String, String) with 'key', 'dfl'; given JsonObject (default constructor) add '42' and JsonArray(); when '42'; then return 'Dfl'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"String JsonMapType.getString(String, String)"})
-  void testGetStringWithKeyDfl_givenJsonObjectAdd42AndJsonArrayWithCapacityIsThree() {
+  void testGetStringWithKeyDfl_givenJsonObjectAdd42AndJsonArray_when42_thenReturnDfl() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
 
     // Act and Assert
-    assertEquals("Dfl", new JsonMapType(map, true).getString("Key", "Dfl"));
+    assertEquals("Dfl", new JsonMapType(map, true).getString("42", "Dfl"));
   }
 
   /**
@@ -8564,25 +8637,27 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
+   *   <li>When {@code Key}.
+   *   <li>Then return {@code Dfl}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#getString(String, String)}
    */
   @Test
   @DisplayName(
-      "Test getString(String, String) with 'key', 'dfl'; given JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three")
+      "Test getString(String, String) with 'key', 'dfl'; given JsonObject (default constructor) add '42' and JsonArray(); when 'Key'; then return 'Dfl'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"String JsonMapType.getString(String, String)"})
-  void testGetStringWithKeyDfl_givenJsonObjectAdd42AndJsonArrayWithCapacityIsThree2() {
+  void testGetStringWithKeyDfl_givenJsonObjectAdd42AndJsonArray_whenKey_thenReturnDfl() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
 
     // Act and Assert
-    assertEquals("Dfl", new JsonMapType(map, true).getString("42", "Dfl"));
+    assertEquals("Dfl", new JsonMapType(map, true).getString("Key", "Dfl"));
   }
 
   /**
@@ -8605,7 +8680,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive(true));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals("Dfl", new JsonMapType(map, true).getString("42", "Dfl"));
@@ -8629,7 +8704,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("String"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals("String", new JsonMapType(map, true).getString("42", "Dfl"));
@@ -8652,7 +8727,7 @@ class JsonMapTypeDiffblueTest {
   void testGetStringWithKeyDfl_whenKey() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals("Dfl", new JsonMapType(map, true).getString("Key", "Dfl"));
@@ -8700,7 +8775,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive(true));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertNull(new JsonMapType(map, false).getString("42"));
@@ -8711,23 +8786,24 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
    *   <li>When {@code 42}.
+   *   <li>Then return {@code null}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#getString(String)}
    */
   @Test
   @DisplayName(
-      "Test getString(String) with 'key'; given JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three; when '42'")
+      "Test getString(String) with 'key'; given JsonObject (default constructor) add '42' and JsonArray(); when '42'; then return 'null'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"String JsonMapType.getString(String)"})
-  void testGetStringWithKey_givenJsonObjectAdd42AndJsonArrayWithCapacityIsThree_when42() {
+  void testGetStringWithKey_givenJsonObjectAdd42AndJsonArray_when42_thenReturnNull() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertNull(new JsonMapType(map, true).getString("42"));
@@ -8738,23 +8814,24 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add {@code 42} and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
    *   <li>When {@code Key}.
+   *   <li>Then return {@code null}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#getString(String)}
    */
   @Test
   @DisplayName(
-      "Test getString(String) with 'key'; given JsonObject (default constructor) add '42' and JsonArray(int) with capacity is three; when 'Key'")
+      "Test getString(String) with 'key'; given JsonObject (default constructor) add '42' and JsonArray(); when 'Key'; then return 'null'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"String JsonMapType.getString(String)"})
-  void testGetStringWithKey_givenJsonObjectAdd42AndJsonArrayWithCapacityIsThree_whenKey() {
+  void testGetStringWithKey_givenJsonObjectAdd42AndJsonArray_whenKey_thenReturnNull() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertNull(new JsonMapType(map, true).getString("Key"));
@@ -8781,7 +8858,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive(true));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertNull(new JsonMapType(map, true).getString("42"));
@@ -8805,7 +8882,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("String"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals("String", new JsonMapType(map, true).getString("42"));
@@ -8828,10 +8905,160 @@ class JsonMapTypeDiffblueTest {
   void testGetStringWithKey_whenKey() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertNull(new JsonMapType(map, true).getString("Key"));
+  }
+
+  /**
+   * Test {@link JsonMapType#getForcedString(String, String)} with {@code key}, {@code dfl}.
+   *
+   * <ul>
+   *   <li>Given {@link JsonArray#JsonArray()} add {@code 42}.
+   *   <li>When {@code 42}.
+   *   <li>Then return {@code ["42"]}.
+   * </ul>
+   *
+   * <p>Method under test: {@link JsonMapType#getForcedString(String, String)}
+   */
+  @Test
+  @DisplayName(
+      "Test getForcedString(String, String) with 'key', 'dfl'; given JsonArray() add '42'; when '42'; then return '[\"42\"]'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"String JsonMapType.getForcedString(String, String)"})
+  void testGetForcedStringWithKeyDfl_givenJsonArrayAdd42_when42_thenReturn42() {
+    // Arrange
+    JsonArray value = new JsonArray();
+    value.add("42");
+
+    JsonObject map = new JsonObject();
+    map.add("42", value);
+    map.add("Property", new JsonArray());
+
+    // Act and Assert
+    assertEquals("[\"42\"]", new JsonMapType(map, true).getForcedString("42", "Dfl"));
+  }
+
+  /**
+   * Test {@link JsonMapType#getForcedString(String, String)} with {@code key}, {@code dfl}.
+   *
+   * <ul>
+   *   <li>Given {@link JsonArray#JsonArray()} add {@link Bootstrap#bootstrapDuration}.
+   *   <li>Then return {@code [-1]}.
+   * </ul>
+   *
+   * <p>Method under test: {@link JsonMapType#getForcedString(String, String)}
+   */
+  @Test
+  @DisplayName(
+      "Test getForcedString(String, String) with 'key', 'dfl'; given JsonArray() add bootstrapDuration; then return '[-1]'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"String JsonMapType.getForcedString(String, String)"})
+  void testGetForcedStringWithKeyDfl_givenJsonArrayAddBootstrapDuration_thenReturn1() {
+    // Arrange
+    JsonArray value = new JsonArray();
+    value.add(Bootstrap.bootstrapDuration);
+
+    JsonObject map = new JsonObject();
+    map.add("42", value);
+    map.add("Property", new JsonArray());
+
+    // Act and Assert
+    assertEquals("[-1]", new JsonMapType(map, true).getForcedString("42", "Dfl"));
+  }
+
+  /**
+   * Test {@link JsonMapType#getForcedString(String, String)} with {@code key}, {@code dfl}.
+   *
+   * <ul>
+   *   <li>Given {@link JsonArray#JsonArray()} add {@code false}.
+   *   <li>When {@code 42}.
+   *   <li>Then return {@code [false]}.
+   * </ul>
+   *
+   * <p>Method under test: {@link JsonMapType#getForcedString(String, String)}
+   */
+  @Test
+  @DisplayName(
+      "Test getForcedString(String, String) with 'key', 'dfl'; given JsonArray() add 'false'; when '42'; then return '[false]'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"String JsonMapType.getForcedString(String, String)"})
+  void testGetForcedStringWithKeyDfl_givenJsonArrayAddFalse_when42_thenReturnFalse() {
+    // Arrange
+    JsonArray value = new JsonArray();
+    value.add(false);
+
+    JsonObject map = new JsonObject();
+    map.add("42", value);
+    map.add("Property", new JsonArray());
+
+    // Act and Assert
+    assertEquals("[false]", new JsonMapType(map, true).getForcedString("42", "Dfl"));
+  }
+
+  /**
+   * Test {@link JsonMapType#getForcedString(String, String)} with {@code key}, {@code dfl}.
+   *
+   * <ul>
+   *   <li>Given {@link JsonArray#JsonArray()} add null.
+   *   <li>When {@code 42}.
+   *   <li>Then return {@code ["\u0000"]}.
+   * </ul>
+   *
+   * <p>Method under test: {@link JsonMapType#getForcedString(String, String)}
+   */
+  @Test
+  @DisplayName(
+      "Test getForcedString(String, String) with 'key', 'dfl'; given JsonArray() add null; when '42'; then return '[\"\\u0000\"]'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"String JsonMapType.getForcedString(String, String)"})
+  void testGetForcedStringWithKeyDfl_givenJsonArrayAddNull_when42_thenReturnU0000() {
+    // Arrange
+    JsonArray value = new JsonArray();
+    value.add('\u0000');
+
+    JsonObject map = new JsonObject();
+    map.add("42", value);
+    map.add("Property", new JsonArray());
+
+    // Act and Assert
+    assertEquals("[\"\\u0000\"]", new JsonMapType(map, true).getForcedString("42", "Dfl"));
+  }
+
+  /**
+   * Test {@link JsonMapType#getForcedString(String, String)} with {@code key}, {@code dfl}.
+   *
+   * <ul>
+   *   <li>Given {@link JsonArray#JsonArray()} add {@code true}.
+   *   <li>When {@code 42}.
+   *   <li>Then return {@code [true,false]}.
+   * </ul>
+   *
+   * <p>Method under test: {@link JsonMapType#getForcedString(String, String)}
+   */
+  @Test
+  @DisplayName(
+      "Test getForcedString(String, String) with 'key', 'dfl'; given JsonArray() add 'true'; when '42'; then return '[true,false]'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"String JsonMapType.getForcedString(String, String)"})
+  void testGetForcedStringWithKeyDfl_givenJsonArrayAddTrue_when42_thenReturnTrueFalse() {
+    // Arrange
+    JsonArray value = new JsonArray();
+    value.add(true);
+    value.add(false);
+
+    JsonObject map = new JsonObject();
+    map.add("42", value);
+    map.add("Property", new JsonArray());
+
+    // Act and Assert
+    assertEquals("[true,false]", new JsonMapType(map, true).getForcedString("42", "Dfl"));
   }
 
   /**
@@ -8897,64 +9124,10 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", null);
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals("null", new JsonMapType(map, true).getForcedString("42", "Dfl"));
-  }
-
-  /**
-   * Test {@link JsonMapType#getForcedString(String, String)} with {@code key}, {@code dfl}.
-   *
-   * <ul>
-   *   <li>Then return {@code [-1]}.
-   * </ul>
-   *
-   * <p>Method under test: {@link JsonMapType#getForcedString(String, String)}
-   */
-  @Test
-  @DisplayName("Test getForcedString(String, String) with 'key', 'dfl'; then return '[-1]'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"String JsonMapType.getForcedString(String, String)"})
-  void testGetForcedStringWithKeyDfl_thenReturn1() {
-    // Arrange
-    JsonArray value = new JsonArray(3);
-    value.add(Bootstrap.bootstrapDuration);
-
-    JsonObject map = new JsonObject();
-    map.add("42", value);
-    map.add("Property", new JsonArray(3));
-
-    // Act and Assert
-    assertEquals("[-1]", new JsonMapType(map, true).getForcedString("42", "Dfl"));
-  }
-
-  /**
-   * Test {@link JsonMapType#getForcedString(String, String)} with {@code key}, {@code dfl}.
-   *
-   * <ul>
-   *   <li>Then return {@code ["42"]}.
-   * </ul>
-   *
-   * <p>Method under test: {@link JsonMapType#getForcedString(String, String)}
-   */
-  @Test
-  @DisplayName("Test getForcedString(String, String) with 'key', 'dfl'; then return '[\"42\"]'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"String JsonMapType.getForcedString(String, String)"})
-  void testGetForcedStringWithKeyDfl_thenReturn42() {
-    // Arrange
-    JsonArray value = new JsonArray(3);
-    value.add("42");
-
-    JsonObject map = new JsonObject();
-    map.add("42", value);
-    map.add("Property", new JsonArray(3));
-
-    // Act and Assert
-    assertEquals("[\"42\"]", new JsonMapType(map, true).getForcedString("42", "Dfl"));
   }
 
   /**
@@ -8975,43 +9148,16 @@ class JsonMapTypeDiffblueTest {
   void testGetForcedStringWithKeyDfl_thenReturn42Property() {
     // Arrange
     JsonObject value = new JsonObject();
-    value.add("42", new JsonArray(3));
-    value.add("Property", new JsonArray(3));
+    value.add("42", new JsonArray());
+    value.add("Property", new JsonArray());
 
     JsonObject map = new JsonObject();
     map.add("42", value);
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(
         "{\"42\":[],\"Property\":[]}", new JsonMapType(map, true).getForcedString("42", "Dfl"));
-  }
-
-  /**
-   * Test {@link JsonMapType#getForcedString(String, String)} with {@code key}, {@code dfl}.
-   *
-   * <ul>
-   *   <li>Then return {@code [false]}.
-   * </ul>
-   *
-   * <p>Method under test: {@link JsonMapType#getForcedString(String, String)}
-   */
-  @Test
-  @DisplayName("Test getForcedString(String, String) with 'key', 'dfl'; then return '[false]'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"String JsonMapType.getForcedString(String, String)"})
-  void testGetForcedStringWithKeyDfl_thenReturnFalse() {
-    // Arrange
-    JsonArray value = new JsonArray(3);
-    value.add(false);
-
-    JsonObject map = new JsonObject();
-    map.add("42", value);
-    map.add("Property", new JsonArray(3));
-
-    // Act and Assert
-    assertEquals("[false]", new JsonMapType(map, true).getForcedString("42", "Dfl"));
   }
 
   /**
@@ -9032,7 +9178,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonObject());
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals("{}", new JsonMapType(map, true).getForcedString("42", "Dfl"));
@@ -9055,8 +9201,8 @@ class JsonMapTypeDiffblueTest {
   void testGetForcedStringWithKeyDfl_thenReturnLeftSquareBracketRightSquareBracket() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals("[]", new JsonMapType(map, true).getForcedString("42", "Dfl"));
@@ -9080,11 +9226,11 @@ class JsonMapTypeDiffblueTest {
   void testGetForcedStringWithKeyDfl_thenReturnProperty() {
     // Arrange
     JsonObject value = new JsonObject();
-    value.add("Property", new JsonArray(3));
+    value.add("Property", new JsonArray());
 
     JsonObject map = new JsonObject();
     map.add("42", value);
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals("{\"Property\":[]}", new JsonMapType(map, true).getForcedString("42", "Dfl"));
@@ -9112,7 +9258,7 @@ class JsonMapTypeDiffblueTest {
 
     JsonObject map = new JsonObject();
     map.add("42", value);
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals("{\"Property\":null}", new JsonMapType(map, true).getForcedString("42", "Dfl"));
@@ -9136,38 +9282,10 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("String"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals("String", new JsonMapType(map, true).getForcedString("42", "Dfl"));
-  }
-
-  /**
-   * Test {@link JsonMapType#getForcedString(String, String)} with {@code key}, {@code dfl}.
-   *
-   * <ul>
-   *   <li>Then return {@code [true,false]}.
-   * </ul>
-   *
-   * <p>Method under test: {@link JsonMapType#getForcedString(String, String)}
-   */
-  @Test
-  @DisplayName("Test getForcedString(String, String) with 'key', 'dfl'; then return '[true,false]'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"String JsonMapType.getForcedString(String, String)"})
-  void testGetForcedStringWithKeyDfl_thenReturnTrueFalse() {
-    // Arrange
-    JsonArray value = new JsonArray(3);
-    value.add(true);
-    value.add(false);
-
-    JsonObject map = new JsonObject();
-    map.add("42", value);
-    map.add("Property", new JsonArray(3));
-
-    // Act and Assert
-    assertEquals("[true,false]", new JsonMapType(map, true).getForcedString("42", "Dfl"));
   }
 
   /**
@@ -9188,38 +9306,10 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive(true));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(Boolean.TRUE.toString(), new JsonMapType(map, true).getForcedString("42", "Dfl"));
-  }
-
-  /**
-   * Test {@link JsonMapType#getForcedString(String, String)} with {@code key}, {@code dfl}.
-   *
-   * <ul>
-   *   <li>Then return {@code ["\u0000"]}.
-   * </ul>
-   *
-   * <p>Method under test: {@link JsonMapType#getForcedString(String, String)}
-   */
-  @Test
-  @DisplayName(
-      "Test getForcedString(String, String) with 'key', 'dfl'; then return '[\"\\u0000\"]'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"String JsonMapType.getForcedString(String, String)"})
-  void testGetForcedStringWithKeyDfl_thenReturnU0000() {
-    // Arrange
-    JsonArray value = new JsonArray(3);
-    value.add('\u0000');
-
-    JsonObject map = new JsonObject();
-    map.add("42", value);
-    map.add("Property", new JsonArray(3));
-
-    // Act and Assert
-    assertEquals("[\"\\u0000\"]", new JsonMapType(map, true).getForcedString("42", "Dfl"));
   }
 
   /**
@@ -9241,7 +9331,7 @@ class JsonMapTypeDiffblueTest {
   void testGetForcedStringWithKeyDfl_whenKey_thenReturnDfl() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals("Dfl", new JsonMapType(map, true).getForcedString("Key", "Dfl"));
@@ -9266,8 +9356,8 @@ class JsonMapTypeDiffblueTest {
   void testGetForcedStringWithKeyDfl_whenKey_thenReturnDfl2() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals("Dfl", new JsonMapType(map, true).getForcedString("Key", "Dfl"));
@@ -9277,7 +9367,8 @@ class JsonMapTypeDiffblueTest {
    * Test {@link JsonMapType#getForcedString(String)} with {@code key}.
    *
    * <ul>
-   *   <li>Given {@link JsonArray#JsonArray(int)} with capacity is three add {@code 42}.
+   *   <li>Given {@link JsonArray#JsonArray()} add {@code 42}.
+   *   <li>When {@code 42}.
    *   <li>Then return {@code ["42"]}.
    * </ul>
    *
@@ -9285,21 +9376,142 @@ class JsonMapTypeDiffblueTest {
    */
   @Test
   @DisplayName(
-      "Test getForcedString(String) with 'key'; given JsonArray(int) with capacity is three add '42'; then return '[\"42\"]'")
+      "Test getForcedString(String) with 'key'; given JsonArray() add '42'; when '42'; then return '[\"42\"]'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"String JsonMapType.getForcedString(String)"})
-  void testGetForcedStringWithKey_givenJsonArrayWithCapacityIsThreeAdd42_thenReturn42() {
+  void testGetForcedStringWithKey_givenJsonArrayAdd42_when42_thenReturn42() {
     // Arrange
-    JsonArray value = new JsonArray(3);
+    JsonArray value = new JsonArray();
     value.add("42");
 
     JsonObject map = new JsonObject();
     map.add("42", value);
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals("[\"42\"]", new JsonMapType(map, true).getForcedString("42"));
+  }
+
+  /**
+   * Test {@link JsonMapType#getForcedString(String)} with {@code key}.
+   *
+   * <ul>
+   *   <li>Given {@link JsonArray#JsonArray()} add {@link Bootstrap#bootstrapDuration}.
+   *   <li>When {@code 42}.
+   *   <li>Then return {@code [-1]}.
+   * </ul>
+   *
+   * <p>Method under test: {@link JsonMapType#getForcedString(String)}
+   */
+  @Test
+  @DisplayName(
+      "Test getForcedString(String) with 'key'; given JsonArray() add bootstrapDuration; when '42'; then return '[-1]'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"String JsonMapType.getForcedString(String)"})
+  void testGetForcedStringWithKey_givenJsonArrayAddBootstrapDuration_when42_thenReturn1() {
+    // Arrange
+    JsonArray value = new JsonArray();
+    value.add(Bootstrap.bootstrapDuration);
+
+    JsonObject map = new JsonObject();
+    map.add("42", value);
+    map.add("Property", new JsonArray());
+
+    // Act and Assert
+    assertEquals("[-1]", new JsonMapType(map, true).getForcedString("42"));
+  }
+
+  /**
+   * Test {@link JsonMapType#getForcedString(String)} with {@code key}.
+   *
+   * <ul>
+   *   <li>Given {@link JsonArray#JsonArray()} add {@code false}.
+   *   <li>When {@code 42}.
+   *   <li>Then return {@code [false]}.
+   * </ul>
+   *
+   * <p>Method under test: {@link JsonMapType#getForcedString(String)}
+   */
+  @Test
+  @DisplayName(
+      "Test getForcedString(String) with 'key'; given JsonArray() add 'false'; when '42'; then return '[false]'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"String JsonMapType.getForcedString(String)"})
+  void testGetForcedStringWithKey_givenJsonArrayAddFalse_when42_thenReturnFalse() {
+    // Arrange
+    JsonArray value = new JsonArray();
+    value.add(false);
+
+    JsonObject map = new JsonObject();
+    map.add("42", value);
+    map.add("Property", new JsonArray());
+
+    // Act and Assert
+    assertEquals("[false]", new JsonMapType(map, true).getForcedString("42"));
+  }
+
+  /**
+   * Test {@link JsonMapType#getForcedString(String)} with {@code key}.
+   *
+   * <ul>
+   *   <li>Given {@link JsonArray#JsonArray()} add null.
+   *   <li>When {@code 42}.
+   *   <li>Then return {@code ["\u0000"]}.
+   * </ul>
+   *
+   * <p>Method under test: {@link JsonMapType#getForcedString(String)}
+   */
+  @Test
+  @DisplayName(
+      "Test getForcedString(String) with 'key'; given JsonArray() add null; when '42'; then return '[\"\\u0000\"]'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"String JsonMapType.getForcedString(String)"})
+  void testGetForcedStringWithKey_givenJsonArrayAddNull_when42_thenReturnU0000() {
+    // Arrange
+    JsonArray value = new JsonArray();
+    value.add('\u0000');
+
+    JsonObject map = new JsonObject();
+    map.add("42", value);
+    map.add("Property", new JsonArray());
+
+    // Act and Assert
+    assertEquals("[\"\\u0000\"]", new JsonMapType(map, true).getForcedString("42"));
+  }
+
+  /**
+   * Test {@link JsonMapType#getForcedString(String)} with {@code key}.
+   *
+   * <ul>
+   *   <li>Given {@link JsonArray#JsonArray()} add {@code true}.
+   *   <li>When {@code 42}.
+   *   <li>Then return {@code [true,false]}.
+   * </ul>
+   *
+   * <p>Method under test: {@link JsonMapType#getForcedString(String)}
+   */
+  @Test
+  @DisplayName(
+      "Test getForcedString(String) with 'key'; given JsonArray() add 'true'; when '42'; then return '[true,false]'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"String JsonMapType.getForcedString(String)"})
+  void testGetForcedStringWithKey_givenJsonArrayAddTrue_when42_thenReturnTrueFalse() {
+    // Arrange
+    JsonArray value = new JsonArray();
+    value.add(true);
+    value.add(false);
+
+    JsonObject map = new JsonObject();
+    map.add("42", value);
+    map.add("Property", new JsonArray());
+
+    // Act and Assert
+    assertEquals("[true,false]", new JsonMapType(map, true).getForcedString("42"));
   }
 
   /**
@@ -9364,11 +9576,11 @@ class JsonMapTypeDiffblueTest {
   void testGetForcedStringWithKey_givenJsonObjectAdd42AndJsonObject_thenReturnProperty() {
     // Arrange
     JsonObject value = new JsonObject();
-    value.add("Property", new JsonArray(3));
+    value.add("Property", new JsonArray());
 
     JsonObject map = new JsonObject();
     map.add("42", value);
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals("{\"Property\":[]}", new JsonMapType(map, true).getForcedString("42"));
@@ -9395,37 +9607,10 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", null);
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals("null", new JsonMapType(map, true).getForcedString("42"));
-  }
-
-  /**
-   * Test {@link JsonMapType#getForcedString(String)} with {@code key}.
-   *
-   * <ul>
-   *   <li>Then return {@code [-1]}.
-   * </ul>
-   *
-   * <p>Method under test: {@link JsonMapType#getForcedString(String)}
-   */
-  @Test
-  @DisplayName("Test getForcedString(String) with 'key'; then return '[-1]'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"String JsonMapType.getForcedString(String)"})
-  void testGetForcedStringWithKey_thenReturn1() {
-    // Arrange
-    JsonArray value = new JsonArray(3);
-    value.add(Bootstrap.bootstrapDuration);
-
-    JsonObject map = new JsonObject();
-    map.add("42", value);
-    map.add("Property", new JsonArray(3));
-
-    // Act and Assert
-    assertEquals("[-1]", new JsonMapType(map, true).getForcedString("42"));
   }
 
   /**
@@ -9445,42 +9630,15 @@ class JsonMapTypeDiffblueTest {
   void testGetForcedStringWithKey_thenReturn42Property() {
     // Arrange
     JsonObject value = new JsonObject();
-    value.add("42", new JsonArray(3));
-    value.add("Property", new JsonArray(3));
+    value.add("42", new JsonArray());
+    value.add("Property", new JsonArray());
 
     JsonObject map = new JsonObject();
     map.add("42", value);
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals("{\"42\":[],\"Property\":[]}", new JsonMapType(map, true).getForcedString("42"));
-  }
-
-  /**
-   * Test {@link JsonMapType#getForcedString(String)} with {@code key}.
-   *
-   * <ul>
-   *   <li>Then return {@code [false]}.
-   * </ul>
-   *
-   * <p>Method under test: {@link JsonMapType#getForcedString(String)}
-   */
-  @Test
-  @DisplayName("Test getForcedString(String) with 'key'; then return '[false]'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"String JsonMapType.getForcedString(String)"})
-  void testGetForcedStringWithKey_thenReturnFalse() {
-    // Arrange
-    JsonArray value = new JsonArray(3);
-    value.add(false);
-
-    JsonObject map = new JsonObject();
-    map.add("42", value);
-    map.add("Property", new JsonArray(3));
-
-    // Act and Assert
-    assertEquals("[false]", new JsonMapType(map, true).getForcedString("42"));
   }
 
   /**
@@ -9501,7 +9659,7 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonObject());
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals("{}", new JsonMapType(map, true).getForcedString("42"));
@@ -9524,8 +9682,8 @@ class JsonMapTypeDiffblueTest {
   void testGetForcedStringWithKey_thenReturnLeftSquareBracketRightSquareBracket() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals("[]", new JsonMapType(map, true).getForcedString("42"));
@@ -9552,7 +9710,7 @@ class JsonMapTypeDiffblueTest {
 
     JsonObject map = new JsonObject();
     map.add("42", value);
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals("{\"Property\":null}", new JsonMapType(map, true).getForcedString("42"));
@@ -9576,38 +9734,10 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive("String"));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals("String", new JsonMapType(map, true).getForcedString("42"));
-  }
-
-  /**
-   * Test {@link JsonMapType#getForcedString(String)} with {@code key}.
-   *
-   * <ul>
-   *   <li>Then return {@code [true,false]}.
-   * </ul>
-   *
-   * <p>Method under test: {@link JsonMapType#getForcedString(String)}
-   */
-  @Test
-  @DisplayName("Test getForcedString(String) with 'key'; then return '[true,false]'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"String JsonMapType.getForcedString(String)"})
-  void testGetForcedStringWithKey_thenReturnTrueFalse() {
-    // Arrange
-    JsonArray value = new JsonArray(3);
-    value.add(true);
-    value.add(false);
-
-    JsonObject map = new JsonObject();
-    map.add("42", value);
-    map.add("Property", new JsonArray(3));
-
-    // Act and Assert
-    assertEquals("[true,false]", new JsonMapType(map, true).getForcedString("42"));
   }
 
   /**
@@ -9628,37 +9758,10 @@ class JsonMapTypeDiffblueTest {
     // Arrange
     JsonObject map = new JsonObject();
     map.add("42", new JsonPrimitive(true));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertEquals(Boolean.TRUE.toString(), new JsonMapType(map, true).getForcedString("42"));
-  }
-
-  /**
-   * Test {@link JsonMapType#getForcedString(String)} with {@code key}.
-   *
-   * <ul>
-   *   <li>Then return {@code ["\u0000"]}.
-   * </ul>
-   *
-   * <p>Method under test: {@link JsonMapType#getForcedString(String)}
-   */
-  @Test
-  @DisplayName("Test getForcedString(String) with 'key'; then return '[\"\\u0000\"]'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"String JsonMapType.getForcedString(String)"})
-  void testGetForcedStringWithKey_thenReturnU0000() {
-    // Arrange
-    JsonArray value = new JsonArray(3);
-    value.add('\u0000');
-
-    JsonObject map = new JsonObject();
-    map.add("42", value);
-    map.add("Property", new JsonArray(3));
-
-    // Act and Assert
-    assertEquals("[\"\\u0000\"]", new JsonMapType(map, true).getForcedString("42"));
   }
 
   /**
@@ -9679,7 +9782,7 @@ class JsonMapTypeDiffblueTest {
   void testGetForcedStringWithKey_whenKey_thenReturnNull() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertNull(new JsonMapType(map, true).getForcedString("Key"));
@@ -9703,8 +9806,8 @@ class JsonMapTypeDiffblueTest {
   void testGetForcedStringWithKey_whenKey_thenReturnNull2() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
 
     // Act and Assert
     assertNull(new JsonMapType(map, true).getForcedString("Key"));
@@ -9715,22 +9818,22 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add empty string and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#setString(String, String)}
    */
   @Test
   @DisplayName(
-      "Test setString(String, String); given JsonObject (default constructor) add empty string and JsonArray(int) with capacity is three")
+      "Test setString(String, String); given JsonObject (default constructor) add empty string and JsonArray()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void JsonMapType.setString(String, String)"})
-  void testSetString_givenJsonObjectAddEmptyStringAndJsonArrayWithCapacityIsThree() {
+  void testSetString_givenJsonObjectAddEmptyStringAndJsonArray() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("", new JsonArray(3));
-    map.add("42", new JsonArray(3));
+    map.add("", new JsonArray());
+    map.add("42", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -9748,23 +9851,23 @@ class JsonMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link JsonObject} (default constructor) add empty string and {@link
-   *       JsonArray#JsonArray(int)} with capacity is three.
+   *       JsonArray#JsonArray()}.
    * </ul>
    *
    * <p>Method under test: {@link JsonMapType#setString(String, String)}
    */
   @Test
   @DisplayName(
-      "Test setString(String, String); given JsonObject (default constructor) add empty string and JsonArray(int) with capacity is three")
+      "Test setString(String, String); given JsonObject (default constructor) add empty string and JsonArray()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void JsonMapType.setString(String, String)"})
-  void testSetString_givenJsonObjectAddEmptyStringAndJsonArrayWithCapacityIsThree2() {
+  void testSetString_givenJsonObjectAddEmptyStringAndJsonArray2() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("", new JsonArray(3));
-    map.add("42", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("", new JsonArray());
+    map.add("42", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -9826,9 +9929,9 @@ class JsonMapTypeDiffblueTest {
   void testSetString_thenJsonMapTypeWithMapIsJsonObjectAndCompressedIsTrueSizeIsFour() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("", new JsonArray(3));
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("", new JsonArray());
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -9860,8 +9963,8 @@ class JsonMapTypeDiffblueTest {
   void testSetString_thenJsonMapTypeWithMapIsJsonObjectAndCompressedIsTrueSizeIsThree() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -9893,9 +9996,9 @@ class JsonMapTypeDiffblueTest {
   void testSetString_thenJsonMapTypeWithMapIsJsonObjectAndCompressedIsTrueSizeIsThree2() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -9927,7 +10030,7 @@ class JsonMapTypeDiffblueTest {
   void testSetString_thenJsonMapTypeWithMapIsJsonObjectAndCompressedIsTrueSizeIsTwo() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("Property", new JsonArray(3));
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -9959,7 +10062,7 @@ class JsonMapTypeDiffblueTest {
   void testSetString_thenJsonMapTypeWithMapIsJsonObjectAndCompressedIsTrueSizeIsTwo2() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
+    map.add("42", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -9989,8 +10092,8 @@ class JsonMapTypeDiffblueTest {
   void testSetString_when42() {
     // Arrange
     JsonObject map = new JsonObject();
-    map.add("42", new JsonArray(3));
-    map.add("Property", new JsonArray(3));
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
     JsonMapType jsonMapType = new JsonMapType(map, true);
 
     // Act
@@ -10000,6 +10103,38 @@ class JsonMapTypeDiffblueTest {
     assertEquals(2, jsonMapType.size());
     JsonObject json = jsonMapType.getJson();
     assertEquals(2, json.size());
+    assertFalse(json.isEmpty());
+  }
+
+  /**
+   * Test {@link JsonMapType#setString(String, String)}.
+   *
+   * <ul>
+   *   <li>When empty string.
+   * </ul>
+   *
+   * <p>Method under test: {@link JsonMapType#setString(String, String)}
+   */
+  @Test
+  @DisplayName("Test setString(String, String); when empty string")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void JsonMapType.setString(String, String)"})
+  void testSetString_whenEmptyString() {
+    // Arrange
+    JsonObject map = new JsonObject();
+    map.add("Property", new JsonArray());
+    map.add("42", new JsonArray());
+    map.add("Property", new JsonArray());
+    JsonMapType jsonMapType = new JsonMapType(map, true);
+
+    // Act
+    jsonMapType.setString("", "Val");
+
+    // Assert
+    assertEquals(3, jsonMapType.size());
+    JsonObject json = jsonMapType.getJson();
+    assertEquals(3, json.size());
     assertFalse(json.isEmpty());
   }
 

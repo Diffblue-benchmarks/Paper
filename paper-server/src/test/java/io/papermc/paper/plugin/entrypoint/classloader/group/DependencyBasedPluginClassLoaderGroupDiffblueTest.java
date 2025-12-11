@@ -12,6 +12,9 @@ import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
 import io.papermc.paper.plugin.provider.classloader.ClassLoaderAccess;
 import io.papermc.paper.plugin.provider.classloader.ConfiguredPluginClassLoader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.nio.file.Paths;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -90,10 +93,14 @@ class DependencyBasedPluginClassLoaderGroupDiffblueTest {
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void DependencyBasedPluginClassLoaderGroup.populateDependencies()"})
-  void testPopulateDependencies2() {
+  void testPopulateDependencies2() throws MalformedURLException {
     // Arrange
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
+    URL[] urlArray =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray);
+    URL[] urlArray2 =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray2);
 
     GlobalPluginClassLoaderGroup globalPluginClassLoaderGroup = new GlobalPluginClassLoaderGroup();
     globalPluginClassLoaderGroup.add(null);
@@ -131,10 +138,15 @@ class DependencyBasedPluginClassLoaderGroupDiffblueTest {
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void DependencyBasedPluginClassLoaderGroup.populateDependencies()"})
-  void testPopulateDependencies_givenClassLoaderAccessCanAccessReturnFalse() {
+  void testPopulateDependencies_givenClassLoaderAccessCanAccessReturnFalse()
+      throws MalformedURLException {
     // Arrange
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
+    URL[] urlArray =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray);
+    URL[] urlArray2 =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray2);
 
     GlobalPluginClassLoaderGroup globalPluginClassLoaderGroup = new GlobalPluginClassLoaderGroup();
     globalPluginClassLoaderGroup.add(null);

@@ -1,5 +1,6 @@
 package io.papermc.paper.registry.data.util;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import com.diffblue.cover.annotations.ManagedByDiffblue;
@@ -8,8 +9,51 @@ import java.util.OptionalInt;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.spongepowered.configurate.transformation.ConfigurationTransformation;
 
 class ChecksDiffblueTest {
+  /**
+   * Test {@link Checks#asConfigured(Object, String)} with {@code Object}, {@code String}.
+   *
+   * <ul>
+   *   <li>When {@link ConfigurationTransformation#WILDCARD_OBJECT}.
+   *   <li>Then does not throw.
+   * </ul>
+   *
+   * <p>Method under test: {@link Checks#asConfigured(Object, String)}
+   */
+  @Test
+  @DisplayName(
+      "Test asConfigured(Object, String) with 'Object', 'String'; when WILDCARD_OBJECT; then does not throw")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"Object Checks.asConfigured(Object, String)"})
+  void testAsConfiguredWithObjectString_whenWildcard_object_thenDoesNotThrow() {
+    // Arrange, Act and Assert
+    assertDoesNotThrow(
+        () -> Checks.asConfigured(ConfigurationTransformation.WILDCARD_OBJECT, "Field"));
+  }
+
+  /**
+   * Test {@link Checks#asConfigured(OptionalInt, String)} with {@code OptionalInt}, {@code String}.
+   *
+   * <ul>
+   *   <li>Then return forty-two.
+   * </ul>
+   *
+   * <p>Method under test: {@link Checks#asConfigured(OptionalInt, String)}
+   */
+  @Test
+  @DisplayName(
+      "Test asConfigured(OptionalInt, String) with 'OptionalInt', 'String'; then return forty-two")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"int Checks.asConfigured(OptionalInt, String)"})
+  void testAsConfiguredWithOptionalIntString_thenReturnFortyTwo() {
+    // Arrange, Act and Assert
+    assertEquals(42, Checks.asConfigured(OptionalInt.of(42), "Field"));
+  }
+
   /**
    * Test {@link Checks#asConfigured(OptionalInt, String)} with {@code OptionalInt}, {@code String}.
    *
@@ -33,27 +77,6 @@ class ChecksDiffblueTest {
   }
 
   /**
-   * Test {@link Checks#asConfigured(OptionalInt, String)} with {@code OptionalInt}, {@code String}.
-   *
-   * <ul>
-   *   <li>When {@link OptionalInt} with one.
-   *   <li>Then return one.
-   * </ul>
-   *
-   * <p>Method under test: {@link Checks#asConfigured(OptionalInt, String)}
-   */
-  @Test
-  @DisplayName(
-      "Test asConfigured(OptionalInt, String) with 'OptionalInt', 'String'; when OptionalInt with one; then return one")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"int Checks.asConfigured(OptionalInt, String)"})
-  void testAsConfiguredWithOptionalIntString_whenOptionalIntWithOne_thenReturnOne() {
-    // Arrange, Act and Assert
-    assertEquals(1, Checks.asConfigured(OptionalInt.of(1), "Field"));
-  }
-
-  /**
    * Test {@link Checks#asArgument(Object, String)}.
    *
    * <ul>
@@ -71,6 +94,27 @@ class ChecksDiffblueTest {
   void testAsArgument_whenNull_thenThrowIllegalArgumentException() {
     // Arrange, Act and Assert
     assertThrows(IllegalArgumentException.class, () -> Checks.asArgument(null, "Field"));
+  }
+
+  /**
+   * Test {@link Checks#asArgument(Object, String)}.
+   *
+   * <ul>
+   *   <li>When {@link ConfigurationTransformation#WILDCARD_OBJECT}.
+   *   <li>Then does not throw.
+   * </ul>
+   *
+   * <p>Method under test: {@link Checks#asArgument(Object, String)}
+   */
+  @Test
+  @DisplayName("Test asArgument(Object, String); when WILDCARD_OBJECT; then does not throw")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"Object Checks.asArgument(Object, String)"})
+  void testAsArgument_whenWildcard_object_thenDoesNotThrow() {
+    // Arrange, Act and Assert
+    assertDoesNotThrow(
+        () -> Checks.asArgument(ConfigurationTransformation.WILDCARD_OBJECT, "Field"));
   }
 
   /**

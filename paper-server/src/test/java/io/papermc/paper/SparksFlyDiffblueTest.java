@@ -4,14 +4,36 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.isA;
+import static org.mockito.Mockito.atLeast;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
 import io.papermc.paper.SparksFly.CommandImpl;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.StringReader;
+import java.nio.charset.Charset;
+import java.nio.file.FileVisitor;
+import java.nio.file.Files;
+import java.nio.file.LinkOption;
+import java.nio.file.OpenOption;
+import java.nio.file.Path;
+import java.nio.file.attribute.FileAttribute;
 import java.util.ArrayList;
 import java.util.Collection;
+import net.minecraft.server.players.OldUsersConverter;
+import net.minecraft.util.profiling.metrics.storage.MetricsPersister;
+import org.bukkit.Server;
+import org.bukkit.craftbukkit.CraftServer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 
 class SparksFlyDiffblueTest {
   /**
@@ -123,6 +145,72 @@ class SparksFlyDiffblueTest {
     assertNull(actualCommandImpl.permissionMessage());
     assertFalse(actualCommandImpl.isRegistered());
     assertTrue(actualCommandImpl.getAliases().isEmpty());
+  }
+
+  /**
+   * Test {@link SparksFly#SparksFly(Server)}.
+   *
+   * <ul>
+   *   <li>Given {@link Files} {@link Files#exists(Path, LinkOption[])} return {@code false}.
+   *   <li>Then calls {@link Files#createDirectories(Path, FileAttribute[])}.
+   * </ul>
+   *
+   * <p>Method under test: {@link SparksFly#SparksFly(Server)}
+   */
+  @Test
+  @DisplayName(
+      "Test new SparksFly(Server); given Files exists(Path, LinkOption[]) return 'false'; then calls createDirectories(Path, FileAttribute[])")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void SparksFly.<init>(Server)"})
+  void testNewSparksFly_givenFilesExistsReturnFalse_thenCallsCreateDirectories()
+      throws IOException {
+    // Arrange
+    try (MockedStatic<Files> mockFiles = mockStatic(Files.class)) {
+      mockFiles
+          .when(() -> Files.newBufferedReader(Mockito.<Path>any(), Mockito.<Charset>any()))
+          .thenReturn(new BufferedReader(new StringReader("foo"), 1));
+      mockFiles
+          .when(() -> Files.exists(Mockito.<Path>any(), isA(LinkOption[].class)))
+          .thenReturn(false);
+      mockFiles
+          .when(() -> Files.createDirectories(Mockito.<Path>any(), isA(FileAttribute[].class)))
+          .thenReturn(MetricsPersister.PROFILING_RESULTS_DIR);
+      mockFiles
+          .when(() -> Files.walkFileTree(Mockito.<Path>any(), Mockito.<FileVisitor<Path>>any()))
+          .thenReturn(MetricsPersister.PROFILING_RESULTS_DIR);
+      mockFiles
+          .when(
+              () ->
+                  Files.write(
+                      Mockito.<Path>any(),
+                      Mockito.<Iterable<CharSequence>>any(),
+                      Mockito.<Charset>any(),
+                      isA(OpenOption[].class)))
+          .thenReturn(MetricsPersister.PROFILING_RESULTS_DIR);
+
+      CraftServer server = mock(CraftServer.class);
+      when(server.getPluginsFolder()).thenReturn(OldUsersConverter.OLD_IPBANLIST);
+
+      // Act
+      new SparksFly(server);
+
+      // Assert
+      mockFiles.verify(
+          () -> Files.createDirectories(Mockito.<Path>any(), isA(FileAttribute[].class)));
+      mockFiles.verify(
+          () -> Files.exists(Mockito.<Path>any(), isA(LinkOption[].class)), atLeast(1));
+      mockFiles.verify(
+          () -> Files.walkFileTree(Mockito.<Path>any(), Mockito.<FileVisitor<Path>>any()));
+      mockFiles.verify(
+          () ->
+              Files.write(
+                  Mockito.<Path>any(),
+                  Mockito.<Iterable<CharSequence>>any(),
+                  Mockito.<Charset>any(),
+                  isA(OpenOption[].class)));
+      verify(server, atLeast(1)).getPluginsFolder();
+    }
   }
 
   /**

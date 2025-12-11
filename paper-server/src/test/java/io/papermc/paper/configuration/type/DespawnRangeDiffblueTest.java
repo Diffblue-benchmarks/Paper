@@ -1,5 +1,6 @@
 package io.papermc.paper.configuration.type;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -94,30 +95,81 @@ class DespawnRangeDiffblueTest {
    * Test {@link DespawnRange#preComputed(int, String)}.
    *
    * <ul>
-   *   <li>Given {@link OptionalInt} with one.
-   *   <li>When zero.
-   *   <li>Then throw {@link SerializationException}.
+   *   <li>Given {@link DespawnRange#DespawnRange(Default)} with generalLimit is {@link
+   *       IntOr.Default#Default(OptionalInt)}.
+   *   <li>Then does not throw.
    * </ul>
    *
    * <p>Method under test: {@link DespawnRange#preComputed(int, String)}
    */
   @Test
   @DisplayName(
-      "Test preComputed(int, String); given OptionalInt with one; when zero; then throw SerializationException")
+      "Test preComputed(int, String); given DespawnRange(Default) with generalLimit is Default(OptionalInt); then does not throw")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void DespawnRange.preComputed(int, String)"})
-  void testPreComputed_givenOptionalIntWithOne_whenZero_thenThrowSerializationException()
+  void testPreComputed_givenDespawnRangeWithGeneralLimitIsDefault_thenDoesNotThrow()
+      throws SerializationException {
+    // Arrange, Act and Assert
+    assertDoesNotThrow(
+        () -> new DespawnRange(new Default(OptionalInt.empty())).preComputed(1, "42"));
+  }
+
+  /**
+   * Test {@link DespawnRange#preComputed(int, String)}.
+   *
+   * <ul>
+   *   <li>Given {@link OptionalInt} with forty-two.
+   *   <li>When one.
+   *   <li>Then does not throw.
+   * </ul>
+   *
+   * <p>Method under test: {@link DespawnRange#preComputed(int, String)}
+   */
+  @Test
+  @DisplayName(
+      "Test preComputed(int, String); given OptionalInt with forty-two; when one; then does not throw")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void DespawnRange.preComputed(int, String)"})
+  void testPreComputed_givenOptionalIntWithFortyTwo_whenOne_thenDoesNotThrow()
+      throws SerializationException {
+    // Arrange
+    OptionalInt value = OptionalInt.of(42);
+    Default generalLimit = new Default(value);
+
+    // Act and Assert
+    assertDoesNotThrow(() -> new DespawnRange(generalLimit).preComputed(1, "42"));
+  }
+
+  /**
+   * Test {@link DespawnRange#preComputed(int, String)}.
+   *
+   * <ul>
+   *   <li>Given {@link OptionalInt} with forty-two.
+   *   <li>When one.
+   *   <li>Then does not throw.
+   * </ul>
+   *
+   * <p>Method under test: {@link DespawnRange#preComputed(int, String)}
+   */
+  @Test
+  @DisplayName(
+      "Test preComputed(int, String); given OptionalInt with forty-two; when one; then does not throw")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void DespawnRange.preComputed(int, String)"})
+  void testPreComputed_givenOptionalIntWithFortyTwo_whenOne_thenDoesNotThrow2()
       throws SerializationException {
     // Arrange
     Default horizontalLimit = new Default(OptionalInt.empty());
-    OptionalInt value = OptionalInt.of(1);
+    OptionalInt value = OptionalInt.of(42);
     Default verticalLimit = new Default(value);
 
     DespawnRange despawnRange = new DespawnRange(horizontalLimit, verticalLimit, true);
 
     // Act and Assert
-    assertThrows(SerializationException.class, () -> despawnRange.preComputed(0, "42"));
+    assertDoesNotThrow(() -> despawnRange.preComputed(1, "42"));
   }
 
   /**
@@ -143,6 +195,33 @@ class DespawnRangeDiffblueTest {
   }
 
   /**
+   * Test {@link DespawnRange#preComputed(int, String)}.
+   *
+   * <ul>
+   *   <li>When zero.
+   *   <li>Then throw {@link SerializationException}.
+   * </ul>
+   *
+   * <p>Method under test: {@link DespawnRange#preComputed(int, String)}
+   */
+  @Test
+  @DisplayName("Test preComputed(int, String); when zero; then throw SerializationException")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void DespawnRange.preComputed(int, String)"})
+  void testPreComputed_whenZero_thenThrowSerializationException2() throws SerializationException {
+    // Arrange
+    Default horizontalLimit = new Default(OptionalInt.empty());
+    OptionalInt value = OptionalInt.of(42);
+    Default verticalLimit = new Default(value);
+
+    DespawnRange despawnRange = new DespawnRange(horizontalLimit, verticalLimit, true);
+
+    // Act and Assert
+    assertThrows(SerializationException.class, () -> despawnRange.preComputed(0, "42"));
+  }
+
+  /**
    * Test Serializer {@link Serializer#deserialize(Type, ConfigurationNode)} with {@code Type},
    * {@code ConfigurationNode}.
    *
@@ -161,7 +240,7 @@ class DespawnRangeDiffblueTest {
 
     ConfigurationNode node = mock(ConfigurationNode.class);
     when(node.hasChild(isA(Object[].class))).thenReturn(false);
-    when(node.require(Mockito.<Class<Default>>any())).thenReturn(new Default(OptionalInt.empty()));
+    when(node.require(Default.class)).thenReturn(new Default(OptionalInt.empty()));
 
     // Act
     DespawnRange actualDeserializeResult = serializer.deserialize(type, node);
@@ -170,6 +249,103 @@ class DespawnRangeDiffblueTest {
     verify(node, atLeast(1)).hasChild(isA(Object[].class));
     verify(node).require(isA(Class.class));
     assertFalse(actualDeserializeResult.wasDefinedViaLongSyntax());
+  }
+
+  /**
+   * Test Serializer {@link Serializer#deserialize(Type, ConfigurationNode)} with {@code Type},
+   * {@code ConfigurationNode}.
+   *
+   * <p>Method under test: {@link Serializer#deserialize(Type, ConfigurationNode)}
+   */
+  @Test
+  @DisplayName(
+      "Test Serializer deserialize(Type, ConfigurationNode) with 'Type', 'ConfigurationNode'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"DespawnRange Serializer.deserialize(Type, ConfigurationNode)"})
+  void testSerializerDeserializeWithTypeConfigurationNode2() throws SerializationException {
+    // Arrange
+    Serializer serializer = new Serializer();
+    PlaceholderForType type = new PlaceholderForType(1);
+
+    ConfigurationNode configurationNode = mock(ConfigurationNode.class);
+    when(configurationNode.require(Default.class)).thenReturn(new Default(OptionalInt.empty()));
+
+    ConfigurationNode node = mock(ConfigurationNode.class);
+    when(node.node(isA(Object[].class))).thenReturn(configurationNode);
+    when(node.hasChild(isA(Object[].class))).thenReturn(true);
+
+    // Act
+    DespawnRange actualDeserializeResult = serializer.deserialize(type, node);
+
+    // Assert
+    verify(node, atLeast(1)).hasChild(isA(Object[].class));
+    verify(node, atLeast(1)).node(isA(Object[].class));
+    verify(configurationNode, atLeast(1)).require(isA(Class.class));
+    assertTrue(actualDeserializeResult.wasDefinedViaLongSyntax());
+  }
+
+  /**
+   * Test Serializer {@link Serializer#deserialize(Type, ConfigurationNode)} with {@code Type},
+   * {@code ConfigurationNode}.
+   *
+   * <p>Method under test: {@link Serializer#deserialize(Type, ConfigurationNode)}
+   */
+  @Test
+  @DisplayName(
+      "Test Serializer deserialize(Type, ConfigurationNode) with 'Type', 'ConfigurationNode'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"DespawnRange Serializer.deserialize(Type, ConfigurationNode)"})
+  void testSerializerDeserializeWithTypeConfigurationNode3() throws SerializationException {
+    // Arrange
+    Serializer serializer = new Serializer();
+    PlaceholderForType type = new PlaceholderForType(1);
+
+    ConfigurationNode configurationNode = mock(ConfigurationNode.class);
+    when(configurationNode.require(Default.class)).thenThrow(new SerializationException());
+
+    ConfigurationNode node = mock(ConfigurationNode.class);
+    when(node.node(isA(Object[].class))).thenReturn(configurationNode);
+    when(node.hasChild(isA(Object[].class))).thenReturn(true);
+
+    // Act and Assert
+    assertThrows(SerializationException.class, () -> serializer.deserialize(type, node));
+    verify(node, atLeast(1)).hasChild(isA(Object[].class));
+    verify(node).node(isA(Object[].class));
+    verify(configurationNode).require(isA(Class.class));
+  }
+
+  /**
+   * Test Serializer {@link Serializer#deserialize(Type, ConfigurationNode)} with {@code Type},
+   * {@code ConfigurationNode}.
+   *
+   * <ul>
+   *   <li>Given {@link SerializationException#SerializationException()}.
+   * </ul>
+   *
+   * <p>Method under test: {@link Serializer#deserialize(Type, ConfigurationNode)}
+   */
+  @Test
+  @DisplayName(
+      "Test Serializer deserialize(Type, ConfigurationNode) with 'Type', 'ConfigurationNode'; given SerializationException()")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"DespawnRange Serializer.deserialize(Type, ConfigurationNode)"})
+  void testSerializerDeserializeWithTypeConfigurationNode_givenSerializationException()
+      throws SerializationException {
+    // Arrange
+    Serializer serializer = new Serializer();
+    PlaceholderForType type = new PlaceholderForType(1);
+
+    ConfigurationNode node = mock(ConfigurationNode.class);
+    when(node.hasChild(isA(Object[].class))).thenReturn(false);
+    when(node.require(Default.class)).thenThrow(new SerializationException());
+
+    // Act and Assert
+    assertThrows(SerializationException.class, () -> serializer.deserialize(type, node));
+    verify(node, atLeast(1)).hasChild(isA(Object[].class));
+    verify(node).require(isA(Class.class));
   }
 
   /**
@@ -216,34 +392,6 @@ class DespawnRangeDiffblueTest {
     // Arrange
     Serializer serializer = new Serializer();
     PlaceholderForType type = new PlaceholderForType(1);
-    DespawnRange despawnRange = new DespawnRange(new Default(OptionalInt.empty()));
-
-    ConfigurationNode node = mock(ConfigurationNode.class);
-    when(node.set(Mockito.<Object>any()))
-        .thenThrow(new SerializationException("An error occurred"));
-
-    // Act and Assert
-    assertThrows(
-        SerializationException.class, () -> serializer.serialize(type, despawnRange, node));
-    verify(node).set(isA(Object.class));
-  }
-
-  /**
-   * Test Serializer {@link Serializer#serialize(Type, DespawnRange, ConfigurationNode)} with {@code
-   * type}, {@code despawnRange}, {@code node}.
-   *
-   * <p>Method under test: {@link Serializer#serialize(Type, DespawnRange, ConfigurationNode)}
-   */
-  @Test
-  @DisplayName(
-      "Test Serializer serialize(Type, DespawnRange, ConfigurationNode) with 'type', 'despawnRange', 'node'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"void Serializer.serialize(Type, DespawnRange, ConfigurationNode)"})
-  void testSerializerSerializeWithTypeDespawnRangeNode3() throws SerializationException {
-    // Arrange
-    Serializer serializer = new Serializer();
-    PlaceholderForType type = new PlaceholderForType(1);
     Default horizontalLimit = new Default(OptionalInt.empty());
     DespawnRange despawnRange =
         new DespawnRange(horizontalLimit, new Default(OptionalInt.empty()), true);
@@ -274,7 +422,7 @@ class DespawnRangeDiffblueTest {
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void Serializer.serialize(Type, DespawnRange, ConfigurationNode)"})
-  void testSerializerSerializeWithTypeDespawnRangeNode4() throws SerializationException {
+  void testSerializerSerializeWithTypeDespawnRangeNode3() throws SerializationException {
     // Arrange
     Serializer serializer = new Serializer();
     PlaceholderForType type = new PlaceholderForType(1);
@@ -283,8 +431,7 @@ class DespawnRangeDiffblueTest {
         new DespawnRange(horizontalLimit, new Default(OptionalInt.empty()), true);
 
     ConfigurationNode configurationNode = mock(ConfigurationNode.class);
-    when(configurationNode.set(Mockito.<Object>any()))
-        .thenThrow(new SerializationException("An error occurred"));
+    when(configurationNode.set(Mockito.<Object>any())).thenThrow(new SerializationException());
 
     ConfigurationNode node = mock(ConfigurationNode.class);
     when(node.node(isA(Object[].class))).thenReturn(configurationNode);
@@ -294,6 +441,38 @@ class DespawnRangeDiffblueTest {
         SerializationException.class, () -> serializer.serialize(type, despawnRange, node));
     verify(node).node(isA(Object[].class));
     verify(configurationNode).set(isA(Object.class));
+  }
+
+  /**
+   * Test Serializer {@link Serializer#serialize(Type, DespawnRange, ConfigurationNode)} with {@code
+   * type}, {@code despawnRange}, {@code node}.
+   *
+   * <ul>
+   *   <li>Given {@link SerializationException#SerializationException()}.
+   * </ul>
+   *
+   * <p>Method under test: {@link Serializer#serialize(Type, DespawnRange, ConfigurationNode)}
+   */
+  @Test
+  @DisplayName(
+      "Test Serializer serialize(Type, DespawnRange, ConfigurationNode) with 'type', 'despawnRange', 'node'; given SerializationException()")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void Serializer.serialize(Type, DespawnRange, ConfigurationNode)"})
+  void testSerializerSerializeWithTypeDespawnRangeNode_givenSerializationException()
+      throws SerializationException {
+    // Arrange
+    Serializer serializer = new Serializer();
+    PlaceholderForType type = new PlaceholderForType(1);
+    DespawnRange despawnRange = new DespawnRange(new Default(OptionalInt.empty()));
+
+    ConfigurationNode node = mock(ConfigurationNode.class);
+    when(node.set(Mockito.<Object>any())).thenThrow(new SerializationException());
+
+    // Act and Assert
+    assertThrows(
+        SerializationException.class, () -> serializer.serialize(type, despawnRange, node));
+    verify(node).set(isA(Object.class));
   }
 
   /**
@@ -327,30 +506,6 @@ class DespawnRangeDiffblueTest {
 
     // Assert
     verify(node).raw(isNull());
-  }
-
-  /**
-   * Test {@link DespawnRange#shouldDespawn(Shape, double, double, double, double)}.
-   *
-   * <ul>
-   *   <li>Given {@link IntOr.Default#Default(OptionalInt)} with value is empty.
-   *   <li>When {@code CYLINDER}.
-   *   <li>Then return {@code false}.
-   * </ul>
-   *
-   * <p>Method under test: {@link DespawnRange#shouldDespawn(Shape, double, double, double, double)}
-   */
-  @Test
-  @DisplayName(
-      "Test shouldDespawn(Shape, double, double, double, double); given Default(OptionalInt) with value is empty; when 'CYLINDER'; then return 'false'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"boolean DespawnRange.shouldDespawn(Shape, double, double, double, double)"})
-  void testShouldDespawn_givenDefaultWithValueIsEmpty_whenCylinder_thenReturnFalse() {
-    // Arrange, Act and Assert
-    assertFalse(
-        new DespawnRange(new Default(OptionalInt.empty()))
-            .shouldDespawn(Shape.CYLINDER, Double.NaN, 10.0d, 10.0d, Double.NaN));
   }
 
   /**
@@ -447,5 +602,33 @@ class DespawnRangeDiffblueTest {
     assertTrue(
         new DespawnRange(new Default(OptionalInt.empty()))
             .shouldDespawn(Shape.ELLIPSOID, 10.0d, 10.0d, 10.0d, 10.0d));
+  }
+
+  /**
+   * Test {@link DespawnRange#shouldDespawn(Shape, double, double, double, double)}.
+   *
+   * <ul>
+   *   <li>Given {@link OptionalInt} with forty-two.
+   *   <li>When {@code CYLINDER}.
+   *   <li>Then return {@code false}.
+   * </ul>
+   *
+   * <p>Method under test: {@link DespawnRange#shouldDespawn(Shape, double, double, double, double)}
+   */
+  @Test
+  @DisplayName(
+      "Test shouldDespawn(Shape, double, double, double, double); given OptionalInt with forty-two; when 'CYLINDER'; then return 'false'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"boolean DespawnRange.shouldDespawn(Shape, double, double, double, double)"})
+  void testShouldDespawn_givenOptionalIntWithFortyTwo_whenCylinder_thenReturnFalse() {
+    // Arrange
+    OptionalInt value = OptionalInt.of(42);
+    Default generalLimit = new Default(value);
+
+    // Act and Assert
+    assertFalse(
+        new DespawnRange(generalLimit)
+            .shouldDespawn(Shape.CYLINDER, Double.NaN, 10.0d, 10.0d, 10.0d));
   }
 }

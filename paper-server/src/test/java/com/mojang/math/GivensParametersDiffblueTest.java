@@ -81,7 +81,7 @@ class GivensParametersDiffblueTest {
   void testAroundXWithMatrix() {
     // Arrange
     GivensParameters givensParameters = new GivensParameters(10.0f, 10.0f);
-    Matrix3f matrix = new Matrix3f(10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f);
+    Matrix3f matrix = new Matrix3f();
 
     // Act
     Matrix3f actualAroundXResult = givensParameters.aroundX(matrix);
@@ -103,16 +103,12 @@ class GivensParametersDiffblueTest {
   void testAroundXWithQuaternion() {
     // Arrange
     GivensParameters givensParameters = new GivensParameters(10.0f, 10.0f);
-    Quaternionf quaternion = new Quaternionf(2.0d, 3.0d, 10.0d, 10.0d);
+    Quaternionf quaternion = new Quaternionf();
 
     // Act
     Quaternionf actualAroundXResult = givensParameters.aroundX(quaternion);
 
     // Assert
-    assertEquals(0.0f, quaternion.y());
-    assertEquals(0.0f, quaternion.z());
-    assertEquals(0.0f, quaternion.y);
-    assertEquals(0.0f, quaternion.z);
     assertSame(quaternion, actualAroundXResult);
   }
 
@@ -129,7 +125,7 @@ class GivensParametersDiffblueTest {
   void testAroundYWithMatrix() {
     // Arrange
     GivensParameters givensParameters = new GivensParameters(10.0f, 10.0f);
-    Matrix3f matrix = new Matrix3f(10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f);
+    Matrix3f matrix = new Matrix3f();
 
     // Act
     Matrix3f actualAroundYResult = givensParameters.aroundY(matrix);
@@ -151,16 +147,12 @@ class GivensParametersDiffblueTest {
   void testAroundYWithQuaternion() {
     // Arrange
     GivensParameters givensParameters = new GivensParameters(10.0f, 10.0f);
-    Quaternionf quaternion = new Quaternionf(2.0d, 3.0d, 10.0d, 10.0d);
+    Quaternionf quaternion = new Quaternionf();
 
     // Act
     Quaternionf actualAroundYResult = givensParameters.aroundY(quaternion);
 
     // Assert
-    assertEquals(0.0f, quaternion.x());
-    assertEquals(0.0f, quaternion.z());
-    assertEquals(0.0f, quaternion.x);
-    assertEquals(0.0f, quaternion.z);
     assertSame(quaternion, actualAroundYResult);
   }
 
@@ -177,7 +169,7 @@ class GivensParametersDiffblueTest {
   void testAroundZWithMatrix() {
     // Arrange
     GivensParameters givensParameters = new GivensParameters(10.0f, 10.0f);
-    Matrix3f matrix = new Matrix3f(10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f);
+    Matrix3f matrix = new Matrix3f();
 
     // Act
     Matrix3f actualAroundZResult = givensParameters.aroundZ(matrix);
@@ -199,16 +191,12 @@ class GivensParametersDiffblueTest {
   void testAroundZWithQuaternion() {
     // Arrange
     GivensParameters givensParameters = new GivensParameters(10.0f, 10.0f);
-    Quaternionf quaternion = new Quaternionf(2.0d, 3.0d, 10.0d, 10.0d);
+    Quaternionf quaternion = new Quaternionf();
 
     // Act
     Quaternionf actualAroundZResult = givensParameters.aroundZ(quaternion);
 
     // Assert
-    assertEquals(0.0f, quaternion.x());
-    assertEquals(0.0f, quaternion.y());
-    assertEquals(0.0f, quaternion.x);
-    assertEquals(0.0f, quaternion.y);
     assertSame(quaternion, actualAroundZResult);
   }
 

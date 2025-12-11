@@ -109,44 +109,22 @@ class SuggestionDiffblueTest {
    * Test {@link Suggestion#apply(String)}.
    *
    * <ul>
-   *   <li>Given {@link StringRange#StringRange(int, int)} with start is one and end is five.
-   *   <li>When {@code Input}.
-   *   <li>Then return {@code IText}.
-   * </ul>
-   *
-   * <p>Method under test: {@link Suggestion#apply(String)}
-   */
-  @Test
-  @DisplayName(
-      "Test apply(String); given StringRange(int, int) with start is one and end is five; when 'Input'; then return 'IText'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"String Suggestion.apply(String)"})
-  void testApply_givenStringRangeWithStartIsOneAndEndIsFive_whenInput_thenReturnIText() {
-    // Arrange, Act and Assert
-    assertEquals("IText", new Suggestion(new StringRange(1, 5), "Text").apply("Input"));
-  }
-
-  /**
-   * Test {@link Suggestion#apply(String)}.
-   *
-   * <ul>
    *   <li>Given {@link StringRange#StringRange(int, int)} with start is zero and end is five.
    *   <li>When {@code Input}.
-   *   <li>Then return {@code Text}.
+   *   <li>Then return {@code 42}.
    * </ul>
    *
    * <p>Method under test: {@link Suggestion#apply(String)}
    */
   @Test
   @DisplayName(
-      "Test apply(String); given StringRange(int, int) with start is zero and end is five; when 'Input'; then return 'Text'")
+      "Test apply(String); given StringRange(int, int) with start is zero and end is five; when 'Input'; then return '42'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"String Suggestion.apply(String)"})
-  void testApply_givenStringRangeWithStartIsZeroAndEndIsFive_whenInput_thenReturnText() {
+  void testApply_givenStringRangeWithStartIsZeroAndEndIsFive_whenInput_thenReturn42() {
     // Arrange, Act and Assert
-    assertEquals("Text", new Suggestion(new StringRange(0, 5), "Text").apply("Input"));
+    assertEquals("42", new IntegerSuggestion(new StringRange(0, 5), 42).apply("Input"));
   }
 
   /**
@@ -154,20 +132,21 @@ class SuggestionDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link StringRange#StringRange(int, int)} with start is zero and end is three.
-   *   <li>Then return {@code Textut}.
+   *   <li>When {@code Input}.
+   *   <li>Then return {@code 42ut}.
    * </ul>
    *
    * <p>Method under test: {@link Suggestion#apply(String)}
    */
   @Test
   @DisplayName(
-      "Test apply(String); given StringRange(int, int) with start is zero and end is three; then return 'Textut'")
+      "Test apply(String); given StringRange(int, int) with start is zero and end is three; when 'Input'; then return '42ut'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"String Suggestion.apply(String)"})
-  void testApply_givenStringRangeWithStartIsZeroAndEndIsThree_thenReturnTextut() {
+  void testApply_givenStringRangeWithStartIsZeroAndEndIsThree_whenInput_thenReturn42ut() {
     // Arrange, Act and Assert
-    assertEquals("Textut", new Suggestion(new StringRange(0, 3), "Text").apply("Input"));
+    assertEquals("42ut", new IntegerSuggestion(new StringRange(0, 3), 42).apply("Input"));
   }
 
   /**
@@ -194,6 +173,28 @@ class SuggestionDiffblueTest {
 
     // Act and Assert
     assertEquals("ITextnput", new Suggestion(range, "Text").apply("Input"));
+  }
+
+  /**
+   * Test {@link Suggestion#apply(String)}.
+   *
+   * <ul>
+   *   <li>Then return {@code Input42}.
+   * </ul>
+   *
+   * <p>Method under test: {@link Suggestion#apply(String)}
+   */
+  @Test
+  @DisplayName("Test apply(String); then return 'Input42'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"String Suggestion.apply(String)"})
+  void testApply_thenReturnInput42() {
+    // Arrange
+    StringRange range = StringRange.at(5);
+
+    // Act and Assert
+    assertEquals("Input42", new IntegerSuggestion(range, 42).apply("Input"));
   }
 
   /**

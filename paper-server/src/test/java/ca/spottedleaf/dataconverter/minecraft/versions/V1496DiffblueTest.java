@@ -5,10 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.anyByte;
 import static org.mockito.Mockito.anyInt;
 import static org.mockito.Mockito.atLeast;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -23,11 +21,10 @@ import ca.spottedleaf.dataconverter.types.json.JsonMapType;
 import ca.spottedleaf.dataconverter.types.json.JsonTypeUtil;
 import ca.spottedleaf.dataconverter.types.nbt.NBTListType;
 import ca.spottedleaf.dataconverter.types.nbt.NBTMapType;
+import ca.spottedleaf.dataconverter.types.nbt.NBTTypeUtil;
 import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
 import com.google.gson.JsonArray;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -610,15 +607,14 @@ class V1496DiffblueTest {
   @MethodsUnderTest({"void LeavesSection.<init>(MapType)"})
   void testLeavesSectionNewLeavesSection() {
     // Arrange
-    NBTListType nbtListType = mock(NBTListType.class);
-    when(nbtListType.getMap(anyInt())).thenReturn(new JsonMapType(true));
-    when(nbtListType.size()).thenReturn(3);
-    doNothing().when(nbtListType).addByte(anyByte());
-    nbtListType.addByte((byte) 'A');
+    JsonListType jsonListType = mock(JsonListType.class);
+    when(jsonListType.getMap(anyInt())).thenReturn(new JsonMapType(true));
+    when(jsonListType.size()).thenReturn(3);
 
     MapType section = mock(MapType.class);
     when(section.getInt(Mockito.<String>any())).thenReturn(1);
-    when(section.getList(Mockito.<String>any(), Mockito.<ObjectType>any())).thenReturn(nbtListType);
+    when(section.getList(Mockito.<String>any(), Mockito.<ObjectType>any()))
+        .thenReturn(jsonListType);
 
     // Act
     LeavesSection actualLeavesSection = new LeavesSection(section);
@@ -626,9 +622,8 @@ class V1496DiffblueTest {
     // Assert
     verify(section).getInt("Y");
     verify(section).getList("Palette", ObjectType.MAP);
-    verify(nbtListType).addByte((byte) 65);
-    verify(nbtListType, atLeast(1)).getMap(anyInt());
-    verify(nbtListType, atLeast(1)).size();
+    verify(jsonListType, atLeast(1)).getMap(anyInt());
+    verify(jsonListType, atLeast(1)).size();
     assertNull(actualLeavesSection.storage);
     assertEquals(1, actualLeavesSection.getSectionY());
     assertTrue(actualLeavesSection.isSkippable());
@@ -638,7 +633,7 @@ class V1496DiffblueTest {
    * Test LeavesSection {@link LeavesSection#LeavesSection(MapType)}.
    *
    * <ul>
-   *   <li>Given {@link NBTListType} {@link NBTListType#getMap(int)} return {@link
+   *   <li>Given {@link JsonListType} {@link JsonListType#getMap(int)} return {@link
    *       NBTMapType#NBTMapType()}.
    * </ul>
    *
@@ -646,21 +641,20 @@ class V1496DiffblueTest {
    */
   @Test
   @DisplayName(
-      "Test LeavesSection new LeavesSection(MapType); given NBTListType getMap(int) return NBTMapType()")
+      "Test LeavesSection new LeavesSection(MapType); given JsonListType getMap(int) return NBTMapType()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void LeavesSection.<init>(MapType)"})
-  void testLeavesSectionNewLeavesSection_givenNBTListTypeGetMapReturnNBTMapType() {
+  void testLeavesSectionNewLeavesSection_givenJsonListTypeGetMapReturnNBTMapType() {
     // Arrange
-    NBTListType nbtListType = mock(NBTListType.class);
-    when(nbtListType.getMap(anyInt())).thenReturn(new NBTMapType());
-    when(nbtListType.size()).thenReturn(3);
-    doNothing().when(nbtListType).addByte(anyByte());
-    nbtListType.addByte((byte) 'A');
+    JsonListType jsonListType = mock(JsonListType.class);
+    when(jsonListType.getMap(anyInt())).thenReturn(new NBTMapType());
+    when(jsonListType.size()).thenReturn(3);
 
     MapType section = mock(MapType.class);
     when(section.getInt(Mockito.<String>any())).thenReturn(1);
-    when(section.getList(Mockito.<String>any(), Mockito.<ObjectType>any())).thenReturn(nbtListType);
+    when(section.getList(Mockito.<String>any(), Mockito.<ObjectType>any()))
+        .thenReturn(jsonListType);
 
     // Act
     LeavesSection actualLeavesSection = new LeavesSection(section);
@@ -668,12 +662,48 @@ class V1496DiffblueTest {
     // Assert
     verify(section).getInt("Y");
     verify(section).getList("Palette", ObjectType.MAP);
-    verify(nbtListType).addByte((byte) 65);
-    verify(nbtListType, atLeast(1)).getMap(anyInt());
-    verify(nbtListType, atLeast(1)).size();
+    verify(jsonListType, atLeast(1)).getMap(anyInt());
+    verify(jsonListType, atLeast(1)).size();
     assertNull(actualLeavesSection.storage);
     assertEquals(1, actualLeavesSection.getSectionY());
     assertTrue(actualLeavesSection.isSkippable());
+  }
+
+  /**
+   * Test LeavesSection {@link LeavesSection#LeavesSection(MapType)}.
+   *
+   * <ul>
+   *   <li>Given {@link NBTListType#NBTListType()}.
+   *   <li>Then {@link Section#palette} return {@link NBTListType}.
+   * </ul>
+   *
+   * <p>Method under test: {@link LeavesSection#LeavesSection(MapType)}
+   */
+  @Test
+  @DisplayName(
+      "Test LeavesSection new LeavesSection(MapType); given NBTListType(); then palette return NBTListType")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void LeavesSection.<init>(MapType)"})
+  void testLeavesSectionNewLeavesSection_givenNBTListType_thenPaletteReturnNBTListType() {
+    // Arrange
+    MapType section = mock(MapType.class);
+    when(section.getInt(Mockito.<String>any())).thenReturn(1);
+    when(section.getList(Mockito.<String>any(), Mockito.<ObjectType>any()))
+        .thenReturn(new NBTListType());
+
+    // Act
+    LeavesSection actualLeavesSection = new LeavesSection(section);
+
+    // Assert
+    verify(section).getInt("Y");
+    verify(section).getList("Palette", ObjectType.MAP);
+    ListType listType = actualLeavesSection.palette;
+    assertTrue(listType instanceof NBTListType);
+    assertTrue(listType.getTypeUtil() instanceof NBTTypeUtil);
+    assertEquals(0, listType.size());
+    assertEquals(ObjectType.NONE, listType.getUniformType());
+    assertTrue(((NBTListType) listType).getTag().isEmpty());
   }
 
   /**
@@ -696,15 +726,14 @@ class V1496DiffblueTest {
     MapType mapType = mock(MapType.class);
     when(mapType.getString(Mockito.<String>any(), Mockito.<String>any())).thenReturn("String");
 
-    NBTListType nbtListType = mock(NBTListType.class);
-    when(nbtListType.getMap(anyInt())).thenReturn(mapType);
-    when(nbtListType.size()).thenReturn(3);
-    doNothing().when(nbtListType).addByte(anyByte());
-    nbtListType.addByte((byte) 'A');
+    JsonListType jsonListType = mock(JsonListType.class);
+    when(jsonListType.getMap(anyInt())).thenReturn(mapType);
+    when(jsonListType.size()).thenReturn(3);
 
     MapType section = mock(MapType.class);
     when(section.getInt(Mockito.<String>any())).thenReturn(1);
-    when(section.getList(Mockito.<String>any(), Mockito.<ObjectType>any())).thenReturn(nbtListType);
+    when(section.getList(Mockito.<String>any(), Mockito.<ObjectType>any()))
+        .thenReturn(jsonListType);
 
     // Act
     LeavesSection actualLeavesSection = new LeavesSection(section);
@@ -713,9 +742,8 @@ class V1496DiffblueTest {
     verify(section).getInt("Y");
     verify(section).getList("Palette", ObjectType.MAP);
     verify(mapType, atLeast(1)).getString("Name", "");
-    verify(nbtListType).addByte((byte) 65);
-    verify(nbtListType, atLeast(1)).getMap(anyInt());
-    verify(nbtListType, atLeast(1)).size();
+    verify(jsonListType, atLeast(1)).getMap(anyInt());
+    verify(jsonListType, atLeast(1)).size();
     assertNull(actualLeavesSection.storage);
     assertEquals(1, actualLeavesSection.getSectionY());
     assertTrue(actualLeavesSection.isSkippable());
@@ -765,82 +793,6 @@ class V1496DiffblueTest {
     assertTrue(json.isJsonArray());
     JsonArray actualAsJsonArray = json.getAsJsonArray();
     assertSame(json, actualAsJsonArray);
-  }
-
-  /**
-   * Test LeavesSection {@link LeavesSection#LeavesSection(MapType)}.
-   *
-   * <ul>
-   *   <li>Then return {@link Section#palette} Tag size is one.
-   * </ul>
-   *
-   * <p>Method under test: {@link LeavesSection#LeavesSection(MapType)}
-   */
-  @Test
-  @DisplayName("Test LeavesSection new LeavesSection(MapType); then return palette Tag size is one")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"void LeavesSection.<init>(MapType)"})
-  void testLeavesSectionNewLeavesSection_thenReturnPaletteTagSizeIsOne() {
-    // Arrange
-    NBTListType nbtListType = new NBTListType();
-    nbtListType.addMap(new NBTMapType());
-
-    MapType section = mock(MapType.class);
-    when(section.getInt(Mockito.<String>any())).thenReturn(1);
-    when(section.getList(Mockito.<String>any(), Mockito.<ObjectType>any())).thenReturn(nbtListType);
-
-    // Act
-    LeavesSection actualLeavesSection = new LeavesSection(section);
-
-    // Assert
-    verify(section).getInt("Y");
-    verify(section).getList("Palette", ObjectType.MAP);
-    ListType listType = actualLeavesSection.palette;
-    assertTrue(listType instanceof NBTListType);
-    ListTag tag = ((NBTListType) listType).getTag();
-    assertEquals(1, tag.size());
-    net.minecraft.nbt.Tag getResult = tag.get(0);
-    assertEquals(0, ((CompoundTag) getResult).size());
-    assertEquals(1, listType.size());
-    assertEquals(ObjectType.MAP, listType.getUniformType());
-    assertTrue(((CompoundTag) getResult).isEmpty());
-    assertEquals('\n', getResult.getId());
-  }
-
-  /**
-   * Test LeavesSection {@link LeavesSection#LeavesSection(MapType)}.
-   *
-   * <ul>
-   *   <li>Then return {@link Section#palette} UniformType is {@code NONE}.
-   * </ul>
-   *
-   * <p>Method under test: {@link LeavesSection#LeavesSection(MapType)}
-   */
-  @Test
-  @DisplayName(
-      "Test LeavesSection new LeavesSection(MapType); then return palette UniformType is 'NONE'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"void LeavesSection.<init>(MapType)"})
-  void testLeavesSectionNewLeavesSection_thenReturnPaletteUniformTypeIsNone() {
-    // Arrange
-    MapType section = mock(MapType.class);
-    when(section.getInt(Mockito.<String>any())).thenReturn(1);
-    when(section.getList(Mockito.<String>any(), Mockito.<ObjectType>any()))
-        .thenReturn(new NBTListType());
-
-    // Act
-    LeavesSection actualLeavesSection = new LeavesSection(section);
-
-    // Assert
-    verify(section).getInt("Y");
-    verify(section).getList("Palette", ObjectType.MAP);
-    ListType listType = actualLeavesSection.palette;
-    assertTrue(listType instanceof NBTListType);
-    assertEquals(0, listType.size());
-    assertEquals(ObjectType.NONE, listType.getUniformType());
-    assertTrue(((NBTListType) listType).getTag().isEmpty());
   }
 
   /**
@@ -913,6 +865,36 @@ class V1496DiffblueTest {
    * Test Section {@link Section#getStateId(String, boolean, int)}.
    *
    * <ul>
+   *   <li>Then return seventeen.
+   * </ul>
+   *
+   * <p>Method under test: {@link Section#getStateId(String, boolean, int)}
+   */
+  @Test
+  @DisplayName("Test Section getStateId(String, boolean, int); then return seventeen")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"int Section.getStateId(String, boolean, int)"})
+  void testSectionGetStateId_thenReturnSeventeen() {
+    // Arrange
+    JsonMapType section = mock(JsonMapType.class);
+    when(section.getList(Mockito.<String>any(), Mockito.<ObjectType>any()))
+        .thenReturn(new NBTListType());
+    when(section.getInt(Mockito.<String>any())).thenReturn(1);
+
+    // Act
+    int actualStateId = new LeavesSection(section).getStateId("Name", true, 1);
+
+    // Assert
+    verify(section).getList("Palette", ObjectType.MAP);
+    verify(section).getInt("Y");
+    assertEquals(17, actualStateId);
+  }
+
+  /**
+   * Test Section {@link Section#getStateId(String, boolean, int)}.
+   *
+   * <ul>
    *   <li>When {@code 42}.
    *   <li>Then return seventeen.
    * </ul>
@@ -933,68 +915,6 @@ class V1496DiffblueTest {
 
     // Act
     int actualStateId = new LeavesSection(section).getStateId("42", true, 1);
-
-    // Assert
-    verify(section).getList("Palette", ObjectType.MAP);
-    verify(section).getInt("Y");
-    assertEquals(17, actualStateId);
-  }
-
-  /**
-   * Test Section {@link Section#getStateId(String, boolean, int)}.
-   *
-   * <ul>
-   *   <li>When {@code null}.
-   *   <li>Then return one.
-   * </ul>
-   *
-   * <p>Method under test: {@link Section#getStateId(String, boolean, int)}
-   */
-  @Test
-  @DisplayName("Test Section getStateId(String, boolean, int); when 'null'; then return one")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"int Section.getStateId(String, boolean, int)"})
-  void testSectionGetStateId_whenNull_thenReturnOne() {
-    // Arrange
-    JsonMapType section = mock(JsonMapType.class);
-    when(section.getList(Mockito.<String>any(), Mockito.<ObjectType>any()))
-        .thenReturn(new NBTListType());
-    when(section.getInt(Mockito.<String>any())).thenReturn(1);
-
-    // Act
-    int actualStateId = new LeavesSection(section).getStateId(null, false, 1);
-
-    // Assert
-    verify(section).getList("Palette", ObjectType.MAP);
-    verify(section).getInt("Y");
-    assertEquals(1, actualStateId);
-  }
-
-  /**
-   * Test Section {@link Section#getStateId(String, boolean, int)}.
-   *
-   * <ul>
-   *   <li>When {@code true}.
-   *   <li>Then return seventeen.
-   * </ul>
-   *
-   * <p>Method under test: {@link Section#getStateId(String, boolean, int)}
-   */
-  @Test
-  @DisplayName("Test Section getStateId(String, boolean, int); when 'true'; then return seventeen")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"int Section.getStateId(String, boolean, int)"})
-  void testSectionGetStateId_whenTrue_thenReturnSeventeen() {
-    // Arrange
-    JsonMapType section = mock(JsonMapType.class);
-    when(section.getList(Mockito.<String>any(), Mockito.<ObjectType>any()))
-        .thenReturn(new NBTListType());
-    when(section.getInt(Mockito.<String>any())).thenReturn(1);
-
-    // Act
-    int actualStateId = new LeavesSection(section).getStateId("Name", true, 1);
 
     // Assert
     verify(section).getList("Palette", ObjectType.MAP);

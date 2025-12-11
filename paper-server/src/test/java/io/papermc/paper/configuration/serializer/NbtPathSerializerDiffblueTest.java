@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
+import java.lang.reflect.AnnotatedType;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.commands.arguments.NbtPathArgument;
@@ -11,6 +12,7 @@ import net.minecraft.commands.arguments.NbtPathArgument.NbtPath;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.spongepowered.configurate.serialize.SerializationException;
 
 class NbtPathSerializerDiffblueTest {
   /**
@@ -96,5 +98,76 @@ class NbtPathSerializerDiffblueTest {
 
     // Assert
     assertTrue(actualFromStringResult.isEmpty());
+  }
+
+  /**
+   * Test {@link NbtPathSerializer#deserialize(AnnotatedType, Object)} with {@code AnnotatedType},
+   * {@code Object}.
+   *
+   * <p>Method under test: {@link NbtPathSerializer#deserialize(AnnotatedType, Object)}
+   */
+  @Test
+  @DisplayName("Test deserialize(AnnotatedType, Object) with 'AnnotatedType', 'Object'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"NbtPath NbtPathSerializer.deserialize(AnnotatedType, Object)"})
+  void testDeserializeWithAnnotatedTypeObject() throws SerializationException {
+    // Arrange, Act and Assert
+    assertEquals(
+        "net.minecraft.commands.arguments.NbtPathArgument$NbtPath",
+        NbtPathSerializer.SERIALIZER
+            .deserialize(
+                (AnnotatedType) null, "net.minecraft.commands.arguments.NbtPathArgument$NbtPath")
+            .toString());
+  }
+
+  /**
+   * Test {@link NbtPathSerializer#deserialize(AnnotatedType, Object)} with {@code AnnotatedType},
+   * {@code Object}.
+   *
+   * <ul>
+   *   <li>Then return toString is {@code String}.
+   * </ul>
+   *
+   * <p>Method under test: {@link NbtPathSerializer#deserialize(AnnotatedType, Object)}
+   */
+  @Test
+  @DisplayName(
+      "Test deserialize(AnnotatedType, Object) with 'AnnotatedType', 'Object'; then return toString is 'java.lang.String'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"NbtPath NbtPathSerializer.deserialize(AnnotatedType, Object)"})
+  void testDeserializeWithAnnotatedTypeObject_thenReturnToStringIsJavaLangString()
+      throws SerializationException {
+    // Arrange, Act and Assert
+    assertEquals(
+        "java.lang.String",
+        NbtPathSerializer.SERIALIZER
+            .deserialize((AnnotatedType) null, "java.lang.String")
+            .toString());
+  }
+
+  /**
+   * Test {@link NbtPathSerializer#deserialize(AnnotatedType, Object)} with {@code AnnotatedType},
+   * {@code Object}.
+   *
+   * <ul>
+   *   <li>When {@code Obj}.
+   *   <li>Then return toString is {@code Obj}.
+   * </ul>
+   *
+   * <p>Method under test: {@link NbtPathSerializer#deserialize(AnnotatedType, Object)}
+   */
+  @Test
+  @DisplayName(
+      "Test deserialize(AnnotatedType, Object) with 'AnnotatedType', 'Object'; when 'Obj'; then return toString is 'Obj'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"NbtPath NbtPathSerializer.deserialize(AnnotatedType, Object)"})
+  void testDeserializeWithAnnotatedTypeObject_whenObj_thenReturnToStringIsObj()
+      throws SerializationException {
+    // Arrange, Act and Assert
+    assertEquals(
+        "Obj", NbtPathSerializer.SERIALIZER.deserialize((AnnotatedType) null, "Obj").toString());
   }
 }

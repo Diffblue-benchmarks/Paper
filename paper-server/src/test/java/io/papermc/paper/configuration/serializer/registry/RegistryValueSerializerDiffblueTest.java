@@ -1,5 +1,7 @@
 package io.papermc.paper.configuration.serializer.registry;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.isA;
@@ -12,6 +14,7 @@ import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
 import com.fasterxml.jackson.databind.type.PlaceholderForType;
 import io.leangen.geantyref.TypeToken;
+import java.lang.reflect.AnnotatedType;
 import java.util.ArrayList;
 import net.minecraft.core.DefaultedMappedRegistry;
 import net.minecraft.core.Registry;
@@ -80,7 +83,10 @@ class RegistryValueSerializerDiffblueTest {
             type, new ImmutableRegistryAccess(new ArrayList<>()), mock(ResourceKey.class), true);
 
     // Assert
-    assertSame(type, actualRegistryValueSerializer.type().getType());
+    TypeToken<Object> typeResult = actualRegistryValueSerializer.type();
+    AnnotatedType annotatedType = typeResult.getAnnotatedType();
+    assertNull(annotatedType.getAnnotatedOwnerType());
+    assertEquals(annotatedType, typeResult.getCanonicalType());
   }
 
   /**

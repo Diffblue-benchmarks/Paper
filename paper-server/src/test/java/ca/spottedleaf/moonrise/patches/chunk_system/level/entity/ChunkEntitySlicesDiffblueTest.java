@@ -58,7 +58,8 @@ class ChunkEntitySlicesDiffblueTest {
    * Test {@link ChunkEntitySlices#copyEntities(CompoundTag, CompoundTag)}.
    *
    * <ul>
-   *   <li>Given {@code null}.
+   *   <li>Given {@link ListTag#ListTag()}.
+   *   <li>When {@link CompoundTag#CompoundTag()}.
    *   <li>Then {@link CompoundTag#CompoundTag()} size is zero.
    * </ul>
    *
@@ -66,14 +67,14 @@ class ChunkEntitySlicesDiffblueTest {
    */
   @Test
   @DisplayName(
-      "Test copyEntities(CompoundTag, CompoundTag); given 'null'; then CompoundTag() size is zero")
+      "Test copyEntities(CompoundTag, CompoundTag); given ListTag(); when CompoundTag(); then CompoundTag() size is zero")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void ChunkEntitySlices.copyEntities(CompoundTag, CompoundTag)"})
-  void testCopyEntities_givenNull_thenCompoundTagSizeIsZero() {
+  void testCopyEntities_givenListTag_whenCompoundTag_thenCompoundTagSizeIsZero() {
     // Arrange
     CompoundTag from = mock(CompoundTag.class);
-    when(from.getListOrEmpty(Mockito.<String>any())).thenReturn(null);
+    when(from.getListOrEmpty(Mockito.<String>any())).thenReturn(new ListTag());
     CompoundTag into = new CompoundTag();
 
     // Act

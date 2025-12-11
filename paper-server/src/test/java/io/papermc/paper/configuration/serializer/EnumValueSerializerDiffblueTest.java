@@ -1,9 +1,11 @@
 package io.papermc.paper.configuration.serializer;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.mock;
 import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
+import io.leangen.geantyref.TypeToken;
 import java.lang.Character.UnicodeScript;
 import java.lang.reflect.AnnotatedType;
 import java.util.function.Predicate;
@@ -24,7 +26,9 @@ class EnumValueSerializerDiffblueTest {
   @MethodsUnderTest({"void EnumValueSerializer.<init>()"})
   void testNewEnumValueSerializer() {
     // Arrange, Act and Assert
-    assertEquals("java.lang.Enum<?>", new EnumValueSerializer().type().getType().getTypeName());
+    TypeToken<Enum<?>> typeResult = new EnumValueSerializer().type();
+    assertEquals("java.lang.Enum<?>", typeResult.getType().getTypeName());
+    assertNull(typeResult.getAnnotatedType().getAnnotatedOwnerType());
   }
 
   /**
@@ -42,9 +46,7 @@ class EnumValueSerializerDiffblueTest {
       "Test serialize(AnnotatedType, Enum, Predicate) with 'AnnotatedType', 'Enum', 'Predicate'; then return 'COMMON'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
-  @MethodsUnderTest({
-    "Object EnumValueSerializer.serialize(AnnotatedType, java.lang.Enum, Predicate)"
-  })
+  @MethodsUnderTest({"Object EnumValueSerializer.serialize(AnnotatedType, Enum, Predicate)"})
   void testSerializeWithAnnotatedTypeEnumPredicate_thenReturnCommon() {
     // Arrange
     EnumValueSerializer enumValueSerializer = new EnumValueSerializer();

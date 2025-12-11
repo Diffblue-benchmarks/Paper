@@ -549,7 +549,7 @@ class CommandDispatcherDiffblueTest {
 
     ArgumentType<Object> type3 = mock(ArgumentType.class);
     when(type3.parse(Mockito.<StringReader>any(), Mockito.<Object>any()))
-        .thenThrow(RunningOnDifferentThreadException.RUNNING_ON_DIFFERENT_THREAD);
+        .thenReturn(ConfigurationTransformation.WILDCARD_OBJECT);
 
     Predicate<Object> requirement = mock(Predicate.class);
     when(requirement.test(Mockito.<Object>any())).thenReturn(true);
@@ -600,7 +600,7 @@ class CommandDispatcherDiffblueTest {
 
     ArgumentCommandNode<Object, Object> node2 =
         new ArgumentCommandNode<>(
-            "com.mojang.brigadier.tree.ArgumentCommandNode",
+            "42",
             type4,
             command3,
             requirement3,
@@ -1131,6 +1131,1181 @@ class CommandDispatcherDiffblueTest {
         .when(consumer)
         .onCommandComplete(Mockito.<CommandContext<Object>>any(), anyBoolean(), anyInt());
 
+    ArgumentType<Object> type3 = mock(ArgumentType.class);
+    when(type3.parse(Mockito.<StringReader>any(), Mockito.<Object>any()))
+        .thenThrow(RunningOnDifferentThreadException.RUNNING_ON_DIFFERENT_THREAD);
+
+    Predicate<Object> requirement = mock(Predicate.class);
+    when(requirement.test(Mockito.<Object>any())).thenReturn(true);
+    Command<Object> command = mock(Command.class);
+    Command<Object> command2 = mock(Command.class);
+    Predicate<Object> requirement2 = mock(Predicate.class);
+
+    LiteralCommandNode<Object> redirect =
+        new LiteralCommandNode<>(
+            "Literal",
+            command2,
+            requirement2,
+            new RootCommandNode<>(),
+            mock(RedirectModifier.class),
+            true);
+
+    ArgumentCommandNode<Object, Object> node =
+        new ArgumentCommandNode<>(
+            "Name",
+            type3,
+            command,
+            requirement,
+            redirect,
+            mock(RedirectModifier.class),
+            true,
+            mock(SuggestionProvider.class));
+
+    ArgumentType<Object> type4 = mock(ArgumentType.class);
+    when(type4.parse(Mockito.<StringReader>any(), Mockito.<Object>any()))
+        .thenReturn(ConfigurationTransformation.WILDCARD_OBJECT);
+
+    Command<Object> command3 = mock(Command.class);
+    when(command3.run(Mockito.<CommandContext<Object>>any())).thenReturn(1);
+
+    Predicate<Object> requirement3 = mock(Predicate.class);
+    when(requirement3.test(Mockito.<Object>any())).thenReturn(true);
+    Command<Object> command4 = mock(Command.class);
+    Predicate<Object> requirement4 = mock(Predicate.class);
+
+    LiteralCommandNode<Object> redirect2 =
+        new LiteralCommandNode<>(
+            "Literal",
+            command4,
+            requirement4,
+            new RootCommandNode<>(),
+            mock(RedirectModifier.class),
+            true);
+
+    ArgumentCommandNode<Object, Object> node2 =
+        new ArgumentCommandNode<>(
+            "42",
+            type4,
+            command3,
+            requirement3,
+            redirect2,
+            mock(RedirectModifier.class),
+            true,
+            mock(SuggestionProvider.class));
+
+    RootCommandNode<Object> root = new RootCommandNode<>();
+    root.addChild(node2);
+    root.addChild(node);
+    ArgumentType<Object> type5 = mock(ArgumentType.class);
+    Command<Object> command5 = mock(Command.class);
+    Predicate<Object> requirement5 = mock(Predicate.class);
+    Command<Object> command6 = mock(Command.class);
+    Predicate<Object> requirement6 = mock(Predicate.class);
+
+    LiteralCommandNode<Object> redirect3 =
+        new LiteralCommandNode<>(
+            "Literal",
+            command6,
+            requirement6,
+            new RootCommandNode<>(),
+            mock(RedirectModifier.class),
+            true);
+
+    ArgumentCommandNode<Object, Object> node3 =
+        new ArgumentCommandNode<>(
+            "Name",
+            type5,
+            command5,
+            requirement5,
+            redirect3,
+            mock(RedirectModifier.class),
+            true,
+            mock(SuggestionProvider.class));
+    root.addChild(node3);
+    ArgumentType<Object> type6 = mock(ArgumentType.class);
+    Command<Object> command7 = mock(Command.class);
+    Predicate<Object> requirement7 = mock(Predicate.class);
+    Command<Object> command8 = mock(Command.class);
+    Predicate<Object> requirement8 = mock(Predicate.class);
+
+    LiteralCommandNode<Object> redirect4 =
+        new LiteralCommandNode<>(
+            "Literal",
+            command8,
+            requirement8,
+            new RootCommandNode<>(),
+            mock(RedirectModifier.class),
+            true);
+
+    ArgumentCommandNode<Object, Object> node4 =
+        new ArgumentCommandNode<>(
+            "Name",
+            type6,
+            command7,
+            requirement7,
+            redirect4,
+            mock(RedirectModifier.class),
+            true,
+            mock(SuggestionProvider.class));
+    root.addChild(node4);
+    ArgumentType<Object> type7 = mock(ArgumentType.class);
+    Command<Object> command9 = mock(Command.class);
+    Predicate<Object> requirement9 = mock(Predicate.class);
+    Command<Object> command10 = mock(Command.class);
+    Predicate<Object> requirement10 = mock(Predicate.class);
+
+    LiteralCommandNode<Object> redirect5 =
+        new LiteralCommandNode<>(
+            "Literal",
+            command10,
+            requirement10,
+            new RootCommandNode<>(),
+            mock(RedirectModifier.class),
+            true);
+
+    ArgumentCommandNode<Object, Object> node5 =
+        new ArgumentCommandNode<>(
+            "Name",
+            type7,
+            command9,
+            requirement9,
+            redirect5,
+            mock(RedirectModifier.class),
+            true,
+            mock(SuggestionProvider.class));
+    root.addChild(node5);
+    ArgumentType<Object> type8 = mock(ArgumentType.class);
+    Command<Object> command11 = mock(Command.class);
+    Predicate<Object> requirement11 = mock(Predicate.class);
+    Command<Object> command12 = mock(Command.class);
+    Predicate<Object> requirement12 = mock(Predicate.class);
+
+    LiteralCommandNode<Object> redirect6 =
+        new LiteralCommandNode<>(
+            "Literal",
+            command12,
+            requirement12,
+            new RootCommandNode<>(),
+            mock(RedirectModifier.class),
+            true);
+
+    ArgumentCommandNode<Object, Object> node6 =
+        new ArgumentCommandNode<>(
+            "Name",
+            type8,
+            command11,
+            requirement11,
+            redirect6,
+            mock(RedirectModifier.class),
+            true,
+            mock(SuggestionProvider.class));
+    root.addChild(node6);
+    ArgumentType<Object> type9 = mock(ArgumentType.class);
+    Command<Object> command13 = mock(Command.class);
+    Predicate<Object> requirement13 = mock(Predicate.class);
+    Command<Object> command14 = mock(Command.class);
+    Predicate<Object> requirement14 = mock(Predicate.class);
+
+    LiteralCommandNode<Object> redirect7 =
+        new LiteralCommandNode<>(
+            "Literal",
+            command14,
+            requirement14,
+            new RootCommandNode<>(),
+            mock(RedirectModifier.class),
+            true);
+
+    ArgumentCommandNode<Object, Object> node7 =
+        new ArgumentCommandNode<>(
+            "Name",
+            type9,
+            command13,
+            requirement13,
+            redirect7,
+            mock(RedirectModifier.class),
+            true,
+            mock(SuggestionProvider.class));
+    root.addChild(node7);
+    ArgumentType<Object> type10 = mock(ArgumentType.class);
+    Command<Object> command15 = mock(Command.class);
+    Predicate<Object> requirement15 = mock(Predicate.class);
+    Command<Object> command16 = mock(Command.class);
+    Predicate<Object> requirement16 = mock(Predicate.class);
+
+    LiteralCommandNode<Object> redirect8 =
+        new LiteralCommandNode<>(
+            "Literal",
+            command16,
+            requirement16,
+            new RootCommandNode<>(),
+            mock(RedirectModifier.class),
+            true);
+
+    ArgumentCommandNode<Object, Object> node8 =
+        new ArgumentCommandNode<>(
+            "Name",
+            type10,
+            command15,
+            requirement15,
+            redirect8,
+            mock(RedirectModifier.class),
+            true,
+            mock(SuggestionProvider.class));
+    root.addChild(node8);
+    ArgumentType<Object> type11 = mock(ArgumentType.class);
+    Command<Object> command17 = mock(Command.class);
+    Predicate<Object> requirement17 = mock(Predicate.class);
+    Command<Object> command18 = mock(Command.class);
+    Predicate<Object> requirement18 = mock(Predicate.class);
+
+    LiteralCommandNode<Object> redirect9 =
+        new LiteralCommandNode<>(
+            "Literal",
+            command18,
+            requirement18,
+            new RootCommandNode<>(),
+            mock(RedirectModifier.class),
+            true);
+
+    ArgumentCommandNode<Object, Object> node9 =
+        new ArgumentCommandNode<>(
+            "Name",
+            type11,
+            command17,
+            requirement17,
+            redirect9,
+            mock(RedirectModifier.class),
+            true,
+            mock(SuggestionProvider.class));
+    root.addChild(node9);
+    ArgumentType<Object> type12 = mock(ArgumentType.class);
+    Command<Object> command19 = mock(Command.class);
+    Predicate<Object> requirement19 = mock(Predicate.class);
+    Command<Object> command20 = mock(Command.class);
+    Predicate<Object> requirement20 = mock(Predicate.class);
+
+    LiteralCommandNode<Object> redirect10 =
+        new LiteralCommandNode<>(
+            "Literal",
+            command20,
+            requirement20,
+            new RootCommandNode<>(),
+            mock(RedirectModifier.class),
+            true);
+
+    ArgumentCommandNode<Object, Object> node10 =
+        new ArgumentCommandNode<>(
+            "Name",
+            type12,
+            command19,
+            requirement19,
+            redirect10,
+            mock(RedirectModifier.class),
+            true,
+            mock(SuggestionProvider.class));
+    root.addChild(node10);
+    ArgumentType<Object> type13 = mock(ArgumentType.class);
+    Command<Object> command21 = mock(Command.class);
+    Predicate<Object> requirement21 = mock(Predicate.class);
+    Command<Object> command22 = mock(Command.class);
+    Predicate<Object> requirement22 = mock(Predicate.class);
+
+    LiteralCommandNode<Object> redirect11 =
+        new LiteralCommandNode<>(
+            "Literal",
+            command22,
+            requirement22,
+            new RootCommandNode<>(),
+            mock(RedirectModifier.class),
+            true);
+
+    ArgumentCommandNode<Object, Object> node11 =
+        new ArgumentCommandNode<>(
+            "Name",
+            type13,
+            command21,
+            requirement21,
+            redirect11,
+            mock(RedirectModifier.class),
+            true,
+            mock(SuggestionProvider.class));
+    root.addChild(node11);
+    ArgumentType<Object> type14 = mock(ArgumentType.class);
+    Command<Object> command23 = mock(Command.class);
+    Predicate<Object> requirement23 = mock(Predicate.class);
+    Command<Object> command24 = mock(Command.class);
+    Predicate<Object> requirement24 = mock(Predicate.class);
+
+    LiteralCommandNode<Object> redirect12 =
+        new LiteralCommandNode<>(
+            "Literal",
+            command24,
+            requirement24,
+            new RootCommandNode<>(),
+            mock(RedirectModifier.class),
+            true);
+
+    ArgumentCommandNode<Object, Object> node12 =
+        new ArgumentCommandNode<>(
+            "Name",
+            type14,
+            command23,
+            requirement23,
+            redirect12,
+            mock(RedirectModifier.class),
+            true,
+            mock(SuggestionProvider.class));
+    root.addChild(node12);
+    ArgumentType<Object> type15 = mock(ArgumentType.class);
+    Command<Object> command25 = mock(Command.class);
+    Predicate<Object> requirement25 = mock(Predicate.class);
+    Command<Object> command26 = mock(Command.class);
+    Predicate<Object> requirement26 = mock(Predicate.class);
+
+    LiteralCommandNode<Object> redirect13 =
+        new LiteralCommandNode<>(
+            "Literal",
+            command26,
+            requirement26,
+            new RootCommandNode<>(),
+            mock(RedirectModifier.class),
+            true);
+
+    ArgumentCommandNode<Object, Object> node13 =
+        new ArgumentCommandNode<>(
+            "Name",
+            type15,
+            command25,
+            requirement25,
+            redirect13,
+            mock(RedirectModifier.class),
+            true,
+            mock(SuggestionProvider.class));
+    root.addChild(node13);
+    ArgumentType<Object> type16 = mock(ArgumentType.class);
+    Command<Object> command27 = mock(Command.class);
+    Predicate<Object> requirement27 = mock(Predicate.class);
+    Command<Object> command28 = mock(Command.class);
+    Predicate<Object> requirement28 = mock(Predicate.class);
+
+    LiteralCommandNode<Object> redirect14 =
+        new LiteralCommandNode<>(
+            "Literal",
+            command28,
+            requirement28,
+            new RootCommandNode<>(),
+            mock(RedirectModifier.class),
+            true);
+
+    ArgumentCommandNode<Object, Object> node14 =
+        new ArgumentCommandNode<>(
+            "Name",
+            type16,
+            command27,
+            requirement27,
+            redirect14,
+            mock(RedirectModifier.class),
+            true,
+            mock(SuggestionProvider.class));
+    root.addChild(node14);
+    ArgumentType<Object> type17 = mock(ArgumentType.class);
+    Command<Object> command29 = mock(Command.class);
+    Predicate<Object> requirement29 = mock(Predicate.class);
+    Command<Object> command30 = mock(Command.class);
+    Predicate<Object> requirement30 = mock(Predicate.class);
+
+    LiteralCommandNode<Object> redirect15 =
+        new LiteralCommandNode<>(
+            "Literal",
+            command30,
+            requirement30,
+            new RootCommandNode<>(),
+            mock(RedirectModifier.class),
+            true);
+
+    ArgumentCommandNode<Object, Object> node15 =
+        new ArgumentCommandNode<>(
+            "Name",
+            type17,
+            command29,
+            requirement29,
+            redirect15,
+            mock(RedirectModifier.class),
+            true,
+            mock(SuggestionProvider.class));
+    root.addChild(node15);
+    ArgumentType<Object> type18 = mock(ArgumentType.class);
+    Command<Object> command31 = mock(Command.class);
+    Predicate<Object> requirement31 = mock(Predicate.class);
+    Command<Object> command32 = mock(Command.class);
+    Predicate<Object> requirement32 = mock(Predicate.class);
+
+    LiteralCommandNode<Object> redirect16 =
+        new LiteralCommandNode<>(
+            "Literal",
+            command32,
+            requirement32,
+            new RootCommandNode<>(),
+            mock(RedirectModifier.class),
+            true);
+
+    ArgumentCommandNode<Object, Object> node16 =
+        new ArgumentCommandNode<>(
+            "Name",
+            type18,
+            command31,
+            requirement31,
+            redirect16,
+            mock(RedirectModifier.class),
+            true,
+            mock(SuggestionProvider.class));
+    root.addChild(node16);
+    ArgumentType<Object> type19 = mock(ArgumentType.class);
+    Command<Object> command33 = mock(Command.class);
+    Predicate<Object> requirement33 = mock(Predicate.class);
+    Command<Object> command34 = mock(Command.class);
+    Predicate<Object> requirement34 = mock(Predicate.class);
+
+    LiteralCommandNode<Object> redirect17 =
+        new LiteralCommandNode<>(
+            "Literal",
+            command34,
+            requirement34,
+            new RootCommandNode<>(),
+            mock(RedirectModifier.class),
+            true);
+
+    ArgumentCommandNode<Object, Object> node17 =
+        new ArgumentCommandNode<>(
+            "Name",
+            type19,
+            command33,
+            requirement33,
+            redirect17,
+            mock(RedirectModifier.class),
+            true,
+            mock(SuggestionProvider.class));
+    root.addChild(node17);
+    ArgumentType<Object> type20 = mock(ArgumentType.class);
+    Command<Object> command35 = mock(Command.class);
+    Predicate<Object> requirement35 = mock(Predicate.class);
+    Command<Object> command36 = mock(Command.class);
+    Predicate<Object> requirement36 = mock(Predicate.class);
+
+    LiteralCommandNode<Object> redirect18 =
+        new LiteralCommandNode<>(
+            "Literal",
+            command36,
+            requirement36,
+            new RootCommandNode<>(),
+            mock(RedirectModifier.class),
+            true);
+
+    ArgumentCommandNode<Object, Object> node18 =
+        new ArgumentCommandNode<>(
+            "Name",
+            type20,
+            command35,
+            requirement35,
+            redirect18,
+            mock(RedirectModifier.class),
+            true,
+            mock(SuggestionProvider.class));
+    root.addChild(node18);
+    ArgumentType<Object> type21 = mock(ArgumentType.class);
+    Command<Object> command37 = mock(Command.class);
+    Predicate<Object> requirement37 = mock(Predicate.class);
+    Command<Object> command38 = mock(Command.class);
+    Predicate<Object> requirement38 = mock(Predicate.class);
+
+    LiteralCommandNode<Object> redirect19 =
+        new LiteralCommandNode<>(
+            "Literal",
+            command38,
+            requirement38,
+            new RootCommandNode<>(),
+            mock(RedirectModifier.class),
+            true);
+
+    ArgumentCommandNode<Object, Object> node19 =
+        new ArgumentCommandNode<>(
+            "Name",
+            type21,
+            command37,
+            requirement37,
+            redirect19,
+            mock(RedirectModifier.class),
+            true,
+            mock(SuggestionProvider.class));
+    root.addChild(node19);
+    ArgumentType<Object> type22 = mock(ArgumentType.class);
+    Command<Object> command39 = mock(Command.class);
+    Predicate<Object> requirement39 = mock(Predicate.class);
+    Command<Object> command40 = mock(Command.class);
+    Predicate<Object> requirement40 = mock(Predicate.class);
+
+    LiteralCommandNode<Object> redirect20 =
+        new LiteralCommandNode<>(
+            "Literal",
+            command40,
+            requirement40,
+            new RootCommandNode<>(),
+            mock(RedirectModifier.class),
+            true);
+
+    ArgumentCommandNode<Object, Object> node20 =
+        new ArgumentCommandNode<>(
+            "Name",
+            type22,
+            command39,
+            requirement39,
+            redirect20,
+            mock(RedirectModifier.class),
+            true,
+            mock(SuggestionProvider.class));
+    root.addChild(node20);
+
+    CommandDispatcher<Object> commandDispatcher = new CommandDispatcher<>(root);
+    commandDispatcher.setConsumer(consumer);
+
+    // Act
+    int actualExecuteResult =
+        commandDispatcher.execute(
+            new StringReader(""), ConfigurationTransformation.WILDCARD_OBJECT);
+
+    // Assert
+    verify(command3).run(isA(CommandContext.class));
+    verify(message).getString();
+    verify(message2).getString();
+    verify(consumer).onCommandComplete(isA(CommandContext.class), eq(true), eq(1));
+    verify(type4).parse(isA(StringReader.class), isA(Object.class));
+    verify(type3).parse(isA(StringReader.class), isA(Object.class));
+    verify(requirement3).test(isA(Object.class));
+    verify(requirement).test(isA(Object.class));
+    assertEquals(1, actualExecuteResult);
+  }
+
+  /**
+   * Test {@link CommandDispatcher#execute(StringReader, Object)} with {@code StringReader}, {@code
+   * Object}.
+   *
+   * <p>Method under test: {@link CommandDispatcher#execute(StringReader, Object)}
+   */
+  @Test
+  @DisplayName("Test execute(StringReader, Object) with 'StringReader', 'Object'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"int CommandDispatcher.execute(StringReader, Object)"})
+  void testExecuteWithStringReaderObject3() throws CommandSyntaxException {
+    // Arrange
+    Message message = mock(Message.class);
+    when(message.getString()).thenReturn("String");
+    Dynamic2CommandExceptionType type = new Dynamic2CommandExceptionType(mock(Function.class));
+
+    new CommandSyntaxException(type, message);
+
+    Message message2 = mock(Message.class);
+    when(message2.getString()).thenReturn("String");
+    Dynamic2CommandExceptionType type2 = new Dynamic2CommandExceptionType(mock(Function.class));
+
+    new CommandSyntaxException(type2, message2);
+
+    ResultConsumer<Object> consumer = mock(ResultConsumer.class);
+    doNothing()
+        .when(consumer)
+        .onCommandComplete(Mockito.<CommandContext<Object>>any(), anyBoolean(), anyInt());
+
+    Message message3 = mock(Message.class);
+    when(message3.getString()).thenReturn("String");
+    Dynamic2CommandExceptionType type3 = new Dynamic2CommandExceptionType(mock(Function.class));
+
+    CommandSyntaxException commandSyntaxException = new CommandSyntaxException(type3, message3);
+
+    ArgumentType<Object> type4 = mock(ArgumentType.class);
+    when(type4.parse(Mockito.<StringReader>any(), Mockito.<Object>any()))
+        .thenThrow(commandSyntaxException);
+
+    Predicate<Object> requirement = mock(Predicate.class);
+    when(requirement.test(Mockito.<Object>any())).thenReturn(true);
+    Command<Object> command = mock(Command.class);
+    Command<Object> command2 = mock(Command.class);
+    Predicate<Object> requirement2 = mock(Predicate.class);
+
+    LiteralCommandNode<Object> redirect =
+        new LiteralCommandNode<>(
+            "Literal",
+            command2,
+            requirement2,
+            new RootCommandNode<>(),
+            mock(RedirectModifier.class),
+            true);
+
+    ArgumentCommandNode<Object, Object> node =
+        new ArgumentCommandNode<>(
+            "Name",
+            type4,
+            command,
+            requirement,
+            redirect,
+            mock(RedirectModifier.class),
+            true,
+            mock(SuggestionProvider.class));
+
+    ArgumentType<Object> type5 = mock(ArgumentType.class);
+    when(type5.parse(Mockito.<StringReader>any(), Mockito.<Object>any()))
+        .thenReturn(ConfigurationTransformation.WILDCARD_OBJECT);
+
+    Command<Object> command3 = mock(Command.class);
+    when(command3.run(Mockito.<CommandContext<Object>>any())).thenReturn(1);
+
+    Predicate<Object> requirement3 = mock(Predicate.class);
+    when(requirement3.test(Mockito.<Object>any())).thenReturn(true);
+    Command<Object> command4 = mock(Command.class);
+    Predicate<Object> requirement4 = mock(Predicate.class);
+
+    LiteralCommandNode<Object> redirect2 =
+        new LiteralCommandNode<>(
+            "Literal",
+            command4,
+            requirement4,
+            new RootCommandNode<>(),
+            mock(RedirectModifier.class),
+            true);
+
+    ArgumentCommandNode<Object, Object> node2 =
+        new ArgumentCommandNode<>(
+            "42",
+            type5,
+            command3,
+            requirement3,
+            redirect2,
+            mock(RedirectModifier.class),
+            true,
+            mock(SuggestionProvider.class));
+
+    RootCommandNode<Object> root = new RootCommandNode<>();
+    root.addChild(node2);
+    root.addChild(node);
+    ArgumentType<Object> type6 = mock(ArgumentType.class);
+    Command<Object> command5 = mock(Command.class);
+    Predicate<Object> requirement5 = mock(Predicate.class);
+    Command<Object> command6 = mock(Command.class);
+    Predicate<Object> requirement6 = mock(Predicate.class);
+
+    LiteralCommandNode<Object> redirect3 =
+        new LiteralCommandNode<>(
+            "Literal",
+            command6,
+            requirement6,
+            new RootCommandNode<>(),
+            mock(RedirectModifier.class),
+            true);
+
+    ArgumentCommandNode<Object, Object> node3 =
+        new ArgumentCommandNode<>(
+            "Name",
+            type6,
+            command5,
+            requirement5,
+            redirect3,
+            mock(RedirectModifier.class),
+            true,
+            mock(SuggestionProvider.class));
+    root.addChild(node3);
+    ArgumentType<Object> type7 = mock(ArgumentType.class);
+    Command<Object> command7 = mock(Command.class);
+    Predicate<Object> requirement7 = mock(Predicate.class);
+    Command<Object> command8 = mock(Command.class);
+    Predicate<Object> requirement8 = mock(Predicate.class);
+
+    LiteralCommandNode<Object> redirect4 =
+        new LiteralCommandNode<>(
+            "Literal",
+            command8,
+            requirement8,
+            new RootCommandNode<>(),
+            mock(RedirectModifier.class),
+            true);
+
+    ArgumentCommandNode<Object, Object> node4 =
+        new ArgumentCommandNode<>(
+            "Name",
+            type7,
+            command7,
+            requirement7,
+            redirect4,
+            mock(RedirectModifier.class),
+            true,
+            mock(SuggestionProvider.class));
+    root.addChild(node4);
+    ArgumentType<Object> type8 = mock(ArgumentType.class);
+    Command<Object> command9 = mock(Command.class);
+    Predicate<Object> requirement9 = mock(Predicate.class);
+    Command<Object> command10 = mock(Command.class);
+    Predicate<Object> requirement10 = mock(Predicate.class);
+
+    LiteralCommandNode<Object> redirect5 =
+        new LiteralCommandNode<>(
+            "Literal",
+            command10,
+            requirement10,
+            new RootCommandNode<>(),
+            mock(RedirectModifier.class),
+            true);
+
+    ArgumentCommandNode<Object, Object> node5 =
+        new ArgumentCommandNode<>(
+            "Name",
+            type8,
+            command9,
+            requirement9,
+            redirect5,
+            mock(RedirectModifier.class),
+            true,
+            mock(SuggestionProvider.class));
+    root.addChild(node5);
+    ArgumentType<Object> type9 = mock(ArgumentType.class);
+    Command<Object> command11 = mock(Command.class);
+    Predicate<Object> requirement11 = mock(Predicate.class);
+    Command<Object> command12 = mock(Command.class);
+    Predicate<Object> requirement12 = mock(Predicate.class);
+
+    LiteralCommandNode<Object> redirect6 =
+        new LiteralCommandNode<>(
+            "Literal",
+            command12,
+            requirement12,
+            new RootCommandNode<>(),
+            mock(RedirectModifier.class),
+            true);
+
+    ArgumentCommandNode<Object, Object> node6 =
+        new ArgumentCommandNode<>(
+            "Name",
+            type9,
+            command11,
+            requirement11,
+            redirect6,
+            mock(RedirectModifier.class),
+            true,
+            mock(SuggestionProvider.class));
+    root.addChild(node6);
+    ArgumentType<Object> type10 = mock(ArgumentType.class);
+    Command<Object> command13 = mock(Command.class);
+    Predicate<Object> requirement13 = mock(Predicate.class);
+    Command<Object> command14 = mock(Command.class);
+    Predicate<Object> requirement14 = mock(Predicate.class);
+
+    LiteralCommandNode<Object> redirect7 =
+        new LiteralCommandNode<>(
+            "Literal",
+            command14,
+            requirement14,
+            new RootCommandNode<>(),
+            mock(RedirectModifier.class),
+            true);
+
+    ArgumentCommandNode<Object, Object> node7 =
+        new ArgumentCommandNode<>(
+            "Name",
+            type10,
+            command13,
+            requirement13,
+            redirect7,
+            mock(RedirectModifier.class),
+            true,
+            mock(SuggestionProvider.class));
+    root.addChild(node7);
+    ArgumentType<Object> type11 = mock(ArgumentType.class);
+    Command<Object> command15 = mock(Command.class);
+    Predicate<Object> requirement15 = mock(Predicate.class);
+    Command<Object> command16 = mock(Command.class);
+    Predicate<Object> requirement16 = mock(Predicate.class);
+
+    LiteralCommandNode<Object> redirect8 =
+        new LiteralCommandNode<>(
+            "Literal",
+            command16,
+            requirement16,
+            new RootCommandNode<>(),
+            mock(RedirectModifier.class),
+            true);
+
+    ArgumentCommandNode<Object, Object> node8 =
+        new ArgumentCommandNode<>(
+            "Name",
+            type11,
+            command15,
+            requirement15,
+            redirect8,
+            mock(RedirectModifier.class),
+            true,
+            mock(SuggestionProvider.class));
+    root.addChild(node8);
+    ArgumentType<Object> type12 = mock(ArgumentType.class);
+    Command<Object> command17 = mock(Command.class);
+    Predicate<Object> requirement17 = mock(Predicate.class);
+    Command<Object> command18 = mock(Command.class);
+    Predicate<Object> requirement18 = mock(Predicate.class);
+
+    LiteralCommandNode<Object> redirect9 =
+        new LiteralCommandNode<>(
+            "Literal",
+            command18,
+            requirement18,
+            new RootCommandNode<>(),
+            mock(RedirectModifier.class),
+            true);
+
+    ArgumentCommandNode<Object, Object> node9 =
+        new ArgumentCommandNode<>(
+            "Name",
+            type12,
+            command17,
+            requirement17,
+            redirect9,
+            mock(RedirectModifier.class),
+            true,
+            mock(SuggestionProvider.class));
+    root.addChild(node9);
+    ArgumentType<Object> type13 = mock(ArgumentType.class);
+    Command<Object> command19 = mock(Command.class);
+    Predicate<Object> requirement19 = mock(Predicate.class);
+    Command<Object> command20 = mock(Command.class);
+    Predicate<Object> requirement20 = mock(Predicate.class);
+
+    LiteralCommandNode<Object> redirect10 =
+        new LiteralCommandNode<>(
+            "Literal",
+            command20,
+            requirement20,
+            new RootCommandNode<>(),
+            mock(RedirectModifier.class),
+            true);
+
+    ArgumentCommandNode<Object, Object> node10 =
+        new ArgumentCommandNode<>(
+            "Name",
+            type13,
+            command19,
+            requirement19,
+            redirect10,
+            mock(RedirectModifier.class),
+            true,
+            mock(SuggestionProvider.class));
+    root.addChild(node10);
+    ArgumentType<Object> type14 = mock(ArgumentType.class);
+    Command<Object> command21 = mock(Command.class);
+    Predicate<Object> requirement21 = mock(Predicate.class);
+    Command<Object> command22 = mock(Command.class);
+    Predicate<Object> requirement22 = mock(Predicate.class);
+
+    LiteralCommandNode<Object> redirect11 =
+        new LiteralCommandNode<>(
+            "Literal",
+            command22,
+            requirement22,
+            new RootCommandNode<>(),
+            mock(RedirectModifier.class),
+            true);
+
+    ArgumentCommandNode<Object, Object> node11 =
+        new ArgumentCommandNode<>(
+            "Name",
+            type14,
+            command21,
+            requirement21,
+            redirect11,
+            mock(RedirectModifier.class),
+            true,
+            mock(SuggestionProvider.class));
+    root.addChild(node11);
+    ArgumentType<Object> type15 = mock(ArgumentType.class);
+    Command<Object> command23 = mock(Command.class);
+    Predicate<Object> requirement23 = mock(Predicate.class);
+    Command<Object> command24 = mock(Command.class);
+    Predicate<Object> requirement24 = mock(Predicate.class);
+
+    LiteralCommandNode<Object> redirect12 =
+        new LiteralCommandNode<>(
+            "Literal",
+            command24,
+            requirement24,
+            new RootCommandNode<>(),
+            mock(RedirectModifier.class),
+            true);
+
+    ArgumentCommandNode<Object, Object> node12 =
+        new ArgumentCommandNode<>(
+            "Name",
+            type15,
+            command23,
+            requirement23,
+            redirect12,
+            mock(RedirectModifier.class),
+            true,
+            mock(SuggestionProvider.class));
+    root.addChild(node12);
+    ArgumentType<Object> type16 = mock(ArgumentType.class);
+    Command<Object> command25 = mock(Command.class);
+    Predicate<Object> requirement25 = mock(Predicate.class);
+    Command<Object> command26 = mock(Command.class);
+    Predicate<Object> requirement26 = mock(Predicate.class);
+
+    LiteralCommandNode<Object> redirect13 =
+        new LiteralCommandNode<>(
+            "Literal",
+            command26,
+            requirement26,
+            new RootCommandNode<>(),
+            mock(RedirectModifier.class),
+            true);
+
+    ArgumentCommandNode<Object, Object> node13 =
+        new ArgumentCommandNode<>(
+            "Name",
+            type16,
+            command25,
+            requirement25,
+            redirect13,
+            mock(RedirectModifier.class),
+            true,
+            mock(SuggestionProvider.class));
+    root.addChild(node13);
+    ArgumentType<Object> type17 = mock(ArgumentType.class);
+    Command<Object> command27 = mock(Command.class);
+    Predicate<Object> requirement27 = mock(Predicate.class);
+    Command<Object> command28 = mock(Command.class);
+    Predicate<Object> requirement28 = mock(Predicate.class);
+
+    LiteralCommandNode<Object> redirect14 =
+        new LiteralCommandNode<>(
+            "Literal",
+            command28,
+            requirement28,
+            new RootCommandNode<>(),
+            mock(RedirectModifier.class),
+            true);
+
+    ArgumentCommandNode<Object, Object> node14 =
+        new ArgumentCommandNode<>(
+            "Name",
+            type17,
+            command27,
+            requirement27,
+            redirect14,
+            mock(RedirectModifier.class),
+            true,
+            mock(SuggestionProvider.class));
+    root.addChild(node14);
+    ArgumentType<Object> type18 = mock(ArgumentType.class);
+    Command<Object> command29 = mock(Command.class);
+    Predicate<Object> requirement29 = mock(Predicate.class);
+    Command<Object> command30 = mock(Command.class);
+    Predicate<Object> requirement30 = mock(Predicate.class);
+
+    LiteralCommandNode<Object> redirect15 =
+        new LiteralCommandNode<>(
+            "Literal",
+            command30,
+            requirement30,
+            new RootCommandNode<>(),
+            mock(RedirectModifier.class),
+            true);
+
+    ArgumentCommandNode<Object, Object> node15 =
+        new ArgumentCommandNode<>(
+            "Name",
+            type18,
+            command29,
+            requirement29,
+            redirect15,
+            mock(RedirectModifier.class),
+            true,
+            mock(SuggestionProvider.class));
+    root.addChild(node15);
+    ArgumentType<Object> type19 = mock(ArgumentType.class);
+    Command<Object> command31 = mock(Command.class);
+    Predicate<Object> requirement31 = mock(Predicate.class);
+    Command<Object> command32 = mock(Command.class);
+    Predicate<Object> requirement32 = mock(Predicate.class);
+
+    LiteralCommandNode<Object> redirect16 =
+        new LiteralCommandNode<>(
+            "Literal",
+            command32,
+            requirement32,
+            new RootCommandNode<>(),
+            mock(RedirectModifier.class),
+            true);
+
+    ArgumentCommandNode<Object, Object> node16 =
+        new ArgumentCommandNode<>(
+            "Name",
+            type19,
+            command31,
+            requirement31,
+            redirect16,
+            mock(RedirectModifier.class),
+            true,
+            mock(SuggestionProvider.class));
+    root.addChild(node16);
+    ArgumentType<Object> type20 = mock(ArgumentType.class);
+    Command<Object> command33 = mock(Command.class);
+    Predicate<Object> requirement33 = mock(Predicate.class);
+    Command<Object> command34 = mock(Command.class);
+    Predicate<Object> requirement34 = mock(Predicate.class);
+
+    LiteralCommandNode<Object> redirect17 =
+        new LiteralCommandNode<>(
+            "Literal",
+            command34,
+            requirement34,
+            new RootCommandNode<>(),
+            mock(RedirectModifier.class),
+            true);
+
+    ArgumentCommandNode<Object, Object> node17 =
+        new ArgumentCommandNode<>(
+            "Name",
+            type20,
+            command33,
+            requirement33,
+            redirect17,
+            mock(RedirectModifier.class),
+            true,
+            mock(SuggestionProvider.class));
+    root.addChild(node17);
+    ArgumentType<Object> type21 = mock(ArgumentType.class);
+    Command<Object> command35 = mock(Command.class);
+    Predicate<Object> requirement35 = mock(Predicate.class);
+    Command<Object> command36 = mock(Command.class);
+    Predicate<Object> requirement36 = mock(Predicate.class);
+
+    LiteralCommandNode<Object> redirect18 =
+        new LiteralCommandNode<>(
+            "Literal",
+            command36,
+            requirement36,
+            new RootCommandNode<>(),
+            mock(RedirectModifier.class),
+            true);
+
+    ArgumentCommandNode<Object, Object> node18 =
+        new ArgumentCommandNode<>(
+            "Name",
+            type21,
+            command35,
+            requirement35,
+            redirect18,
+            mock(RedirectModifier.class),
+            true,
+            mock(SuggestionProvider.class));
+    root.addChild(node18);
+    ArgumentType<Object> type22 = mock(ArgumentType.class);
+    Command<Object> command37 = mock(Command.class);
+    Predicate<Object> requirement37 = mock(Predicate.class);
+    Command<Object> command38 = mock(Command.class);
+    Predicate<Object> requirement38 = mock(Predicate.class);
+
+    LiteralCommandNode<Object> redirect19 =
+        new LiteralCommandNode<>(
+            "Literal",
+            command38,
+            requirement38,
+            new RootCommandNode<>(),
+            mock(RedirectModifier.class),
+            true);
+
+    ArgumentCommandNode<Object, Object> node19 =
+        new ArgumentCommandNode<>(
+            "Name",
+            type22,
+            command37,
+            requirement37,
+            redirect19,
+            mock(RedirectModifier.class),
+            true,
+            mock(SuggestionProvider.class));
+    root.addChild(node19);
+    ArgumentType<Object> type23 = mock(ArgumentType.class);
+    Command<Object> command39 = mock(Command.class);
+    Predicate<Object> requirement39 = mock(Predicate.class);
+    Command<Object> command40 = mock(Command.class);
+    Predicate<Object> requirement40 = mock(Predicate.class);
+
+    LiteralCommandNode<Object> redirect20 =
+        new LiteralCommandNode<>(
+            "Literal",
+            command40,
+            requirement40,
+            new RootCommandNode<>(),
+            mock(RedirectModifier.class),
+            true);
+
+    ArgumentCommandNode<Object, Object> node20 =
+        new ArgumentCommandNode<>(
+            "Name",
+            type23,
+            command39,
+            requirement39,
+            redirect20,
+            mock(RedirectModifier.class),
+            true,
+            mock(SuggestionProvider.class));
+    root.addChild(node20);
+
+    CommandDispatcher<Object> commandDispatcher = new CommandDispatcher<>(root);
+    commandDispatcher.setConsumer(consumer);
+
+    // Act
+    int actualExecuteResult =
+        commandDispatcher.execute(
+            new StringReader(""), ConfigurationTransformation.WILDCARD_OBJECT);
+
+    // Assert
+    verify(command3).run(isA(CommandContext.class));
+    verify(message3).getString();
+    verify(message).getString();
+    verify(message2).getString();
+    verify(consumer).onCommandComplete(isA(CommandContext.class), eq(true), eq(1));
+    verify(type5).parse(isA(StringReader.class), isA(Object.class));
+    verify(type4).parse(isA(StringReader.class), isA(Object.class));
+    verify(requirement3).test(isA(Object.class));
+    verify(requirement).test(isA(Object.class));
+    assertEquals(1, actualExecuteResult);
+  }
+
+  /**
+   * Test {@link CommandDispatcher#execute(StringReader, Object)} with {@code StringReader}, {@code
+   * Object}.
+   *
+   * <p>Method under test: {@link CommandDispatcher#execute(StringReader, Object)}
+   */
+  @Test
+  @DisplayName("Test execute(StringReader, Object) with 'StringReader', 'Object'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"int CommandDispatcher.execute(StringReader, Object)"})
+  void testExecuteWithStringReaderObject4() throws CommandSyntaxException {
+    // Arrange
+    Message message = mock(Message.class);
+    when(message.getString()).thenReturn("String");
+    Dynamic2CommandExceptionType type = new Dynamic2CommandExceptionType(mock(Function.class));
+
+    new CommandSyntaxException(type, message);
+
+    Message message2 = mock(Message.class);
+    when(message2.getString()).thenReturn("String");
+    Dynamic2CommandExceptionType type2 = new Dynamic2CommandExceptionType(mock(Function.class));
+
+    new CommandSyntaxException(type2, message2);
+
+    ResultConsumer<Object> consumer = mock(ResultConsumer.class);
+    doNothing()
+        .when(consumer)
+        .onCommandComplete(Mockito.<CommandContext<Object>>any(), anyBoolean(), anyInt());
+
     Message message3 = mock(Message.class);
     when(message3.getString()).thenReturn("String");
     Dynamic2CommandExceptionType type3 = new Dynamic2CommandExceptionType(mock(Function.class));
@@ -1179,7 +2354,7 @@ class CommandDispatcherDiffblueTest {
 
     ArgumentCommandNode<Object, Object> node2 =
         new ArgumentCommandNode<>(
-            "com.mojang.brigadier.tree.ArgumentCommandNode",
+            "42",
             type5,
             command3,
             requirement3,
@@ -1685,594 +2860,6 @@ class CommandDispatcherDiffblueTest {
    * Test {@link CommandDispatcher#execute(StringReader, Object)} with {@code StringReader}, {@code
    * Object}.
    *
-   * <p>Method under test: {@link CommandDispatcher#execute(StringReader, Object)}
-   */
-  @Test
-  @DisplayName("Test execute(StringReader, Object) with 'StringReader', 'Object'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"int CommandDispatcher.execute(StringReader, Object)"})
-  void testExecuteWithStringReaderObject3() throws CommandSyntaxException {
-    // Arrange
-    Message message = mock(Message.class);
-    when(message.getString()).thenReturn("String");
-    Dynamic2CommandExceptionType type = new Dynamic2CommandExceptionType(mock(Function.class));
-
-    new CommandSyntaxException(type, message);
-
-    Message message2 = mock(Message.class);
-    when(message2.getString()).thenReturn("String");
-    Dynamic2CommandExceptionType type2 = new Dynamic2CommandExceptionType(mock(Function.class));
-
-    new CommandSyntaxException(type2, message2);
-
-    ResultConsumer<Object> consumer = mock(ResultConsumer.class);
-    doNothing()
-        .when(consumer)
-        .onCommandComplete(Mockito.<CommandContext<Object>>any(), anyBoolean(), anyInt());
-
-    Message message3 = mock(Message.class);
-    when(message3.getString()).thenReturn("String");
-    Dynamic2CommandExceptionType type3 = new Dynamic2CommandExceptionType(mock(Function.class));
-
-    CommandSyntaxException commandSyntaxException = new CommandSyntaxException(type3, message3);
-
-    ArgumentType<Object> type4 = mock(ArgumentType.class);
-    when(type4.parse(Mockito.<StringReader>any(), Mockito.<Object>any()))
-        .thenThrow(commandSyntaxException);
-
-    Predicate<Object> requirement = mock(Predicate.class);
-    when(requirement.test(Mockito.<Object>any())).thenReturn(true);
-    Command<Object> command = mock(Command.class);
-    Command<Object> command2 = mock(Command.class);
-    Predicate<Object> requirement2 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect =
-        new LiteralCommandNode<>(
-            "Literal",
-            command2,
-            requirement2,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node =
-        new ArgumentCommandNode<>(
-            "Name",
-            type4,
-            command,
-            requirement,
-            redirect,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-
-    ArgumentType<Object> type5 = mock(ArgumentType.class);
-    when(type5.parse(Mockito.<StringReader>any(), Mockito.<Object>any()))
-        .thenReturn(ConfigurationTransformation.WILDCARD_OBJECT);
-
-    Command<Object> command3 = mock(Command.class);
-    when(command3.run(Mockito.<CommandContext<Object>>any())).thenReturn(1);
-
-    Predicate<Object> predicate = mock(Predicate.class);
-    when(predicate.test(Mockito.<Object>any())).thenReturn(true);
-    Predicate<Object> requirement3 = mock(Predicate.class);
-    Command<Object> command4 = mock(Command.class);
-    Predicate<Object> requirement4 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect2 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command4,
-            requirement4,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node2 =
-        new ArgumentCommandNode<>(
-            "com.mojang.brigadier.tree.ArgumentCommandNode",
-            type5,
-            command3,
-            requirement3,
-            redirect2,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    node2.requirement = predicate;
-
-    RootCommandNode<Object> root = new RootCommandNode<>();
-    root.addChild(node2);
-    root.addChild(node);
-    Command<Object> command5 = mock(Command.class);
-    Predicate<Object> requirement5 = mock(Predicate.class);
-    ArgumentType<Object> type6 = mock(ArgumentType.class);
-    Command<Object> command6 = mock(Command.class);
-    Predicate<Object> requirement6 = mock(Predicate.class);
-
-    ArgumentCommandNode<Object, Object> redirect3 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type6,
-            command6,
-            requirement6,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-
-    LiteralCommandNode<Object> node3 =
-        new LiteralCommandNode<>(
-            "Literal", command5, requirement5, redirect3, mock(RedirectModifier.class), true);
-    root.addChild(node3);
-    ArgumentType<Object> type7 = mock(ArgumentType.class);
-    Command<Object> command7 = mock(Command.class);
-    Predicate<Object> requirement7 = mock(Predicate.class);
-    Command<Object> command8 = mock(Command.class);
-    Predicate<Object> requirement8 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect4 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command8,
-            requirement8,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node4 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type7,
-            command7,
-            requirement7,
-            redirect4,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node4);
-    ArgumentType<Object> type8 = mock(ArgumentType.class);
-    Command<Object> command9 = mock(Command.class);
-    Predicate<Object> requirement9 = mock(Predicate.class);
-    Command<Object> command10 = mock(Command.class);
-    Predicate<Object> requirement10 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect5 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command10,
-            requirement10,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node5 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type8,
-            command9,
-            requirement9,
-            redirect5,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node5);
-    ArgumentType<Object> type9 = mock(ArgumentType.class);
-    Command<Object> command11 = mock(Command.class);
-    Predicate<Object> requirement11 = mock(Predicate.class);
-    Command<Object> command12 = mock(Command.class);
-    Predicate<Object> requirement12 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect6 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command12,
-            requirement12,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node6 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type9,
-            command11,
-            requirement11,
-            redirect6,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node6);
-    ArgumentType<Object> type10 = mock(ArgumentType.class);
-    Command<Object> command13 = mock(Command.class);
-    Predicate<Object> requirement13 = mock(Predicate.class);
-    Command<Object> command14 = mock(Command.class);
-    Predicate<Object> requirement14 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect7 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command14,
-            requirement14,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node7 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type10,
-            command13,
-            requirement13,
-            redirect7,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node7);
-    ArgumentType<Object> type11 = mock(ArgumentType.class);
-    Command<Object> command15 = mock(Command.class);
-    Predicate<Object> requirement15 = mock(Predicate.class);
-    Command<Object> command16 = mock(Command.class);
-    Predicate<Object> requirement16 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect8 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command16,
-            requirement16,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node8 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type11,
-            command15,
-            requirement15,
-            redirect8,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node8);
-    ArgumentType<Object> type12 = mock(ArgumentType.class);
-    Command<Object> command17 = mock(Command.class);
-    Predicate<Object> requirement17 = mock(Predicate.class);
-    Command<Object> command18 = mock(Command.class);
-    Predicate<Object> requirement18 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect9 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command18,
-            requirement18,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node9 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type12,
-            command17,
-            requirement17,
-            redirect9,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node9);
-    ArgumentType<Object> type13 = mock(ArgumentType.class);
-    Command<Object> command19 = mock(Command.class);
-    Predicate<Object> requirement19 = mock(Predicate.class);
-    Command<Object> command20 = mock(Command.class);
-    Predicate<Object> requirement20 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect10 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command20,
-            requirement20,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node10 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type13,
-            command19,
-            requirement19,
-            redirect10,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node10);
-    ArgumentType<Object> type14 = mock(ArgumentType.class);
-    Command<Object> command21 = mock(Command.class);
-    Predicate<Object> requirement21 = mock(Predicate.class);
-    Command<Object> command22 = mock(Command.class);
-    Predicate<Object> requirement22 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect11 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command22,
-            requirement22,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node11 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type14,
-            command21,
-            requirement21,
-            redirect11,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node11);
-    ArgumentType<Object> type15 = mock(ArgumentType.class);
-    Command<Object> command23 = mock(Command.class);
-    Predicate<Object> requirement23 = mock(Predicate.class);
-    Command<Object> command24 = mock(Command.class);
-    Predicate<Object> requirement24 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect12 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command24,
-            requirement24,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node12 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type15,
-            command23,
-            requirement23,
-            redirect12,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node12);
-    ArgumentType<Object> type16 = mock(ArgumentType.class);
-    Command<Object> command25 = mock(Command.class);
-    Predicate<Object> requirement25 = mock(Predicate.class);
-    Command<Object> command26 = mock(Command.class);
-    Predicate<Object> requirement26 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect13 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command26,
-            requirement26,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node13 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type16,
-            command25,
-            requirement25,
-            redirect13,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node13);
-    ArgumentType<Object> type17 = mock(ArgumentType.class);
-    Command<Object> command27 = mock(Command.class);
-    Predicate<Object> requirement27 = mock(Predicate.class);
-    Command<Object> command28 = mock(Command.class);
-    Predicate<Object> requirement28 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect14 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command28,
-            requirement28,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node14 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type17,
-            command27,
-            requirement27,
-            redirect14,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node14);
-    ArgumentType<Object> type18 = mock(ArgumentType.class);
-    Command<Object> command29 = mock(Command.class);
-    Predicate<Object> requirement29 = mock(Predicate.class);
-    Command<Object> command30 = mock(Command.class);
-    Predicate<Object> requirement30 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect15 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command30,
-            requirement30,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node15 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type18,
-            command29,
-            requirement29,
-            redirect15,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node15);
-    ArgumentType<Object> type19 = mock(ArgumentType.class);
-    Command<Object> command31 = mock(Command.class);
-    Predicate<Object> requirement31 = mock(Predicate.class);
-    Command<Object> command32 = mock(Command.class);
-    Predicate<Object> requirement32 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect16 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command32,
-            requirement32,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node16 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type19,
-            command31,
-            requirement31,
-            redirect16,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node16);
-    ArgumentType<Object> type20 = mock(ArgumentType.class);
-    Command<Object> command33 = mock(Command.class);
-    Predicate<Object> requirement33 = mock(Predicate.class);
-    Command<Object> command34 = mock(Command.class);
-    Predicate<Object> requirement34 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect17 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command34,
-            requirement34,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node17 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type20,
-            command33,
-            requirement33,
-            redirect17,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node17);
-    ArgumentType<Object> type21 = mock(ArgumentType.class);
-    Command<Object> command35 = mock(Command.class);
-    Predicate<Object> requirement35 = mock(Predicate.class);
-    Command<Object> command36 = mock(Command.class);
-    Predicate<Object> requirement36 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect18 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command36,
-            requirement36,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node18 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type21,
-            command35,
-            requirement35,
-            redirect18,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node18);
-    ArgumentType<Object> type22 = mock(ArgumentType.class);
-    Command<Object> command37 = mock(Command.class);
-    Predicate<Object> requirement37 = mock(Predicate.class);
-    Command<Object> command38 = mock(Command.class);
-    Predicate<Object> requirement38 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect19 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command38,
-            requirement38,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node19 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type22,
-            command37,
-            requirement37,
-            redirect19,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node19);
-    ArgumentType<Object> type23 = mock(ArgumentType.class);
-    Command<Object> command39 = mock(Command.class);
-    Predicate<Object> requirement39 = mock(Predicate.class);
-    Command<Object> command40 = mock(Command.class);
-    Predicate<Object> requirement40 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect20 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command40,
-            requirement40,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node20 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type23,
-            command39,
-            requirement39,
-            redirect20,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node20);
-
-    CommandDispatcher<Object> commandDispatcher = new CommandDispatcher<>(root);
-    commandDispatcher.setConsumer(consumer);
-
-    // Act
-    int actualExecuteResult =
-        commandDispatcher.execute(
-            new StringReader(""), ConfigurationTransformation.WILDCARD_OBJECT);
-
-    // Assert
-    verify(command3).run(isA(CommandContext.class));
-    verify(message3).getString();
-    verify(message).getString();
-    verify(message2).getString();
-    verify(consumer).onCommandComplete(isA(CommandContext.class), eq(true), eq(1));
-    verify(type5).parse(isA(StringReader.class), isA(Object.class));
-    verify(type4).parse(isA(StringReader.class), isA(Object.class));
-    verify(predicate).test(isA(Object.class));
-    verify(requirement).test(isA(Object.class));
-    assertEquals(1, actualExecuteResult);
-  }
-
-  /**
-   * Test {@link CommandDispatcher#execute(StringReader, Object)} with {@code StringReader}, {@code
-   * Object}.
-   *
    * <ul>
    *   <li>Given {@link Command} {@link Command#run(CommandContext)} return one.
    *   <li>Then return one.
@@ -2341,1786 +2928,6 @@ class CommandDispatcherDiffblueTest {
     verify(command).run(isA(CommandContext.class));
     verify(consumer).onCommandComplete(isA(CommandContext.class), eq(true), eq(1));
     verify(type).parse(isA(StringReader.class), isA(Object.class));
-    verify(requirement).test(isA(Object.class));
-    assertEquals(1, actualExecuteResult);
-  }
-
-  /**
-   * Test {@link CommandDispatcher#execute(StringReader, Object)} with {@code StringReader}, {@code
-   * Object}.
-   *
-   * <ul>
-   *   <li>Given {@link Predicate} {@link Predicate#test(Object)} return {@code false}.
-   * </ul>
-   *
-   * <p>Method under test: {@link CommandDispatcher#execute(StringReader, Object)}
-   */
-  @Test
-  @DisplayName(
-      "Test execute(StringReader, Object) with 'StringReader', 'Object'; given Predicate test(Object) return 'false'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"int CommandDispatcher.execute(StringReader, Object)"})
-  void testExecuteWithStringReaderObject_givenPredicateTestReturnFalse()
-      throws CommandSyntaxException {
-    // Arrange
-    Message message = mock(Message.class);
-    when(message.getString()).thenReturn("String");
-    Dynamic2CommandExceptionType type = new Dynamic2CommandExceptionType(mock(Function.class));
-
-    new CommandSyntaxException(type, message);
-
-    Message message2 = mock(Message.class);
-    when(message2.getString()).thenReturn("String");
-    Dynamic2CommandExceptionType type2 = new Dynamic2CommandExceptionType(mock(Function.class));
-
-    new CommandSyntaxException(type2, message2);
-
-    Message message3 = mock(Message.class);
-    when(message3.getString()).thenReturn("String");
-    Dynamic2CommandExceptionType type3 = new Dynamic2CommandExceptionType(mock(Function.class));
-
-    new CommandSyntaxException(type3, message3);
-
-    ResultConsumer<Object> consumer = mock(ResultConsumer.class);
-    doNothing()
-        .when(consumer)
-        .onCommandComplete(Mockito.<CommandContext<Object>>any(), anyBoolean(), anyInt());
-
-    Predicate<Object> requirement = mock(Predicate.class);
-    when(requirement.test(Mockito.<Object>any())).thenReturn(false);
-    ArgumentType<Object> type4 = mock(ArgumentType.class);
-    Command<Object> command = mock(Command.class);
-    Command<Object> command2 = mock(Command.class);
-    Predicate<Object> requirement2 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect =
-        new LiteralCommandNode<>(
-            "Literal",
-            command2,
-            requirement2,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node =
-        new ArgumentCommandNode<>(
-            "Name",
-            type4,
-            command,
-            requirement,
-            redirect,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-
-    ArgumentType<Object> type5 = mock(ArgumentType.class);
-    when(type5.parse(Mockito.<StringReader>any(), Mockito.<Object>any()))
-        .thenReturn(ConfigurationTransformation.WILDCARD_OBJECT);
-
-    Command<Object> command3 = mock(Command.class);
-    when(command3.run(Mockito.<CommandContext<Object>>any())).thenReturn(1);
-
-    Predicate<Object> predicate = mock(Predicate.class);
-    when(predicate.test(Mockito.<Object>any())).thenReturn(true);
-    Predicate<Object> requirement3 = mock(Predicate.class);
-    Command<Object> command4 = mock(Command.class);
-    Predicate<Object> requirement4 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect2 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command4,
-            requirement4,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node2 =
-        new ArgumentCommandNode<>(
-            "com.mojang.brigadier.tree.ArgumentCommandNode",
-            type5,
-            command3,
-            requirement3,
-            redirect2,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    node2.requirement = predicate;
-
-    RootCommandNode<Object> root = new RootCommandNode<>();
-    root.addChild(node2);
-    root.addChild(node);
-    ArgumentType<Object> type6 = mock(ArgumentType.class);
-    Command<Object> command5 = mock(Command.class);
-    Predicate<Object> requirement5 = mock(Predicate.class);
-    Command<Object> command6 = mock(Command.class);
-    Predicate<Object> requirement6 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect3 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command6,
-            requirement6,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node3 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type6,
-            command5,
-            requirement5,
-            redirect3,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node3);
-    ArgumentType<Object> type7 = mock(ArgumentType.class);
-    Command<Object> command7 = mock(Command.class);
-    Predicate<Object> requirement7 = mock(Predicate.class);
-    Command<Object> command8 = mock(Command.class);
-    Predicate<Object> requirement8 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect4 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command8,
-            requirement8,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node4 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type7,
-            command7,
-            requirement7,
-            redirect4,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node4);
-    ArgumentType<Object> type8 = mock(ArgumentType.class);
-    Command<Object> command9 = mock(Command.class);
-    Predicate<Object> requirement9 = mock(Predicate.class);
-    Command<Object> command10 = mock(Command.class);
-    Predicate<Object> requirement10 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect5 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command10,
-            requirement10,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node5 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type8,
-            command9,
-            requirement9,
-            redirect5,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node5);
-    ArgumentType<Object> type9 = mock(ArgumentType.class);
-    Command<Object> command11 = mock(Command.class);
-    Predicate<Object> requirement11 = mock(Predicate.class);
-    Command<Object> command12 = mock(Command.class);
-    Predicate<Object> requirement12 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect6 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command12,
-            requirement12,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node6 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type9,
-            command11,
-            requirement11,
-            redirect6,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node6);
-    ArgumentType<Object> type10 = mock(ArgumentType.class);
-    Command<Object> command13 = mock(Command.class);
-    Predicate<Object> requirement13 = mock(Predicate.class);
-    Command<Object> command14 = mock(Command.class);
-    Predicate<Object> requirement14 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect7 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command14,
-            requirement14,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node7 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type10,
-            command13,
-            requirement13,
-            redirect7,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node7);
-    ArgumentType<Object> type11 = mock(ArgumentType.class);
-    Command<Object> command15 = mock(Command.class);
-    Predicate<Object> requirement15 = mock(Predicate.class);
-    Command<Object> command16 = mock(Command.class);
-    Predicate<Object> requirement16 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect8 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command16,
-            requirement16,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node8 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type11,
-            command15,
-            requirement15,
-            redirect8,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node8);
-    ArgumentType<Object> type12 = mock(ArgumentType.class);
-    Command<Object> command17 = mock(Command.class);
-    Predicate<Object> requirement17 = mock(Predicate.class);
-    Command<Object> command18 = mock(Command.class);
-    Predicate<Object> requirement18 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect9 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command18,
-            requirement18,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node9 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type12,
-            command17,
-            requirement17,
-            redirect9,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node9);
-    ArgumentType<Object> type13 = mock(ArgumentType.class);
-    Command<Object> command19 = mock(Command.class);
-    Predicate<Object> requirement19 = mock(Predicate.class);
-    Command<Object> command20 = mock(Command.class);
-    Predicate<Object> requirement20 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect10 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command20,
-            requirement20,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node10 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type13,
-            command19,
-            requirement19,
-            redirect10,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node10);
-    ArgumentType<Object> type14 = mock(ArgumentType.class);
-    Command<Object> command21 = mock(Command.class);
-    Predicate<Object> requirement21 = mock(Predicate.class);
-    Command<Object> command22 = mock(Command.class);
-    Predicate<Object> requirement22 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect11 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command22,
-            requirement22,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node11 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type14,
-            command21,
-            requirement21,
-            redirect11,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node11);
-    ArgumentType<Object> type15 = mock(ArgumentType.class);
-    Command<Object> command23 = mock(Command.class);
-    Predicate<Object> requirement23 = mock(Predicate.class);
-    Command<Object> command24 = mock(Command.class);
-    Predicate<Object> requirement24 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect12 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command24,
-            requirement24,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node12 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type15,
-            command23,
-            requirement23,
-            redirect12,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node12);
-    ArgumentType<Object> type16 = mock(ArgumentType.class);
-    Command<Object> command25 = mock(Command.class);
-    Predicate<Object> requirement25 = mock(Predicate.class);
-    Command<Object> command26 = mock(Command.class);
-    Predicate<Object> requirement26 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect13 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command26,
-            requirement26,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node13 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type16,
-            command25,
-            requirement25,
-            redirect13,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node13);
-    ArgumentType<Object> type17 = mock(ArgumentType.class);
-    Command<Object> command27 = mock(Command.class);
-    Predicate<Object> requirement27 = mock(Predicate.class);
-    Command<Object> command28 = mock(Command.class);
-    Predicate<Object> requirement28 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect14 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command28,
-            requirement28,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node14 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type17,
-            command27,
-            requirement27,
-            redirect14,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node14);
-    ArgumentType<Object> type18 = mock(ArgumentType.class);
-    Command<Object> command29 = mock(Command.class);
-    Predicate<Object> requirement29 = mock(Predicate.class);
-    Command<Object> command30 = mock(Command.class);
-    Predicate<Object> requirement30 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect15 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command30,
-            requirement30,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node15 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type18,
-            command29,
-            requirement29,
-            redirect15,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node15);
-    ArgumentType<Object> type19 = mock(ArgumentType.class);
-    Command<Object> command31 = mock(Command.class);
-    Predicate<Object> requirement31 = mock(Predicate.class);
-    Command<Object> command32 = mock(Command.class);
-    Predicate<Object> requirement32 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect16 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command32,
-            requirement32,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node16 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type19,
-            command31,
-            requirement31,
-            redirect16,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node16);
-    ArgumentType<Object> type20 = mock(ArgumentType.class);
-    Command<Object> command33 = mock(Command.class);
-    Predicate<Object> requirement33 = mock(Predicate.class);
-    Command<Object> command34 = mock(Command.class);
-    Predicate<Object> requirement34 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect17 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command34,
-            requirement34,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node17 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type20,
-            command33,
-            requirement33,
-            redirect17,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node17);
-    ArgumentType<Object> type21 = mock(ArgumentType.class);
-    Command<Object> command35 = mock(Command.class);
-    Predicate<Object> requirement35 = mock(Predicate.class);
-    Command<Object> command36 = mock(Command.class);
-    Predicate<Object> requirement36 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect18 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command36,
-            requirement36,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node18 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type21,
-            command35,
-            requirement35,
-            redirect18,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node18);
-    ArgumentType<Object> type22 = mock(ArgumentType.class);
-    Command<Object> command37 = mock(Command.class);
-    Predicate<Object> requirement37 = mock(Predicate.class);
-    Command<Object> command38 = mock(Command.class);
-    Predicate<Object> requirement38 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect19 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command38,
-            requirement38,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node19 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type22,
-            command37,
-            requirement37,
-            redirect19,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node19);
-    ArgumentType<Object> type23 = mock(ArgumentType.class);
-    Command<Object> command39 = mock(Command.class);
-    Predicate<Object> requirement39 = mock(Predicate.class);
-    Command<Object> command40 = mock(Command.class);
-    Predicate<Object> requirement40 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect20 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command40,
-            requirement40,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node20 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type23,
-            command39,
-            requirement39,
-            redirect20,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node20);
-
-    CommandDispatcher<Object> commandDispatcher = new CommandDispatcher<>(root);
-    commandDispatcher.setConsumer(consumer);
-
-    // Act
-    int actualExecuteResult =
-        commandDispatcher.execute(
-            new StringReader(""), ConfigurationTransformation.WILDCARD_OBJECT);
-
-    // Assert
-    verify(command3).run(isA(CommandContext.class));
-    verify(message).getString();
-    verify(message2).getString();
-    verify(message3).getString();
-    verify(consumer).onCommandComplete(isA(CommandContext.class), eq(true), eq(1));
-    verify(type5).parse(isA(StringReader.class), isA(Object.class));
-    verify(predicate).test(isA(Object.class));
-    verify(requirement).test(isA(Object.class));
-    assertEquals(1, actualExecuteResult);
-  }
-
-  /**
-   * Test {@link CommandDispatcher#execute(StringReader, Object)} with {@code StringReader}, {@code
-   * Object}.
-   *
-   * <ul>
-   *   <li>Then calls {@link Message#getString()}.
-   * </ul>
-   *
-   * <p>Method under test: {@link CommandDispatcher#execute(StringReader, Object)}
-   */
-  @Test
-  @DisplayName(
-      "Test execute(StringReader, Object) with 'StringReader', 'Object'; then calls getString()")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"int CommandDispatcher.execute(StringReader, Object)"})
-  void testExecuteWithStringReaderObject_thenCallsGetString() throws CommandSyntaxException {
-    // Arrange
-    Message message = mock(Message.class);
-    when(message.getString()).thenReturn("String");
-    Dynamic2CommandExceptionType type = new Dynamic2CommandExceptionType(mock(Function.class));
-
-    new CommandSyntaxException(type, message);
-
-    Message message2 = mock(Message.class);
-    when(message2.getString()).thenReturn("String");
-    Dynamic2CommandExceptionType type2 = new Dynamic2CommandExceptionType(mock(Function.class));
-
-    new CommandSyntaxException(type2, message2);
-
-    ResultConsumer<Object> consumer = mock(ResultConsumer.class);
-    doNothing()
-        .when(consumer)
-        .onCommandComplete(Mockito.<CommandContext<Object>>any(), anyBoolean(), anyInt());
-
-    ArgumentType<Object> type3 = mock(ArgumentType.class);
-    when(type3.parse(Mockito.<StringReader>any(), Mockito.<Object>any()))
-        .thenReturn(ConfigurationTransformation.WILDCARD_OBJECT);
-
-    Predicate<Object> requirement = mock(Predicate.class);
-    when(requirement.test(Mockito.<Object>any())).thenReturn(true);
-    Command<Object> command = mock(Command.class);
-    Command<Object> command2 = mock(Command.class);
-    Predicate<Object> requirement2 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect =
-        new LiteralCommandNode<>(
-            "Literal",
-            command2,
-            requirement2,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node =
-        new ArgumentCommandNode<>(
-            "Name",
-            type3,
-            command,
-            requirement,
-            redirect,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-
-    ArgumentType<Object> type4 = mock(ArgumentType.class);
-    when(type4.parse(Mockito.<StringReader>any(), Mockito.<Object>any()))
-        .thenReturn(ConfigurationTransformation.WILDCARD_OBJECT);
-
-    Command<Object> command3 = mock(Command.class);
-    when(command3.run(Mockito.<CommandContext<Object>>any())).thenReturn(1);
-
-    Predicate<Object> requirement3 = mock(Predicate.class);
-    when(requirement3.test(Mockito.<Object>any())).thenReturn(true);
-    Command<Object> command4 = mock(Command.class);
-    Predicate<Object> requirement4 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect2 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command4,
-            requirement4,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node2 =
-        new ArgumentCommandNode<>(
-            "com.mojang.brigadier.tree.ArgumentCommandNode",
-            type4,
-            command3,
-            requirement3,
-            redirect2,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-
-    RootCommandNode<Object> root = new RootCommandNode<>();
-    root.addChild(node2);
-    root.addChild(node);
-    ArgumentType<Object> type5 = mock(ArgumentType.class);
-    Command<Object> command5 = mock(Command.class);
-    Predicate<Object> requirement5 = mock(Predicate.class);
-    Command<Object> command6 = mock(Command.class);
-    Predicate<Object> requirement6 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect3 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command6,
-            requirement6,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node3 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type5,
-            command5,
-            requirement5,
-            redirect3,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node3);
-    ArgumentType<Object> type6 = mock(ArgumentType.class);
-    Command<Object> command7 = mock(Command.class);
-    Predicate<Object> requirement7 = mock(Predicate.class);
-    Command<Object> command8 = mock(Command.class);
-    Predicate<Object> requirement8 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect4 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command8,
-            requirement8,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node4 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type6,
-            command7,
-            requirement7,
-            redirect4,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node4);
-    ArgumentType<Object> type7 = mock(ArgumentType.class);
-    Command<Object> command9 = mock(Command.class);
-    Predicate<Object> requirement9 = mock(Predicate.class);
-    Command<Object> command10 = mock(Command.class);
-    Predicate<Object> requirement10 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect5 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command10,
-            requirement10,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node5 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type7,
-            command9,
-            requirement9,
-            redirect5,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node5);
-    ArgumentType<Object> type8 = mock(ArgumentType.class);
-    Command<Object> command11 = mock(Command.class);
-    Predicate<Object> requirement11 = mock(Predicate.class);
-    Command<Object> command12 = mock(Command.class);
-    Predicate<Object> requirement12 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect6 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command12,
-            requirement12,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node6 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type8,
-            command11,
-            requirement11,
-            redirect6,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node6);
-    ArgumentType<Object> type9 = mock(ArgumentType.class);
-    Command<Object> command13 = mock(Command.class);
-    Predicate<Object> requirement13 = mock(Predicate.class);
-    Command<Object> command14 = mock(Command.class);
-    Predicate<Object> requirement14 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect7 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command14,
-            requirement14,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node7 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type9,
-            command13,
-            requirement13,
-            redirect7,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node7);
-    ArgumentType<Object> type10 = mock(ArgumentType.class);
-    Command<Object> command15 = mock(Command.class);
-    Predicate<Object> requirement15 = mock(Predicate.class);
-    Command<Object> command16 = mock(Command.class);
-    Predicate<Object> requirement16 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect8 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command16,
-            requirement16,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node8 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type10,
-            command15,
-            requirement15,
-            redirect8,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node8);
-    ArgumentType<Object> type11 = mock(ArgumentType.class);
-    Command<Object> command17 = mock(Command.class);
-    Predicate<Object> requirement17 = mock(Predicate.class);
-    Command<Object> command18 = mock(Command.class);
-    Predicate<Object> requirement18 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect9 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command18,
-            requirement18,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node9 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type11,
-            command17,
-            requirement17,
-            redirect9,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node9);
-    ArgumentType<Object> type12 = mock(ArgumentType.class);
-    Command<Object> command19 = mock(Command.class);
-    Predicate<Object> requirement19 = mock(Predicate.class);
-    Command<Object> command20 = mock(Command.class);
-    Predicate<Object> requirement20 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect10 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command20,
-            requirement20,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node10 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type12,
-            command19,
-            requirement19,
-            redirect10,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node10);
-    ArgumentType<Object> type13 = mock(ArgumentType.class);
-    Command<Object> command21 = mock(Command.class);
-    Predicate<Object> requirement21 = mock(Predicate.class);
-    Command<Object> command22 = mock(Command.class);
-    Predicate<Object> requirement22 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect11 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command22,
-            requirement22,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node11 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type13,
-            command21,
-            requirement21,
-            redirect11,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node11);
-    ArgumentType<Object> type14 = mock(ArgumentType.class);
-    Command<Object> command23 = mock(Command.class);
-    Predicate<Object> requirement23 = mock(Predicate.class);
-    Command<Object> command24 = mock(Command.class);
-    Predicate<Object> requirement24 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect12 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command24,
-            requirement24,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node12 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type14,
-            command23,
-            requirement23,
-            redirect12,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node12);
-    ArgumentType<Object> type15 = mock(ArgumentType.class);
-    Command<Object> command25 = mock(Command.class);
-    Predicate<Object> requirement25 = mock(Predicate.class);
-    Command<Object> command26 = mock(Command.class);
-    Predicate<Object> requirement26 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect13 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command26,
-            requirement26,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node13 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type15,
-            command25,
-            requirement25,
-            redirect13,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node13);
-    ArgumentType<Object> type16 = mock(ArgumentType.class);
-    Command<Object> command27 = mock(Command.class);
-    Predicate<Object> requirement27 = mock(Predicate.class);
-    Command<Object> command28 = mock(Command.class);
-    Predicate<Object> requirement28 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect14 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command28,
-            requirement28,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node14 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type16,
-            command27,
-            requirement27,
-            redirect14,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node14);
-    ArgumentType<Object> type17 = mock(ArgumentType.class);
-    Command<Object> command29 = mock(Command.class);
-    Predicate<Object> requirement29 = mock(Predicate.class);
-    Command<Object> command30 = mock(Command.class);
-    Predicate<Object> requirement30 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect15 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command30,
-            requirement30,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node15 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type17,
-            command29,
-            requirement29,
-            redirect15,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node15);
-    ArgumentType<Object> type18 = mock(ArgumentType.class);
-    Command<Object> command31 = mock(Command.class);
-    Predicate<Object> requirement31 = mock(Predicate.class);
-    Command<Object> command32 = mock(Command.class);
-    Predicate<Object> requirement32 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect16 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command32,
-            requirement32,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node16 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type18,
-            command31,
-            requirement31,
-            redirect16,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node16);
-    ArgumentType<Object> type19 = mock(ArgumentType.class);
-    Command<Object> command33 = mock(Command.class);
-    Predicate<Object> requirement33 = mock(Predicate.class);
-    Command<Object> command34 = mock(Command.class);
-    Predicate<Object> requirement34 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect17 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command34,
-            requirement34,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node17 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type19,
-            command33,
-            requirement33,
-            redirect17,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node17);
-    ArgumentType<Object> type20 = mock(ArgumentType.class);
-    Command<Object> command35 = mock(Command.class);
-    Predicate<Object> requirement35 = mock(Predicate.class);
-    Command<Object> command36 = mock(Command.class);
-    Predicate<Object> requirement36 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect18 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command36,
-            requirement36,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node18 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type20,
-            command35,
-            requirement35,
-            redirect18,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node18);
-    ArgumentType<Object> type21 = mock(ArgumentType.class);
-    Command<Object> command37 = mock(Command.class);
-    Predicate<Object> requirement37 = mock(Predicate.class);
-    Command<Object> command38 = mock(Command.class);
-    Predicate<Object> requirement38 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect19 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command38,
-            requirement38,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node19 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type21,
-            command37,
-            requirement37,
-            redirect19,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node19);
-    ArgumentType<Object> type22 = mock(ArgumentType.class);
-    Command<Object> command39 = mock(Command.class);
-    Predicate<Object> requirement39 = mock(Predicate.class);
-    Command<Object> command40 = mock(Command.class);
-    Predicate<Object> requirement40 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect20 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command40,
-            requirement40,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node20 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type22,
-            command39,
-            requirement39,
-            redirect20,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node20);
-
-    CommandDispatcher<Object> commandDispatcher = new CommandDispatcher<>(root);
-    commandDispatcher.setConsumer(consumer);
-
-    // Act
-    int actualExecuteResult =
-        commandDispatcher.execute(
-            new StringReader(""), ConfigurationTransformation.WILDCARD_OBJECT);
-
-    // Assert
-    verify(command3).run(isA(CommandContext.class));
-    verify(message).getString();
-    verify(message2).getString();
-    verify(consumer).onCommandComplete(isA(CommandContext.class), eq(true), eq(1));
-    verify(type4).parse(isA(StringReader.class), isA(Object.class));
-    verify(type3).parse(isA(StringReader.class), isA(Object.class));
-    verify(requirement3).test(isA(Object.class));
-    verify(requirement).test(isA(Object.class));
-    assertEquals(1, actualExecuteResult);
-  }
-
-  /**
-   * Test {@link CommandDispatcher#execute(StringReader, Object)} with {@code StringReader}, {@code
-   * Object}.
-   *
-   * <ul>
-   *   <li>Then calls {@link Message#getString()}.
-   * </ul>
-   *
-   * <p>Method under test: {@link CommandDispatcher#execute(StringReader, Object)}
-   */
-  @Test
-  @DisplayName(
-      "Test execute(StringReader, Object) with 'StringReader', 'Object'; then calls getString()")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"int CommandDispatcher.execute(StringReader, Object)"})
-  void testExecuteWithStringReaderObject_thenCallsGetString2() throws CommandSyntaxException {
-    // Arrange
-    Message message = mock(Message.class);
-    when(message.getString()).thenReturn("String");
-    Dynamic2CommandExceptionType type = new Dynamic2CommandExceptionType(mock(Function.class));
-
-    new CommandSyntaxException(type, message);
-
-    Message message2 = mock(Message.class);
-    when(message2.getString()).thenReturn("String");
-    Dynamic2CommandExceptionType type2 = new Dynamic2CommandExceptionType(mock(Function.class));
-
-    new CommandSyntaxException(type2, message2);
-
-    ResultConsumer<Object> consumer = mock(ResultConsumer.class);
-    doNothing()
-        .when(consumer)
-        .onCommandComplete(Mockito.<CommandContext<Object>>any(), anyBoolean(), anyInt());
-
-    Message message3 = mock(Message.class);
-    when(message3.getString()).thenReturn("String");
-    Dynamic2CommandExceptionType type3 = new Dynamic2CommandExceptionType(mock(Function.class));
-
-    CommandSyntaxException commandSyntaxException = new CommandSyntaxException(type3, message3);
-
-    ArgumentType<Object> type4 = mock(ArgumentType.class);
-    when(type4.parse(Mockito.<StringReader>any(), Mockito.<Object>any()))
-        .thenThrow(commandSyntaxException);
-
-    Predicate<Object> requirement = mock(Predicate.class);
-    when(requirement.test(Mockito.<Object>any())).thenReturn(true);
-    Command<Object> command = mock(Command.class);
-    Command<Object> command2 = mock(Command.class);
-    Predicate<Object> requirement2 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect =
-        new LiteralCommandNode<>(
-            "Literal",
-            command2,
-            requirement2,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node =
-        new ArgumentCommandNode<>(
-            "Name",
-            type4,
-            command,
-            requirement,
-            redirect,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-
-    ArgumentType<Object> type5 = mock(ArgumentType.class);
-    when(type5.parse(Mockito.<StringReader>any(), Mockito.<Object>any()))
-        .thenReturn(ConfigurationTransformation.WILDCARD_OBJECT);
-
-    Command<Object> command3 = mock(Command.class);
-    when(command3.run(Mockito.<CommandContext<Object>>any())).thenReturn(1);
-
-    Predicate<Object> requirement3 = mock(Predicate.class);
-    when(requirement3.test(Mockito.<Object>any())).thenReturn(true);
-    Command<Object> command4 = mock(Command.class);
-    Predicate<Object> requirement4 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect2 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command4,
-            requirement4,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node2 =
-        new ArgumentCommandNode<>(
-            "com.mojang.brigadier.tree.ArgumentCommandNode",
-            type5,
-            command3,
-            requirement3,
-            redirect2,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-
-    RootCommandNode<Object> root = new RootCommandNode<>();
-    root.addChild(node2);
-    root.addChild(node);
-    ArgumentType<Object> type6 = mock(ArgumentType.class);
-    Command<Object> command5 = mock(Command.class);
-    Predicate<Object> requirement5 = mock(Predicate.class);
-    Command<Object> command6 = mock(Command.class);
-    Predicate<Object> requirement6 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect3 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command6,
-            requirement6,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node3 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type6,
-            command5,
-            requirement5,
-            redirect3,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node3);
-    ArgumentType<Object> type7 = mock(ArgumentType.class);
-    Command<Object> command7 = mock(Command.class);
-    Predicate<Object> requirement7 = mock(Predicate.class);
-    Command<Object> command8 = mock(Command.class);
-    Predicate<Object> requirement8 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect4 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command8,
-            requirement8,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node4 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type7,
-            command7,
-            requirement7,
-            redirect4,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node4);
-    ArgumentType<Object> type8 = mock(ArgumentType.class);
-    Command<Object> command9 = mock(Command.class);
-    Predicate<Object> requirement9 = mock(Predicate.class);
-    Command<Object> command10 = mock(Command.class);
-    Predicate<Object> requirement10 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect5 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command10,
-            requirement10,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node5 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type8,
-            command9,
-            requirement9,
-            redirect5,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node5);
-    ArgumentType<Object> type9 = mock(ArgumentType.class);
-    Command<Object> command11 = mock(Command.class);
-    Predicate<Object> requirement11 = mock(Predicate.class);
-    Command<Object> command12 = mock(Command.class);
-    Predicate<Object> requirement12 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect6 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command12,
-            requirement12,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node6 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type9,
-            command11,
-            requirement11,
-            redirect6,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node6);
-    ArgumentType<Object> type10 = mock(ArgumentType.class);
-    Command<Object> command13 = mock(Command.class);
-    Predicate<Object> requirement13 = mock(Predicate.class);
-    Command<Object> command14 = mock(Command.class);
-    Predicate<Object> requirement14 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect7 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command14,
-            requirement14,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node7 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type10,
-            command13,
-            requirement13,
-            redirect7,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node7);
-    ArgumentType<Object> type11 = mock(ArgumentType.class);
-    Command<Object> command15 = mock(Command.class);
-    Predicate<Object> requirement15 = mock(Predicate.class);
-    Command<Object> command16 = mock(Command.class);
-    Predicate<Object> requirement16 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect8 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command16,
-            requirement16,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node8 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type11,
-            command15,
-            requirement15,
-            redirect8,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node8);
-    ArgumentType<Object> type12 = mock(ArgumentType.class);
-    Command<Object> command17 = mock(Command.class);
-    Predicate<Object> requirement17 = mock(Predicate.class);
-    Command<Object> command18 = mock(Command.class);
-    Predicate<Object> requirement18 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect9 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command18,
-            requirement18,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node9 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type12,
-            command17,
-            requirement17,
-            redirect9,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node9);
-    ArgumentType<Object> type13 = mock(ArgumentType.class);
-    Command<Object> command19 = mock(Command.class);
-    Predicate<Object> requirement19 = mock(Predicate.class);
-    Command<Object> command20 = mock(Command.class);
-    Predicate<Object> requirement20 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect10 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command20,
-            requirement20,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node10 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type13,
-            command19,
-            requirement19,
-            redirect10,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node10);
-    ArgumentType<Object> type14 = mock(ArgumentType.class);
-    Command<Object> command21 = mock(Command.class);
-    Predicate<Object> requirement21 = mock(Predicate.class);
-    Command<Object> command22 = mock(Command.class);
-    Predicate<Object> requirement22 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect11 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command22,
-            requirement22,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node11 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type14,
-            command21,
-            requirement21,
-            redirect11,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node11);
-    ArgumentType<Object> type15 = mock(ArgumentType.class);
-    Command<Object> command23 = mock(Command.class);
-    Predicate<Object> requirement23 = mock(Predicate.class);
-    Command<Object> command24 = mock(Command.class);
-    Predicate<Object> requirement24 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect12 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command24,
-            requirement24,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node12 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type15,
-            command23,
-            requirement23,
-            redirect12,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node12);
-    ArgumentType<Object> type16 = mock(ArgumentType.class);
-    Command<Object> command25 = mock(Command.class);
-    Predicate<Object> requirement25 = mock(Predicate.class);
-    Command<Object> command26 = mock(Command.class);
-    Predicate<Object> requirement26 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect13 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command26,
-            requirement26,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node13 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type16,
-            command25,
-            requirement25,
-            redirect13,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node13);
-    ArgumentType<Object> type17 = mock(ArgumentType.class);
-    Command<Object> command27 = mock(Command.class);
-    Predicate<Object> requirement27 = mock(Predicate.class);
-    Command<Object> command28 = mock(Command.class);
-    Predicate<Object> requirement28 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect14 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command28,
-            requirement28,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node14 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type17,
-            command27,
-            requirement27,
-            redirect14,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node14);
-    ArgumentType<Object> type18 = mock(ArgumentType.class);
-    Command<Object> command29 = mock(Command.class);
-    Predicate<Object> requirement29 = mock(Predicate.class);
-    Command<Object> command30 = mock(Command.class);
-    Predicate<Object> requirement30 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect15 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command30,
-            requirement30,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node15 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type18,
-            command29,
-            requirement29,
-            redirect15,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node15);
-    ArgumentType<Object> type19 = mock(ArgumentType.class);
-    Command<Object> command31 = mock(Command.class);
-    Predicate<Object> requirement31 = mock(Predicate.class);
-    Command<Object> command32 = mock(Command.class);
-    Predicate<Object> requirement32 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect16 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command32,
-            requirement32,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node16 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type19,
-            command31,
-            requirement31,
-            redirect16,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node16);
-    ArgumentType<Object> type20 = mock(ArgumentType.class);
-    Command<Object> command33 = mock(Command.class);
-    Predicate<Object> requirement33 = mock(Predicate.class);
-    Command<Object> command34 = mock(Command.class);
-    Predicate<Object> requirement34 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect17 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command34,
-            requirement34,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node17 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type20,
-            command33,
-            requirement33,
-            redirect17,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node17);
-    ArgumentType<Object> type21 = mock(ArgumentType.class);
-    Command<Object> command35 = mock(Command.class);
-    Predicate<Object> requirement35 = mock(Predicate.class);
-    Command<Object> command36 = mock(Command.class);
-    Predicate<Object> requirement36 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect18 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command36,
-            requirement36,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node18 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type21,
-            command35,
-            requirement35,
-            redirect18,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node18);
-    ArgumentType<Object> type22 = mock(ArgumentType.class);
-    Command<Object> command37 = mock(Command.class);
-    Predicate<Object> requirement37 = mock(Predicate.class);
-    Command<Object> command38 = mock(Command.class);
-    Predicate<Object> requirement38 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect19 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command38,
-            requirement38,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node19 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type22,
-            command37,
-            requirement37,
-            redirect19,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node19);
-    ArgumentType<Object> type23 = mock(ArgumentType.class);
-    Command<Object> command39 = mock(Command.class);
-    Predicate<Object> requirement39 = mock(Predicate.class);
-    Command<Object> command40 = mock(Command.class);
-    Predicate<Object> requirement40 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect20 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command40,
-            requirement40,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node20 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type23,
-            command39,
-            requirement39,
-            redirect20,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    root.addChild(node20);
-
-    CommandDispatcher<Object> commandDispatcher = new CommandDispatcher<>(root);
-    commandDispatcher.setConsumer(consumer);
-
-    // Act
-    int actualExecuteResult =
-        commandDispatcher.execute(
-            new StringReader(""), ConfigurationTransformation.WILDCARD_OBJECT);
-
-    // Assert
-    verify(command3).run(isA(CommandContext.class));
-    verify(message3).getString();
-    verify(message).getString();
-    verify(message2).getString();
-    verify(consumer).onCommandComplete(isA(CommandContext.class), eq(true), eq(1));
-    verify(type5).parse(isA(StringReader.class), isA(Object.class));
-    verify(type4).parse(isA(StringReader.class), isA(Object.class));
-    verify(requirement3).test(isA(Object.class));
     verify(requirement).test(isA(Object.class));
     assertEquals(1, actualExecuteResult);
   }
@@ -4323,7 +3130,7 @@ class CommandDispatcherDiffblueTest {
 
     ArgumentCommandNode<Object, Object> node2 =
         new ArgumentCommandNode<>(
-            "com.mojang.brigadier.tree.ArgumentCommandNode",
+            "42",
             type3,
             command3,
             requirement3,
@@ -4918,7 +3725,7 @@ class CommandDispatcherDiffblueTest {
 
     ArgumentCommandNode<Object, Object> node2 =
         new ArgumentCommandNode<>(
-            "com.mojang.brigadier.tree.ArgumentCommandNode",
+            "42",
             type3,
             command3,
             requirement3,
@@ -6469,7 +5276,7 @@ class CommandDispatcherDiffblueTest {
 
     ArgumentCommandNode<Object, Object> node2 =
         new ArgumentCommandNode<>(
-            "com.mojang.brigadier.tree.ArgumentCommandNode",
+            "42",
             type3,
             command3,
             requirement3,
@@ -7659,7 +6466,7 @@ class CommandDispatcherDiffblueTest {
 
     ArgumentCommandNode<Object, Object> node2 =
         new ArgumentCommandNode<>(
-            "com.mojang.brigadier.tree.ArgumentCommandNode",
+            "42",
             type3,
             command3,
             requirement3,
@@ -8265,7 +7072,7 @@ class CommandDispatcherDiffblueTest {
 
     ArgumentCommandNode<Object, Object> node2 =
         new ArgumentCommandNode<>(
-            "com.mojang.brigadier.tree.ArgumentCommandNode",
+            "42",
             type3,
             command3,
             requirement3,
@@ -8801,8 +7608,7 @@ class CommandDispatcherDiffblueTest {
     assertSame(node2, node22);
     CommandContextBuilder<Object> actualLastChild = context.getLastChild();
     assertSame(context, actualLastChild);
-    ParsedArgument<Object, ?> getResult2 =
-        arguments.get("com.mojang.brigadier.tree.ArgumentCommandNode");
+    ParsedArgument<Object, ?> getResult2 = arguments.get("42");
     assertSame(getResult2.getRange(), getResult.getRange());
     assertSame(object, getResult2.getResult());
   }
@@ -8989,7 +7795,7 @@ class CommandDispatcherDiffblueTest {
 
     ArgumentCommandNode<Object, Object> node2 =
         new ArgumentCommandNode<>(
-            "com.mojang.brigadier.tree.ArgumentCommandNode",
+            "42",
             type3,
             command3,
             requirement3,
@@ -9578,22 +8384,50 @@ class CommandDispatcherDiffblueTest {
   void testGetAllUsageWithNodeSourceRestricted2() {
     // Arrange
     CommandDispatcher<Object> commandDispatcher = new CommandDispatcher<>();
+    ArgumentType<Object> type = mock(ArgumentType.class);
+    Command<Object> command = mock(Command.class);
+    Predicate<Object> requirement = mock(Predicate.class);
+    ArgumentType<Object> type2 = mock(ArgumentType.class);
+    Command<Object> command2 = mock(Command.class);
+    Predicate<Object> requirement2 = mock(Predicate.class);
+    Command<Object> command3 = mock(Command.class);
+    Predicate<Object> requirement3 = mock(Predicate.class);
+
+    LiteralCommandNode<Object> redirect =
+        new LiteralCommandNode<>(
+            "Literal",
+            command3,
+            requirement3,
+            new RootCommandNode<>(),
+            mock(RedirectModifier.class),
+            true);
+
+    ArgumentCommandNode<Object, Object> redirect2 =
+        new ArgumentCommandNode<>(
+            "Name",
+            type2,
+            command2,
+            requirement2,
+            redirect,
+            mock(RedirectModifier.class),
+            true,
+            mock(SuggestionProvider.class));
+
     ArgumentCommandNode<Object, Object> node =
         new ArgumentCommandNode<>(
             "Name",
-            mock(ArgumentType.class),
-            null,
-            mock(Predicate.class),
-            null,
+            type,
+            command,
+            requirement,
+            redirect2,
             mock(RedirectModifier.class),
             true,
             mock(SuggestionProvider.class));
 
     // Act and Assert
-    assertEquals(
-        0,
-        commandDispatcher.getAllUsage(node, ConfigurationTransformation.WILDCARD_OBJECT, false)
-            .length);
+    assertArrayEquals(
+        new String[] {"", "<Name> -> <Name>"},
+        commandDispatcher.getAllUsage(node, ConfigurationTransformation.WILDCARD_OBJECT, false));
   }
 
   /**
@@ -9904,6 +8738,42 @@ class CommandDispatcherDiffblueTest {
     // Assert
     verify(predicate).test(isA(Object.class));
     assertEquals(0, actualAllUsage.length);
+  }
+
+  /**
+   * Test {@link CommandDispatcher#getAllUsage(CommandNode, Object, boolean)} with {@code node},
+   * {@code source}, {@code restricted}.
+   *
+   * <ul>
+   *   <li>Then return array of {@link String} with empty string.
+   * </ul>
+   *
+   * <p>Method under test: {@link CommandDispatcher#getAllUsage(CommandNode, Object, boolean)}
+   */
+  @Test
+  @DisplayName(
+      "Test getAllUsage(CommandNode, Object, boolean) with 'node', 'source', 'restricted'; then return array of String with empty string")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"String[] CommandDispatcher.getAllUsage(CommandNode, Object, boolean)"})
+  void testGetAllUsageWithNodeSourceRestricted_thenReturnArrayOfStringWithEmptyString() {
+    // Arrange
+    CommandDispatcher<Object> commandDispatcher = new CommandDispatcher<>();
+    ArgumentCommandNode<Object, Object> node =
+        new ArgumentCommandNode<>(
+            "Name",
+            mock(ArgumentType.class),
+            mock(Command.class),
+            mock(Predicate.class),
+            null,
+            mock(RedirectModifier.class),
+            true,
+            mock(SuggestionProvider.class));
+
+    // Act and Assert
+    assertArrayEquals(
+        new String[] {""},
+        commandDispatcher.getAllUsage(node, ConfigurationTransformation.WILDCARD_OBJECT, false));
   }
 
   /**
@@ -14550,9 +13420,11 @@ class CommandDispatcherDiffblueTest {
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void CommandDispatcher.findAmbiguities(AmbiguityConsumer)"})
-  void testFindAmbiguities() {
+  void testFindAmbiguities() throws CommandSyntaxException {
     // Arrange
     ArgumentType<Object> type = mock(ArgumentType.class);
+    when(type.parse(Mockito.<StringReader>any()))
+        .thenReturn(ConfigurationTransformation.WILDCARD_OBJECT);
     when(type.getExamples()).thenReturn(new ArrayList<>());
     Command<Object> command = mock(Command.class);
     Predicate<Object> requirement = mock(Predicate.class);
@@ -14579,34 +13451,27 @@ class CommandDispatcherDiffblueTest {
             true,
             mock(SuggestionProvider.class));
 
-    ArgumentType<Object> type2 = mock(ArgumentType.class);
-    when(type2.getExamples()).thenReturn(new ArrayList<>());
+    RootCommandNode<Object> root = new RootCommandNode<>();
     Command<Object> command3 = mock(Command.class);
     Predicate<Object> requirement3 = mock(Predicate.class);
+    ArgumentType<Object> type2 = mock(ArgumentType.class);
     Command<Object> command4 = mock(Command.class);
     Predicate<Object> requirement4 = mock(Predicate.class);
 
-    LiteralCommandNode<Object> redirect2 =
-        new LiteralCommandNode<>(
-            "Literal",
+    ArgumentCommandNode<Object, Object> redirect2 =
+        new ArgumentCommandNode<>(
+            "Name",
+            type2,
             command4,
             requirement4,
             new RootCommandNode<>(),
             mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node2 =
-        new ArgumentCommandNode<>(
-            "com.mojang.brigadier.tree.ArgumentCommandNode",
-            type2,
-            command3,
-            requirement3,
-            redirect2,
-            mock(RedirectModifier.class),
             true,
             mock(SuggestionProvider.class));
 
-    RootCommandNode<Object> root = new RootCommandNode<>();
+    LiteralCommandNode<Object> node2 =
+        new LiteralCommandNode<>(
+            "Literal", command3, requirement3, redirect2, mock(RedirectModifier.class), true);
     root.addChild(node2);
     root.addChild(node);
     CommandDispatcher<Object> commandDispatcher = new CommandDispatcher<>(root);
@@ -14615,8 +13480,8 @@ class CommandDispatcherDiffblueTest {
     commandDispatcher.findAmbiguities(mock(AmbiguityConsumer.class));
 
     // Assert
-    verify(type2).getExamples();
     verify(type).getExamples();
+    verify(type).parse(isA(StringReader.class));
   }
 
   /**
@@ -14631,80 +13496,6 @@ class CommandDispatcherDiffblueTest {
   @MethodsUnderTest({"void CommandDispatcher.findAmbiguities(AmbiguityConsumer)"})
   void testFindAmbiguities2() throws CommandSyntaxException {
     // Arrange
-    ArgumentType<Object> type = mock(ArgumentType.class);
-    when(type.parse(Mockito.<StringReader>any()))
-        .thenReturn(ConfigurationTransformation.WILDCARD_OBJECT);
-    when(type.getExamples()).thenReturn(new ArrayList<>());
-    Command<Object> command = mock(Command.class);
-    Predicate<Object> requirement = mock(Predicate.class);
-    Command<Object> command2 = mock(Command.class);
-    Predicate<Object> requirement2 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect =
-        new LiteralCommandNode<>(
-            "Literal",
-            command2,
-            requirement2,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node =
-        new ArgumentCommandNode<>(
-            "Name",
-            type,
-            command,
-            requirement,
-            redirect,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-
-    RootCommandNode<Object> root = new RootCommandNode<>();
-    Command<Object> command3 = mock(Command.class);
-    Predicate<Object> requirement3 = mock(Predicate.class);
-    ArgumentType<Object> type2 = mock(ArgumentType.class);
-    Command<Object> command4 = mock(Command.class);
-    Predicate<Object> requirement4 = mock(Predicate.class);
-
-    ArgumentCommandNode<Object, Object> redirect2 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type2,
-            command4,
-            requirement4,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-
-    LiteralCommandNode<Object> node2 =
-        new LiteralCommandNode<>(
-            "Literal", command3, requirement3, redirect2, mock(RedirectModifier.class), true);
-    root.addChild(node2);
-    root.addChild(node);
-    CommandDispatcher<Object> commandDispatcher = new CommandDispatcher<>(root);
-
-    // Act
-    commandDispatcher.findAmbiguities(mock(AmbiguityConsumer.class));
-
-    // Assert
-    verify(type).getExamples();
-    verify(type).parse(isA(StringReader.class));
-  }
-
-  /**
-   * Test {@link CommandDispatcher#findAmbiguities(AmbiguityConsumer)}.
-   *
-   * <p>Method under test: {@link CommandDispatcher#findAmbiguities(AmbiguityConsumer)}
-   */
-  @Test
-  @DisplayName("Test findAmbiguities(AmbiguityConsumer)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"void CommandDispatcher.findAmbiguities(AmbiguityConsumer)"})
-  void testFindAmbiguities3() throws CommandSyntaxException {
-    // Arrange
     ArrayList<String> stringList = new ArrayList<>();
     stringList.add("foo");
 
@@ -14728,7 +13519,7 @@ class CommandDispatcherDiffblueTest {
 
     ArgumentCommandNode<Object, Object> node =
         new ArgumentCommandNode<>(
-            "com.mojang.brigadier.tree.ArgumentCommandNode",
+            "42",
             type,
             command,
             requirement,
@@ -14759,83 +13550,6 @@ class CommandDispatcherDiffblueTest {
     LiteralCommandNode<Object> node2 =
         new LiteralCommandNode<>(
             "Literal", command3, requirement3, redirect2, mock(RedirectModifier.class), true);
-    root.addChild(node2);
-    CommandDispatcher<Object> commandDispatcher = new CommandDispatcher<>(root);
-
-    // Act
-    commandDispatcher.findAmbiguities(mock(AmbiguityConsumer.class));
-
-    // Assert
-    verify(type).getExamples();
-    verify(type).parse(isA(StringReader.class));
-  }
-
-  /**
-   * Test {@link CommandDispatcher#findAmbiguities(AmbiguityConsumer)}.
-   *
-   * <p>Method under test: {@link CommandDispatcher#findAmbiguities(AmbiguityConsumer)}
-   */
-  @Test
-  @DisplayName("Test findAmbiguities(AmbiguityConsumer)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"void CommandDispatcher.findAmbiguities(AmbiguityConsumer)"})
-  void testFindAmbiguities4() throws CommandSyntaxException {
-    // Arrange
-    ArrayList<String> stringList = new ArrayList<>();
-    stringList.add("foo");
-
-    ArgumentType<Object> type = mock(ArgumentType.class);
-    when(type.parse(Mockito.<StringReader>any()))
-        .thenReturn(ConfigurationTransformation.WILDCARD_OBJECT);
-    when(type.getExamples()).thenReturn(stringList);
-    Command<Object> command = mock(Command.class);
-    Predicate<Object> requirement = mock(Predicate.class);
-    Command<Object> command2 = mock(Command.class);
-    Predicate<Object> requirement2 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect =
-        new LiteralCommandNode<>(
-            "Literal",
-            command2,
-            requirement2,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node =
-        new ArgumentCommandNode<>(
-            "com.mojang.brigadier.tree.ArgumentCommandNode",
-            type,
-            command,
-            requirement,
-            redirect,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-
-    RootCommandNode<Object> root = new RootCommandNode<>();
-    root.addChild(node);
-    Command<Object> command3 = mock(Command.class);
-    Predicate<Object> requirement3 = mock(Predicate.class);
-    ArgumentType<Object> type2 = mock(ArgumentType.class);
-    Command<Object> command4 = mock(Command.class);
-    Predicate<Object> requirement4 = mock(Predicate.class);
-
-    ArgumentCommandNode<Object, Object> redirect2 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type2,
-            command4,
-            requirement4,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-
-    LiteralCommandNode<Object> node2 =
-        new LiteralCommandNode<>(
-            "42", command3, requirement3, redirect2, mock(RedirectModifier.class), true);
     root.addChild(node2);
     CommandDispatcher<Object> commandDispatcher = new CommandDispatcher<>(root);
 
@@ -14890,7 +13604,7 @@ class CommandDispatcherDiffblueTest {
 
     ArgumentCommandNode<Object, Object> node =
         new ArgumentCommandNode<>(
-            "com.mojang.brigadier.tree.ArgumentCommandNode",
+            "42",
             type,
             command,
             requirement,
@@ -14951,17 +13665,21 @@ class CommandDispatcherDiffblueTest {
    * Test {@link CommandDispatcher#findAmbiguities(AmbiguityConsumer)}.
    *
    * <ul>
+   *   <li>Given {@link ArrayList#ArrayList()} add {@code foo}.
+   *   <li>When {@link AmbiguityConsumer}.
    *   <li>Then calls {@link ArgumentType#parse(StringReader)}.
    * </ul>
    *
    * <p>Method under test: {@link CommandDispatcher#findAmbiguities(AmbiguityConsumer)}
    */
   @Test
-  @DisplayName("Test findAmbiguities(AmbiguityConsumer); then calls parse(StringReader)")
+  @DisplayName(
+      "Test findAmbiguities(AmbiguityConsumer); given ArrayList() add 'foo'; when AmbiguityConsumer; then calls parse(StringReader)")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void CommandDispatcher.findAmbiguities(AmbiguityConsumer)"})
-  void testFindAmbiguities_thenCallsParse() throws CommandSyntaxException {
+  void testFindAmbiguities_givenArrayListAddFoo_whenAmbiguityConsumer_thenCallsParse()
+      throws CommandSyntaxException {
     // Arrange
     ArgumentType<Object> type = mock(ArgumentType.class);
     when(type.parse(Mockito.<StringReader>any()))
@@ -15013,7 +13731,7 @@ class CommandDispatcherDiffblueTest {
 
     ArgumentCommandNode<Object, Object> node2 =
         new ArgumentCommandNode<>(
-            "com.mojang.brigadier.tree.ArgumentCommandNode",
+            "42",
             type2,
             command3,
             requirement3,
@@ -15034,6 +13752,89 @@ class CommandDispatcherDiffblueTest {
     verify(type2).getExamples();
     verify(type).getExamples();
     verify(type).parse(isA(StringReader.class));
+  }
+
+  /**
+   * Test {@link CommandDispatcher#findAmbiguities(AmbiguityConsumer)}.
+   *
+   * <ul>
+   *   <li>Then calls {@link ArgumentType#getExamples()}.
+   * </ul>
+   *
+   * <p>Method under test: {@link CommandDispatcher#findAmbiguities(AmbiguityConsumer)}
+   */
+  @Test
+  @DisplayName("Test findAmbiguities(AmbiguityConsumer); then calls getExamples()")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void CommandDispatcher.findAmbiguities(AmbiguityConsumer)"})
+  void testFindAmbiguities_thenCallsGetExamples() {
+    // Arrange
+    ArgumentType<Object> type = mock(ArgumentType.class);
+    when(type.getExamples()).thenReturn(new ArrayList<>());
+    Command<Object> command = mock(Command.class);
+    Predicate<Object> requirement = mock(Predicate.class);
+    Command<Object> command2 = mock(Command.class);
+    Predicate<Object> requirement2 = mock(Predicate.class);
+
+    LiteralCommandNode<Object> redirect =
+        new LiteralCommandNode<>(
+            "Literal",
+            command2,
+            requirement2,
+            new RootCommandNode<>(),
+            mock(RedirectModifier.class),
+            true);
+
+    ArgumentCommandNode<Object, Object> node =
+        new ArgumentCommandNode<>(
+            "Name",
+            type,
+            command,
+            requirement,
+            redirect,
+            mock(RedirectModifier.class),
+            true,
+            mock(SuggestionProvider.class));
+
+    ArgumentType<Object> type2 = mock(ArgumentType.class);
+    when(type2.getExamples()).thenReturn(new ArrayList<>());
+    Command<Object> command3 = mock(Command.class);
+    Predicate<Object> requirement3 = mock(Predicate.class);
+    Command<Object> command4 = mock(Command.class);
+    Predicate<Object> requirement4 = mock(Predicate.class);
+
+    LiteralCommandNode<Object> redirect2 =
+        new LiteralCommandNode<>(
+            "Literal",
+            command4,
+            requirement4,
+            new RootCommandNode<>(),
+            mock(RedirectModifier.class),
+            true);
+
+    ArgumentCommandNode<Object, Object> node2 =
+        new ArgumentCommandNode<>(
+            "42",
+            type2,
+            command3,
+            requirement3,
+            redirect2,
+            mock(RedirectModifier.class),
+            true,
+            mock(SuggestionProvider.class));
+
+    RootCommandNode<Object> root = new RootCommandNode<>();
+    root.addChild(node2);
+    root.addChild(node);
+    CommandDispatcher<Object> commandDispatcher = new CommandDispatcher<>(root);
+
+    // Act
+    commandDispatcher.findAmbiguities(mock(AmbiguityConsumer.class));
+
+    // Assert
+    verify(type2).getExamples();
+    verify(type).getExamples();
   }
 
   /**
@@ -15080,7 +13881,7 @@ class CommandDispatcherDiffblueTest {
 
     ArgumentCommandNode<Object, Object> node =
         new ArgumentCommandNode<>(
-            "com.mojang.brigadier.tree.ArgumentCommandNode",
+            "42",
             type,
             command,
             requirement,

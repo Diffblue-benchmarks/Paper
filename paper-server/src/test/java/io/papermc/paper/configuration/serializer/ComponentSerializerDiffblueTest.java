@@ -1,8 +1,10 @@
 package io.papermc.paper.configuration.serializer;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
+import io.leangen.geantyref.TypeToken;
 import java.lang.reflect.AnnotatedType;
 import net.kyori.adventure.text.Component;
 import org.junit.jupiter.api.DisplayName;
@@ -12,6 +14,24 @@ import org.spongepowered.configurate.serialize.SerializationException;
 import org.spongepowered.configurate.transformation.ConfigurationTransformation;
 
 class ComponentSerializerDiffblueTest {
+  /**
+   * Test new {@link ComponentSerializer} (default constructor).
+   *
+   * <p>Method under test: default or parameterless constructor of {@link ComponentSerializer}
+   */
+  @Test
+  @DisplayName("Test new ComponentSerializer (default constructor)")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void ComponentSerializer.<init>()"})
+  void testNewComponentSerializer() {
+    // Arrange, Act and Assert
+    TypeToken<Component> typeResult = new ComponentSerializer().type();
+    AnnotatedType annotatedType = typeResult.getAnnotatedType();
+    assertNull(annotatedType.getAnnotatedOwnerType());
+    assertEquals(annotatedType, typeResult.getCanonicalType());
+  }
+
   /**
    * Test {@link ComponentSerializer#deserialize(AnnotatedType, Object)} with {@code AnnotatedType},
    * {@code Object}.

@@ -1,5 +1,6 @@
 package io.papermc.paper.plugin.lifecycle.event.types;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -438,5 +439,41 @@ class MonitorableLifecycleEventTypeDiffblueTest {
         () ->
             monitorableLifecycleEventType.forEachHandler(registrarEventImpl, consumer, predicate));
     verify(predicate).test(isA(RegisteredHandler.class));
+  }
+
+  /**
+   * Test {@link MonitorableLifecycleEventType#forEachHandler(LifecycleEvent, Consumer, Predicate)}.
+   *
+   * <ul>
+   *   <li>When {@link Predicate}.
+   *   <li>Then does not throw.
+   * </ul>
+   *
+   * <p>Method under test: {@link MonitorableLifecycleEventType#forEachHandler(LifecycleEvent,
+   * Consumer, Predicate)}
+   */
+  @Test
+  @DisplayName(
+      "Test forEachHandler(LifecycleEvent, Consumer, Predicate); when Predicate; then does not throw")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({
+    "void MonitorableLifecycleEventType.forEachHandler(LifecycleEvent, Consumer, Predicate)"
+  })
+  void testForEachHandler_whenPredicate_thenDoesNotThrow() {
+    // Arrange
+    Class<LifecycleEventOwner> ownerType = LifecycleEventOwner.class;
+    MonitorableLifecycleEventType<LifecycleEventOwner, LifecycleEvent>
+        monitorableLifecycleEventType = new MonitorableLifecycleEventType<>("Name", ownerType);
+    PaperRegistrar<LifecycleEventOwner> paperRegistrar = mock(PaperRegistrar.class);
+    Class<LifecycleEventOwner> ownerClass = LifecycleEventOwner.class;
+
+    // Act and Assert
+    assertDoesNotThrow(
+        () ->
+            monitorableLifecycleEventType.forEachHandler(
+                new RegistrarEventImpl<>(paperRegistrar, ownerClass),
+                mock(Consumer.class),
+                mock(Predicate.class)));
   }
 }

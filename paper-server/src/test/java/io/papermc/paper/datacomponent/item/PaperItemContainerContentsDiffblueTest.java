@@ -1,5 +1,6 @@
 package io.papermc.paper.datacomponent.item;
 
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.diffblue.cover.annotations.ManagedByDiffblue;
@@ -33,5 +34,22 @@ class PaperItemContainerContentsDiffblueTest {
     // Assert
     assertTrue(actualAddAllResult instanceof BuilderImpl);
     assertSame(builderImpl, actualAddAllResult);
+  }
+
+  /**
+   * Test {@link PaperItemContainerContents#getHandle()}.
+   *
+   * <p>Method under test: {@link PaperItemContainerContents#getHandle()}
+   */
+  @Test
+  @DisplayName("Test getHandle()")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({
+    "net.minecraft.world.item.component.ItemContainerContents PaperItemContainerContents.getHandle()"
+  })
+  void testGetHandle() {
+    // Arrange, Act and Assert
+    assertNull(new PaperItemContainerContents(null).getHandle());
   }
 }

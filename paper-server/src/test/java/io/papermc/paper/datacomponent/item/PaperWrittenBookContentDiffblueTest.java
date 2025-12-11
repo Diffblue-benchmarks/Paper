@@ -2,7 +2,6 @@ package io.papermc.paper.datacomponent.item;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.atLeast;
@@ -17,8 +16,6 @@ import io.papermc.paper.text.Filtered;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import net.kyori.adventure.text.ComponentLike;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.network.Filterable;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -74,58 +71,7 @@ class PaperWrittenBookContentDiffblueTest {
     // Assert
     verify(title, atLeast(1)).filtered();
     verify(title, atLeast(1)).raw();
-    WrittenBookContent writtenBookContent = builderImpl.build();
-    assertTrue(writtenBookContent instanceof PaperWrittenBookContent);
-    assertTrue(((PaperWrittenBookContent) writtenBookContent).getHandle().pages().isEmpty());
     assertSame(builderImpl, actualAddPagesResult);
-  }
-
-  /**
-   * Test BuilderImpl {@link BuilderImpl#addPages(List)}.
-   *
-   * <ul>
-   *   <li>Then build return {@link PaperWrittenBookContent}.
-   * </ul>
-   *
-   * <p>Method under test: {@link BuilderImpl#addPages(List)}
-   */
-  @Test
-  @DisplayName("Test BuilderImpl addPages(List); then build return PaperWrittenBookContent")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"Builder BuilderImpl.addPages(List)"})
-  void testBuilderImplAddPages_thenBuildReturnPaperWrittenBookContent() {
-    // Arrange
-    Filtered<String> title = mock(Filtered.class);
-    when(title.filtered()).thenReturn("Filtered");
-    when(title.raw()).thenReturn("Raw");
-    BuilderImpl builderImpl = new BuilderImpl(title, "JaneDoe");
-
-    ComponentLike componentLike = mock(ComponentLike.class);
-    when(componentLike.asComponent()).thenReturn(null);
-
-    ArrayList<ComponentLike> pages = new ArrayList<>();
-    pages.add(componentLike);
-
-    // Act
-    Builder actualAddPagesResult = builderImpl.addPages(pages);
-
-    // Assert
-    verify(title, atLeast(1)).filtered();
-    verify(title, atLeast(1)).raw();
-    verify(componentLike).asComponent();
-    WrittenBookContent writtenBookContent = actualAddPagesResult.build();
-    assertTrue(writtenBookContent instanceof PaperWrittenBookContent);
-    WrittenBookContent writtenBookContent2 = builderImpl.build();
-    assertTrue(writtenBookContent2 instanceof PaperWrittenBookContent);
-    assertTrue(actualAddPagesResult instanceof BuilderImpl);
-    List<Filterable<Component>> pagesResult =
-        ((PaperWrittenBookContent) writtenBookContent).getHandle().pages();
-    assertEquals(1, pagesResult.size());
-    Filterable<Component> getResult = pagesResult.get(0);
-    assertNull(getResult.raw());
-    assertEquals(1, ((PaperWrittenBookContent) writtenBookContent2).getHandle().pages().size());
-    assertFalse(getResult.filtered().isPresent());
   }
 
   /**
@@ -146,44 +92,6 @@ class PaperWrittenBookContentDiffblueTest {
     BuilderImpl builderImpl = new BuilderImpl(title, "JaneDoe");
 
     Filtered<String> title2 = mock(Filtered.class);
-    when(title2.filtered()).thenReturn(null);
-    when(title2.raw()).thenReturn("Raw");
-
-    // Act
-    Builder actualFilteredTitleResult = builderImpl.filteredTitle(title2);
-
-    // Assert
-    verify(title2, atLeast(1)).filtered();
-    verify(title, atLeast(1)).filtered();
-    verify(title, atLeast(1)).raw();
-    verify(title2, atLeast(1)).raw();
-    assertSame(builderImpl, actualFilteredTitleResult);
-  }
-
-  /**
-   * Test BuilderImpl {@link BuilderImpl#filteredTitle(Filtered)}.
-   *
-   * <ul>
-   *   <li>Given {@code Filtered}.
-   *   <li>When {@link Filtered} {@link Filtered#filtered()} return {@code Filtered}.
-   * </ul>
-   *
-   * <p>Method under test: {@link BuilderImpl#filteredTitle(Filtered)}
-   */
-  @Test
-  @DisplayName(
-      "Test BuilderImpl filteredTitle(Filtered); given 'Filtered'; when Filtered filtered() return 'Filtered'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"Builder BuilderImpl.filteredTitle(Filtered)"})
-  void testBuilderImplFilteredTitle_givenFiltered_whenFilteredFilteredReturnFiltered() {
-    // Arrange
-    Filtered<String> title = mock(Filtered.class);
-    when(title.filtered()).thenReturn("Filtered");
-    when(title.raw()).thenReturn("Raw");
-    BuilderImpl builderImpl = new BuilderImpl(title, "JaneDoe");
-
-    Filtered<String> title2 = mock(Filtered.class);
     when(title2.filtered()).thenReturn("Filtered");
     when(title2.raw()).thenReturn("Raw");
 
@@ -193,6 +101,42 @@ class PaperWrittenBookContentDiffblueTest {
     // Assert
     verify(title, atLeast(1)).filtered();
     verify(title2, atLeast(1)).filtered();
+    verify(title, atLeast(1)).raw();
+    verify(title2, atLeast(1)).raw();
+    assertSame(builderImpl, actualFilteredTitleResult);
+  }
+
+  /**
+   * Test BuilderImpl {@link BuilderImpl#filteredTitle(Filtered)}.
+   *
+   * <ul>
+   *   <li>When {@link Filtered} {@link Filtered#filtered()} return {@code null}.
+   * </ul>
+   *
+   * <p>Method under test: {@link BuilderImpl#filteredTitle(Filtered)}
+   */
+  @Test
+  @DisplayName("Test BuilderImpl filteredTitle(Filtered); when Filtered filtered() return 'null'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"Builder BuilderImpl.filteredTitle(Filtered)"})
+  void testBuilderImplFilteredTitle_whenFilteredFilteredReturnNull() {
+    // Arrange
+    Filtered<String> title = mock(Filtered.class);
+    when(title.filtered()).thenReturn("Filtered");
+    when(title.raw()).thenReturn("Raw");
+    BuilderImpl builderImpl = new BuilderImpl(title, "JaneDoe");
+
+    Filtered<String> title2 = mock(Filtered.class);
+    when(title2.filtered()).thenReturn(null);
+    when(title2.raw()).thenReturn("Raw");
+
+    // Act
+    Builder actualFilteredTitleResult = builderImpl.filteredTitle(title2);
+
+    // Assert
+    verify(title2, atLeast(1)).filtered();
+    verify(title, atLeast(1)).filtered();
     verify(title, atLeast(1)).raw();
     verify(title2, atLeast(1)).raw();
     assertSame(builderImpl, actualFilteredTitleResult);

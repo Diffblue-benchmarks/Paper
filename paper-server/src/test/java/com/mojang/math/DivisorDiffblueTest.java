@@ -164,6 +164,7 @@ class DivisorDiffblueTest {
 
     // Assert
     assertTrue(actualIteratorResult instanceof Divisor);
+    assertEquals(-1L, actualAsIterableResult.spliterator().getExactSizeIfKnown());
     assertEquals(10, actualIteratorResult.next().intValue());
     assertFalse(actualIteratorResult.hasNext());
   }
@@ -189,6 +190,7 @@ class DivisorDiffblueTest {
 
     // Assert
     assertTrue(actualIteratorResult instanceof Divisor);
+    assertEquals(-1L, actualAsIterableResult.spliterator().getExactSizeIfKnown());
     assertFalse(actualIteratorResult.hasNext());
   }
 }

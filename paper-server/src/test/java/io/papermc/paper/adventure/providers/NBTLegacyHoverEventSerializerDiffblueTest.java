@@ -10,6 +10,10 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
+import com.mojang.brigadier.Message;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import com.mojang.brigadier.exceptions.Dynamic2CommandExceptionType;
+import com.mojang.brigadier.exceptions.Dynamic2CommandExceptionType.Function;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
@@ -23,6 +27,7 @@ import net.kyori.adventure.util.Codec;
 import net.kyori.adventure.util.Codec.Decoder;
 import net.kyori.adventure.util.Codec.Encoder;
 import net.minecraft.Util;
+import org.bukkit.NamespacedKey;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -221,5 +226,44 @@ class NBTLegacyHoverEventSerializerDiffblueTest {
     assertFalse(actualSerializeShowEntityResult.hasStyling());
     Component actualCompactResult = actualSerializeShowEntityResult.compact();
     assertEquals(actualSerializeShowEntityResult, actualCompactResult);
+  }
+
+  /**
+   * Test {@link NBTLegacyHoverEventSerializer#serializeShowEntity(ShowEntity, Encoder)}.
+   *
+   * <ul>
+   *   <li>Then throw {@link CommandSyntaxException}.
+   * </ul>
+   *
+   * <p>Method under test: {@link
+   * NBTLegacyHoverEventSerializer#serializeShowEntity(HoverEvent.ShowEntity, Codec.Encoder)}
+   */
+  @Test
+  @DisplayName("Test serializeShowEntity(ShowEntity, Encoder); then throw CommandSyntaxException")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({
+    "Component NBTLegacyHoverEventSerializer.serializeShowEntity(HoverEvent.ShowEntity, Codec.Encoder)"
+  })
+  void testSerializeShowEntity_thenThrowCommandSyntaxException() throws Throwable {
+    // Arrange
+    ShowEntity input =
+        ShowEntity.of(NamespacedKey.randomKey(), Util.NIL_UUID, mock(Component.class));
+
+    Message message = mock(Message.class);
+    when(message.getString()).thenReturn("String");
+    Dynamic2CommandExceptionType type = new Dynamic2CommandExceptionType(mock(Function.class));
+
+    CommandSyntaxException commandSyntaxException = new CommandSyntaxException(type, message);
+
+    Encoder<Component, String, RuntimeException> componentCodec = mock(Encoder.class);
+    when(componentCodec.encode(Mockito.<Component>any())).thenThrow(commandSyntaxException);
+
+    // Act and Assert
+    assertThrows(
+        CommandSyntaxException.class,
+        () -> NBTLegacyHoverEventSerializer.INSTANCE.serializeShowEntity(input, componentCodec));
+    verify(message).getString();
+    verify(componentCodec).encode(isA(Component.class));
   }
 }

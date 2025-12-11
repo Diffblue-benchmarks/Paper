@@ -38,6 +38,21 @@ class EntityListDiffblueTest {
   }
 
   /**
+   * Test {@link EntityList#iterator()}.
+   *
+   * <p>Method under test: {@link EntityList#iterator()}
+   */
+  @Test
+  @DisplayName("Test iterator()")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"java.util.Iterator EntityList.iterator()"})
+  void testIterator() {
+    // Arrange, Act and Assert
+    assertFalse(new EntityList().iterator().hasNext());
+  }
+
+  /**
    * Test new {@link EntityList} (default constructor).
    *
    * <p>Method under test: default or parameterless constructor of {@link EntityList}

@@ -34,43 +34,40 @@ class FileArrayProviderSourceDiffblueTest {
    * Test {@link FileArrayProviderSource#prepareContext(File[])} with {@code context}.
    *
    * <ul>
-   *   <li>Given {@link FileArrayProviderSource} (default constructor).
+   *   <li>When array of {@link File} with {@code null}.
    * </ul>
    *
    * <p>Method under test: {@link FileArrayProviderSource#prepareContext(File[])}
    */
   @Test
-  @DisplayName(
-      "Test prepareContext(File[]) with 'context'; given FileArrayProviderSource (default constructor)")
+  @DisplayName("Test prepareContext(File[]) with 'context'; when array of File with 'null'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"java.util.List FileArrayProviderSource.prepareContext(File[])"})
-  void testPrepareContextWithContext_givenFileArrayProviderSource() {
+  void testPrepareContextWithContext_whenArrayOfFileWithNull() {
     // Arrange, Act and Assert
-    assertTrue(
-        new FileArrayProviderSource()
-            .prepareContext(new File[] {OldUsersConverter.OLD_IPBANLIST})
-            .isEmpty());
+    assertTrue(FileArrayProviderSource.INSTANCE.prepareContext(new File[] {null}).isEmpty());
   }
 
   /**
    * Test {@link FileArrayProviderSource#prepareContext(File[])} with {@code context}.
    *
    * <ul>
-   *   <li>When array of {@link File} with {@code null}.
-   *   <li>Then return Empty.
+   *   <li>When array of {@link File} with {@link OldUsersConverter#OLD_IPBANLIST}.
    * </ul>
    *
    * <p>Method under test: {@link FileArrayProviderSource#prepareContext(File[])}
    */
   @Test
-  @DisplayName(
-      "Test prepareContext(File[]) with 'context'; when array of File with 'null'; then return Empty")
+  @DisplayName("Test prepareContext(File[]) with 'context'; when array of File with OLD_IPBANLIST")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"java.util.List FileArrayProviderSource.prepareContext(File[])"})
-  void testPrepareContextWithContext_whenArrayOfFileWithNull_thenReturnEmpty() {
+  void testPrepareContextWithContext_whenArrayOfFileWithOld_ipbanlist() {
     // Arrange, Act and Assert
-    assertTrue(FileArrayProviderSource.INSTANCE.prepareContext(new File[] {null}).isEmpty());
+    assertTrue(
+        FileArrayProviderSource.INSTANCE
+            .prepareContext(new File[] {OldUsersConverter.OLD_IPBANLIST})
+            .isEmpty());
   }
 }

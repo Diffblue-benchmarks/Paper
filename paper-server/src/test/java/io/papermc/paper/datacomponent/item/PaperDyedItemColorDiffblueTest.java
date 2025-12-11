@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
 import io.papermc.paper.datacomponent.item.PaperDyedItemColor.BuilderImpl;
+import org.bukkit.Color;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -22,7 +23,7 @@ class PaperDyedItemColorDiffblueTest {
   @ManagedByDiffblue
   @MethodsUnderTest({
     "DyedItemColor BuilderImpl.build()",
-    "DyedItemColor.Builder BuilderImpl.color(org.bukkit.Color)"
+    "DyedItemColor.Builder BuilderImpl.color(Color)"
   })
   void testBuilderImplBuild() {
     // Arrange and Act
@@ -33,22 +34,56 @@ class PaperDyedItemColorDiffblueTest {
   }
 
   /**
-   * Test BuilderImpl new {@link BuilderImpl} (default constructor).
+   * Test {@link PaperDyedItemColor#getHandle()}.
    *
-   * <p>Method under test: default or parameterless constructor of {@link BuilderImpl}
+   * <p>Method under test: {@link PaperDyedItemColor#getHandle()}
    */
   @Test
-  @DisplayName("Test BuilderImpl new BuilderImpl (default constructor)")
+  @DisplayName("Test getHandle()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
-  @MethodsUnderTest({"void BuilderImpl.<init>()"})
-  void testBuilderImplNewBuilderImpl() {
-    // Arrange, Act and Assert
-    DyedItemColor dyedItemColor = new BuilderImpl().build();
-    assertTrue(dyedItemColor instanceof PaperDyedItemColor);
-    net.minecraft.world.item.component.DyedItemColor handle =
-        ((PaperDyedItemColor) dyedItemColor).getHandle();
-    assertEquals(16777215, handle.rgb());
-    assertSame(handle, ((PaperDyedItemColor) dyedItemColor).impl());
+  @MethodsUnderTest({
+    "net.minecraft.world.item.component.DyedItemColor PaperDyedItemColor.getHandle()"
+  })
+  void testGetHandle() {
+    // Arrange
+    net.minecraft.world.item.component.DyedItemColor impl =
+        new net.minecraft.world.item.component.DyedItemColor(1);
+
+    // Act
+    net.minecraft.world.item.component.DyedItemColor actualHandle =
+        new PaperDyedItemColor(impl).getHandle();
+
+    // Assert
+    assertEquals(1, actualHandle.rgb());
+    assertSame(impl, actualHandle);
+  }
+
+  /**
+   * Test {@link PaperDyedItemColor#color()}.
+   *
+   * <ul>
+   *   <li>Given {@link net.minecraft.world.item.component.DyedItemColor#DyedItemColor(int)} with
+   *       rgb is one.
+   *   <li>Then return Green is zero.
+   * </ul>
+   *
+   * <p>Method under test: {@link PaperDyedItemColor#color()}
+   */
+  @Test
+  @DisplayName("Test color(); given DyedItemColor(int) with rgb is one; then return Green is zero")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"Color PaperDyedItemColor.color()"})
+  void testColor_givenDyedItemColorWithRgbIsOne_thenReturnGreenIsZero() {
+    // Arrange and Act
+    Color actualColorResult =
+        new PaperDyedItemColor(new net.minecraft.world.item.component.DyedItemColor(1)).color();
+
+    // Assert
+    assertEquals(0, actualColorResult.getGreen());
+    assertEquals(0, actualColorResult.getRed());
+    assertEquals(1, actualColorResult.getBlue());
+    assertEquals(255, actualColorResult.getAlpha());
   }
 }

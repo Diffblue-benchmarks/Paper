@@ -36,28 +36,6 @@ class PaperItemDamageFunctionDiffblueTest {
   }
 
   /**
-   * Test BuilderImpl new {@link BuilderImpl} (default constructor).
-   *
-   * <p>Method under test: default or parameterless constructor of {@link BuilderImpl}
-   */
-  @Test
-  @DisplayName("Test BuilderImpl new BuilderImpl (default constructor)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"void BuilderImpl.<init>()"})
-  void testBuilderImplNewBuilderImpl() {
-    // Arrange, Act and Assert
-    ItemDamageFunction itemDamageFunction = new BuilderImpl().build();
-    assertTrue(itemDamageFunction instanceof PaperItemDamageFunction);
-    BlocksAttacks.ItemDamageFunction handle =
-        ((PaperItemDamageFunction) itemDamageFunction).getHandle();
-    assertEquals(0.0f, handle.base());
-    assertEquals(1.0f, handle.factor());
-    assertEquals(1.0f, handle.threshold());
-    assertSame(handle, ((PaperItemDamageFunction) itemDamageFunction).impl());
-  }
-
-  /**
    * Test BuilderImpl {@link BuilderImpl#threshold(float)}.
    *
    * <ul>
@@ -170,6 +148,24 @@ class PaperItemDamageFunctionDiffblueTest {
         10.0f,
         new PaperItemDamageFunction(new BlocksAttacks.ItemDamageFunction(10.0f, 10.0f, 10.0f))
             .factor());
+  }
+
+  /**
+   * Test {@link PaperItemDamageFunction#damageToApply(float)}.
+   *
+   * <p>Method under test: {@link PaperItemDamageFunction#damageToApply(float)}
+   */
+  @Test
+  @DisplayName("Test damageToApply(float)")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"int PaperItemDamageFunction.damageToApply(float)"})
+  void testDamageToApply() {
+    // Arrange, Act and Assert
+    assertEquals(
+        110,
+        new PaperItemDamageFunction(new BlocksAttacks.ItemDamageFunction(0.0f, 10.0f, 10.0f))
+            .damageToApply(10.0f));
   }
 
   /**

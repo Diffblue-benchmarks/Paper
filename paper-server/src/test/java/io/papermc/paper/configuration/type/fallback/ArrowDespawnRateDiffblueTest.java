@@ -137,6 +137,7 @@ class ArrowDespawnRateDiffblueTest {
 
     // Assert
     assertEquals(42, actualProcessResult.getAsInt());
+    assertFalse(actualProcessResult.isEmpty());
     assertTrue(actualProcessResult.isPresent());
   }
 
@@ -158,8 +159,13 @@ class ArrowDespawnRateDiffblueTest {
   @ManagedByDiffblue
   @MethodsUnderTest({"OptionalInt ArrowDespawnRate.process(int)"})
   void testProcess_givenDefSpigotWorldConfig_whenMinusOne_thenReturnNotPresent() {
-    // Arrange, Act and Assert
-    assertFalse(ArrowDespawnRate.def(mock(SpigotWorldConfig.class)).process(-1).isPresent());
+    // Arrange and Act
+    OptionalInt actualProcessResult =
+        ArrowDespawnRate.def(mock(SpigotWorldConfig.class)).process(-1);
+
+    // Assert
+    assertFalse(actualProcessResult.isPresent());
+    assertTrue(actualProcessResult.isEmpty());
   }
 
   /**

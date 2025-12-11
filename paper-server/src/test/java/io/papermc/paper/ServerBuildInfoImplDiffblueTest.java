@@ -26,7 +26,7 @@ class ServerBuildInfoImplDiffblueTest {
     // Arrange
     OptionalInt buildNumber = OptionalInt.empty();
     Optional<String> gitBranch = Optional.empty();
-    Optional<String> gitCommit = Optional.of("DEV");
+    Optional<String> gitCommit = Optional.of("42");
 
     ServerBuildInfoImpl serverBuildInfoImpl =
         new ServerBuildInfoImpl(
@@ -40,31 +40,31 @@ class ServerBuildInfoImplDiffblueTest {
             gitCommit);
 
     // Act and Assert
-    assertEquals("42-DEV-DEV", serverBuildInfoImpl.asString(StringRepresentation.VERSION_SIMPLE));
+    assertEquals("42-DEV-42", serverBuildInfoImpl.asString(StringRepresentation.VERSION_SIMPLE));
   }
 
   /**
    * Test {@link ServerBuildInfoImpl#asString(StringRepresentation)}.
    *
    * <ul>
-   *   <li>Given {@link OptionalInt} with forty-five.
+   *   <li>Given {@link OptionalInt} with forty-two.
    *   <li>When {@code VERSION_SIMPLE}.
-   *   <li>Then return {@code 42-45-DEV}.
+   *   <li>Then return {@code 42-42-42}.
    * </ul>
    *
    * <p>Method under test: {@link ServerBuildInfoImpl#asString(StringRepresentation)}
    */
   @Test
   @DisplayName(
-      "Test asString(StringRepresentation); given OptionalInt with forty-five; when 'VERSION_SIMPLE'; then return '42-45-DEV'")
+      "Test asString(StringRepresentation); given OptionalInt with forty-two; when 'VERSION_SIMPLE'; then return '42-42-42'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"String ServerBuildInfoImpl.asString(StringRepresentation)"})
-  void testAsString_givenOptionalIntWithFortyFive_whenVersionSimple_thenReturn4245Dev() {
+  void testAsString_givenOptionalIntWithFortyTwo_whenVersionSimple_thenReturn424242() {
     // Arrange
-    OptionalInt buildNumber = OptionalInt.of(45);
-    Optional<String> gitBranch = Optional.of("DEV");
-    Optional<String> gitCommit = Optional.of("DEV");
+    OptionalInt buildNumber = OptionalInt.of(42);
+    Optional<String> gitBranch = Optional.of("42");
+    Optional<String> gitCommit = Optional.of("42");
 
     ServerBuildInfoImpl serverBuildInfoImpl =
         new ServerBuildInfoImpl(
@@ -78,28 +78,28 @@ class ServerBuildInfoImplDiffblueTest {
             gitCommit);
 
     // Act and Assert
-    assertEquals("42-45-DEV", serverBuildInfoImpl.asString(StringRepresentation.VERSION_SIMPLE));
+    assertEquals("42-42-42", serverBuildInfoImpl.asString(StringRepresentation.VERSION_SIMPLE));
   }
 
   /**
    * Test {@link ServerBuildInfoImpl#asString(StringRepresentation)}.
    *
    * <ul>
-   *   <li>Then return {@code 42-DEV-DEV}.
+   *   <li>Then return {@code 42-DEV-42}.
    * </ul>
    *
    * <p>Method under test: {@link ServerBuildInfoImpl#asString(StringRepresentation)}
    */
   @Test
-  @DisplayName("Test asString(StringRepresentation); then return '42-DEV-DEV'")
+  @DisplayName("Test asString(StringRepresentation); then return '42-DEV-42'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"String ServerBuildInfoImpl.asString(StringRepresentation)"})
-  void testAsString_thenReturn42DevDev() {
+  void testAsString_thenReturn42Dev42() {
     // Arrange
     OptionalInt buildNumber = OptionalInt.empty();
-    Optional<String> gitBranch = Optional.of("DEV");
-    Optional<String> gitCommit = Optional.of("DEV");
+    Optional<String> gitBranch = Optional.of("42");
+    Optional<String> gitCommit = Optional.of("42");
 
     ServerBuildInfoImpl serverBuildInfoImpl =
         new ServerBuildInfoImpl(
@@ -113,6 +113,6 @@ class ServerBuildInfoImplDiffblueTest {
             gitCommit);
 
     // Act and Assert
-    assertEquals("42-DEV-DEV", serverBuildInfoImpl.asString(StringRepresentation.VERSION_SIMPLE));
+    assertEquals("42-DEV-42", serverBuildInfoImpl.asString(StringRepresentation.VERSION_SIMPLE));
   }
 }

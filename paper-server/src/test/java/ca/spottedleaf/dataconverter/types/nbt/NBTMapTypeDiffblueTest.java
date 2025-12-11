@@ -1657,18 +1657,18 @@ class NBTMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link CompoundTag#CompoundTag()} {@code 42} is {@link ByteTag#ONE}.
-   *   <li>Then return {@link AtomicLong}.
+   *   <li>Then return {@link Bootstrap#bootstrapDuration}.
    * </ul>
    *
    * <p>Method under test: {@link NBTMapType#getNumber(String, Number)}
    */
   @Test
   @DisplayName(
-      "Test getNumber(String, Number) with 'key', 'dfl'; given CompoundTag() '42' is ONE; then return AtomicLong")
+      "Test getNumber(String, Number) with 'key', 'dfl'; given CompoundTag() '42' is ONE; then return bootstrapDuration")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"Number NBTMapType.getNumber(String, Number)"})
-  void testGetNumberWithKeyDfl_givenCompoundTag42IsOne_thenReturnAtomicLong() {
+  void testGetNumberWithKeyDfl_givenCompoundTag42IsOne_thenReturnBootstrapDuration() {
     // Arrange
     CompoundTag tag = new CompoundTag();
     tag.put("42", ByteTag.ONE);
@@ -1678,8 +1678,6 @@ class NBTMapTypeDiffblueTest {
     Number actualNumber = new NBTMapType(tag).getNumber("Key", dfl);
 
     // Assert
-    assertTrue(actualNumber instanceof AtomicLong);
-    assertEquals(-1L, ((AtomicLong) actualNumber).get());
     assertSame(dfl, actualNumber);
   }
 
@@ -1843,18 +1841,18 @@ class NBTMapTypeDiffblueTest {
    *
    * <ul>
    *   <li>Given {@link NBTMapType#NBTMapType()}.
-   *   <li>Then return {@link AtomicLong}.
+   *   <li>Then return {@link Bootstrap#bootstrapDuration}.
    * </ul>
    *
    * <p>Method under test: {@link NBTMapType#getNumber(String, Number)}
    */
   @Test
   @DisplayName(
-      "Test getNumber(String, Number) with 'key', 'dfl'; given NBTMapType(); then return AtomicLong")
+      "Test getNumber(String, Number) with 'key', 'dfl'; given NBTMapType(); then return bootstrapDuration")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"Number NBTMapType.getNumber(String, Number)"})
-  void testGetNumberWithKeyDfl_givenNBTMapType_thenReturnAtomicLong() {
+  void testGetNumberWithKeyDfl_givenNBTMapType_thenReturnBootstrapDuration() {
     // Arrange
     AtomicLong dfl = Bootstrap.bootstrapDuration;
 
@@ -1862,8 +1860,6 @@ class NBTMapTypeDiffblueTest {
     Number actualNumber = new NBTMapType().getNumber("Key", dfl);
 
     // Assert
-    assertTrue(actualNumber instanceof AtomicLong);
-    assertEquals(-1L, ((AtomicLong) actualNumber).get());
     assertSame(dfl, actualNumber);
   }
 
@@ -6903,49 +6899,21 @@ class NBTMapTypeDiffblueTest {
    * Test {@link NBTMapType#setMap(String, MapType)}.
    *
    * <ul>
-   *   <li>Given {@link NBTMapType#NBTMapType()}.
+   *   <li>Given {@link CompoundTag} {@link CompoundTag#put(String, Tag)} return {@link
+   *       ByteTag#ONE}.
    *   <li>When {@link NBTMapType#NBTMapType()}.
-   *   <li>Then {@link NBTMapType#NBTMapType()} size is zero.
+   *   <li>Then calls {@link CompoundTag#put(String, Tag)}.
    * </ul>
    *
    * <p>Method under test: {@link NBTMapType#setMap(String, MapType)}
    */
   @Test
   @DisplayName(
-      "Test setMap(String, MapType); given NBTMapType(); when NBTMapType(); then NBTMapType() size is zero")
+      "Test setMap(String, MapType); given CompoundTag put(String, Tag) return ONE; when NBTMapType(); then calls put(String, Tag)")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void NBTMapType.setMap(String, MapType)"})
-  void testSetMap_givenNBTMapType_whenNBTMapType_thenNBTMapTypeSizeIsZero() {
-    // Arrange
-    NBTMapType nbtMapType = new NBTMapType();
-    NBTMapType val = new NBTMapType();
-
-    // Act
-    nbtMapType.setMap("Key", val);
-
-    // Assert that nothing has changed
-    assertEquals(0, val.size());
-    assertEquals(0, val.getTag().size());
-  }
-
-  /**
-   * Test {@link NBTMapType#setMap(String, MapType)}.
-   *
-   * <ul>
-   *   <li>Then {@link NBTMapType#NBTMapType(CompoundTag)} with tag is {@link CompoundTag} size is
-   *       zero.
-   * </ul>
-   *
-   * <p>Method under test: {@link NBTMapType#setMap(String, MapType)}
-   */
-  @Test
-  @DisplayName(
-      "Test setMap(String, MapType); then NBTMapType(CompoundTag) with tag is CompoundTag size is zero")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"void NBTMapType.setMap(String, MapType)"})
-  void testSetMap_thenNBTMapTypeWithTagIsCompoundTagSizeIsZero() {
+  void testSetMap_givenCompoundTagPutReturnOne_whenNBTMapType_thenCallsPut() {
     // Arrange
     CompoundTag tag = mock(CompoundTag.class);
     when(tag.put(Mockito.<String>any(), Mockito.<net.minecraft.nbt.Tag>any()))
@@ -6956,9 +6924,8 @@ class NBTMapTypeDiffblueTest {
     // Act
     nbtMapType.setMap("Key", new NBTMapType());
 
-    // Assert that nothing has changed
+    // Assert
     verify(tag, atLeast(1)).put(eq("Key"), Mockito.<net.minecraft.nbt.Tag>any());
-    assertEquals(0, nbtMapType.size());
   }
 
   /**

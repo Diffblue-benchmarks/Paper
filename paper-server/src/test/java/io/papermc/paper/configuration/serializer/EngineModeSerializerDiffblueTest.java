@@ -1,12 +1,15 @@
 package io.papermc.paper.configuration.serializer;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
 import com.fasterxml.jackson.databind.type.PlaceholderForType;
+import io.leangen.geantyref.TypeToken;
 import io.papermc.paper.configuration.type.EngineMode;
+import java.lang.reflect.AnnotatedType;
 import java.lang.reflect.Type;
 import java.util.function.Predicate;
 import org.junit.jupiter.api.DisplayName;
@@ -16,6 +19,24 @@ import org.spongepowered.configurate.serialize.SerializationException;
 import org.spongepowered.configurate.transformation.ConfigurationTransformation;
 
 class EngineModeSerializerDiffblueTest {
+  /**
+   * Test new {@link EngineModeSerializer} (default constructor).
+   *
+   * <p>Method under test: default or parameterless constructor of {@link EngineModeSerializer}
+   */
+  @Test
+  @DisplayName("Test new EngineModeSerializer (default constructor)")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void EngineModeSerializer.<init>()"})
+  void testNewEngineModeSerializer() {
+    // Arrange, Act and Assert
+    TypeToken<EngineMode> typeResult = new EngineModeSerializer().type();
+    AnnotatedType annotatedType = typeResult.getAnnotatedType();
+    assertNull(annotatedType.getAnnotatedOwnerType());
+    assertEquals(annotatedType, typeResult.getCanonicalType());
+  }
+
   /**
    * Test {@link EngineModeSerializer#deserialize(Type, Object)} with {@code Type}, {@code Object}.
    *

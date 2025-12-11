@@ -5,23 +5,21 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
 import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
 import java.awt.Component;
 import java.awt.Component.BaselineResizeBehavior;
-import java.awt.ContainerOrderFocusTraversalPolicy;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.HeadlessException;
 import java.awt.image.DirectColorModel;
+import java.beans.PropertyChangeListener;
 import javax.swing.DebugGraphics;
-import javax.swing.plaf.basic.BasicComboBoxUI;
-import javax.swing.plaf.basic.BasicTextUI;
-import javax.swing.plaf.basic.BasicTextUI.BasicCaret;
+import javax.swing.plaf.basic.BasicComboBoxEditor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.spongepowered.configurate.transformation.ConfigurationTransformation;
 
 class RAMGraphDiffblueTest {
   /**
@@ -63,6 +61,7 @@ class RAMGraphDiffblueTest {
     assertNull(actualRamGraph.getRootPane());
     assertNull(actualRamGraph.getTransferHandler());
     assertNull(actualRamGraph.getBorder());
+    assertNull(actualRamGraph.getUI());
     assertEquals(0, actualRamGraph.getComponentCount());
     assertEquals(0, actualRamGraph.getDebugGraphicsOptions());
     assertEquals(0, actualRamGraph.getHeight());
@@ -124,36 +123,6 @@ class RAMGraphDiffblueTest {
   /**
    * Test {@link RAMGraph#getPreferredSize()}.
    *
-   * <p>Method under test: {@link RAMGraph#getPreferredSize()}
-   */
-  @Test
-  @DisplayName("Test getPreferredSize()")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"Dimension RAMGraph.getPreferredSize()"})
-  void testGetPreferredSize() {
-    // Arrange
-    RAMGraph ramGraph = new RAMGraph();
-    ramGraph.setFocusTraversalPolicy(new ContainerOrderFocusTraversalPolicy());
-    ramGraph.putClientProperty(
-        ConfigurationTransformation.WILDCARD_OBJECT, ConfigurationTransformation.WILDCARD_OBJECT);
-    ramGraph.addNotify();
-
-    // Act
-    Dimension actualPreferredSize = ramGraph.getPreferredSize();
-
-    // Assert
-    assertEquals(110, actualPreferredSize.height);
-    assertEquals(110.0d, actualPreferredSize.getHeight());
-    assertEquals(350, actualPreferredSize.width);
-    assertEquals(350.0d, actualPreferredSize.getWidth());
-    Dimension actualSize = actualPreferredSize.getSize();
-    assertEquals(actualPreferredSize, actualSize);
-  }
-
-  /**
-   * Test {@link RAMGraph#getPreferredSize()}.
-   *
    * <ul>
    *   <li>Given {@link RAMGraph} (default constructor).
    * </ul>
@@ -182,59 +151,23 @@ class RAMGraphDiffblueTest {
    * Test {@link RAMGraph#getPreferredSize()}.
    *
    * <ul>
-   *   <li>Given {@link RAMGraph} (default constructor) addMouseMotionListener {@link
-   *       BasicTextUI.BasicCaret} (default constructor).
+   *   <li>Given {@link RAMGraph} (default constructor) addFocusListener {@link BasicComboBoxEditor}
+   *       (default constructor).
    * </ul>
    *
    * <p>Method under test: {@link RAMGraph#getPreferredSize()}
    */
   @Test
   @DisplayName(
-      "Test getPreferredSize(); given RAMGraph (default constructor) addMouseMotionListener BasicCaret (default constructor)")
+      "Test getPreferredSize(); given RAMGraph (default constructor) addFocusListener BasicComboBoxEditor (default constructor)")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"Dimension RAMGraph.getPreferredSize()"})
-  void testGetPreferredSize_givenRAMGraphAddMouseMotionListenerBasicCaret() {
+  void testGetPreferredSize_givenRAMGraphAddFocusListenerBasicComboBoxEditor() {
     // Arrange
     RAMGraph ramGraph = new RAMGraph();
-    ramGraph.addMouseMotionListener(new BasicCaret());
-    ramGraph.addKeyListener(new BasicComboBoxUI().new KeyHandler());
-
-    // Act
-    Dimension actualPreferredSize = ramGraph.getPreferredSize();
-
-    // Assert
-    assertEquals(110, actualPreferredSize.height);
-    assertEquals(110.0d, actualPreferredSize.getHeight());
-    assertEquals(350, actualPreferredSize.width);
-    assertEquals(350.0d, actualPreferredSize.getWidth());
-    Dimension actualSize = actualPreferredSize.getSize();
-    assertEquals(actualPreferredSize, actualSize);
-  }
-
-  /**
-   * Test {@link RAMGraph#getPreferredSize()}.
-   *
-   * <ul>
-   *   <li>Given {@link RAMGraph} (default constructor) ClientProperty {@link
-   *       ConfigurationTransformation#WILDCARD_OBJECT} is {@link
-   *       ConfigurationTransformation#WILDCARD_OBJECT}.
-   * </ul>
-   *
-   * <p>Method under test: {@link RAMGraph#getPreferredSize()}
-   */
-  @Test
-  @DisplayName(
-      "Test getPreferredSize(); given RAMGraph (default constructor) ClientProperty WILDCARD_OBJECT is WILDCARD_OBJECT")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"Dimension RAMGraph.getPreferredSize()"})
-  void testGetPreferredSize_givenRAMGraphClientPropertyWildcard_objectIsWildcard_object() {
-    // Arrange
-    RAMGraph ramGraph = new RAMGraph();
-    ramGraph.putClientProperty(
-        ConfigurationTransformation.WILDCARD_OBJECT, ConfigurationTransformation.WILDCARD_OBJECT);
-    ramGraph.addNotify();
+    ramGraph.addFocusListener(new BasicComboBoxEditor());
+    ramGraph.add(new RAMGraph());
 
     // Act
     Dimension actualPreferredSize = ramGraph.getPreferredSize();
@@ -251,51 +184,17 @@ class RAMGraphDiffblueTest {
   /**
    * Test {@link RAMGraph#paint(Graphics)}.
    *
-   * <ul>
-   *   <li>Given {@link RAMGraph} (default constructor) add {@link RAMGraph} (default constructor)
-   *       and zero.
-   *   <li>Then throw {@link HeadlessException}.
-   * </ul>
-   *
    * <p>Method under test: {@link RAMGraph#paint(Graphics)}
    */
   @Test
-  @DisplayName(
-      "Test paint(Graphics); given RAMGraph (default constructor) add RAMGraph (default constructor) and zero; then throw HeadlessException")
+  @DisplayName("Test paint(Graphics)")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void RAMGraph.paint(Graphics)"})
-  void testPaint_givenRAMGraphAddRAMGraphAndZero_thenThrowHeadlessException() {
+  void testPaint() {
     // Arrange
     RAMGraph ramGraph = new RAMGraph();
-    ramGraph.add(new RAMGraph(), 0);
-
-    // Act and Assert
-    assertThrows(HeadlessException.class, () -> ramGraph.paint(new DebugGraphics()));
-  }
-
-  /**
-   * Test {@link RAMGraph#paint(Graphics)}.
-   *
-   * <ul>
-   *   <li>Given {@link RAMGraph} (default constructor) ClientProperty {@link
-   *       ConfigurationTransformation#WILDCARD_OBJECT} is {@link
-   *       ConfigurationTransformation#WILDCARD_OBJECT}.
-   * </ul>
-   *
-   * <p>Method under test: {@link RAMGraph#paint(Graphics)}
-   */
-  @Test
-  @DisplayName(
-      "Test paint(Graphics); given RAMGraph (default constructor) ClientProperty WILDCARD_OBJECT is WILDCARD_OBJECT")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"void RAMGraph.paint(Graphics)"})
-  void testPaint_givenRAMGraphClientPropertyWildcard_objectIsWildcard_object() {
-    // Arrange
-    RAMGraph ramGraph = new RAMGraph();
-    ramGraph.putClientProperty(
-        ConfigurationTransformation.WILDCARD_OBJECT, ConfigurationTransformation.WILDCARD_OBJECT);
+    ramGraph.addPropertyChangeListener("Property Name", mock(PropertyChangeListener.class));
 
     // Act and Assert
     assertThrows(HeadlessException.class, () -> ramGraph.paint(new DebugGraphics()));

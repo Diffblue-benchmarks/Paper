@@ -78,6 +78,7 @@ class PaperPaintingVariantRegistryEntryDiffblueTest {
     assertEquals("minecraft", resourceLocation.getNamespace());
     OptionalInt optionalInt = actualPaperPaintingVariantRegistryEntry.height;
     assertEquals(1, optionalInt.getAsInt());
+    assertFalse(optionalInt.isEmpty());
     assertTrue(optionalInt.isPresent());
     OptionalInt expectedOptionalInt = actualPaperPaintingVariantRegistryEntry.height;
     assertEquals(expectedOptionalInt, actualPaperPaintingVariantRegistryEntry.width);
@@ -121,8 +122,12 @@ class PaperPaintingVariantRegistryEntryDiffblueTest {
     assertNull(actualPaperPaintingVariantRegistryEntry.author);
     assertNull(actualPaperPaintingVariantRegistryEntry.title);
     assertNull(actualPaperPaintingVariantRegistryEntry.assetId);
-    assertFalse(actualPaperPaintingVariantRegistryEntry.height.isPresent());
-    assertFalse(actualPaperPaintingVariantRegistryEntry.width.isPresent());
+    OptionalInt optionalInt = actualPaperPaintingVariantRegistryEntry.height;
+    assertFalse(optionalInt.isPresent());
+    OptionalInt optionalInt2 = actualPaperPaintingVariantRegistryEntry.width;
+    assertFalse(optionalInt2.isPresent());
+    assertTrue(optionalInt.isEmpty());
+    assertTrue(optionalInt2.isEmpty());
   }
 
   /**
@@ -315,6 +320,7 @@ class PaperPaintingVariantRegistryEntryDiffblueTest {
     assertEquals("minecraft", resourceLocation.getNamespace());
     OptionalInt optionalInt = actualPaperBuilder.height;
     assertEquals(1, optionalInt.getAsInt());
+    assertFalse(optionalInt.isEmpty());
     assertTrue(optionalInt.isPresent());
     OptionalInt expectedOptionalInt = actualPaperBuilder.height;
     assertEquals(expectedOptionalInt, actualPaperBuilder.width);
@@ -354,8 +360,12 @@ class PaperPaintingVariantRegistryEntryDiffblueTest {
     assertNull(actualPaperBuilder.author);
     assertNull(actualPaperBuilder.title);
     assertNull(actualPaperBuilder.assetId);
-    assertFalse(actualPaperBuilder.height.isPresent());
-    assertFalse(actualPaperBuilder.width.isPresent());
+    OptionalInt optionalInt = actualPaperBuilder.height;
+    assertFalse(optionalInt.isPresent());
+    OptionalInt optionalInt2 = actualPaperBuilder.width;
+    assertFalse(optionalInt2.isPresent());
+    assertTrue(optionalInt.isEmpty());
+    assertTrue(optionalInt2.isEmpty());
   }
 
   /**

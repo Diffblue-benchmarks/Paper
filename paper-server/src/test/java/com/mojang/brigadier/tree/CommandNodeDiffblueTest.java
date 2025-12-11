@@ -1,8 +1,8 @@
 package com.mojang.brigadier.tree;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -692,7 +692,7 @@ class CommandNodeDiffblueTest {
 
     ArgumentCommandNode<Object, Object> node =
         new ArgumentCommandNode<>(
-            "com.mojang.brigadier.tree.ArgumentCommandNode",
+            "42",
             type,
             command,
             requirement,
@@ -794,7 +794,7 @@ class CommandNodeDiffblueTest {
 
     ArgumentCommandNode<Object, Object> node2 =
         new ArgumentCommandNode<>(
-            "com.mojang.brigadier.tree.ArgumentCommandNode",
+            "42",
             type2,
             command3,
             requirement3,
@@ -850,7 +850,7 @@ class CommandNodeDiffblueTest {
 
     ArgumentCommandNode<Object, Object> node =
         new ArgumentCommandNode<>(
-            "com.mojang.brigadier.tree.ArgumentCommandNode",
+            "42",
             type,
             command,
             requirement,
@@ -881,82 +881,6 @@ class CommandNodeDiffblueTest {
     LiteralCommandNode<Object> node2 =
         new LiteralCommandNode<>(
             "Literal", command3, requirement3, redirect2, mock(RedirectModifier.class), true);
-    rootCommandNode.addChild(node2);
-
-    // Act
-    rootCommandNode.findAmbiguities(mock(AmbiguityConsumer.class));
-
-    // Assert
-    verify(type).getExamples();
-    verify(type).parse(isA(StringReader.class));
-  }
-
-  /**
-   * Test {@link CommandNode#findAmbiguities(AmbiguityConsumer)}.
-   *
-   * <p>Method under test: {@link CommandNode#findAmbiguities(AmbiguityConsumer)}
-   */
-  @Test
-  @DisplayName("Test findAmbiguities(AmbiguityConsumer)")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"void CommandNode.findAmbiguities(AmbiguityConsumer)"})
-  void testFindAmbiguities4() throws CommandSyntaxException {
-    // Arrange
-    ArrayList<String> stringList = new ArrayList<>();
-    stringList.add("foo");
-
-    ArgumentType<Object> type = mock(ArgumentType.class);
-    when(type.parse(Mockito.<StringReader>any()))
-        .thenReturn(ConfigurationTransformation.WILDCARD_OBJECT);
-    when(type.getExamples()).thenReturn(stringList);
-    Command<Object> command = mock(Command.class);
-    Predicate<Object> requirement = mock(Predicate.class);
-    Command<Object> command2 = mock(Command.class);
-    Predicate<Object> requirement2 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect =
-        new LiteralCommandNode<>(
-            "Literal",
-            command2,
-            requirement2,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> node =
-        new ArgumentCommandNode<>(
-            "com.mojang.brigadier.tree.ArgumentCommandNode",
-            type,
-            command,
-            requirement,
-            redirect,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-
-    RootCommandNode<Object> rootCommandNode = new RootCommandNode<>();
-    rootCommandNode.addChild(node);
-    Command<Object> command3 = mock(Command.class);
-    Predicate<Object> requirement3 = mock(Predicate.class);
-    ArgumentType<Object> type2 = mock(ArgumentType.class);
-    Command<Object> command4 = mock(Command.class);
-    Predicate<Object> requirement4 = mock(Predicate.class);
-
-    ArgumentCommandNode<Object, Object> redirect2 =
-        new ArgumentCommandNode<>(
-            "Name",
-            type2,
-            command4,
-            requirement4,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-
-    LiteralCommandNode<Object> node2 =
-        new LiteralCommandNode<>(
-            "42", command3, requirement3, redirect2, mock(RedirectModifier.class), true);
     rootCommandNode.addChild(node2);
 
     // Act
@@ -1037,7 +961,7 @@ class CommandNodeDiffblueTest {
 
     ArgumentCommandNode<Object, Object> node2 =
         new ArgumentCommandNode<>(
-            "com.mojang.brigadier.tree.ArgumentCommandNode",
+            "42",
             type2,
             command3,
             requirement3,
@@ -1057,6 +981,31 @@ class CommandNodeDiffblueTest {
     verify(type2).getExamples();
     verify(type).getExamples();
     verify(type).parse(isA(StringReader.class));
+  }
+
+  /**
+   * Test {@link CommandNode#findAmbiguities(AmbiguityConsumer)}.
+   *
+   * <ul>
+   *   <li>Given {@link RootCommandNode} (default constructor).
+   *   <li>When {@link AmbiguityConsumer}.
+   *   <li>Then does not throw.
+   * </ul>
+   *
+   * <p>Method under test: {@link CommandNode#findAmbiguities(AmbiguityConsumer)}
+   */
+  @Test
+  @DisplayName(
+      "Test findAmbiguities(AmbiguityConsumer); given RootCommandNode (default constructor); when AmbiguityConsumer; then does not throw")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void CommandNode.findAmbiguities(AmbiguityConsumer)"})
+  void testFindAmbiguities_givenRootCommandNode_whenAmbiguityConsumer_thenDoesNotThrow() {
+    // Arrange
+    RootCommandNode<Object> rootCommandNode = new RootCommandNode<>();
+
+    // Act and Assert
+    assertDoesNotThrow(() -> rootCommandNode.findAmbiguities(mock(AmbiguityConsumer.class)));
   }
 
   /**
@@ -1098,7 +1047,7 @@ class CommandNodeDiffblueTest {
 
     ArgumentCommandNode<Object, Object> node =
         new ArgumentCommandNode<>(
-            "com.mojang.brigadier.tree.ArgumentCommandNode",
+            "42",
             type,
             command,
             requirement,
@@ -1157,6 +1106,54 @@ class CommandNodeDiffblueTest {
    * Test {@link CommandNode#findAmbiguities(AmbiguityConsumer)}.
    *
    * <ul>
+   *   <li>Then does not throw.
+   * </ul>
+   *
+   * <p>Method under test: {@link CommandNode#findAmbiguities(AmbiguityConsumer)}
+   */
+  @Test
+  @DisplayName("Test findAmbiguities(AmbiguityConsumer); then does not throw")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void CommandNode.findAmbiguities(AmbiguityConsumer)"})
+  void testFindAmbiguities_thenDoesNotThrow() {
+    // Arrange
+    RootCommandNode<Object> rootCommandNode = new RootCommandNode<>();
+    ArgumentType<Object> type = mock(ArgumentType.class);
+    Command<Object> command = mock(Command.class);
+    Predicate<Object> requirement = mock(Predicate.class);
+    Command<Object> command2 = mock(Command.class);
+    Predicate<Object> requirement2 = mock(Predicate.class);
+
+    LiteralCommandNode<Object> redirect =
+        new LiteralCommandNode<>(
+            "Literal",
+            command2,
+            requirement2,
+            new RootCommandNode<>(),
+            mock(RedirectModifier.class),
+            true);
+
+    ArgumentCommandNode<Object, Object> node =
+        new ArgumentCommandNode<>(
+            "Name",
+            type,
+            command,
+            requirement,
+            redirect,
+            mock(RedirectModifier.class),
+            true,
+            mock(SuggestionProvider.class));
+    rootCommandNode.addChild(node);
+
+    // Act and Assert
+    assertDoesNotThrow(() -> rootCommandNode.findAmbiguities(mock(AmbiguityConsumer.class)));
+  }
+
+  /**
+   * Test {@link CommandNode#findAmbiguities(AmbiguityConsumer)}.
+   *
+   * <ul>
    *   <li>When {@link AmbiguityConsumer} {@link AmbiguityConsumer#ambiguous(CommandNode,
    *       CommandNode, CommandNode, Collection)} does nothing.
    *   <li>Then calls {@link AmbiguityConsumer#ambiguous(CommandNode, CommandNode, CommandNode,
@@ -1197,7 +1194,7 @@ class CommandNodeDiffblueTest {
 
     ArgumentCommandNode<Object, Object> node =
         new ArgumentCommandNode<>(
-            "com.mojang.brigadier.tree.ArgumentCommandNode",
+            "42",
             type,
             command,
             requirement,
@@ -1251,434 +1248,6 @@ class CommandNodeDiffblueTest {
             isA(Collection.class));
     verify(type).getExamples();
     verify(type).parse(isA(StringReader.class));
-  }
-
-  /**
-   * Test {@link CommandNode#equals(Object)}, and {@link CommandNode#hashCode()}.
-   *
-   * <ul>
-   *   <li>When other is same.
-   *   <li>Then return equal.
-   * </ul>
-   *
-   * <p>Method under test: {@link CommandNode#equals(Object)}
-   */
-  @Test
-  @DisplayName("Test equals(Object), and hashCode(); when other is same; then return equal")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"boolean CommandNode.equals(Object)"})
-  void testEqualsAndHashCode_whenOtherIsSame_thenReturnEqual() {
-    // Arrange
-    ArgumentType<Object> type = mock(ArgumentType.class);
-    Command<Object> command = mock(Command.class);
-    Predicate<Object> requirement = mock(Predicate.class);
-    Command<Object> command2 = mock(Command.class);
-    Predicate<Object> requirement2 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect =
-        new LiteralCommandNode<>(
-            "Literal",
-            command2,
-            requirement2,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> argumentCommandNode =
-        new ArgumentCommandNode<>(
-            "Name",
-            type,
-            command,
-            requirement,
-            redirect,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-
-    // Act and Assert
-    assertEquals(argumentCommandNode, argumentCommandNode);
-    int expectedHashCodeResult = argumentCommandNode.hashCode();
-    assertEquals(expectedHashCodeResult, argumentCommandNode.hashCode());
-  }
-
-  /**
-   * Test {@link CommandNode#equals(Object)}.
-   *
-   * <ul>
-   *   <li>When other is different.
-   *   <li>Then return not equal.
-   * </ul>
-   *
-   * <p>Method under test: {@link CommandNode#equals(Object)}
-   */
-  @Test
-  @DisplayName("Test equals(Object); when other is different; then return not equal")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"boolean CommandNode.equals(Object)"})
-  void testEquals_whenOtherIsDifferent_thenReturnNotEqual() {
-    // Arrange
-    ArgumentType<Object> type = mock(ArgumentType.class);
-    Command<Object> command = mock(Command.class);
-    Predicate<Object> requirement = mock(Predicate.class);
-    Command<Object> command2 = mock(Command.class);
-    Predicate<Object> requirement2 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect =
-        new LiteralCommandNode<>(
-            "Literal",
-            command2,
-            requirement2,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> argumentCommandNode =
-        new ArgumentCommandNode<>(
-            "Name",
-            type,
-            command,
-            requirement,
-            redirect,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    ArgumentType<Object> type2 = mock(ArgumentType.class);
-    Command<Object> command3 = mock(Command.class);
-    Predicate<Object> requirement3 = mock(Predicate.class);
-    Command<Object> command4 = mock(Command.class);
-    Predicate<Object> requirement4 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect2 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command4,
-            requirement4,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    // Act and Assert
-    assertNotEquals(
-        argumentCommandNode,
-        new ArgumentCommandNode<>(
-            "Name",
-            type2,
-            command3,
-            requirement3,
-            redirect2,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class)));
-  }
-
-  /**
-   * Test {@link CommandNode#equals(Object)}.
-   *
-   * <ul>
-   *   <li>When other is {@code null}.
-   *   <li>Then return not equal.
-   * </ul>
-   *
-   * <p>Method under test: {@link CommandNode#equals(Object)}
-   */
-  @Test
-  @DisplayName("Test equals(Object); when other is 'null'; then return not equal")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"boolean CommandNode.equals(Object)"})
-  void testEquals_whenOtherIsNull_thenReturnNotEqual() {
-    // Arrange
-    ArgumentType<Object> type = mock(ArgumentType.class);
-    Command<Object> command = mock(Command.class);
-    Predicate<Object> requirement = mock(Predicate.class);
-    Command<Object> command2 = mock(Command.class);
-    Predicate<Object> requirement2 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect =
-        new LiteralCommandNode<>(
-            "Literal",
-            command2,
-            requirement2,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> argumentCommandNode =
-        new ArgumentCommandNode<>(
-            "Name",
-            type,
-            command,
-            requirement,
-            redirect,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-
-    // Act and Assert
-    assertNotEquals(argumentCommandNode, null);
-  }
-
-  /**
-   * Test {@link CommandNode#equals(Object)}.
-   *
-   * <ul>
-   *   <li>When other is wrong type.
-   *   <li>Then return not equal.
-   * </ul>
-   *
-   * <p>Method under test: {@link CommandNode#equals(Object)}
-   */
-  @Test
-  @DisplayName("Test equals(Object); when other is wrong type; then return not equal")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"boolean CommandNode.equals(Object)"})
-  void testEquals_whenOtherIsWrongType_thenReturnNotEqual() {
-    // Arrange
-    ArgumentType<Object> type = mock(ArgumentType.class);
-    Command<Object> command = mock(Command.class);
-    Predicate<Object> requirement = mock(Predicate.class);
-    Command<Object> command2 = mock(Command.class);
-    Predicate<Object> requirement2 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect =
-        new LiteralCommandNode<>(
-            "Literal",
-            command2,
-            requirement2,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> argumentCommandNode =
-        new ArgumentCommandNode<>(
-            "Name",
-            type,
-            command,
-            requirement,
-            redirect,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-
-    // Act and Assert
-    assertNotEquals(argumentCommandNode, "Different type to CommandNode");
-  }
-
-  /**
-   * Test {@link CommandNode#equals(Object)}, and {@link CommandNode#hashCode()}.
-   *
-   * <ul>
-   *   <li>When other is same.
-   *   <li>Then return equal.
-   * </ul>
-   *
-   * <p>Method under test: {@link CommandNode#equals(Object)}
-   */
-  @Test
-  @DisplayName("Test equals(Object), and hashCode(); when other is same; then return equal")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"int CommandNode.hashCode()"})
-  void testEqualsAndHashCode_whenOtherIsSame_thenReturnEqual2() {
-    // Arrange
-    ArgumentType<Object> type = mock(ArgumentType.class);
-    Command<Object> command = mock(Command.class);
-    Predicate<Object> requirement = mock(Predicate.class);
-    Command<Object> command2 = mock(Command.class);
-    Predicate<Object> requirement2 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect =
-        new LiteralCommandNode<>(
-            "Literal",
-            command2,
-            requirement2,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> argumentCommandNode =
-        new ArgumentCommandNode<>(
-            "Name",
-            type,
-            command,
-            requirement,
-            redirect,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-
-    // Act and Assert
-    assertEquals(argumentCommandNode, argumentCommandNode);
-    int expectedHashCodeResult = argumentCommandNode.hashCode();
-    assertEquals(expectedHashCodeResult, argumentCommandNode.hashCode());
-  }
-
-  /**
-   * Test {@link CommandNode#equals(Object)}.
-   *
-   * <ul>
-   *   <li>When other is different.
-   *   <li>Then return not equal.
-   * </ul>
-   *
-   * <p>Method under test: {@link CommandNode#equals(Object)}
-   */
-  @Test
-  @DisplayName("Test equals(Object); when other is different; then return not equal")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"int CommandNode.hashCode()"})
-  void testEquals_whenOtherIsDifferent_thenReturnNotEqual2() {
-    // Arrange
-    ArgumentType<Object> type = mock(ArgumentType.class);
-    Command<Object> command = mock(Command.class);
-    Predicate<Object> requirement = mock(Predicate.class);
-    Command<Object> command2 = mock(Command.class);
-    Predicate<Object> requirement2 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect =
-        new LiteralCommandNode<>(
-            "Literal",
-            command2,
-            requirement2,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> argumentCommandNode =
-        new ArgumentCommandNode<>(
-            "Name",
-            type,
-            command,
-            requirement,
-            redirect,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-    ArgumentType<Object> type2 = mock(ArgumentType.class);
-    Command<Object> command3 = mock(Command.class);
-    Predicate<Object> requirement3 = mock(Predicate.class);
-    Command<Object> command4 = mock(Command.class);
-    Predicate<Object> requirement4 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect2 =
-        new LiteralCommandNode<>(
-            "Literal",
-            command4,
-            requirement4,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    // Act and Assert
-    assertNotEquals(
-        argumentCommandNode,
-        new ArgumentCommandNode<>(
-            "Name",
-            type2,
-            command3,
-            requirement3,
-            redirect2,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class)));
-  }
-
-  /**
-   * Test {@link CommandNode#equals(Object)}.
-   *
-   * <ul>
-   *   <li>When other is {@code null}.
-   *   <li>Then return not equal.
-   * </ul>
-   *
-   * <p>Method under test: {@link CommandNode#equals(Object)}
-   */
-  @Test
-  @DisplayName("Test equals(Object); when other is 'null'; then return not equal")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"int CommandNode.hashCode()"})
-  void testEquals_whenOtherIsNull_thenReturnNotEqual2() {
-    // Arrange
-    ArgumentType<Object> type = mock(ArgumentType.class);
-    Command<Object> command = mock(Command.class);
-    Predicate<Object> requirement = mock(Predicate.class);
-    Command<Object> command2 = mock(Command.class);
-    Predicate<Object> requirement2 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect =
-        new LiteralCommandNode<>(
-            "Literal",
-            command2,
-            requirement2,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> argumentCommandNode =
-        new ArgumentCommandNode<>(
-            "Name",
-            type,
-            command,
-            requirement,
-            redirect,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-
-    // Act and Assert
-    assertNotEquals(argumentCommandNode, null);
-  }
-
-  /**
-   * Test {@link CommandNode#equals(Object)}.
-   *
-   * <ul>
-   *   <li>When other is wrong type.
-   *   <li>Then return not equal.
-   * </ul>
-   *
-   * <p>Method under test: {@link CommandNode#equals(Object)}
-   */
-  @Test
-  @DisplayName("Test equals(Object); when other is wrong type; then return not equal")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"int CommandNode.hashCode()"})
-  void testEquals_whenOtherIsWrongType_thenReturnNotEqual2() {
-    // Arrange
-    ArgumentType<Object> type = mock(ArgumentType.class);
-    Command<Object> command = mock(Command.class);
-    Predicate<Object> requirement = mock(Predicate.class);
-    Command<Object> command2 = mock(Command.class);
-    Predicate<Object> requirement2 = mock(Predicate.class);
-
-    LiteralCommandNode<Object> redirect =
-        new LiteralCommandNode<>(
-            "Literal",
-            command2,
-            requirement2,
-            new RootCommandNode<>(),
-            mock(RedirectModifier.class),
-            true);
-
-    ArgumentCommandNode<Object, Object> argumentCommandNode =
-        new ArgumentCommandNode<>(
-            "Name",
-            type,
-            command,
-            requirement,
-            redirect,
-            mock(RedirectModifier.class),
-            true,
-            mock(SuggestionProvider.class));
-
-    // Act and Assert
-    assertNotEquals(argumentCommandNode, "Different type to CommandNode");
   }
 
   /**

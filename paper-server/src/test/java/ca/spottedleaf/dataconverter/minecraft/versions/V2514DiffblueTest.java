@@ -1,6 +1,7 @@
 package ca.spottedleaf.dataconverter.minecraft.versions;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.eq;
@@ -227,6 +228,69 @@ class V2514DiffblueTest {
   }
 
   /**
+   * Test {@link V2514#replaceUUIDString(MapType, String, String)}.
+   *
+   * <ul>
+   *   <li>When {@link JsonMapType#JsonMapType(boolean)} with compressed is {@code true}.
+   *   <li>Then does not throw.
+   * </ul>
+   *
+   * <p>Method under test: {@link V2514#replaceUUIDString(MapType, String, String)}
+   */
+  @Test
+  @DisplayName(
+      "Test replaceUUIDString(MapType, String, String); when JsonMapType(boolean) with compressed is 'true'; then does not throw")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void V2514.replaceUUIDString(MapType, String, String)"})
+  void testReplaceUUIDString_whenJsonMapTypeWithCompressedIsTrue_thenDoesNotThrow() {
+    // Arrange, Act and Assert
+    assertDoesNotThrow(
+        () -> V2514.replaceUUIDString(new JsonMapType(true), "Old Path", "New Path"));
+  }
+
+  /**
+   * Test {@link V2514#replaceUUIDString(MapType, String, String)}.
+   *
+   * <ul>
+   *   <li>When {@link NBTMapType#NBTMapType()}.
+   *   <li>Then does not throw.
+   * </ul>
+   *
+   * <p>Method under test: {@link V2514#replaceUUIDString(MapType, String, String)}
+   */
+  @Test
+  @DisplayName(
+      "Test replaceUUIDString(MapType, String, String); when NBTMapType(); then does not throw")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void V2514.replaceUUIDString(MapType, String, String)"})
+  void testReplaceUUIDString_whenNBTMapType_thenDoesNotThrow() {
+    // Arrange, Act and Assert
+    assertDoesNotThrow(() -> V2514.replaceUUIDString(new NBTMapType(), "Old Path", "New Path"));
+  }
+
+  /**
+   * Test {@link V2514#replaceUUIDString(MapType, String, String)}.
+   *
+   * <ul>
+   *   <li>When {@code null}.
+   *   <li>Then does not throw.
+   * </ul>
+   *
+   * <p>Method under test: {@link V2514#replaceUUIDString(MapType, String, String)}
+   */
+  @Test
+  @DisplayName("Test replaceUUIDString(MapType, String, String); when 'null'; then does not throw")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void V2514.replaceUUIDString(MapType, String, String)"})
+  void testReplaceUUIDString_whenNull_thenDoesNotThrow() {
+    // Arrange, Act and Assert
+    assertDoesNotThrow(() -> V2514.replaceUUIDString(null, "Old Path", "New Path"));
+  }
+
+  /**
    * Test {@link V2514#replaceUUIDMLTag(MapType, String, String)}.
    *
    * <ul>
@@ -348,6 +412,27 @@ class V2514DiffblueTest {
    * Test {@link V2514#replaceUUIDMLTag(MapType, String, String)}.
    *
    * <ul>
+   *   <li>When {@link JsonMapType#JsonMapType(boolean)} with compressed is {@code true}.
+   *   <li>Then does not throw.
+   * </ul>
+   *
+   * <p>Method under test: {@link V2514#replaceUUIDMLTag(MapType, String, String)}
+   */
+  @Test
+  @DisplayName(
+      "Test replaceUUIDMLTag(MapType, String, String); when JsonMapType(boolean) with compressed is 'true'; then does not throw")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void V2514.replaceUUIDMLTag(MapType, String, String)"})
+  void testReplaceUUIDMLTag_whenJsonMapTypeWithCompressedIsTrue_thenDoesNotThrow() {
+    // Arrange, Act and Assert
+    assertDoesNotThrow(() -> V2514.replaceUUIDMLTag(new JsonMapType(true), "Old Path", "New Path"));
+  }
+
+  /**
+   * Test {@link V2514#replaceUUIDMLTag(MapType, String, String)}.
+   *
+   * <ul>
    *   <li>When {@link MapType} {@link MapType#remove(String)} does nothing.
    *   <li>Then calls {@link MapType#setInts(String, int[])}.
    * </ul>
@@ -381,6 +466,27 @@ class V2514DiffblueTest {
   }
 
   /**
+   * Test {@link V2514#replaceUUIDMLTag(MapType, String, String)}.
+   *
+   * <ul>
+   *   <li>When {@link NBTMapType#NBTMapType()}.
+   *   <li>Then does not throw.
+   * </ul>
+   *
+   * <p>Method under test: {@link V2514#replaceUUIDMLTag(MapType, String, String)}
+   */
+  @Test
+  @DisplayName(
+      "Test replaceUUIDMLTag(MapType, String, String); when NBTMapType(); then does not throw")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void V2514.replaceUUIDMLTag(MapType, String, String)"})
+  void testReplaceUUIDMLTag_whenNBTMapType_thenDoesNotThrow() {
+    // Arrange, Act and Assert
+    assertDoesNotThrow(() -> V2514.replaceUUIDMLTag(new NBTMapType(), "Old Path", "New Path"));
+  }
+
+  /**
    * Test {@link V2514#replaceUUIDLeastMost(MapType, String, String)}.
    *
    * <ul>
@@ -411,6 +517,28 @@ class V2514DiffblueTest {
     verify(data, atLeast(1)).getLong(Mockito.<String>any());
     verify(data, atLeast(1)).remove(Mockito.<String>any());
     verify(data).setInts(eq("New Path"), isA(int[].class));
+  }
+
+  /**
+   * Test {@link V2514#replaceUUIDLeastMost(MapType, String, String)}.
+   *
+   * <ul>
+   *   <li>When {@link JsonMapType#JsonMapType(boolean)} with compressed is {@code true}.
+   *   <li>Then does not throw.
+   * </ul>
+   *
+   * <p>Method under test: {@link V2514#replaceUUIDLeastMost(MapType, String, String)}
+   */
+  @Test
+  @DisplayName(
+      "Test replaceUUIDLeastMost(MapType, String, String); when JsonMapType(boolean) with compressed is 'true'; then does not throw")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void V2514.replaceUUIDLeastMost(MapType, String, String)"})
+  void testReplaceUUIDLeastMost_whenJsonMapTypeWithCompressedIsTrue_thenDoesNotThrow() {
+    // Arrange, Act and Assert
+    assertDoesNotThrow(
+        () -> V2514.replaceUUIDLeastMost(new JsonMapType(true), "Prefix", "New Path"));
   }
 
   /**
@@ -469,5 +597,47 @@ class V2514DiffblueTest {
         () -> V2514.replaceUUIDLeastMost(data, "Prefix", "New Path"));
     verify(data, atLeast(1)).getLong(Mockito.<String>any());
     verify(data).remove("PrefixMost");
+  }
+
+  /**
+   * Test {@link V2514#replaceUUIDLeastMost(MapType, String, String)}.
+   *
+   * <ul>
+   *   <li>When {@link NBTMapType#NBTMapType()}.
+   *   <li>Then does not throw.
+   * </ul>
+   *
+   * <p>Method under test: {@link V2514#replaceUUIDLeastMost(MapType, String, String)}
+   */
+  @Test
+  @DisplayName(
+      "Test replaceUUIDLeastMost(MapType, String, String); when NBTMapType(); then does not throw")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void V2514.replaceUUIDLeastMost(MapType, String, String)"})
+  void testReplaceUUIDLeastMost_whenNBTMapType_thenDoesNotThrow() {
+    // Arrange, Act and Assert
+    assertDoesNotThrow(() -> V2514.replaceUUIDLeastMost(new NBTMapType(), "Prefix", "New Path"));
+  }
+
+  /**
+   * Test {@link V2514#replaceUUIDLeastMost(MapType, String, String)}.
+   *
+   * <ul>
+   *   <li>When {@code null}.
+   *   <li>Then does not throw.
+   * </ul>
+   *
+   * <p>Method under test: {@link V2514#replaceUUIDLeastMost(MapType, String, String)}
+   */
+  @Test
+  @DisplayName(
+      "Test replaceUUIDLeastMost(MapType, String, String); when 'null'; then does not throw")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void V2514.replaceUUIDLeastMost(MapType, String, String)"})
+  void testReplaceUUIDLeastMost_whenNull_thenDoesNotThrow() {
+    // Arrange, Act and Assert
+    assertDoesNotThrow(() -> V2514.replaceUUIDLeastMost(null, "Prefix", "New Path"));
   }
 }

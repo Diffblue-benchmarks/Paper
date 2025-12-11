@@ -13,6 +13,9 @@ import io.papermc.paper.plugin.entrypoint.classloader.PaperPluginClassLoader;
 import io.papermc.paper.plugin.provider.classloader.ClassLoaderAccess;
 import io.papermc.paper.plugin.provider.classloader.ConfiguredPluginClassLoader;
 import io.papermc.paper.plugin.provider.classloader.PluginClassLoaderGroup;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.nio.file.Paths;
 import java.util.List;
 import org.bukkit.plugin.java.PluginClassLoader;
@@ -62,12 +65,16 @@ class PaperPluginClassLoaderStorageDiffblueTest {
   @MethodsUnderTest({
     "PluginClassLoaderGroup PaperPluginClassLoaderStorage.registerSpigotGroup(PluginClassLoader)"
   })
-  void testRegisterSpigotGroup_thenReturnLockingClassLoaderGroup() {
+  void testRegisterSpigotGroup_thenReturnLockingClassLoaderGroup() throws MalformedURLException {
     // Arrange
     PaperPluginClassLoaderStorage paperPluginClassLoaderStorage =
         new PaperPluginClassLoaderStorage();
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
+    URL[] urlArray =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray);
+    URL[] urlArray2 =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray2);
 
     // Act
     PluginClassLoaderGroup actualRegisterSpigotGroupResult =
@@ -104,12 +111,17 @@ class PaperPluginClassLoaderStorageDiffblueTest {
   @MethodsUnderTest({
     "PluginClassLoaderGroup PaperPluginClassLoaderStorage.registerOpenGroup(ConfiguredPluginClassLoader)"
   })
-  void testRegisterOpenGroup_thenParentReturnGlobalPluginClassLoaderGroup() {
+  void testRegisterOpenGroup_thenParentReturnGlobalPluginClassLoaderGroup()
+      throws MalformedURLException {
     // Arrange
     PaperPluginClassLoaderStorage paperPluginClassLoaderStorage =
         new PaperPluginClassLoaderStorage();
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
+    URL[] urlArray =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray);
+    URL[] urlArray2 =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray2);
 
     // Act
     PluginClassLoaderGroup actualRegisterOpenGroupResult =
@@ -148,12 +160,17 @@ class PaperPluginClassLoaderStorageDiffblueTest {
   @MethodsUnderTest({
     "PluginClassLoaderGroup PaperPluginClassLoaderStorage.registerAccessBackedGroup(ConfiguredPluginClassLoader, ClassLoaderAccess)"
   })
-  void testRegisterAccessBackedGroup_thenReturnLockingClassLoaderGroup() {
+  void testRegisterAccessBackedGroup_thenReturnLockingClassLoaderGroup()
+      throws MalformedURLException {
     // Arrange
     PaperPluginClassLoaderStorage paperPluginClassLoaderStorage =
         new PaperPluginClassLoaderStorage();
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
+    URL[] urlArray =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray);
+    URL[] urlArray2 =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray2);
     ClassLoaderAccess access = mock(ClassLoaderAccess.class);
 
     // Act
@@ -195,12 +212,17 @@ class PaperPluginClassLoaderStorageDiffblueTest {
   @MethodsUnderTest({
     "void PaperPluginClassLoaderStorage.unregisterClassloader(ConfiguredPluginClassLoader)"
   })
-  void testUnregisterClassloader_givenGlobalPluginClassLoaderGroup_thenCallsGetGroup() {
+  void testUnregisterClassloader_givenGlobalPluginClassLoaderGroup_thenCallsGetGroup()
+      throws MalformedURLException {
     // Arrange
     PaperPluginClassLoaderStorage paperPluginClassLoaderStorage =
         new PaperPluginClassLoaderStorage();
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
+    URL[] urlArray =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray);
+    URL[] urlArray2 =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray2);
 
     PaperPluginClassLoader configuredPluginClassLoader = mock(PaperPluginClassLoader.class);
     when(configuredPluginClassLoader.getGroup()).thenReturn(new GlobalPluginClassLoaderGroup());
@@ -225,12 +247,16 @@ class PaperPluginClassLoaderStorageDiffblueTest {
   @MethodsUnderTest({
     "boolean PaperPluginClassLoaderStorage.registerUnsafePlugin(ConfiguredPluginClassLoader)"
   })
-  void testRegisterUnsafePlugin() {
+  void testRegisterUnsafePlugin() throws MalformedURLException {
     // Arrange
     PaperPluginClassLoaderStorage paperPluginClassLoaderStorage =
         new PaperPluginClassLoaderStorage();
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
+    URL[] urlArray =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray);
+    URL[] urlArray2 =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray2);
 
     // Act
     boolean actualRegisterUnsafePluginResult =

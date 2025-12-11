@@ -2,7 +2,7 @@ package io.papermc.paper.configuration.type.number;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.anyDouble;
 import static org.mockito.Mockito.mock;
@@ -10,6 +10,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
+import io.leangen.geantyref.TypeToken;
 import io.papermc.paper.configuration.type.number.DoubleOr.Default;
 import io.papermc.paper.configuration.type.number.DoubleOr.Disabled;
 import io.papermc.paper.configuration.type.number.DoubleOr.Serializer;
@@ -278,6 +279,7 @@ class DoubleOrDiffblueTest {
 
     // Assert
     assertEquals(-1.0d, actualFullResult.getAsDouble());
+    assertFalse(actualFullResult.isEmpty());
     assertTrue(actualFullResult.isPresent());
   }
 
@@ -308,6 +310,7 @@ class DoubleOrDiffblueTest {
 
     // Assert
     assertEquals(42.0d, actualFullResult.getAsDouble());
+    assertFalse(actualFullResult.isEmpty());
     assertTrue(actualFullResult.isPresent());
   }
 
@@ -331,7 +334,10 @@ class DoubleOrDiffblueTest {
 
     // Assert
     assertEquals("42", actualSerializer.emptySerializedValue);
-    assertSame(classOfT, actualSerializer.type().getType());
+    TypeToken<DoubleOr> typeResult = actualSerializer.type();
+    AnnotatedType annotatedType = typeResult.getAnnotatedType();
+    assertNull(annotatedType.getAnnotatedOwnerType());
+    assertEquals(annotatedType, typeResult.getCanonicalType());
   }
 
   /**

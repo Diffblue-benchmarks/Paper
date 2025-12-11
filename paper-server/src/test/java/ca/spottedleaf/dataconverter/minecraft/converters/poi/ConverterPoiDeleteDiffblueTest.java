@@ -71,6 +71,7 @@ class ConverterPoiDeleteDiffblueTest {
    * sourceVersion}, {@code toVersion}.
    *
    * <ul>
+   *   <li>When {@link NBTMapType#NBTMapType()}.
    *   <li>Then return {@code null}.
    * </ul>
    *
@@ -78,13 +79,13 @@ class ConverterPoiDeleteDiffblueTest {
    */
   @Test
   @DisplayName(
-      "Test convert(MapType, long, long) with 'data', 'sourceVersion', 'toVersion'; then return 'null'")
+      "Test convert(MapType, long, long) with 'data', 'sourceVersion', 'toVersion'; when NBTMapType(); then return 'null'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"MapType ConverterPoiDelete.convert(MapType, long, long)"})
-  void testConvertWithDataSourceVersionToVersion_thenReturnNull() {
+  void testConvertWithDataSourceVersionToVersion_whenNBTMapType_thenReturnNull() {
     // Arrange
-    ConverterPoiDelete converterPoiDelete = new ConverterPoiDelete(0, mock(Predicate.class));
+    ConverterPoiDelete converterPoiDelete = new ConverterPoiDelete(1, mock(Predicate.class));
 
     // Act and Assert
     assertNull(converterPoiDelete.convert(new NBTMapType(), 1L, 1L));

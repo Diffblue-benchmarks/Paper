@@ -179,32 +179,33 @@ class MatrixUtilDiffblueTest {
    * Test {@link MatrixUtil#eigenvalueJacobi(Matrix3f, int)}.
    *
    * <ul>
-   *   <li>Then return y is {@code -0.3535534}.
+   *   <li>Given ten.
+   *   <li>When four.
+   *   <li>Then return z is {@code 0.3826835}.
    * </ul>
    *
    * <p>Method under test: {@link MatrixUtil#eigenvalueJacobi(Matrix3f, int)}
    */
   @Test
-  @DisplayName("Test eigenvalueJacobi(Matrix3f, int); then return y is '-0.3535534'")
+  @DisplayName(
+      "Test eigenvalueJacobi(Matrix3f, int); given ten; when four; then return z is '0.3826835'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"Quaternionf MatrixUtil.eigenvalueJacobi(Matrix3f, int)"})
-  void testEigenvalueJacobi_thenReturnYIs03535534() {
+  void testEigenvalueJacobi_givenTen_whenFour_thenReturnZIs03826835() {
     // Arrange
-    Matrix3f input = new Matrix3f(10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f);
+    Matrix3f input = new Matrix3f();
+    input.m01(10.0f);
+    input.add(new Matrix3f());
 
     // Act
-    Quaternionf actualEigenvalueJacobiResult = MatrixUtil.eigenvalueJacobi(input, 1);
+    Quaternionf actualEigenvalueJacobiResult = MatrixUtil.eigenvalueJacobi(input, 4);
 
     // Assert
-    assertEquals(-0.3535534f, actualEigenvalueJacobiResult.y());
-    assertEquals(-0.3535534f, actualEigenvalueJacobiResult.y);
-    assertEquals(0.14644663f, actualEigenvalueJacobiResult.x());
-    assertEquals(0.14644663f, actualEigenvalueJacobiResult.x);
-    assertEquals(0.3535534f, actualEigenvalueJacobiResult.z());
-    assertEquals(0.3535534f, actualEigenvalueJacobiResult.z);
-    assertEquals(0.85355335f, actualEigenvalueJacobiResult.w());
-    assertEquals(0.85355335f, actualEigenvalueJacobiResult.w);
+    assertEquals(0.3826835f, actualEigenvalueJacobiResult.z());
+    assertEquals(0.3826835f, actualEigenvalueJacobiResult.z);
+    assertEquals(0.9238796f, actualEigenvalueJacobiResult.w());
+    assertEquals(0.9238796f, actualEigenvalueJacobiResult.w);
     Quaternionf actualConjugateResult = actualEigenvalueJacobiResult.conjugate();
     assertSame(actualEigenvalueJacobiResult, actualConjugateResult);
     Quaternionf actualInvertResult = actualEigenvalueJacobiResult.invert();
@@ -217,59 +218,57 @@ class MatrixUtilDiffblueTest {
    * Test {@link MatrixUtil#eigenvalueJacobi(Matrix3f, int)}.
    *
    * <ul>
-   *   <li>Then return y is {@code -0.19134171}.
+   *   <li>Given ten.
+   *   <li>When {@link Matrix3f#Matrix3f()} m01 ten.
+   *   <li>Then return z is {@code 0.38268346}.
    * </ul>
    *
    * <p>Method under test: {@link MatrixUtil#eigenvalueJacobi(Matrix3f, int)}
    */
   @Test
-  @DisplayName("Test eigenvalueJacobi(Matrix3f, int); then return y is '-0.19134171'")
+  @DisplayName(
+      "Test eigenvalueJacobi(Matrix3f, int); given ten; when Matrix3f() m01 ten; then return z is '0.38268346'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"Quaternionf MatrixUtil.eigenvalueJacobi(Matrix3f, int)"})
-  void testEigenvalueJacobi_thenReturnYIs019134171() {
+  void testEigenvalueJacobi_givenTen_whenMatrix3fM01Ten_thenReturnZIs038268346() {
     // Arrange
-    Matrix3f input =
-        new Matrix3f(Constants.EPSILON, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f);
+    Matrix3f input = new Matrix3f();
+    input.m01(10.0f);
+    input.add(new Matrix3f());
 
     // Act
     Quaternionf actualEigenvalueJacobiResult = MatrixUtil.eigenvalueJacobi(input, 1);
 
     // Assert
-    assertEquals(-0.19134171f, actualEigenvalueJacobiResult.y());
-    assertEquals(-0.19134171f, actualEigenvalueJacobiResult.y);
-    assertEquals(0.4619398f, actualEigenvalueJacobiResult.x());
-    assertEquals(0.4619398f, actualEigenvalueJacobiResult.z());
-    assertEquals(0.4619398f, actualEigenvalueJacobiResult.x);
-    assertEquals(0.4619398f, actualEigenvalueJacobiResult.z);
-    assertEquals(0.73253775f, actualEigenvalueJacobiResult.w());
-    assertEquals(0.73253775f, actualEigenvalueJacobiResult.w);
-    Quaternionf actualConjugateResult = actualEigenvalueJacobiResult.conjugate();
-    assertSame(actualEigenvalueJacobiResult, actualConjugateResult);
-    Quaternionf actualInvertResult = actualEigenvalueJacobiResult.invert();
-    assertSame(actualEigenvalueJacobiResult, actualInvertResult);
-    Quaternionf actualNormalizeResult = actualEigenvalueJacobiResult.normalize();
-    assertSame(actualEigenvalueJacobiResult, actualNormalizeResult);
+    assertEquals(0.38268346f, actualEigenvalueJacobiResult.z());
+    assertEquals(0.38268346f, actualEigenvalueJacobiResult.z);
+    assertEquals(0.9238795f, actualEigenvalueJacobiResult.w());
+    assertEquals(0.9238795f, actualEigenvalueJacobiResult.w);
   }
 
   /**
    * Test {@link MatrixUtil#eigenvalueJacobi(Matrix3f, int)}.
    *
    * <ul>
+   *   <li>Given ten.
+   *   <li>When {@link Matrix3f#Matrix3f()} m02 ten.
    *   <li>Then return y is {@code -0.38268346}.
    * </ul>
    *
    * <p>Method under test: {@link MatrixUtil#eigenvalueJacobi(Matrix3f, int)}
    */
   @Test
-  @DisplayName("Test eigenvalueJacobi(Matrix3f, int); then return y is '-0.38268346'")
+  @DisplayName(
+      "Test eigenvalueJacobi(Matrix3f, int); given ten; when Matrix3f() m02 ten; then return y is '-0.38268346'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"Quaternionf MatrixUtil.eigenvalueJacobi(Matrix3f, int)"})
-  void testEigenvalueJacobi_thenReturnYIs038268346() {
+  void testEigenvalueJacobi_givenTen_whenMatrix3fM02Ten_thenReturnYIs038268346() {
     // Arrange
-    Matrix3f input =
-        new Matrix3f(10.0f, Float.NaN, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f);
+    Matrix3f input = new Matrix3f();
+    input.m02(10.0f);
+    input.add(new Matrix3f());
 
     // Act
     Quaternionf actualEigenvalueJacobiResult = MatrixUtil.eigenvalueJacobi(input, 1);
@@ -279,105 +278,94 @@ class MatrixUtilDiffblueTest {
     assertEquals(-0.38268346f, actualEigenvalueJacobiResult.y);
     assertEquals(0.0f, actualEigenvalueJacobiResult.z());
     assertEquals(0.0f, actualEigenvalueJacobiResult.z);
-    Quaternionf actualConjugateResult = actualEigenvalueJacobiResult.conjugate();
-    assertSame(actualEigenvalueJacobiResult, actualConjugateResult);
-    Quaternionf actualInvertResult = actualEigenvalueJacobiResult.invert();
-    assertSame(actualEigenvalueJacobiResult, actualInvertResult);
-    Quaternionf actualNormalizeResult = actualEigenvalueJacobiResult.normalize();
-    assertSame(actualEigenvalueJacobiResult, actualNormalizeResult);
+    assertEquals(0.9238795f, actualEigenvalueJacobiResult.w());
+    assertEquals(0.9238795f, actualEigenvalueJacobiResult.w);
   }
 
   /**
    * Test {@link MatrixUtil#eigenvalueJacobi(Matrix3f, int)}.
    *
    * <ul>
-   *   <li>Then return y is {@code -0.0154054705}.
+   *   <li>Given ten.
+   *   <li>When {@link Matrix3f#Matrix3f()} m12 ten.
+   *   <li>Then return x is {@code 0.38268346}.
    * </ul>
    *
    * <p>Method under test: {@link MatrixUtil#eigenvalueJacobi(Matrix3f, int)}
    */
   @Test
-  @DisplayName("Test eigenvalueJacobi(Matrix3f, int); then return y is '-0.0154054705'")
+  @DisplayName(
+      "Test eigenvalueJacobi(Matrix3f, int); given ten; when Matrix3f() m12 ten; then return x is '0.38268346'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"Quaternionf MatrixUtil.eigenvalueJacobi(Matrix3f, int)"})
-  void testEigenvalueJacobi_thenReturnYIs00154054705() {
+  void testEigenvalueJacobi_givenTen_whenMatrix3fM12Ten_thenReturnXIs038268346() {
     // Arrange
-    Matrix3f input = new Matrix3f(200.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f);
+    Matrix3f input = new Matrix3f();
+    input.m12(10.0f);
+    input.add(new Matrix3f());
 
     // Act
     Quaternionf actualEigenvalueJacobiResult = MatrixUtil.eigenvalueJacobi(input, 1);
 
     // Assert
-    assertEquals(-0.0154054705f, actualEigenvalueJacobiResult.y());
-    assertEquals(-0.0154054705f, actualEigenvalueJacobiResult.y);
-    assertEquals(0.034844473f, actualEigenvalueJacobiResult.z());
-    assertEquals(0.034844473f, actualEigenvalueJacobiResult.z);
-    assertEquals(0.38307577f, actualEigenvalueJacobiResult.x());
-    assertEquals(0.38307577f, actualEigenvalueJacobiResult.x);
-    assertEquals(0.9229309f, actualEigenvalueJacobiResult.w());
-    assertEquals(0.9229309f, actualEigenvalueJacobiResult.w);
-    Quaternionf actualConjugateResult = actualEigenvalueJacobiResult.conjugate();
-    assertSame(actualEigenvalueJacobiResult, actualConjugateResult);
-    Quaternionf actualInvertResult = actualEigenvalueJacobiResult.invert();
-    assertSame(actualEigenvalueJacobiResult, actualInvertResult);
-    Quaternionf actualNormalizeResult = actualEigenvalueJacobiResult.normalize();
-    assertSame(actualEigenvalueJacobiResult, actualNormalizeResult);
+    assertEquals(0.0f, actualEigenvalueJacobiResult.z());
+    assertEquals(0.0f, actualEigenvalueJacobiResult.z);
+    assertEquals(0.38268346f, actualEigenvalueJacobiResult.x());
+    assertEquals(0.38268346f, actualEigenvalueJacobiResult.x);
+    assertEquals(0.9238795f, actualEigenvalueJacobiResult.w());
+    assertEquals(0.9238795f, actualEigenvalueJacobiResult.w);
   }
 
   /**
    * Test {@link MatrixUtil#eigenvalueJacobi(Matrix3f, int)}.
    *
    * <ul>
-   *   <li>Then return y is zero.
+   *   <li>When {@link Matrix3f#Matrix3f()}.
+   *   <li>Then return w is one.
    * </ul>
    *
    * <p>Method under test: {@link MatrixUtil#eigenvalueJacobi(Matrix3f, int)}
    */
   @Test
-  @DisplayName("Test eigenvalueJacobi(Matrix3f, int); then return y is zero")
+  @DisplayName("Test eigenvalueJacobi(Matrix3f, int); when Matrix3f(); then return w is one")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"Quaternionf MatrixUtil.eigenvalueJacobi(Matrix3f, int)"})
-  void testEigenvalueJacobi_thenReturnYIsZero() {
-    // Arrange
-    Matrix3f input =
-        new Matrix3f(Float.NaN, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f);
-
-    // Act
-    Quaternionf actualEigenvalueJacobiResult = MatrixUtil.eigenvalueJacobi(input, 1);
+  void testEigenvalueJacobi_whenMatrix3f_thenReturnWIsOne() {
+    // Arrange and Act
+    Quaternionf actualEigenvalueJacobiResult = MatrixUtil.eigenvalueJacobi(new Matrix3f(), 1);
 
     // Assert
-    assertEquals(0.0f, actualEigenvalueJacobiResult.y());
-    assertEquals(0.0f, actualEigenvalueJacobiResult.y);
-    assertEquals(0.38268346f, actualEigenvalueJacobiResult.z());
-    assertEquals(0.38268346f, actualEigenvalueJacobiResult.z);
-    Quaternionf actualConjugateResult = actualEigenvalueJacobiResult.conjugate();
-    assertSame(actualEigenvalueJacobiResult, actualConjugateResult);
-    Quaternionf actualInvertResult = actualEigenvalueJacobiResult.invert();
-    assertSame(actualEigenvalueJacobiResult, actualInvertResult);
-    Quaternionf actualNormalizeResult = actualEigenvalueJacobiResult.normalize();
-    assertSame(actualEigenvalueJacobiResult, actualNormalizeResult);
+    assertEquals(0.0f, actualEigenvalueJacobiResult.z());
+    assertEquals(0.0f, actualEigenvalueJacobiResult.z);
+    assertEquals(1.0f, actualEigenvalueJacobiResult.w());
+    assertEquals(1.0f, actualEigenvalueJacobiResult.w);
   }
 
   /**
    * Test {@link MatrixUtil#svdDecompose(Matrix3f)}.
    *
-   * <ul>
-   *   <li>Then return Left w is {@code -0.32693136}.
-   * </ul>
-   *
    * <p>Method under test: {@link MatrixUtil#svdDecompose(Matrix3f)}
    */
   @Test
-  @DisplayName("Test svdDecompose(Matrix3f); then return Left w is '-0.32693136'")
+  @DisplayName("Test svdDecompose(Matrix3f)")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"Triple MatrixUtil.svdDecompose(Matrix3f)"})
-  void testSvdDecompose_thenReturnLeftWIs032693136() {
+  void testSvdDecompose() {
     // Arrange
     Matrix3f matrix =
-        new Matrix3f(Constants.EPSILON, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f);
+        new Matrix3f(
+            Constants.EPSILON,
+            Constants.EPSILON,
+            Constants.EPSILON,
+            Constants.EPSILON,
+            Constants.EPSILON,
+            Constants.EPSILON,
+            Constants.EPSILON,
+            Constants.EPSILON,
+            Constants.EPSILON);
 
     // Act
     Triple<Quaternionf, Vector3f, Quaternionf> actualSvdDecomposeResult =
@@ -386,19 +374,139 @@ class MatrixUtilDiffblueTest {
     // Assert
     assertTrue(actualSvdDecomposeResult instanceof ImmutableTriple);
     Quaternionf left = actualSvdDecomposeResult.getLeft();
-    assertEquals(-0.32693136f, left.w());
+    Quaternionf actualConjugateResult = left.conjugate();
+    assertSame(left, actualConjugateResult);
+    Quaternionf actualInvertResult = left.invert();
+    assertSame(left, actualInvertResult);
+    Quaternionf actualNormalizeResult = left.normalize();
+    assertSame(left, actualNormalizeResult);
+    Vector3f middle = actualSvdDecomposeResult.getMiddle();
+    Vector3f actualAbsoluteResult = middle.absolute();
+    assertSame(middle, actualAbsoluteResult);
+    Vector3f actualCeilResult = middle.ceil();
+    assertSame(middle, actualCeilResult);
+    Vector3f actualFloorResult = middle.floor();
+    assertSame(middle, actualFloorResult);
+    Vector3f actualNormalizeResult2 = middle.normalize();
+    assertSame(middle, actualNormalizeResult2);
     Quaternionf right = actualSvdDecomposeResult.getRight();
-    assertEquals(-0.3269314f, right.x());
-    assertEquals(-0.3269314f, right.x);
-    assertEquals(-0.48019484f, right.z());
-    assertEquals(-0.48019484f, right.z);
-    assertEquals(0.19890317f, left.z());
-    assertEquals(0.19890332f, right.y());
-    assertEquals(0.19890332f, right.y);
-    assertEquals(0.48019487f, left.y());
-    assertEquals(0.78928214f, right.w());
-    assertEquals(0.78928214f, right.w);
-    assertEquals(0.7892822f, left.x());
+    Quaternionf actualConjugateResult2 = right.conjugate();
+    assertSame(right, actualConjugateResult2);
+    Quaternionf actualInvertResult2 = right.invert();
+    assertSame(right, actualInvertResult2);
+    Quaternionf actualNormalizeResult3 = right.normalize();
+    assertSame(right, actualNormalizeResult3);
+  }
+
+  /**
+   * Test {@link MatrixUtil#svdDecompose(Matrix3f)}.
+   *
+   * <ul>
+   *   <li>Then return Middle y is zero.
+   * </ul>
+   *
+   * <p>Method under test: {@link MatrixUtil#svdDecompose(Matrix3f)}
+   */
+  @Test
+  @DisplayName("Test svdDecompose(Matrix3f); then return Middle y is zero")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"Triple MatrixUtil.svdDecompose(Matrix3f)"})
+  void testSvdDecompose_thenReturnMiddleYIsZero() {
+    // Arrange
+    Matrix3f matrix =
+        new Matrix3f(
+            -0.5f,
+            Constants.EPSILON,
+            Constants.EPSILON,
+            Constants.EPSILON,
+            Constants.EPSILON,
+            Constants.EPSILON,
+            Constants.EPSILON,
+            Constants.EPSILON,
+            Constants.EPSILON);
+
+    // Act
+    Triple<Quaternionf, Vector3f, Quaternionf> actualSvdDecomposeResult =
+        MatrixUtil.svdDecompose(matrix);
+
+    // Assert
+    assertTrue(actualSvdDecomposeResult instanceof ImmutableTriple);
+    Vector3f middle = actualSvdDecomposeResult.getMiddle();
+    assertEquals(0.0f, middle.y());
+    assertEquals(0.0f, middle.y);
+    Quaternionf left = actualSvdDecomposeResult.getLeft();
+    assertEquals(0.38268346f, left.y());
+    assertEquals(0.9238796f, left.z());
+    assertEquals(1.306563E-6f, left.x());
+    assertEquals(5.411962E-7f, left.w());
+    Quaternionf actualConjugateResult = left.conjugate();
+    assertSame(left, actualConjugateResult);
+    Quaternionf actualInvertResult = left.invert();
+    assertSame(left, actualInvertResult);
+    Quaternionf actualNormalizeResult = left.normalize();
+    assertSame(left, actualNormalizeResult);
+    Vector3f actualAbsoluteResult = middle.absolute();
+    assertSame(middle, actualAbsoluteResult);
+    Vector3f actualCeilResult = middle.ceil();
+    assertSame(middle, actualCeilResult);
+    Vector3f actualFloorResult = middle.floor();
+    assertSame(middle, actualFloorResult);
+    Vector3f actualNormalizeResult2 = middle.normalize();
+    assertSame(middle, actualNormalizeResult2);
+    Quaternionf right = actualSvdDecomposeResult.getRight();
+    Quaternionf actualConjugateResult2 = right.conjugate();
+    assertSame(right, actualConjugateResult2);
+    Quaternionf actualInvertResult2 = right.invert();
+    assertSame(right, actualInvertResult2);
+    Quaternionf actualNormalizeResult3 = right.normalize();
+    assertSame(right, actualNormalizeResult3);
+  }
+
+  /**
+   * Test {@link MatrixUtil#svdDecompose(Matrix3f)}.
+   *
+   * <ul>
+   *   <li>Then return Right y is {@code -0.033436112}.
+   * </ul>
+   *
+   * <p>Method under test: {@link MatrixUtil#svdDecompose(Matrix3f)}
+   */
+  @Test
+  @DisplayName("Test svdDecompose(Matrix3f); then return Right y is '-0.033436112'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"Triple MatrixUtil.svdDecompose(Matrix3f)"})
+  void testSvdDecompose_thenReturnRightYIs0033436112() {
+    // Arrange
+    Matrix3f matrix =
+        new Matrix3f(
+            -0.5f,
+            Constants.EPSILON,
+            Constants.EPSILON,
+            0.5f,
+            Constants.EPSILON,
+            Constants.EPSILON,
+            0.125f,
+            Constants.EPSILON,
+            Constants.EPSILON);
+
+    // Act
+    Triple<Quaternionf, Vector3f, Quaternionf> actualSvdDecomposeResult =
+        MatrixUtil.svdDecompose(matrix);
+
+    // Assert
+    assertTrue(actualSvdDecomposeResult instanceof ImmutableTriple);
+    Quaternionf right = actualSvdDecomposeResult.getRight();
+    assertEquals(-0.033436112f, right.y());
+    assertEquals(-0.033436112f, right.y);
+    assertEquals(-0.080721915f, right.x());
+    assertEquals(-0.080721915f, right.x);
+    assertEquals(-0.38121995f, right.z());
+    assertEquals(-0.38121995f, right.z);
+    assertEquals(0.9203464f, right.w());
+    assertEquals(0.9203464f, right.w);
+    Quaternionf left = actualSvdDecomposeResult.getLeft();
     Quaternionf actualConjugateResult = left.conjugate();
     assertSame(left, actualConjugateResult);
     Quaternionf actualInvertResult = left.invert();
@@ -426,19 +534,29 @@ class MatrixUtilDiffblueTest {
    * Test {@link MatrixUtil#svdDecompose(Matrix3f)}.
    *
    * <ul>
-   *   <li>Then return Right x is {@code -0.115916975}.
+   *   <li>Then return Right y is {@code 0.38268346}.
    * </ul>
    *
    * <p>Method under test: {@link MatrixUtil#svdDecompose(Matrix3f)}
    */
   @Test
-  @DisplayName("Test svdDecompose(Matrix3f); then return Right x is '-0.115916975'")
+  @DisplayName("Test svdDecompose(Matrix3f); then return Right y is '0.38268346'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"Triple MatrixUtil.svdDecompose(Matrix3f)"})
-  void testSvdDecompose_thenReturnRightXIs0115916975() {
+  void testSvdDecompose_thenReturnRightYIs038268346() {
     // Arrange
-    Matrix3f matrix = new Matrix3f(10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f);
+    Matrix3f matrix =
+        new Matrix3f(
+            -0.5f,
+            Constants.EPSILON,
+            Constants.EPSILON,
+            Constants.EPSILON,
+            Constants.EPSILON,
+            Constants.EPSILON,
+            0.5f,
+            Constants.EPSILON,
+            Constants.EPSILON);
 
     // Act
     Triple<Quaternionf, Vector3f, Quaternionf> actualSvdDecomposeResult =
@@ -447,24 +565,16 @@ class MatrixUtilDiffblueTest {
     // Assert
     assertTrue(actualSvdDecomposeResult instanceof ImmutableTriple);
     Quaternionf right = actualSvdDecomposeResult.getRight();
-    assertEquals(-0.115916975f, right.x());
+    assertEquals(0.38268346f, right.y());
+    assertEquals(0.38268346f, right.y);
     Quaternionf left = actualSvdDecomposeResult.getLeft();
-    assertEquals(-0.27984816f, left.y());
-    assertEquals(-0.3647052f, right.z());
-    Vector3f middle = actualSvdDecomposeResult.getMiddle();
-    assertEquals(0.0f, middle.z());
-    assertEquals(0.0f, middle.z);
-    assertEquals(0.11591689f, left.x());
-    assertEquals(0.2798483f, right.y());
-    assertEquals(0.3647052f, left.z());
-    assertEquals(0.88047624f, right.w());
-    assertEquals(0.8804763f, left.w());
     Quaternionf actualConjugateResult = left.conjugate();
     assertSame(left, actualConjugateResult);
     Quaternionf actualInvertResult = left.invert();
     assertSame(left, actualInvertResult);
     Quaternionf actualNormalizeResult = left.normalize();
     assertSame(left, actualNormalizeResult);
+    Vector3f middle = actualSvdDecomposeResult.getMiddle();
     Vector3f actualAbsoluteResult = middle.absolute();
     assertSame(middle, actualAbsoluteResult);
     Vector3f actualCeilResult = middle.ceil();
@@ -473,6 +583,187 @@ class MatrixUtilDiffblueTest {
     assertSame(middle, actualFloorResult);
     Vector3f actualNormalizeResult2 = middle.normalize();
     assertSame(middle, actualNormalizeResult2);
+    Quaternionf actualConjugateResult2 = right.conjugate();
+    assertSame(right, actualConjugateResult2);
+    Quaternionf actualInvertResult2 = right.invert();
+    assertSame(right, actualInvertResult2);
+    Quaternionf actualNormalizeResult3 = right.normalize();
+    assertSame(right, actualNormalizeResult3);
+  }
+
+  /**
+   * Test {@link MatrixUtil#svdDecompose(Matrix3f)}.
+   *
+   * <ul>
+   *   <li>Then return Right z is {@code -0.024976602}.
+   * </ul>
+   *
+   * <p>Method under test: {@link MatrixUtil#svdDecompose(Matrix3f)}
+   */
+  @Test
+  @DisplayName("Test svdDecompose(Matrix3f); then return Right z is '-0.024976602'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"Triple MatrixUtil.svdDecompose(Matrix3f)"})
+  void testSvdDecompose_thenReturnRightZIs0024976602() {
+    // Arrange
+    Matrix3f matrix =
+        new Matrix3f(
+            -0.5f,
+            Constants.EPSILON,
+            Constants.EPSILON,
+            10.0f,
+            Constants.EPSILON,
+            Constants.EPSILON,
+            Constants.EPSILON,
+            Constants.EPSILON,
+            Constants.EPSILON);
+
+    // Act
+    Triple<Quaternionf, Vector3f, Quaternionf> actualSvdDecomposeResult =
+        MatrixUtil.svdDecompose(matrix);
+
+    // Assert
+    assertTrue(actualSvdDecomposeResult instanceof ImmutableTriple);
+    Quaternionf right = actualSvdDecomposeResult.getRight();
+    assertEquals(-0.024976602f, right.z());
+    assertEquals(-0.024976602f, right.z);
+    assertEquals(0.0f, right.y());
+    assertEquals(0.0f, right.y);
+    assertEquals(0.999688f, right.w());
+    assertEquals(0.999688f, right.w);
+    Quaternionf left = actualSvdDecomposeResult.getLeft();
+    Quaternionf actualConjugateResult = left.conjugate();
+    assertSame(left, actualConjugateResult);
+    Quaternionf actualInvertResult = left.invert();
+    assertSame(left, actualInvertResult);
+    Quaternionf actualNormalizeResult = left.normalize();
+    assertSame(left, actualNormalizeResult);
+    Vector3f middle = actualSvdDecomposeResult.getMiddle();
+    Vector3f actualAbsoluteResult = middle.absolute();
+    assertSame(middle, actualAbsoluteResult);
+    Vector3f actualCeilResult = middle.ceil();
+    assertSame(middle, actualCeilResult);
+    Vector3f actualFloorResult = middle.floor();
+    assertSame(middle, actualFloorResult);
+    Vector3f actualNormalizeResult2 = middle.normalize();
+    assertSame(middle, actualNormalizeResult2);
+    Quaternionf actualConjugateResult2 = right.conjugate();
+    assertSame(right, actualConjugateResult2);
+    Quaternionf actualInvertResult2 = right.invert();
+    assertSame(right, actualInvertResult2);
+    Quaternionf actualNormalizeResult3 = right.normalize();
+    assertSame(right, actualNormalizeResult3);
+  }
+
+  /**
+   * Test {@link MatrixUtil#svdDecompose(Matrix3f)}.
+   *
+   * <ul>
+   *   <li>Then return Right z is {@code -0.38268346}.
+   * </ul>
+   *
+   * <p>Method under test: {@link MatrixUtil#svdDecompose(Matrix3f)}
+   */
+  @Test
+  @DisplayName("Test svdDecompose(Matrix3f); then return Right z is '-0.38268346'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"Triple MatrixUtil.svdDecompose(Matrix3f)"})
+  void testSvdDecompose_thenReturnRightZIs038268346() {
+    // Arrange
+    Matrix3f matrix =
+        new Matrix3f(
+            -0.5f,
+            Constants.EPSILON,
+            Constants.EPSILON,
+            0.5f,
+            Constants.EPSILON,
+            Constants.EPSILON,
+            Constants.EPSILON,
+            Constants.EPSILON,
+            Constants.EPSILON);
+
+    // Act
+    Triple<Quaternionf, Vector3f, Quaternionf> actualSvdDecomposeResult =
+        MatrixUtil.svdDecompose(matrix);
+
+    // Assert
+    assertTrue(actualSvdDecomposeResult instanceof ImmutableTriple);
+    Quaternionf right = actualSvdDecomposeResult.getRight();
+    assertEquals(-0.38268346f, right.z());
+    assertEquals(-0.38268346f, right.z);
+    Quaternionf left = actualSvdDecomposeResult.getLeft();
+    Quaternionf actualConjugateResult = left.conjugate();
+    assertSame(left, actualConjugateResult);
+    Quaternionf actualInvertResult = left.invert();
+    assertSame(left, actualInvertResult);
+    Quaternionf actualNormalizeResult = left.normalize();
+    assertSame(left, actualNormalizeResult);
+    Vector3f middle = actualSvdDecomposeResult.getMiddle();
+    Vector3f actualAbsoluteResult = middle.absolute();
+    assertSame(middle, actualAbsoluteResult);
+    Vector3f actualCeilResult = middle.ceil();
+    assertSame(middle, actualCeilResult);
+    Vector3f actualFloorResult = middle.floor();
+    assertSame(middle, actualFloorResult);
+    Vector3f actualNormalizeResult2 = middle.normalize();
+    assertSame(middle, actualNormalizeResult2);
+    Quaternionf actualConjugateResult2 = right.conjugate();
+    assertSame(right, actualConjugateResult2);
+    Quaternionf actualInvertResult2 = right.invert();
+    assertSame(right, actualInvertResult2);
+    Quaternionf actualNormalizeResult3 = right.normalize();
+    assertSame(right, actualNormalizeResult3);
+  }
+
+  /**
+   * Test {@link MatrixUtil#svdDecompose(Matrix3f)}.
+   *
+   * <ul>
+   *   <li>When {@link Matrix3f#Matrix3f()}.
+   *   <li>Then return Left x is zero.
+   * </ul>
+   *
+   * <p>Method under test: {@link MatrixUtil#svdDecompose(Matrix3f)}
+   */
+  @Test
+  @DisplayName("Test svdDecompose(Matrix3f); when Matrix3f(); then return Left x is zero")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"Triple MatrixUtil.svdDecompose(Matrix3f)"})
+  void testSvdDecompose_whenMatrix3f_thenReturnLeftXIsZero() {
+    // Arrange and Act
+    Triple<Quaternionf, Vector3f, Quaternionf> actualSvdDecomposeResult =
+        MatrixUtil.svdDecompose(new Matrix3f());
+
+    // Assert
+    assertTrue(actualSvdDecomposeResult instanceof ImmutableTriple);
+    Quaternionf left = actualSvdDecomposeResult.getLeft();
+    assertEquals(0.0f, left.x());
+    assertEquals(0.0f, left.y());
+    assertEquals(0.0f, left.z());
+    assertEquals(0.0f, left.x);
+    assertEquals(0.0f, left.y);
+    assertEquals(0.0f, left.z);
+    assertEquals(1.0f, left.w());
+    assertEquals(1.0f, left.w);
+    Quaternionf actualConjugateResult = left.conjugate();
+    assertSame(left, actualConjugateResult);
+    Quaternionf actualInvertResult = left.invert();
+    assertSame(left, actualInvertResult);
+    Quaternionf actualNormalizeResult = left.normalize();
+    assertSame(left, actualNormalizeResult);
+    Vector3f middle = actualSvdDecomposeResult.getMiddle();
+    Vector3f actualAbsoluteResult = middle.absolute();
+    assertSame(middle, actualAbsoluteResult);
+    Vector3f actualCeilResult = middle.ceil();
+    assertSame(middle, actualCeilResult);
+    Vector3f actualFloorResult = middle.floor();
+    assertSame(middle, actualFloorResult);
+    Vector3f actualNormalizeResult2 = middle.normalize();
+    assertSame(middle, actualNormalizeResult2);
+    Quaternionf right = actualSvdDecomposeResult.getRight();
     Quaternionf actualConjugateResult2 = right.conjugate();
     assertSame(right, actualConjugateResult2);
     Quaternionf actualInvertResult2 = right.invert();

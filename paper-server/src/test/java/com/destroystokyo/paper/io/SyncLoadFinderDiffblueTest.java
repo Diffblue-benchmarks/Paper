@@ -66,10 +66,12 @@ class SyncLoadFinderDiffblueTest {
   })
   void testThrowableWithEqualsEqualsAndHashCode_whenOtherIsEqual_thenReturnEqual() {
     // Arrange
-    StackTraceElement stackTraceElement = new StackTraceElement("foo", "foo", "foo", 1);
+    StackTraceElement stackTraceElement =
+        new StackTraceElement("Declaring Class", "Method Name", "foo.txt", 2);
     StackTraceElement[] stacktrace = new StackTraceElement[] {stackTraceElement};
     ThrowableWithEquals throwableWithEquals = new ThrowableWithEquals(stacktrace);
-    StackTraceElement stackTraceElement2 = new StackTraceElement("foo", "foo", "foo", 1);
+    StackTraceElement stackTraceElement2 =
+        new StackTraceElement("Declaring Class", "Method Name", "foo.txt", 2);
     StackTraceElement[] stacktrace2 = new StackTraceElement[] {stackTraceElement2};
     ThrowableWithEquals throwableWithEquals2 = new ThrowableWithEquals(stacktrace2);
 
@@ -105,7 +107,8 @@ class SyncLoadFinderDiffblueTest {
   })
   void testThrowableWithEqualsEqualsAndHashCode_whenOtherIsSame_thenReturnEqual() {
     // Arrange
-    StackTraceElement stackTraceElement = new StackTraceElement("foo", "foo", "foo", 1);
+    StackTraceElement stackTraceElement =
+        new StackTraceElement("Declaring Class", "Method Name", "foo.txt", 2);
     StackTraceElement[] stacktrace = new StackTraceElement[] {stackTraceElement};
     ThrowableWithEquals throwableWithEquals = new ThrowableWithEquals(stacktrace);
 
@@ -137,7 +140,8 @@ class SyncLoadFinderDiffblueTest {
   void testThrowableWithEqualsEquals_whenOtherIsDifferent_thenReturnNotEqual() {
     // Arrange
     ThrowableWithEquals throwableWithEquals = new ThrowableWithEquals(new StackTraceElement[] {});
-    StackTraceElement stackTraceElement = new StackTraceElement("foo", "foo", "foo", 1);
+    StackTraceElement stackTraceElement =
+        new StackTraceElement("Declaring Class", "Method Name", "foo.txt", 2);
     StackTraceElement[] stacktrace = new StackTraceElement[] {stackTraceElement};
     ThrowableWithEquals throwableWithEquals2 = new ThrowableWithEquals(stacktrace);
 
@@ -166,10 +170,11 @@ class SyncLoadFinderDiffblueTest {
   })
   void testThrowableWithEqualsEquals_whenOtherIsDifferent_thenReturnNotEqual2() {
     // Arrange
-    StackTraceElement stackTraceElement = new StackTraceElement("42", "foo", "foo", 1);
+    StackTraceElement stackTraceElement = new StackTraceElement("foo", "Method Name", "foo.txt", 2);
     StackTraceElement[] stacktrace = new StackTraceElement[] {stackTraceElement};
     ThrowableWithEquals throwableWithEquals = new ThrowableWithEquals(stacktrace);
-    StackTraceElement stackTraceElement2 = new StackTraceElement("foo", "foo", "foo", 1);
+    StackTraceElement stackTraceElement2 =
+        new StackTraceElement("Declaring Class", "Method Name", "foo.txt", 2);
     StackTraceElement[] stacktrace2 = new StackTraceElement[] {stackTraceElement2};
     ThrowableWithEquals throwableWithEquals2 = new ThrowableWithEquals(stacktrace2);
 
@@ -198,7 +203,8 @@ class SyncLoadFinderDiffblueTest {
   })
   void testThrowableWithEqualsEquals_whenOtherIsNull_thenReturnNotEqual() {
     // Arrange
-    StackTraceElement stackTraceElement = new StackTraceElement("foo", "foo", "foo", 1);
+    StackTraceElement stackTraceElement =
+        new StackTraceElement("Declaring Class", "Method Name", "foo.txt", 2);
     StackTraceElement[] stacktrace = new StackTraceElement[] {stackTraceElement};
     ThrowableWithEquals throwableWithEquals = new ThrowableWithEquals(stacktrace);
 
@@ -227,7 +233,8 @@ class SyncLoadFinderDiffblueTest {
   })
   void testThrowableWithEqualsEquals_whenOtherIsWrongType_thenReturnNotEqual() {
     // Arrange
-    StackTraceElement stackTraceElement = new StackTraceElement("foo", "foo", "foo", 1);
+    StackTraceElement stackTraceElement =
+        new StackTraceElement("Declaring Class", "Method Name", "foo.txt", 2);
     StackTraceElement[] stacktrace = new StackTraceElement[] {stackTraceElement};
     ThrowableWithEquals throwableWithEquals = new ThrowableWithEquals(stacktrace);
 
@@ -239,21 +246,22 @@ class SyncLoadFinderDiffblueTest {
    * Test ThrowableWithEquals {@link ThrowableWithEquals#hash(StackTraceElement[])}.
    *
    * <ul>
-   *   <li>Then return {@code 517991227}.
+   *   <li>Then return {@code 247585743}.
    * </ul>
    *
    * <p>Method under test: {@link ThrowableWithEquals#hash(StackTraceElement[])}
    */
   @Test
-  @DisplayName("Test ThrowableWithEquals hash(StackTraceElement[]); then return '517991227'")
+  @DisplayName("Test ThrowableWithEquals hash(StackTraceElement[]); then return '247585743'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"int ThrowableWithEquals.hash(StackTraceElement[])"})
-  void testThrowableWithEqualsHash_thenReturn517991227() {
+  void testThrowableWithEqualsHash_thenReturn247585743() {
     // Arrange
-    StackTraceElement stackTraceElement = new StackTraceElement("foo", "foo", "foo", 1);
+    StackTraceElement stackTraceElement =
+        new StackTraceElement("Declaring Class", "Method Name", "foo.txt", 2);
 
     // Act and Assert
-    assertEquals(517991227, ThrowableWithEquals.hash(new StackTraceElement[] {stackTraceElement}));
+    assertEquals(247585743, ThrowableWithEquals.hash(new StackTraceElement[] {stackTraceElement}));
   }
 }

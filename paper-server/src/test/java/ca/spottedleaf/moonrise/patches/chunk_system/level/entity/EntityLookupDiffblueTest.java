@@ -1,5 +1,6 @@
 package ca.spottedleaf.moonrise.patches.chunk_system.level.entity;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -9,7 +10,6 @@ import ca.spottedleaf.moonrise.patches.chunk_system.level.entity.EntityLookup.Ar
 import ca.spottedleaf.moonrise.patches.chunk_system.level.entity.EntityLookup.ChunkSlicesRegion;
 import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
-import java.util.Iterator;
 import java.util.NoSuchElementException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -17,33 +17,6 @@ import org.junit.jupiter.api.Test;
 import org.spongepowered.configurate.transformation.ConfigurationTransformation;
 
 class EntityLookupDiffblueTest {
-  /**
-   * Test ArrayIterable {@link ArrayIterable#iterator()}.
-   *
-   * <ul>
-   *   <li>Then return {@link ArrayIterable.ArrayIterator}.
-   * </ul>
-   *
-   * <p>Method under test: {@link ArrayIterable#iterator()}
-   */
-  @Test
-  @DisplayName("Test ArrayIterable iterator(); then return ArrayIterator")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"Iterator ArrayIterable.iterator()"})
-  void testArrayIterableIterator_thenReturnArrayIterator() {
-    // Arrange
-    Object[] array = new Object[] {ConfigurationTransformation.WILDCARD_OBJECT};
-    ArrayIterable<Object> arrayIterable = new ArrayIterable<>(array, 1, 1);
-
-    // Act
-    Iterator<Object> actualIteratorResult = arrayIterable.iterator();
-
-    // Assert
-    assertTrue(actualIteratorResult instanceof ArrayIterator);
-    assertFalse(actualIteratorResult.hasNext());
-  }
-
   /**
    * Test ArrayIterable_ArrayIterator {@link ArrayIterable.ArrayIterator#hasNext()}.
    *
@@ -94,6 +67,35 @@ class EntityLookupDiffblueTest {
    * Test ArrayIterable_ArrayIterator {@link ArrayIterable.ArrayIterator#next()}.
    *
    * <ul>
+   *   <li>Then does not throw.
+   * </ul>
+   *
+   * <p>Method under test: {@link ArrayIterable.ArrayIterator#next()}
+   */
+  @Test
+  @DisplayName("Test ArrayIterable_ArrayIterator next(); then does not throw")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"Object ArrayIterable.ArrayIterator.next()"})
+  void testArrayIterable_ArrayIteratorNext_thenDoesNotThrow() {
+    // Arrange
+    ArrayIterator<Object> arrayIterator =
+        new ArrayIterator<>(
+            new Object[] {
+              ConfigurationTransformation.WILDCARD_OBJECT,
+              ConfigurationTransformation.WILDCARD_OBJECT
+            },
+            1,
+            3);
+
+    // Act
+    assertDoesNotThrow(() -> arrayIterator.next());
+  }
+
+  /**
+   * Test ArrayIterable_ArrayIterator {@link ArrayIterable.ArrayIterator#next()}.
+   *
+   * <ul>
    *   <li>Then throw {@link NoSuchElementException}.
    * </ul>
    *
@@ -133,6 +135,28 @@ class EntityLookupDiffblueTest {
   }
 
   /**
+   * Test ChunkSlicesRegion {@link ChunkSlicesRegion#get(int)}.
+   *
+   * <ul>
+   *   <li>When one.
+   *   <li>Then return {@code null}.
+   * </ul>
+   *
+   * <p>Method under test: {@link ChunkSlicesRegion#get(int)}
+   */
+  @Test
+  @DisplayName("Test ChunkSlicesRegion get(int); when one; then return 'null'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({
+    "ca.spottedleaf.moonrise.patches.chunk_system.level.entity.ChunkEntitySlices ChunkSlicesRegion.get(int)"
+  })
+  void testChunkSlicesRegionGet_whenOne_thenReturnNull() {
+    // Arrange, Act and Assert
+    assertNull(new ChunkSlicesRegion().get(1));
+  }
+
+  /**
    * Test ChunkSlicesRegion new {@link ChunkSlicesRegion} (default constructor).
    *
    * <p>Method under test: default or parameterless constructor of {@link ChunkSlicesRegion}
@@ -145,5 +169,25 @@ class EntityLookupDiffblueTest {
   void testChunkSlicesRegionNewChunkSlicesRegion() {
     // Arrange, Act and Assert
     assertNull(new ChunkSlicesRegion().get(1));
+  }
+
+  /**
+   * Test ChunkSlicesRegion {@link ChunkSlicesRegion#remove(int)}.
+   *
+   * <ul>
+   *   <li>When one.
+   *   <li>Then throw {@link IllegalStateException}.
+   * </ul>
+   *
+   * <p>Method under test: {@link ChunkSlicesRegion#remove(int)}
+   */
+  @Test
+  @DisplayName("Test ChunkSlicesRegion remove(int); when one; then throw IllegalStateException")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"int ChunkSlicesRegion.remove(int)"})
+  void testChunkSlicesRegionRemove_whenOne_thenThrowIllegalStateException() {
+    // Arrange, Act and Assert
+    assertThrows(IllegalStateException.class, () -> new ChunkSlicesRegion().remove(1));
   }
 }

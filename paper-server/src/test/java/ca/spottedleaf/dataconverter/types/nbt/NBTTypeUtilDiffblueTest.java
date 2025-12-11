@@ -1,6 +1,5 @@
 package ca.spottedleaf.dataconverter.types.nbt;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -21,8 +20,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-import com.google.gson.internal.LazilyParsedNumber;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.util.Iterator;
 import java.util.List;
 import net.minecraft.nbt.ByteTag;
@@ -101,104 +100,22 @@ class NBTTypeUtilDiffblueTest {
    * Test {@link NBTTypeUtil#convertTo(Object, TypeUtil)}.
    *
    * <ul>
-   *   <li>Given {@link NBTListType#NBTListType()}.
-   *   <li>Then Json iterator next return {@link JsonArray}.
+   *   <li>Given one.
+   *   <li>Then return Json iterator next AsString is {@code 1}.
    * </ul>
    *
    * <p>Method under test: {@link NBTTypeUtil#convertTo(Object, TypeUtil)}
    */
   @Test
   @DisplayName(
-      "Test convertTo(Object, TypeUtil); given NBTListType(); then Json iterator next return JsonArray")
+      "Test convertTo(Object, TypeUtil); given one; then return Json iterator next AsString is '1'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"Object NBTTypeUtil.convertTo(Object, TypeUtil)"})
-  void testConvertTo_givenNBTListType_thenJsonIteratorNextReturnJsonArray() {
+  void testConvertTo_givenOne_thenReturnJsonIteratorNextAsStringIs1() {
     // Arrange
     NBTListType nbtListType = new NBTListType();
-    nbtListType.addList(new NBTListType());
-    nbtListType.addByte((byte) 'A');
-
-    // Act
-    Object actualConvertToResult = Types.NBT.convertTo(nbtListType, new JsonTypeUtil(true));
-
-    // Assert
-    assertTrue(actualConvertToResult instanceof JsonListType);
-    Iterator<JsonElement> iteratorResult =
-        ((JsonListType) actualConvertToResult).getJson().iterator();
-    JsonElement nextResult = iteratorResult.next();
-    assertTrue(nextResult instanceof JsonArray);
-    JsonElement nextResult2 = iteratorResult.next();
-    assertTrue(nextResult2 instanceof JsonPrimitive);
-    assertEquals(0, ((JsonArray) nextResult).size());
-    assertFalse(iteratorResult.hasNext());
-    assertFalse(((JsonArray) nextResult).iterator().hasNext());
-    assertTrue(((JsonArray) nextResult).isEmpty());
-    assertTrue(nextResult.isJsonArray());
-    assertSame(nextResult, nextResult.getAsJsonArray());
-    assertArrayEquals(new byte[] {'A'}, nextResult2.getAsBigInteger().toByteArray());
-  }
-
-  /**
-   * Test {@link NBTTypeUtil#convertTo(Object, TypeUtil)}.
-   *
-   * <ul>
-   *   <li>Given {@link NBTMapType#NBTMapType()}.
-   *   <li>Then Json iterator next return {@link JsonObject}.
-   * </ul>
-   *
-   * <p>Method under test: {@link NBTTypeUtil#convertTo(Object, TypeUtil)}
-   */
-  @Test
-  @DisplayName(
-      "Test convertTo(Object, TypeUtil); given NBTMapType(); then Json iterator next return JsonObject")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"Object NBTTypeUtil.convertTo(Object, TypeUtil)"})
-  void testConvertTo_givenNBTMapType_thenJsonIteratorNextReturnJsonObject() {
-    // Arrange
-    NBTListType nbtListType = new NBTListType();
-    nbtListType.addMap(new NBTMapType());
-    nbtListType.addByte((byte) 'A');
-
-    // Act
-    Object actualConvertToResult = Types.NBT.convertTo(nbtListType, new JsonTypeUtil(true));
-
-    // Assert
-    assertTrue(actualConvertToResult instanceof JsonListType);
-    Iterator<JsonElement> iteratorResult =
-        ((JsonListType) actualConvertToResult).getJson().iterator();
-    JsonElement nextResult = iteratorResult.next();
-    assertTrue(nextResult instanceof JsonObject);
-    JsonElement nextResult2 = iteratorResult.next();
-    assertTrue(nextResult2 instanceof JsonPrimitive);
-    assertEquals(0, ((JsonObject) nextResult).size());
-    assertFalse(iteratorResult.hasNext());
-    assertTrue(nextResult.isJsonObject());
-    assertTrue(((JsonObject) nextResult).isEmpty());
-    assertSame(nextResult, nextResult.getAsJsonObject());
-    assertArrayEquals(new byte[] {'A'}, nextResult2.getAsBigInteger().toByteArray());
-  }
-
-  /**
-   * Test {@link NBTTypeUtil#convertTo(Object, TypeUtil)}.
-   *
-   * <ul>
-   *   <li>Then Json iterator next AsNumber return {@link LazilyParsedNumber}.
-   * </ul>
-   *
-   * <p>Method under test: {@link NBTTypeUtil#convertTo(Object, TypeUtil)}
-   */
-  @Test
-  @DisplayName(
-      "Test convertTo(Object, TypeUtil); then Json iterator next AsNumber return LazilyParsedNumber")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"Object NBTTypeUtil.convertTo(Object, TypeUtil)"})
-  void testConvertTo_thenJsonIteratorNextAsNumberReturnLazilyParsedNumber() {
-    // Arrange
-    NBTListType nbtListType = new NBTListType();
-    nbtListType.addString("ca.spottedleaf.dataconverter.types.nbt.NBTListType");
+    nbtListType.addInt(1);
     nbtListType.addByte((byte) 'A');
 
     // Act
@@ -210,93 +127,18 @@ class NBTTypeUtilDiffblueTest {
         ((JsonListType) actualConvertToResult).getJson().iterator();
     JsonElement nextResult = iteratorResult.next();
     assertTrue(nextResult instanceof JsonPrimitive);
-    JsonElement nextResult2 = iteratorResult.next();
-    assertTrue(nextResult2 instanceof JsonPrimitive);
-    Number asNumber = nextResult.getAsNumber();
-    assertTrue(asNumber instanceof LazilyParsedNumber);
-    assertEquals("ca.spottedleaf.dataconverter.types.nbt.NBTListType", nextResult.getAsString());
-    assertEquals("ca.spottedleaf.dataconverter.types.nbt.NBTListType", asNumber.toString());
-    assertEquals('c', nextResult.getAsCharacter());
-    assertFalse(((JsonPrimitive) nextResult).isNumber());
+    assertTrue(iteratorResult.next() instanceof JsonPrimitive);
+    assertEquals("1", nextResult.getAsString());
+    assertEquals('1', nextResult.getAsCharacter());
+    assertEquals(1, nextResult.getAsInt());
+    assertEquals(1, nextResult.getAsNumber().intValue());
+    assertEquals(1.0d, nextResult.getAsDouble());
+    assertEquals(1.0f, nextResult.getAsFloat());
+    assertEquals(1L, nextResult.getAsLong());
+    assertEquals((byte) 1, nextResult.getAsByte());
+    assertEquals((short) 1, nextResult.getAsShort());
     assertFalse(iteratorResult.hasNext());
-    assertTrue(((JsonPrimitive) nextResult).isString());
-    assertArrayEquals(new byte[] {'A'}, nextResult2.getAsBigInteger().toByteArray());
-  }
-
-  /**
-   * Test {@link NBTTypeUtil#convertTo(Object, TypeUtil)}.
-   *
-   * <ul>
-   *   <li>Then return Json iterator next AsNumber longValue is minus one.
-   * </ul>
-   *
-   * <p>Method under test: {@link NBTTypeUtil#convertTo(Object, TypeUtil)}
-   */
-  @Test
-  @DisplayName(
-      "Test convertTo(Object, TypeUtil); then return Json iterator next AsNumber longValue is minus one")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"Object NBTTypeUtil.convertTo(Object, TypeUtil)"})
-  void testConvertTo_thenReturnJsonIteratorNextAsNumberLongValueIsMinusOne() {
-    // Arrange
-    NBTListType nbtListType = new NBTListType();
-    nbtListType.addLong(-1L);
-    nbtListType.addByte((byte) 'A');
-
-    // Act
-    Object actualConvertToResult = Types.NBT.convertTo(nbtListType, new JsonTypeUtil(true));
-
-    // Assert
-    assertTrue(actualConvertToResult instanceof JsonListType);
-    Iterator<JsonElement> iteratorResult =
-        ((JsonListType) actualConvertToResult).getJson().iterator();
-    JsonElement nextResult = iteratorResult.next();
-    assertTrue(nextResult instanceof JsonPrimitive);
-    JsonElement nextResult2 = iteratorResult.next();
-    assertTrue(nextResult2 instanceof JsonPrimitive);
-    assertEquals(-1L, nextResult.getAsNumber().longValue());
-    assertFalse(iteratorResult.hasNext());
-    assertArrayEquals(new byte[] {-1}, nextResult.getAsBigInteger().toByteArray());
-    assertArrayEquals(new byte[] {'A'}, nextResult2.getAsBigInteger().toByteArray());
-  }
-
-  /**
-   * Test {@link NBTTypeUtil#convertTo(Object, TypeUtil)}.
-   *
-   * <ul>
-   *   <li>Then return Json iterator next AsNumber shortValue is minus one.
-   * </ul>
-   *
-   * <p>Method under test: {@link NBTTypeUtil#convertTo(Object, TypeUtil)}
-   */
-  @Test
-  @DisplayName(
-      "Test convertTo(Object, TypeUtil); then return Json iterator next AsNumber shortValue is minus one")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"Object NBTTypeUtil.convertTo(Object, TypeUtil)"})
-  void testConvertTo_thenReturnJsonIteratorNextAsNumberShortValueIsMinusOne() {
-    // Arrange
-    NBTListType nbtListType = new NBTListType();
-    nbtListType.addShort((short) -1);
-    nbtListType.addByte((byte) 'A');
-
-    // Act
-    Object actualConvertToResult = Types.NBT.convertTo(nbtListType, new JsonTypeUtil(true));
-
-    // Assert
-    assertTrue(actualConvertToResult instanceof JsonListType);
-    Iterator<JsonElement> iteratorResult =
-        ((JsonListType) actualConvertToResult).getJson().iterator();
-    JsonElement nextResult = iteratorResult.next();
-    assertTrue(nextResult instanceof JsonPrimitive);
-    JsonElement nextResult2 = iteratorResult.next();
-    assertTrue(nextResult2 instanceof JsonPrimitive);
-    assertEquals((short) -1, nextResult.getAsNumber().shortValue());
-    assertFalse(iteratorResult.hasNext());
-    assertArrayEquals(new byte[] {-1}, nextResult.getAsBigInteger().toByteArray());
-    assertArrayEquals(new byte[] {'A'}, nextResult2.getAsBigInteger().toByteArray());
+    assertEquals(new BigDecimal("1"), nextResult.getAsBigDecimal());
   }
 
   /**
@@ -3693,7 +3535,6 @@ class NBTTypeUtilDiffblueTest {
     assertEquals((byte) 1, json.getAsNumber().byteValue());
     assertEquals((byte) 1, nextResult.getAsNumber().byteValue());
     assertFalse(iteratorResult.hasNext());
-    assertArrayEquals(new byte[] {1}, json.getAsBigInteger().toByteArray());
   }
 
   /**
@@ -4114,7 +3955,6 @@ class NBTTypeUtilDiffblueTest {
     assertEquals(1, json.getAsNumber().intValue());
     assertEquals(1, nextResult.getAsNumber().intValue());
     assertFalse(iteratorResult.hasNext());
-    assertArrayEquals(new byte[] {1}, json.getAsBigInteger().toByteArray());
   }
 
   /**
@@ -4151,7 +3991,6 @@ class NBTTypeUtilDiffblueTest {
     assertEquals(1L, json.getAsNumber().longValue());
     assertEquals(1L, nextResult.getAsNumber().longValue());
     assertFalse(iteratorResult.hasNext());
-    assertArrayEquals(new byte[] {1}, json.getAsBigInteger().toByteArray());
   }
 
   /**

@@ -4,10 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.mockito.Mockito.mock;
 import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
-import io.papermc.paper.adventure.AdventureComponent;
 import java.util.Map;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
@@ -59,19 +57,22 @@ class PaperOverrideTextDisplayDiffblueTest {
   /**
    * Test {@link PaperOverrideTextDisplay#getHandle()}.
    *
+   * <ul>
+   *   <li>Given {@link PaperOverrideTextDisplay#PaperOverrideTextDisplay(OverrideText)} with impl
+   *       is {@code null}.
+   *   <li>Then return {@code null}.
+   * </ul>
+   *
    * <p>Method under test: {@link PaperOverrideTextDisplay#getHandle()}
    */
   @Test
-  @DisplayName("Test getHandle()")
+  @DisplayName(
+      "Test getHandle(); given PaperOverrideTextDisplay(OverrideText) with impl is 'null'; then return 'null'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"OverrideText PaperOverrideTextDisplay.getHandle()"})
-  void testGetHandle() {
-    // Arrange
-    AdventureComponent component = new AdventureComponent(mock(Component.class));
-    OverrideText impl = new OverrideText(component);
-
-    // Act and Assert
-    assertSame(impl, new PaperOverrideTextDisplay(impl).getHandle());
+  void testGetHandle_givenPaperOverrideTextDisplayWithImplIsNull_thenReturnNull() {
+    // Arrange, Act and Assert
+    assertNull(new PaperOverrideTextDisplay(null).getHandle());
   }
 }

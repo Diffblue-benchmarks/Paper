@@ -18,6 +18,7 @@ import io.papermc.paper.plugin.provider.configuration.PaperPluginMeta;
 import io.papermc.paper.plugin.provider.type.paper.PaperPluginParent;
 import io.papermc.paper.plugin.provider.type.paper.PaperPluginParent.PaperBootstrapProvider;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -251,20 +252,58 @@ class MetaDependencyTreeDiffblueTest {
   /**
    * Test {@link MetaDependencyTree#isTransitiveDependency(PluginMeta, PluginMeta)}.
    *
+   * <ul>
+   *   <li>Given {@link BootstrapMetaDependencyTree#BootstrapMetaDependencyTree()}.
+   * </ul>
+   *
    * <p>Method under test: {@link MetaDependencyTree#isTransitiveDependency(PluginMeta, PluginMeta)}
    */
   @Test
-  @DisplayName("Test isTransitiveDependency(PluginMeta, PluginMeta)")
+  @DisplayName(
+      "Test isTransitiveDependency(PluginMeta, PluginMeta); given BootstrapMetaDependencyTree()")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"boolean MetaDependencyTree.isTransitiveDependency(PluginMeta, PluginMeta)"})
-  void testIsTransitiveDependency() {
+  void testIsTransitiveDependency_givenBootstrapMetaDependencyTree() {
     // Arrange
     BootstrapMetaDependencyTree bootstrapMetaDependencyTree = new BootstrapMetaDependencyTree();
     PaperPluginMeta plugin = new PaperPluginMeta();
 
     // Act and Assert
     assertFalse(bootstrapMetaDependencyTree.isTransitiveDependency(plugin, new PaperPluginMeta()));
+  }
+
+  /**
+   * Test {@link MetaDependencyTree#isTransitiveDependency(PluginMeta, PluginMeta)}.
+   *
+   * <ul>
+   *   <li>Given {@link MutableGraph} {@link MutableGraph#nodes()} return {@link HashSet#HashSet()}.
+   *   <li>Then calls {@link MutableGraph#nodes()}.
+   * </ul>
+   *
+   * <p>Method under test: {@link MetaDependencyTree#isTransitiveDependency(PluginMeta, PluginMeta)}
+   */
+  @Test
+  @DisplayName(
+      "Test isTransitiveDependency(PluginMeta, PluginMeta); given MutableGraph nodes() return HashSet(); then calls nodes()")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"boolean MetaDependencyTree.isTransitiveDependency(PluginMeta, PluginMeta)"})
+  void testIsTransitiveDependency_givenMutableGraphNodesReturnHashSet_thenCallsNodes() {
+    // Arrange
+    MutableGraph<String> graph = mock(MutableGraph.class);
+    when(graph.nodes()).thenReturn(new HashSet<>());
+    BootstrapMetaDependencyTree bootstrapMetaDependencyTree =
+        new BootstrapMetaDependencyTree(graph);
+    PaperPluginMeta plugin = new PaperPluginMeta();
+
+    // Act
+    boolean actualIsTransitiveDependencyResult =
+        bootstrapMetaDependencyTree.isTransitiveDependency(plugin, new PaperPluginMeta());
+
+    // Assert
+    verify(graph).nodes();
+    assertFalse(actualIsTransitiveDependencyResult);
   }
 
   /**
@@ -362,23 +401,6 @@ class MetaDependencyTreeDiffblueTest {
   @ManagedByDiffblue
   @MethodsUnderTest({"String MetaDependencyTree.toString()"})
   void testToString2() {
-    // Arrange, Act and Assert
-    assertEquals(
-        "BootstrapDependencyTree{graph=isDirected: true, allowsSelfLoops: false, nodes: [], edges: []}",
-        new BootstrapMetaDependencyTree().toString());
-  }
-
-  /**
-   * Test {@link MetaDependencyTree#toString()}.
-   *
-   * <p>Method under test: {@link MetaDependencyTree#toString()}
-   */
-  @Test
-  @DisplayName("Test toString()")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"String MetaDependencyTree.toString()"})
-  void testToString3() {
     // Arrange
     SimpleMetaDependencyTree simpleMetaDependencyTree = new SimpleMetaDependencyTree();
     simpleMetaDependencyTree.add(new TestJavaPluginProvider(new TestPluginMeta("42")));

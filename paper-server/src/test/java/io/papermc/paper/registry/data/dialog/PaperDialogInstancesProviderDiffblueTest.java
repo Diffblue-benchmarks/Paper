@@ -503,12 +503,41 @@ class PaperDialogInstancesProviderDiffblueTest {
   void testMultilineOptions_whenNull_thenReturnHeightIsNull() {
     // Arrange and Act
     MultilineOptions actualMultilineOptionsResult =
-        new PaperDialogInstancesProvider().multilineOptions(null, null);
+        new PaperDialogInstancesProvider().multilineOptions(1, null);
 
     // Assert
     assertTrue(actualMultilineOptionsResult instanceof MultilineOptionsImpl);
     assertNull(actualMultilineOptionsResult.height());
+    assertEquals(1, actualMultilineOptionsResult.maxLines().intValue());
+  }
+
+  /**
+   * Test {@link PaperDialogInstancesProvider#multilineOptions(Integer, Integer)}.
+   *
+   * <ul>
+   *   <li>When {@code null}.
+   *   <li>Then return maxLines is {@code null}.
+   * </ul>
+   *
+   * <p>Method under test: {@link PaperDialogInstancesProvider#multilineOptions(Integer, Integer)}
+   */
+  @Test
+  @DisplayName(
+      "Test multilineOptions(Integer, Integer); when 'null'; then return maxLines is 'null'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({
+    "TextDialogInput.MultilineOptions PaperDialogInstancesProvider.multilineOptions(Integer, Integer)"
+  })
+  void testMultilineOptions_whenNull_thenReturnMaxLinesIsNull() {
+    // Arrange and Act
+    MultilineOptions actualMultilineOptionsResult =
+        new PaperDialogInstancesProvider().multilineOptions(null, 1);
+
+    // Assert
+    assertTrue(actualMultilineOptionsResult instanceof MultilineOptionsImpl);
     assertNull(actualMultilineOptionsResult.maxLines());
+    assertEquals(1, actualMultilineOptionsResult.height().intValue());
   }
 
   /**
@@ -516,20 +545,20 @@ class PaperDialogInstancesProviderDiffblueTest {
    *
    * <ul>
    *   <li>When two.
-   *   <li>Then return height intValue is one.
+   *   <li>Then return maxLines intValue is two.
    * </ul>
    *
    * <p>Method under test: {@link PaperDialogInstancesProvider#multilineOptions(Integer, Integer)}
    */
   @Test
   @DisplayName(
-      "Test multilineOptions(Integer, Integer); when two; then return height intValue is one")
+      "Test multilineOptions(Integer, Integer); when two; then return maxLines intValue is two")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({
     "TextDialogInput.MultilineOptions PaperDialogInstancesProvider.multilineOptions(Integer, Integer)"
   })
-  void testMultilineOptions_whenTwo_thenReturnHeightIntValueIsOne() {
+  void testMultilineOptions_whenTwo_thenReturnMaxLinesIntValueIsTwo() {
     // Arrange and Act
     MultilineOptions actualMultilineOptionsResult =
         new PaperDialogInstancesProvider().multilineOptions(2, 1);

@@ -7,6 +7,7 @@ import static org.mockito.Mockito.mock;
 import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
 import com.fasterxml.jackson.databind.type.PlaceholderForType;
+import io.leangen.geantyref.TypeToken;
 import io.papermc.paper.configuration.serializer.ServerboundPacketClassSerializer.PacketInfo;
 import java.lang.reflect.Type;
 import java.util.function.Predicate;
@@ -31,9 +32,12 @@ class ServerboundPacketClassSerializerDiffblueTest {
   @MethodsUnderTest({"void ServerboundPacketClassSerializer.<init>()"})
   void testNewServerboundPacketClassSerializer() {
     // Arrange, Act and Assert
+    TypeToken<Class<? extends Packet<?>>> typeResult =
+        new ServerboundPacketClassSerializer().type();
     assertEquals(
         "java.lang.Class<? extends net.minecraft.network.protocol.Packet<?>>",
-        new ServerboundPacketClassSerializer().type().getType().getTypeName());
+        typeResult.getType().getTypeName());
+    assertNull(typeResult.getAnnotatedType().getAnnotatedOwnerType());
   }
 
   /**
@@ -183,6 +187,35 @@ class ServerboundPacketClassSerializerDiffblueTest {
   }
 
   /**
+   * Test {@link ServerboundPacketClassSerializer#deserialize(Type, Object)} with {@code Type},
+   * {@code Object}.
+   *
+   * <ul>
+   *   <li>When zero.
+   *   <li>Then throw {@link SerializationException}.
+   * </ul>
+   *
+   * <p>Method under test: {@link ServerboundPacketClassSerializer#deserialize(Type, Object)}
+   */
+  @Test
+  @DisplayName(
+      "Test deserialize(Type, Object) with 'Type', 'Object'; when zero; then throw SerializationException")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"Class ServerboundPacketClassSerializer.deserialize(Type, Object)"})
+  void testDeserializeWithTypeObject_whenZero_thenThrowSerializationException()
+      throws SerializationException {
+    // Arrange
+    ServerboundPacketClassSerializer serverboundPacketClassSerializer =
+        new ServerboundPacketClassSerializer();
+
+    // Act and Assert
+    assertThrows(
+        SerializationException.class,
+        () -> serverboundPacketClassSerializer.deserialize(new PlaceholderForType(1), 0));
+  }
+
+  /**
    * Test PacketInfo {@link PacketInfo#packetClass()}.
    *
    * <p>Method under test: {@link PacketInfo#packetClass()}
@@ -209,14 +242,19 @@ class ServerboundPacketClassSerializerDiffblueTest {
    * Test {@link ServerboundPacketClassSerializer#serialize(Class, Predicate)} with {@code Class},
    * {@code Predicate}.
    *
+   * <ul>
+   *   <li>When {@code Packet}.
+   * </ul>
+   *
    * <p>Method under test: {@link ServerboundPacketClassSerializer#serialize(Class, Predicate)}
    */
   @Test
-  @DisplayName("Test serialize(Class, Predicate) with 'Class', 'Predicate'")
+  @DisplayName(
+      "Test serialize(Class, Predicate) with 'Class', 'Predicate'; when 'net.minecraft.network.protocol.Packet'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"Object ServerboundPacketClassSerializer.serialize(Class, Predicate)"})
-  void testSerializeWithClassPredicate() {
+  void testSerializeWithClassPredicate_whenNetMinecraftNetworkProtocolPacket() {
     // Arrange
     ServerboundPacketClassSerializer serverboundPacketClassSerializer =
         new ServerboundPacketClassSerializer();
@@ -226,5 +264,27 @@ class ServerboundPacketClassSerializerDiffblueTest {
     assertNull(
         serverboundPacketClassSerializer.serialize(
             (Class<Packet<?>>) (Class) forNameResult, mock(Predicate.class)));
+  }
+
+  /**
+   * Test {@link ServerboundPacketClassSerializer#serialize(Class, Predicate)} with {@code Class},
+   * {@code Predicate}.
+   *
+   * <ul>
+   *   <li>When {@code null}.
+   * </ul>
+   *
+   * <p>Method under test: {@link ServerboundPacketClassSerializer#serialize(Class, Predicate)}
+   */
+  @Test
+  @DisplayName("Test serialize(Class, Predicate) with 'Class', 'Predicate'; when 'null'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"Object ServerboundPacketClassSerializer.serialize(Class, Predicate)"})
+  void testSerializeWithClassPredicate_whenNull() {
+    // Arrange, Act and Assert
+    assertNull(
+        new ServerboundPacketClassSerializer()
+            .serialize((Class<Packet<?>>) (Class) null, mock(Predicate.class)));
   }
 }

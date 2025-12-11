@@ -5,6 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.atLeast;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
 import net.minecraft.util.Mth;
@@ -15,8 +18,64 @@ import org.joml.Vector3f;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+@ExtendWith(MockitoExtension.class)
 class TransformationDiffblueTest {
+  @Mock private Quaternionf quaternionf;
+
+  @InjectMocks private Transformation transformation;
+
+  @Mock private Vector3f vector3f;
+
+  /**
+   * Test {@link Transformation#Transformation(Vector3f, Quaternionf, Vector3f, Quaternionf)}.
+   *
+   * <ul>
+   *   <li>Given {@link Quaternionf} {@link Quaternionf#w()} return ten.
+   *   <li>When {@link Vector3f}.
+   *   <li>Then calls {@link Quaternionf#w()}.
+   * </ul>
+   *
+   * <p>Method under test: {@link Transformation#Transformation(Vector3f, Quaternionf, Vector3f,
+   * Quaternionf)}
+   */
+  @Test
+  @DisplayName(
+      "Test new Transformation(Vector3f, Quaternionf, Vector3f, Quaternionf); given Quaternionf w() return ten; when Vector3f; then calls w()")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void Transformation.<init>(Vector3f, Quaternionf, Vector3f, Quaternionf)"})
+  void testNewTransformation_givenQuaternionfWReturnTen_whenVector3f_thenCallsW() {
+    // Arrange
+    when(quaternionf.w()).thenReturn(10.0f);
+    when(quaternionf.x()).thenReturn(10.0f);
+    when(quaternionf.y()).thenReturn(10.0f);
+    when(quaternionf.z()).thenReturn(10.0f);
+    when(vector3f.x()).thenReturn(10.0f);
+    when(vector3f.y()).thenReturn(10.0f);
+    when(vector3f.z()).thenReturn(10.0f);
+
+    // Act
+    Transformation actualTransformation =
+        new Transformation(vector3f, quaternionf, vector3f, quaternionf);
+
+    // Assert
+    verify(quaternionf, atLeast(1)).w();
+    verify(quaternionf, atLeast(1)).x();
+    verify(quaternionf, atLeast(1)).y();
+    verify(quaternionf, atLeast(1)).z();
+    verify(vector3f, atLeast(1)).x();
+    verify(vector3f, atLeast(1)).y();
+    verify(vector3f, atLeast(1)).z();
+    Matrix4fc matrix = actualTransformation.getMatrix();
+    assertTrue(matrix instanceof Matrix4f);
+    assertEquals(matrix, actualTransformation.getMatrixCopy());
+  }
+
   /**
    * Test {@link Transformation#Transformation(Matrix4fc)}.
    *
@@ -60,12 +119,11 @@ class TransformationDiffblueTest {
   @MethodsUnderTest({"void Transformation.<init>(Vector3f, Quaternionf, Vector3f, Quaternionf)"})
   void testNewTransformation_whenNull() {
     // Arrange
-    Quaternionf leftRotation = new Quaternionf(2.0d, 3.0d, 10.0d, 10.0d);
-    Quaternionf rightRotation = new Quaternionf(2.0d, 3.0d, 10.0d, 10.0d);
+    Quaternionf leftRotation = new Quaternionf();
 
     // Act
     Transformation actualTransformation =
-        new Transformation(null, leftRotation, Mth.X_AXIS, rightRotation);
+        new Transformation(null, leftRotation, Mth.X_AXIS, new Quaternionf());
 
     // Assert
     Matrix4fc matrix = actualTransformation.getMatrix();
@@ -89,12 +147,9 @@ class TransformationDiffblueTest {
   @ManagedByDiffblue
   @MethodsUnderTest({"void Transformation.<init>(Vector3f, Quaternionf, Vector3f, Quaternionf)"})
   void testNewTransformation_whenNull2() {
-    // Arrange
-    Quaternionf rightRotation = new Quaternionf(2.0d, 3.0d, 10.0d, 10.0d);
-
-    // Act
+    // Arrange and Act
     Transformation actualTransformation =
-        new Transformation(Mth.X_AXIS, null, Mth.X_AXIS, rightRotation);
+        new Transformation(Mth.X_AXIS, null, Mth.X_AXIS, new Quaternionf());
 
     // Assert
     Matrix4fc matrix = actualTransformation.getMatrix();
@@ -119,12 +174,11 @@ class TransformationDiffblueTest {
   @MethodsUnderTest({"void Transformation.<init>(Vector3f, Quaternionf, Vector3f, Quaternionf)"})
   void testNewTransformation_whenNull3() {
     // Arrange
-    Quaternionf leftRotation = new Quaternionf(2.0d, 3.0d, 10.0d, 10.0d);
-    Quaternionf rightRotation = new Quaternionf(2.0d, 3.0d, 10.0d, 10.0d);
+    Quaternionf leftRotation = new Quaternionf();
 
     // Act
     Transformation actualTransformation =
-        new Transformation(Mth.X_AXIS, leftRotation, null, rightRotation);
+        new Transformation(Mth.X_AXIS, leftRotation, null, new Quaternionf());
 
     // Assert
     Matrix4fc matrix = actualTransformation.getMatrix();
@@ -148,12 +202,9 @@ class TransformationDiffblueTest {
   @ManagedByDiffblue
   @MethodsUnderTest({"void Transformation.<init>(Vector3f, Quaternionf, Vector3f, Quaternionf)"})
   void testNewTransformation_whenNull4() {
-    // Arrange
-    Quaternionf leftRotation = new Quaternionf(2.0d, 3.0d, 10.0d, 10.0d);
-
-    // Act
+    // Arrange and Act
     Transformation actualTransformation =
-        new Transformation(Mth.X_AXIS, leftRotation, Mth.X_AXIS, null);
+        new Transformation(Mth.X_AXIS, new Quaternionf(), Mth.X_AXIS, null);
 
     // Assert
     Matrix4fc matrix = actualTransformation.getMatrix();
@@ -177,11 +228,9 @@ class TransformationDiffblueTest {
   @ManagedByDiffblue
   @MethodsUnderTest({"void Transformation.<init>(Vector3f, Quaternionf, Vector3f, Quaternionf)"})
   void testNewTransformation_whenNull5() {
-    // Arrange
-    Quaternionf rightRotation = new Quaternionf(2.0d, 3.0d, 10.0d, 10.0d);
-
-    // Act
-    Transformation actualTransformation = new Transformation(null, null, Mth.X_AXIS, rightRotation);
+    // Arrange and Act
+    Transformation actualTransformation =
+        new Transformation(null, null, Mth.X_AXIS, new Quaternionf());
 
     // Assert
     Matrix4fc matrix = actualTransformation.getMatrix();
@@ -218,27 +267,24 @@ class TransformationDiffblueTest {
    * Test {@link Transformation#Transformation(Vector3f, Quaternionf, Vector3f, Quaternionf)}.
    *
    * <ul>
-   *   <li>When {@link Quaternionf#Quaternionf(double, double, double, double)} with x is two and y
-   *       is three and z is ten and w is ten.
+   *   <li>When {@link Mth#X_AXIS}.
    * </ul>
    *
    * <p>Method under test: {@link Transformation#Transformation(Vector3f, Quaternionf, Vector3f,
    * Quaternionf)}
    */
   @Test
-  @DisplayName(
-      "Test new Transformation(Vector3f, Quaternionf, Vector3f, Quaternionf); when Quaternionf(double, double, double, double) with x is two and y is three and z is ten and w is ten")
+  @DisplayName("Test new Transformation(Vector3f, Quaternionf, Vector3f, Quaternionf); when X_AXIS")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void Transformation.<init>(Vector3f, Quaternionf, Vector3f, Quaternionf)"})
-  void testNewTransformation_whenQuaternionfWithXIsTwoAndYIsThreeAndZIsTenAndWIsTen() {
+  void testNewTransformation_whenX_axis() {
     // Arrange
-    Quaternionf leftRotation = new Quaternionf(2.0d, 3.0d, 10.0d, 10.0d);
-    Quaternionf rightRotation = new Quaternionf(2.0d, 3.0d, 10.0d, 10.0d);
+    Quaternionf leftRotation = new Quaternionf();
 
     // Act
     Transformation actualTransformation =
-        new Transformation(Mth.X_AXIS, leftRotation, Mth.X_AXIS, rightRotation);
+        new Transformation(Mth.X_AXIS, leftRotation, Mth.X_AXIS, new Quaternionf());
 
     // Assert
     Matrix4fc matrix = actualTransformation.getMatrix();
@@ -278,11 +324,9 @@ class TransformationDiffblueTest {
   @MethodsUnderTest({"Transformation Transformation.compose(Transformation)"})
   void testComposeWithOther() {
     // Arrange
-    Quaternionf leftRotation = new Quaternionf(2.0d, 3.0d, 10.0d, 10.0d);
-    Quaternionf rightRotation = new Quaternionf(2.0d, 3.0d, 10.0d, 10.0d);
-
+    Quaternionf leftRotation = new Quaternionf();
     Transformation transformation =
-        new Transformation(Mth.X_AXIS, leftRotation, Mth.X_AXIS, rightRotation);
+        new Transformation(Mth.X_AXIS, leftRotation, Mth.X_AXIS, new Quaternionf());
 
     // Act
     Transformation actualComposeResult = transformation.compose(Transformation.identity());
@@ -336,16 +380,12 @@ class TransformationDiffblueTest {
   @MethodsUnderTest({"Transformation Transformation.compose(Transformation)"})
   void testComposeWithOther_thenMatrixReturnMatrix4f() {
     // Arrange
-    Quaternionf leftRotation = new Quaternionf(2.0d, 3.0d, 10.0d, 10.0d);
-    Quaternionf rightRotation = new Quaternionf(2.0d, 3.0d, 10.0d, 10.0d);
-
+    Quaternionf leftRotation = new Quaternionf();
     Transformation transformation =
-        new Transformation(Mth.X_AXIS, leftRotation, Mth.X_AXIS, rightRotation);
-    Quaternionf leftRotation2 = new Quaternionf(2.0d, 3.0d, 10.0d, 10.0d);
-    Quaternionf rightRotation2 = new Quaternionf(2.0d, 3.0d, 10.0d, 10.0d);
-
+        new Transformation(Mth.X_AXIS, leftRotation, Mth.X_AXIS, new Quaternionf());
+    Quaternionf leftRotation2 = new Quaternionf();
     Transformation other =
-        new Transformation(Mth.X_AXIS, leftRotation2, Mth.X_AXIS, rightRotation2);
+        new Transformation(Mth.X_AXIS, leftRotation2, Mth.X_AXIS, new Quaternionf());
 
     // Act
     Transformation actualComposeResult = transformation.compose(other);
@@ -1172,11 +1212,9 @@ class TransformationDiffblueTest {
   @MethodsUnderTest({"boolean Transformation.equals(Object)", "int Transformation.hashCode()"})
   void testEquals_whenOtherIsDifferent_thenReturnNotEqual() {
     // Arrange
-    Quaternionf leftRotation = new Quaternionf(2.0d, 3.0d, 10.0d, 10.0d);
-    Quaternionf rightRotation = new Quaternionf(2.0d, 3.0d, 10.0d, 10.0d);
-
+    Quaternionf leftRotation = new Quaternionf();
     Transformation transformation =
-        new Transformation(Mth.X_AXIS, leftRotation, Mth.X_AXIS, rightRotation);
+        new Transformation(Mth.X_AXIS, leftRotation, Mth.X_AXIS, new Quaternionf());
 
     // Act and Assert
     assertNotEquals(transformation, Transformation.identity());
@@ -1295,17 +1333,19 @@ class TransformationDiffblueTest {
    *
    * <ul>
    *   <li>Given identity.
+   *   <li>When identity.
    *   <li>Then return identity.
    * </ul>
    *
    * <p>Method under test: {@link Transformation#slerp(Transformation, float)}
    */
   @Test
-  @DisplayName("Test slerp(Transformation, float); given identity; then return identity")
+  @DisplayName(
+      "Test slerp(Transformation, float); given identity; when identity; then return identity")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"Transformation Transformation.slerp(Transformation, float)"})
-  void testSlerp_givenIdentity_thenReturnIdentity() {
+  void testSlerp_givenIdentity_whenIdentity_thenReturnIdentity() {
     // Arrange
     Transformation identityResult = Transformation.identity();
     Transformation transformation = Transformation.identity();
@@ -1321,25 +1361,73 @@ class TransformationDiffblueTest {
    * Test {@link Transformation#slerp(Transformation, float)}.
    *
    * <ul>
-   *   <li>Given {@link Quaternionf#Quaternionf(double, double, double, double)} with x is two and y
-   *       is three and z is ten and w is ten.
+   *   <li>Given {@link Quaternionf} {@link Quaternionf#w()} return ten.
+   *   <li>Then return MatrixCopy m00 is zero.
    * </ul>
    *
    * <p>Method under test: {@link Transformation#slerp(Transformation, float)}
    */
   @Test
   @DisplayName(
-      "Test slerp(Transformation, float); given Quaternionf(double, double, double, double) with x is two and y is three and z is ten and w is ten")
+      "Test slerp(Transformation, float); given Quaternionf w() return ten; then return MatrixCopy m00 is zero")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"Transformation Transformation.slerp(Transformation, float)"})
-  void testSlerp_givenQuaternionfWithXIsTwoAndYIsThreeAndZIsTenAndWIsTen() {
+  void testSlerp_givenQuaternionfWReturnTen_thenReturnMatrixCopyM00IsZero() {
     // Arrange
-    Quaternionf leftRotation = new Quaternionf(2.0d, 3.0d, 10.0d, 10.0d);
-    Quaternionf rightRotation = new Quaternionf(2.0d, 3.0d, 10.0d, 10.0d);
+    when(quaternionf.w()).thenReturn(10.0f);
+    when(quaternionf.x()).thenReturn(10.0f);
+    when(quaternionf.y()).thenReturn(10.0f);
+    when(quaternionf.z()).thenReturn(10.0f);
+    when(vector3f.x()).thenReturn(10.0f);
+    when(vector3f.y()).thenReturn(10.0f);
+    when(vector3f.z()).thenReturn(10.0f);
 
+    // Act
+    Transformation actualSlerpResult = transformation.slerp(transformation, 0.5f);
+
+    // Assert
+    verify(quaternionf, atLeast(1)).w();
+    verify(quaternionf, atLeast(1)).x();
+    verify(quaternionf, atLeast(1)).y();
+    verify(quaternionf, atLeast(1)).z();
+    verify(vector3f, atLeast(1)).x();
+    verify(vector3f, atLeast(1)).y();
+    verify(vector3f, atLeast(1)).z();
+    Matrix4fc matrix = actualSlerpResult.getMatrix();
+    assertTrue(matrix instanceof Matrix4f);
+    Matrix4f matrixCopy = actualSlerpResult.getMatrixCopy();
+    assertEquals(0.0f, matrixCopy.m00());
+    assertEquals(0.0f, matrixCopy.m11());
+    assertEquals(0.0f, matrixCopy.m22());
+    assertEquals(0.0f, matrix.m00());
+    assertEquals(0.0f, matrix.m11());
+    assertEquals(0.0f, matrix.m22());
+    assertTrue(matrixCopy.isFinite());
+    assertTrue(matrix.isFinite());
+    assertTrue(actualSlerpResult.getLeftRotation().isFinite());
+    assertTrue(actualSlerpResult.getRightRotation().isFinite());
+  }
+
+  /**
+   * Test {@link Transformation#slerp(Transformation, float)}.
+   *
+   * <ul>
+   *   <li>Then return LeftRotation is {@link Quaternionf#Quaternionf()}.
+   * </ul>
+   *
+   * <p>Method under test: {@link Transformation#slerp(Transformation, float)}
+   */
+  @Test
+  @DisplayName("Test slerp(Transformation, float); then return LeftRotation is Quaternionf()")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"Transformation Transformation.slerp(Transformation, float)"})
+  void testSlerp_thenReturnLeftRotationIsQuaternionf() {
+    // Arrange
+    Quaternionf leftRotation = new Quaternionf();
     Transformation transformation =
-        new Transformation(Mth.X_AXIS, leftRotation, Mth.X_AXIS, rightRotation);
+        new Transformation(Mth.X_AXIS, leftRotation, Mth.X_AXIS, new Quaternionf());
 
     // Act
     Transformation actualSlerpResult = transformation.slerp(Transformation.identity(), 0.5f);
@@ -1347,6 +1435,8 @@ class TransformationDiffblueTest {
     // Assert
     Matrix4fc matrix = actualSlerpResult.getMatrix();
     assertTrue(matrix instanceof Matrix4f);
+    assertEquals(leftRotation, actualSlerpResult.getLeftRotation());
+    assertEquals(leftRotation, actualSlerpResult.getRightRotation());
     assertEquals(matrix, actualSlerpResult.getMatrixCopy());
   }
 

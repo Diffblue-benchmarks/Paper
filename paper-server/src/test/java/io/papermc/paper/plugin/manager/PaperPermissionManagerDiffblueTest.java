@@ -1,5 +1,6 @@
 package io.papermc.paper.plugin.manager;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -128,6 +129,30 @@ class PaperPermissionManagerDiffblueTest {
     assertThrows(
         IllegalArgumentException.class, () -> normalPaperPermissionManager.removePermission(perm));
     verify(perm).getName();
+  }
+
+  /**
+   * Test {@link PaperPermissionManager#removePermission(Permission)} with {@code perm}.
+   *
+   * <ul>
+   *   <li>When {@link Permission#Permission(String)} with {@code Name}.
+   *   <li>Then does not throw.
+   * </ul>
+   *
+   * <p>Method under test: {@link PaperPermissionManager#removePermission(Permission)}
+   */
+  @Test
+  @DisplayName(
+      "Test removePermission(Permission) with 'perm'; when Permission(String) with 'Name'; then does not throw")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void PaperPermissionManager.removePermission(Permission)"})
+  void testRemovePermissionWithPerm_whenPermissionWithName_thenDoesNotThrow() {
+    // Arrange
+    NormalPaperPermissionManager normalPaperPermissionManager = new NormalPaperPermissionManager();
+
+    // Act and Assert
+    assertDoesNotThrow(() -> normalPaperPermissionManager.removePermission(new Permission("Name")));
   }
 
   /**

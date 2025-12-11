@@ -119,4 +119,23 @@ class RegistryHolderDiffblueTest {
     assertThrows(IllegalArgumentException.class, () -> delayed.loadFrom(delayedEntry, registry));
     verify(delegate).createRegistryHolder(isA(Registry.class));
   }
+
+  /**
+   * Test Memoized {@link Memoized#Memoized(Supplier)}.
+   *
+   * <p>Method under test: {@link Memoized#Memoized(Supplier)}
+   */
+  @Test
+  @DisplayName("Test Memoized new Memoized(Supplier)")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void Memoized.<init>(Supplier)"})
+  void testMemoizedNewMemoized() {
+    // Arrange and Act
+    Memoized<Keyed, org.bukkit.Registry<Keyed>> actualMemoized =
+        new Memoized<>(mock(Supplier.class));
+
+    // Assert
+    assertNull(actualMemoized.get());
+  }
 }

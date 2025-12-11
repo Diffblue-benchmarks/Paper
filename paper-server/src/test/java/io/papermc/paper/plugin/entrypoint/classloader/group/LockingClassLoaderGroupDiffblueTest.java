@@ -16,6 +16,9 @@ import io.papermc.paper.plugin.entrypoint.classloader.PaperPluginClassLoader;
 import io.papermc.paper.plugin.provider.classloader.ClassLoaderAccess;
 import io.papermc.paper.plugin.provider.classloader.ConfiguredPluginClassLoader;
 import io.papermc.paper.plugin.provider.classloader.PluginClassLoaderGroup;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.nio.file.Paths;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -80,12 +83,17 @@ class LockingClassLoaderGroupDiffblueTest {
   @MethodsUnderTest({
     "Class LockingClassLoaderGroup.getClassByName(String, boolean, ConfiguredPluginClassLoader)"
   })
-  void testGetClassByName_givenJavaLangObject_thenReturnObject() throws ClassNotFoundException {
+  void testGetClassByName_givenJavaLangObject_thenReturnObject()
+      throws ClassNotFoundException, MalformedURLException {
     // Arrange
     LockingClassLoaderGroup lockingClassLoaderGroup =
         new LockingClassLoaderGroup(new GlobalPluginClassLoaderGroup());
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
+    URL[] urlArray =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray);
+    URL[] urlArray2 =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray2);
 
     PaperPluginClassLoader requester = mock(PaperPluginClassLoader.class);
     Class<Object> forNameResult = Object.class;
@@ -121,13 +129,17 @@ class LockingClassLoaderGroupDiffblueTest {
   @MethodsUnderTest({
     "Class LockingClassLoaderGroup.getClassByName(String, boolean, ConfiguredPluginClassLoader)"
   })
-  void testGetClassByName_thenReturnObject() throws ClassNotFoundException {
+  void testGetClassByName_thenReturnObject() throws ClassNotFoundException, MalformedURLException {
     // Arrange
     LockingClassLoaderGroup lockingClassLoaderGroup =
         new LockingClassLoaderGroup(
             new LockingClassLoaderGroup(new GlobalPluginClassLoaderGroup()));
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
+    URL[] urlArray =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray);
+    URL[] urlArray2 =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray2);
 
     PaperPluginClassLoader requester = mock(PaperPluginClassLoader.class);
     Class<Object> forNameResult = Object.class;
@@ -154,12 +166,16 @@ class LockingClassLoaderGroupDiffblueTest {
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void LockingClassLoaderGroup.add(ConfiguredPluginClassLoader)"})
-  void testAdd() {
+  void testAdd() throws MalformedURLException {
     // Arrange
     LockingClassLoaderGroup lockingClassLoaderGroup =
         new LockingClassLoaderGroup(new GlobalPluginClassLoaderGroup());
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
+    URL[] urlArray =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray);
+    URL[] urlArray2 =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray2);
 
     // Act
     lockingClassLoaderGroup.add(null);
@@ -183,13 +199,17 @@ class LockingClassLoaderGroupDiffblueTest {
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void LockingClassLoaderGroup.add(ConfiguredPluginClassLoader)"})
-  void testAdd2() {
+  void testAdd2() throws MalformedURLException {
     // Arrange
     LockingClassLoaderGroup lockingClassLoaderGroup =
         new LockingClassLoaderGroup(
             new LockingClassLoaderGroup(new GlobalPluginClassLoaderGroup()));
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
+    URL[] urlArray =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray);
+    URL[] urlArray2 =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray2);
 
     // Act
     lockingClassLoaderGroup.add(null);
@@ -247,7 +267,8 @@ class LockingClassLoaderGroupDiffblueTest {
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"ClassLoaderAccess LockingClassLoaderGroup.getAccess()"})
-  void testGetAccess_givenClassLoaderAccessCanAccessReturnTrue_thenReturnCanAccessNull() {
+  void testGetAccess_givenClassLoaderAccessCanAccessReturnTrue_thenReturnCanAccessNull()
+      throws MalformedURLException {
     // Arrange
     ClassLoaderAccess classLoaderAccess = mock(ClassLoaderAccess.class);
     when(classLoaderAccess.canAccess(Mockito.<ConfiguredPluginClassLoader>any())).thenReturn(true);
@@ -257,11 +278,16 @@ class LockingClassLoaderGroupDiffblueTest {
     when(parent.getAccess()).thenReturn(classLoaderAccess);
     LockingClassLoaderGroup parent2 = new LockingClassLoaderGroup(parent);
     LockingClassLoaderGroup lockingClassLoaderGroup = new LockingClassLoaderGroup(parent2);
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
 
     // Act
-    boolean actualCanAccessResult = lockingClassLoaderGroup.getAccess().canAccess(null);
+    ClassLoaderAccess actualAccess = lockingClassLoaderGroup.getAccess();
+    URL[] urlArray =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray);
+    URL[] urlArray2 =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray2);
+    boolean actualCanAccessResult = actualAccess.canAccess(null);
 
     // Assert
     verify(parent).getAccess();
@@ -287,7 +313,7 @@ class LockingClassLoaderGroupDiffblueTest {
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"ClassLoaderAccess LockingClassLoaderGroup.getAccess()"})
-  void testGetAccess_thenReturnNotCanAccessNull() {
+  void testGetAccess_thenReturnNotCanAccessNull() throws MalformedURLException {
     // Arrange
     ClassLoaderAccess classLoaderAccess = mock(ClassLoaderAccess.class);
     when(classLoaderAccess.canAccess(Mockito.<ConfiguredPluginClassLoader>any())).thenReturn(false);
@@ -297,11 +323,16 @@ class LockingClassLoaderGroupDiffblueTest {
     when(parent.getAccess()).thenReturn(classLoaderAccess);
     LockingClassLoaderGroup parent2 = new LockingClassLoaderGroup(parent);
     LockingClassLoaderGroup lockingClassLoaderGroup = new LockingClassLoaderGroup(parent2);
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
 
     // Act
-    boolean actualCanAccessResult = lockingClassLoaderGroup.getAccess().canAccess(null);
+    ClassLoaderAccess actualAccess = lockingClassLoaderGroup.getAccess();
+    URL[] urlArray =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray);
+    URL[] urlArray2 =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray2);
+    boolean actualCanAccessResult = actualAccess.canAccess(null);
 
     // Assert
     verify(parent).getAccess();

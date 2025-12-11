@@ -80,6 +80,7 @@ class FallbackValueDiffblueTest {
 
     // Assert
     assertEquals(-1, actualFromObjectResult.getAsInt());
+    assertFalse(actualFromObjectResult.isEmpty());
     assertTrue(actualFromObjectResult.isPresent());
   }
 
@@ -104,6 +105,7 @@ class FallbackValueDiffblueTest {
 
     // Assert
     assertEquals(1, actualFromObjectResult.getAsInt());
+    assertFalse(actualFromObjectResult.isEmpty());
     assertTrue(actualFromObjectResult.isPresent());
   }
 
@@ -123,8 +125,12 @@ class FallbackValueDiffblueTest {
   @ManagedByDiffblue
   @MethodsUnderTest({"OptionalInt Int.fromObject(Object)"})
   void testIntFromObject_whenDefault_thenReturnNotPresent() throws SerializationException {
-    // Arrange, Act and Assert
-    assertFalse(Int.fromObject("default").isPresent());
+    // Arrange and Act
+    OptionalInt actualFromObjectResult = Int.fromObject("default");
+
+    // Assert
+    assertFalse(actualFromObjectResult.isPresent());
+    assertTrue(actualFromObjectResult.isEmpty());
   }
 
   /**
@@ -164,8 +170,12 @@ class FallbackValueDiffblueTest {
   @ManagedByDiffblue
   @MethodsUnderTest({"OptionalInt Int.fromObject(Object)"})
   void testIntFromObject_whenEmpty_thenReturnNotPresent() throws SerializationException {
-    // Arrange, Act and Assert
-    assertFalse(Int.fromObject(OptionalInt.empty()).isPresent());
+    // Arrange and Act
+    OptionalInt actualFromObjectResult = Int.fromObject(OptionalInt.empty());
+
+    // Assert
+    assertFalse(actualFromObjectResult.isPresent());
+    assertTrue(actualFromObjectResult.isEmpty());
   }
 
   /**
@@ -209,6 +219,7 @@ class FallbackValueDiffblueTest {
 
     // Assert
     assertEquals(1, actualFromObjectResult.getAsInt());
+    assertFalse(actualFromObjectResult.isEmpty());
     assertTrue(actualFromObjectResult.isPresent());
   }
 

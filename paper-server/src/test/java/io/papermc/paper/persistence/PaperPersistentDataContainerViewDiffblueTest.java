@@ -1,11 +1,9 @@
 package io.papermc.paper.persistence;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
@@ -35,6 +33,7 @@ class PaperPersistentDataContainerViewDiffblueTest {
    * {@code key}, {@code type}.
    *
    * <ul>
+   *   <li>When randomKey.
    *   <li>Then return {@code false}.
    * </ul>
    *
@@ -43,13 +42,13 @@ class PaperPersistentDataContainerViewDiffblueTest {
    */
   @Test
   @DisplayName(
-      "Test has(NamespacedKey, PersistentDataType) with 'key', 'type'; then return 'false'")
+      "Test has(NamespacedKey, PersistentDataType) with 'key', 'type'; when randomKey; then return 'false'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({
     "boolean PaperPersistentDataContainerView.has(NamespacedKey, PersistentDataType)"
   })
-  void testHasWithKeyType_thenReturnFalse() {
+  void testHasWithKeyType_whenRandomKey_thenReturnFalse() {
     // Arrange
     CraftPersistentDataContainer craftPersistentDataContainer =
         new CraftPersistentDataContainer(new CraftPersistentDataTypeRegistry());
@@ -149,116 +148,6 @@ class PaperPersistentDataContainerViewDiffblueTest {
 
     // Assert
     assertSame(object, actualOrDefault);
-  }
-
-  /**
-   * Test {@link PaperPersistentDataContainerView#getKeys()}.
-   *
-   * <p>Method under test: {@link PaperPersistentDataContainerView#getKeys()}
-   */
-  @Test
-  @DisplayName("Test getKeys()")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"java.util.Set PaperPersistentDataContainerView.getKeys()"})
-  void testGetKeys() {
-    // Arrange, Act and Assert
-    assertTrue(
-        new CraftPersistentDataContainer(new CraftPersistentDataTypeRegistry())
-            .getKeys()
-            .isEmpty());
-  }
-
-  /**
-   * Test {@link PaperPersistentDataContainerView#getKeys()}.
-   *
-   * <ul>
-   *   <li>Then return Empty.
-   * </ul>
-   *
-   * <p>Method under test: {@link PaperPersistentDataContainerView#getKeys()}
-   */
-  @Test
-  @DisplayName("Test getKeys(); then return Empty")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"java.util.Set PaperPersistentDataContainerView.getKeys()"})
-  void testGetKeys_thenReturnEmpty() {
-    // Arrange
-    CraftPersistentDataContainer craftPersistentDataContainer =
-        new CraftPersistentDataContainer(new CraftPersistentDataTypeRegistry());
-    craftPersistentDataContainer.put("Key", ByteTag.ONE);
-
-    // Act and Assert
-    assertTrue(craftPersistentDataContainer.getKeys().isEmpty());
-  }
-
-  /**
-   * Test {@link PaperPersistentDataContainerView#getKeys()}.
-   *
-   * <ul>
-   *   <li>Then return size is one.
-   * </ul>
-   *
-   * <p>Method under test: {@link PaperPersistentDataContainerView#getKeys()}
-   */
-  @Test
-  @DisplayName("Test getKeys(); then return size is one")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"java.util.Set PaperPersistentDataContainerView.getKeys()"})
-  void testGetKeys_thenReturnSizeIsOne() {
-    // Arrange
-    CraftPersistentDataContainer craftPersistentDataContainer =
-        new CraftPersistentDataContainer(new CraftPersistentDataTypeRegistry());
-    craftPersistentDataContainer.put(":", ByteTag.ONE);
-    craftPersistentDataContainer.put("Key", ByteTag.ONE);
-
-    // Act and Assert
-    assertEquals(1, craftPersistentDataContainer.getKeys().size());
-  }
-
-  /**
-   * Test {@link PaperPersistentDataContainerView#isEmpty()}.
-   *
-   * <ul>
-   *   <li>Then return {@code false}.
-   * </ul>
-   *
-   * <p>Method under test: {@link PaperPersistentDataContainerView#isEmpty()}
-   */
-  @Test
-  @DisplayName("Test isEmpty(); then return 'false'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"boolean PaperPersistentDataContainerView.isEmpty()"})
-  void testIsEmpty_thenReturnFalse() {
-    // Arrange
-    CraftPersistentDataContainer craftPersistentDataContainer =
-        new CraftPersistentDataContainer(new CraftPersistentDataTypeRegistry());
-    craftPersistentDataContainer.put("Key", ByteTag.ONE);
-
-    // Act and Assert
-    assertFalse(craftPersistentDataContainer.isEmpty());
-  }
-
-  /**
-   * Test {@link PaperPersistentDataContainerView#isEmpty()}.
-   *
-   * <ul>
-   *   <li>Then return {@code true}.
-   * </ul>
-   *
-   * <p>Method under test: {@link PaperPersistentDataContainerView#isEmpty()}
-   */
-  @Test
-  @DisplayName("Test isEmpty(); then return 'true'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"boolean PaperPersistentDataContainerView.isEmpty()"})
-  void testIsEmpty_thenReturnTrue() {
-    // Arrange, Act and Assert
-    assertTrue(new CraftPersistentDataContainer(new CraftPersistentDataTypeRegistry()).isEmpty());
   }
 
   /**

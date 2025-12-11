@@ -1,7 +1,6 @@
 package io.papermc.paper.command.brigadier;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -28,17 +27,17 @@ class ShadowBrigNodeDiffblueTest {
    * Test {@link ShadowBrigNode#ShadowBrigNode(CommandNode)}.
    *
    * <ul>
-   *   <li>Then Redirect return {@link ShadowBrigNode}.
+   *   <li>Then return Redirect Name is {@code Literal}.
    * </ul>
    *
    * <p>Method under test: {@link ShadowBrigNode#ShadowBrigNode(CommandNode)}
    */
   @Test
-  @DisplayName("Test new ShadowBrigNode(CommandNode); then Redirect return ShadowBrigNode")
+  @DisplayName("Test new ShadowBrigNode(CommandNode); then return Redirect Name is 'Literal'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void ShadowBrigNode.<init>(CommandNode)"})
-  void testNewShadowBrigNode_thenRedirectReturnShadowBrigNode() {
+  void testNewShadowBrigNode_thenReturnRedirectNameIsLiteral() {
     // Arrange
     ArgumentType<Object> type = mock(ArgumentType.class);
     Command<net.minecraft.commands.CommandSourceStack> command = mock(Command.class);
@@ -70,36 +69,74 @@ class ShadowBrigNodeDiffblueTest {
     ShadowBrigNode actualShadowBrigNode = new ShadowBrigNode(node);
 
     // Assert
-    assertTrue(actualShadowBrigNode.getRedirect() instanceof ShadowBrigNode);
+    CommandNode<CommandSourceStack> redirect2 = actualShadowBrigNode.getRedirect();
+    assertTrue(redirect2 instanceof ShadowBrigNode);
+    Collection<String> examples = actualShadowBrigNode.getExamples();
+    assertEquals(1, examples.size());
+    assertTrue(examples instanceof Set);
+    assertEquals("Literal", redirect2.getName());
+    assertEquals("Literal", redirect2.getUsageText());
+    assertEquals("Literal", ((ShadowBrigNode) redirect2).getLiteral());
     assertEquals("Name", actualShadowBrigNode.getLiteral());
     assertEquals("Name", actualShadowBrigNode.getName());
     assertEquals("Name", actualShadowBrigNode.getUsageText());
+    assertTrue(examples.contains("Name"));
     assertSame(node, actualShadowBrigNode.getHandle());
+    assertSame(redirect, ((ShadowBrigNode) redirect2).getHandle());
   }
 
   /**
    * Test {@link ShadowBrigNode#ShadowBrigNode(CommandNode)}.
    *
    * <ul>
-   *   <li>Then return Examples size is one.
+   *   <li>Then return Redirect Name is {@code Name}.
    * </ul>
    *
    * <p>Method under test: {@link ShadowBrigNode#ShadowBrigNode(CommandNode)}
    */
   @Test
-  @DisplayName("Test new ShadowBrigNode(CommandNode); then return Examples size is one")
+  @DisplayName("Test new ShadowBrigNode(CommandNode); then return Redirect Name is 'Name'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"void ShadowBrigNode.<init>(CommandNode)"})
-  void testNewShadowBrigNode_thenReturnExamplesSizeIsOne() {
+  void testNewShadowBrigNode_thenReturnRedirectNameIsName() {
     // Arrange
+    ArgumentType<Object> type = mock(ArgumentType.class);
+    Command<net.minecraft.commands.CommandSourceStack> command = mock(Command.class);
+    Predicate<net.minecraft.commands.CommandSourceStack> requirement = mock(Predicate.class);
+    ArgumentType<Object> type2 = mock(ArgumentType.class);
+    Command<net.minecraft.commands.CommandSourceStack> command2 = mock(Command.class);
+    Predicate<net.minecraft.commands.CommandSourceStack> requirement2 = mock(Predicate.class);
+    Command<net.minecraft.commands.CommandSourceStack> command3 = mock(Command.class);
+    Predicate<net.minecraft.commands.CommandSourceStack> requirement3 = mock(Predicate.class);
+
+    LiteralCommandNode<net.minecraft.commands.CommandSourceStack> redirect =
+        new LiteralCommandNode<>(
+            "Literal",
+            command3,
+            requirement3,
+            new RootCommandNode<>(),
+            mock(RedirectModifier.class),
+            true);
+
+    ArgumentCommandNode<net.minecraft.commands.CommandSourceStack, Object> redirect2 =
+        new ArgumentCommandNode<>(
+            "Name",
+            type2,
+            command2,
+            requirement2,
+            redirect,
+            mock(RedirectModifier.class),
+            true,
+            mock(SuggestionProvider.class));
+
     ArgumentCommandNode<net.minecraft.commands.CommandSourceStack, Object> node =
         new ArgumentCommandNode<>(
             "minecraft:",
-            mock(ArgumentType.class),
-            mock(Command.class),
-            mock(Predicate.class),
-            null,
+            type,
+            command,
+            requirement,
+            redirect2,
             mock(RedirectModifier.class),
             true,
             mock(SuggestionProvider.class));
@@ -108,14 +145,19 @@ class ShadowBrigNodeDiffblueTest {
     ShadowBrigNode actualShadowBrigNode = new ShadowBrigNode(node);
 
     // Assert
+    CommandNode<CommandSourceStack> redirect3 = actualShadowBrigNode.getRedirect();
+    assertTrue(redirect3 instanceof ShadowBrigNode);
     Collection<String> examples = actualShadowBrigNode.getExamples();
     assertEquals(1, examples.size());
     assertTrue(examples instanceof Set);
+    assertEquals("Name", redirect3.getName());
+    assertEquals("Name", redirect3.getUsageText());
+    assertEquals("Name", ((ShadowBrigNode) redirect3).getLiteral());
     assertEquals("minecraft:", actualShadowBrigNode.getLiteral());
     assertEquals("minecraft:", actualShadowBrigNode.getName());
     assertEquals("minecraft:", actualShadowBrigNode.getUsageText());
-    assertNull(actualShadowBrigNode.getRedirect());
     assertTrue(examples.contains("minecraft:"));
+    assertSame(redirect2, ((ShadowBrigNode) redirect3).getHandle());
     assertSame(node, actualShadowBrigNode.getHandle());
   }
 

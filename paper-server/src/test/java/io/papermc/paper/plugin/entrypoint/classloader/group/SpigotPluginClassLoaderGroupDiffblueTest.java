@@ -8,6 +8,11 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
+import io.papermc.paper.plugin.provider.classloader.ClassLoaderAccess;
+import io.papermc.paper.plugin.provider.classloader.ConfiguredPluginClassLoader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.function.Predicate;
@@ -38,15 +43,22 @@ class SpigotPluginClassLoaderGroupDiffblueTest {
   @MethodsUnderTest({
     "void SpigotPluginClassLoaderGroup.<init>(GlobalPluginClassLoaderGroup, Predicate, PluginClassLoader)"
   })
-  void testNewSpigotPluginClassLoaderGroup_thenReturnPluginClassLoaderIsNull() {
+  void testNewSpigotPluginClassLoaderGroup_thenReturnPluginClassLoaderIsNull()
+      throws MalformedURLException {
     // Arrange
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
+    GlobalPluginClassLoaderGroup globalPluginClassLoaderGroup = new GlobalPluginClassLoaderGroup();
+    Predicate<ConfiguredPluginClassLoader> libraryClassloaderPredicate = mock(Predicate.class);
+    URL[] urlArray =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray);
+    URL[] urlArray2 =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray2);
 
     // Act
     SpigotPluginClassLoaderGroup actualSpigotPluginClassLoaderGroup =
         new SpigotPluginClassLoaderGroup(
-            new GlobalPluginClassLoaderGroup(), mock(Predicate.class), null);
+            globalPluginClassLoaderGroup, libraryClassloaderPredicate, null);
 
     // Assert
     assertNull(actualSpigotPluginClassLoaderGroup.getPluginClassLoader());
@@ -66,24 +78,31 @@ class SpigotPluginClassLoaderGroupDiffblueTest {
   @DisplayName("Test getAccess(); then return not canAccess 'null'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
-  @MethodsUnderTest({
-    "io.papermc.paper.plugin.provider.classloader.ClassLoaderAccess SpigotPluginClassLoaderGroup.getAccess()"
-  })
-  void testGetAccess_thenReturnNotCanAccessNull() {
+  @MethodsUnderTest({"ClassLoaderAccess SpigotPluginClassLoaderGroup.getAccess()"})
+  void testGetAccess_thenReturnNotCanAccessNull() throws MalformedURLException {
     // Arrange
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
+    URL[] urlArray =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray);
+    URL[] urlArray2 =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray2);
 
     GlobalPluginClassLoaderGroup globalPluginClassLoaderGroup =
         mock(GlobalPluginClassLoaderGroup.class);
     when(globalPluginClassLoaderGroup.getClassLoaders()).thenReturn(new ArrayList<>());
     SpigotPluginClassLoaderGroup spigotPluginClassLoaderGroup =
         new SpigotPluginClassLoaderGroup(globalPluginClassLoaderGroup, mock(Predicate.class), null);
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
 
     // Act
-    boolean actualCanAccessResult = spigotPluginClassLoaderGroup.getAccess().canAccess(null);
+    ClassLoaderAccess actualAccess = spigotPluginClassLoaderGroup.getAccess();
+    URL[] urlArray3 =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray3);
+    URL[] urlArray4 =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray4);
+    boolean actualCanAccessResult = actualAccess.canAccess(null);
 
     // Assert
     verify(globalPluginClassLoaderGroup).getClassLoaders();

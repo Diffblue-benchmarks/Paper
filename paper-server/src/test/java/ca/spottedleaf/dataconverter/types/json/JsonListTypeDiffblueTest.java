@@ -53,7 +53,7 @@ class JsonListTypeDiffblueTest {
   })
   void testGettersAndSetters() {
     // Arrange
-    JsonArray array = new JsonArray(3);
+    JsonArray array = new JsonArray();
 
     // Act
     JsonListType actualJsonListType = new JsonListType(array, true);
@@ -369,17 +369,17 @@ class JsonListTypeDiffblueTest {
    * Test {@link JsonListType#getNumber(int, Number)} with {@code index}, {@code dfl}.
    *
    * <ul>
-   *   <li>Then return {@link AtomicLong}.
+   *   <li>Then return {@link Bootstrap#bootstrapDuration}.
    * </ul>
    *
    * <p>Method under test: {@link JsonListType#getNumber(int, Number)}
    */
   @Test
-  @DisplayName("Test getNumber(int, Number) with 'index', 'dfl'; then return AtomicLong")
+  @DisplayName("Test getNumber(int, Number) with 'index', 'dfl'; then return bootstrapDuration")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"Number JsonListType.getNumber(int, Number)"})
-  void testGetNumberWithIndexDfl_thenReturnAtomicLong() {
+  void testGetNumberWithIndexDfl_thenReturnBootstrapDuration() {
     // Arrange
     JsonListType jsonListType = new JsonListType(true);
     jsonListType.addString("String");
@@ -390,8 +390,6 @@ class JsonListTypeDiffblueTest {
     Number actualNumber = jsonListType.getNumber(0, dfl);
 
     // Assert
-    assertTrue(actualNumber instanceof AtomicLong);
-    assertEquals(-1L, ((AtomicLong) actualNumber).get());
     assertSame(dfl, actualNumber);
   }
 

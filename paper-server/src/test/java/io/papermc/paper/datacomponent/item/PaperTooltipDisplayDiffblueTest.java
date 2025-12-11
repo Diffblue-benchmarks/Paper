@@ -6,7 +6,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
 import io.papermc.paper.datacomponent.item.PaperTooltipDisplay.BuilderImpl;
+import io.papermc.paper.datacomponent.item.TooltipDisplay.Builder;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -23,7 +26,7 @@ class PaperTooltipDisplayDiffblueTest {
   @ManagedByDiffblue
   @MethodsUnderTest({
     "TooltipDisplay BuilderImpl.build()",
-    "TooltipDisplay.Builder BuilderImpl.hideTooltip(boolean)"
+    "Builder BuilderImpl.hideTooltip(boolean)"
   })
   void testBuilderImplBuild() {
     // Arrange and Act
@@ -31,6 +34,27 @@ class PaperTooltipDisplayDiffblueTest {
 
     // Assert
     assertTrue(actualTooltipDisplay instanceof PaperTooltipDisplay);
+  }
+
+  /**
+   * Test BuilderImpl {@link BuilderImpl#hiddenComponents(Set)}.
+   *
+   * <p>Method under test: {@link BuilderImpl#hiddenComponents(Set)}
+   */
+  @Test
+  @DisplayName("Test BuilderImpl hiddenComponents(Set)")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"Builder BuilderImpl.hiddenComponents(Set)"})
+  void testBuilderImplHiddenComponents() {
+    // Arrange
+    BuilderImpl builderImpl = new BuilderImpl();
+
+    // Act
+    Builder actualHiddenComponentsResult = builderImpl.hiddenComponents(new HashSet<>());
+
+    // Assert
+    assertSame(builderImpl, actualHiddenComponentsResult);
   }
 
   /**
@@ -141,7 +165,7 @@ class PaperTooltipDisplayDiffblueTest {
       "Test hiddenComponents(); given PaperTooltipDisplay(TooltipDisplay) with impl is DEFAULT; then return Empty")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
-  @MethodsUnderTest({"java.util.Set PaperTooltipDisplay.hiddenComponents()"})
+  @MethodsUnderTest({"Set PaperTooltipDisplay.hiddenComponents()"})
   void testHiddenComponents_givenPaperTooltipDisplayWithImplIsDefault_thenReturnEmpty() {
     // Arrange, Act and Assert
     assertTrue(

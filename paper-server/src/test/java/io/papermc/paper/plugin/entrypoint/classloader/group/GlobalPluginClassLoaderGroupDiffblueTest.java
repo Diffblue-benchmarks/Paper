@@ -5,6 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
+import io.papermc.paper.plugin.provider.classloader.ClassLoaderAccess;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.nio.file.Paths;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -25,9 +29,7 @@ class GlobalPluginClassLoaderGroupDiffblueTest {
       "Test getAccess(); then GlobalPluginClassLoaderGroup (default constructor) ClassLoaders Empty")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
-  @MethodsUnderTest({
-    "io.papermc.paper.plugin.provider.classloader.ClassLoaderAccess GlobalPluginClassLoaderGroup.getAccess()"
-  })
+  @MethodsUnderTest({"ClassLoaderAccess GlobalPluginClassLoaderGroup.getAccess()"})
   void testGetAccess_thenGlobalPluginClassLoaderGroupClassLoadersEmpty() {
     // Arrange
     GlobalPluginClassLoaderGroup globalPluginClassLoaderGroup = new GlobalPluginClassLoaderGroup();
@@ -52,18 +54,23 @@ class GlobalPluginClassLoaderGroupDiffblueTest {
   @DisplayName("Test getAccess(); then 'null'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
-  @MethodsUnderTest({
-    "io.papermc.paper.plugin.provider.classloader.ClassLoaderAccess GlobalPluginClassLoaderGroup.getAccess()"
-  })
-  void testGetAccess_thenNull() {
+  @MethodsUnderTest({"ClassLoaderAccess GlobalPluginClassLoaderGroup.getAccess()"})
+  void testGetAccess_thenNull() throws MalformedURLException {
     // Arrange
     GlobalPluginClassLoaderGroup globalPluginClassLoaderGroup = new GlobalPluginClassLoaderGroup();
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
-    Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri();
 
-    // Act and Assert
+    // Act
+    ClassLoaderAccess actualAccess = globalPluginClassLoaderGroup.getAccess();
+    URL[] urlArray =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray);
+    URL[] urlArray2 =
+        new URL[] {Paths.get(System.getProperty("java.io.tmpdir"), "test.txt").toUri().toURL()};
+    new URLClassLoader(urlArray2);
+
+    // Assert
     assertNull(null);
-    assertTrue(globalPluginClassLoaderGroup.getAccess().canAccess(null));
+    assertTrue(actualAccess.canAccess(null));
     assertTrue(globalPluginClassLoaderGroup.getClassLoaders().isEmpty());
   }
 

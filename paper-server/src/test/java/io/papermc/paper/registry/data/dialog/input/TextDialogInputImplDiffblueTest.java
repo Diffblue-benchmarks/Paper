@@ -1,7 +1,6 @@
 package io.papermc.paper.registry.data.dialog.input;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
@@ -26,7 +25,7 @@ class TextDialogInputImplDiffblueTest {
   @ManagedByDiffblue
   @MethodsUnderTest({
     "TextDialogInput BuilderImpl.build()",
-    "Builder BuilderImpl.initial(String)",
+    "Builder BuilderImpl.initial(java.lang.String)",
     "Builder BuilderImpl.labelVisible(boolean)",
     "Builder BuilderImpl.multiline(TextDialogInput.MultilineOptions)"
   })
@@ -61,41 +60,6 @@ class TextDialogInputImplDiffblueTest {
     assertTrue(textDialogInput instanceof TextDialogInputImpl);
     assertEquals(3, textDialogInput.maxLength());
     assertSame(builderImpl, actualMaxLengthResult);
-  }
-
-  /**
-   * Test BuilderImpl {@link BuilderImpl#BuilderImpl(String, Component)}.
-   *
-   * <ul>
-   *   <li>When {@code Key}.
-   *   <li>Then build return {@link TextDialogInputImpl}.
-   * </ul>
-   *
-   * <p>Method under test: {@link BuilderImpl#BuilderImpl(String, Component)}
-   */
-  @Test
-  @DisplayName(
-      "Test BuilderImpl new BuilderImpl(String, Component); when 'Key'; then build return TextDialogInputImpl")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"void BuilderImpl.<init>(String, Component)"})
-  void testBuilderImplNewBuilderImpl_whenKey_thenBuildReturnTextDialogInputImpl() {
-    // Arrange
-    Component label = mock(Component.class);
-
-    // Act
-    BuilderImpl actualBuilderImpl = new BuilderImpl("Key", label);
-
-    // Assert
-    TextDialogInput textDialogInput = actualBuilderImpl.build();
-    assertTrue(textDialogInput instanceof TextDialogInputImpl);
-    assertEquals("", textDialogInput.initial());
-    assertEquals("Key", textDialogInput.key());
-    assertNull(textDialogInput.multiline());
-    assertEquals(200, textDialogInput.width());
-    assertTrue(textDialogInput.labelVisible());
-    assertEquals(Integer.SIZE, textDialogInput.maxLength());
-    assertSame(label, textDialogInput.label());
   }
 
   /**

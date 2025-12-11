@@ -70,7 +70,7 @@ class DeserializedFieldInfoDiffblueTest {
     FieldProcessor<Object> processor = mock(FieldProcessor.class);
     when(processor.process(
             Mockito.<AnnotatedType>any(), Mockito.<Object>any(), Mockito.<Object>any()))
-        .thenThrow(new SerializationException("An error occurred"));
+        .thenThrow(new SerializationException());
     DeserializedFieldInfo<Object> deserializedFieldInfo =
         new DeserializedFieldInfo<>(null, ConfigurationTransformation.WILDCARD_OBJECT, processor);
 

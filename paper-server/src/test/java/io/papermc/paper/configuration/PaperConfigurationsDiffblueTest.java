@@ -547,178 +547,6 @@ class PaperConfigurationsDiffblueTest {
    * ConfigurationNode)}.
    *
    * <ul>
-   *   <li>Given {@link ConfigurationNode} {@link ConfigurationNode#virtual()} return {@code false}.
-   * </ul>
-   *
-   * <p>Method under test: {@link PaperConfigurations#applyWorldConfigTransformations(ContextMap,
-   * ConfigurationNode, ConfigurationNode)}
-   */
-  @Test
-  @DisplayName(
-      "Test applyWorldConfigTransformations(ContextMap, ConfigurationNode, ConfigurationNode); given ConfigurationNode virtual() return 'false'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({
-    "void PaperConfigurations.applyWorldConfigTransformations(ContextMap, ConfigurationNode, ConfigurationNode)"
-  })
-  void testApplyWorldConfigTransformations_givenConfigurationNodeVirtualReturnFalse()
-      throws Exception {
-    // Arrange
-    PaperConfigurations setupResult =
-        PaperConfigurations.setup(
-            MetricsPersister.PROFILING_RESULTS_DIR,
-            Paths.get(System.getProperty("java.io.tmpdir"), "test.txt"),
-            MetricsPersister.PROFILING_RESULTS_DIR,
-            OldUsersConverter.OLD_IPBANLIST);
-
-    ContextMap contextMap = mock(ContextMap.class);
-    when(contextMap.require(Mockito.<ContextKey<Object>>any()))
-        .thenReturn(new GameRules(FeatureFlags.DEFAULT_FLAGS));
-
-    ConfigurationNode configurationNode = mock(ConfigurationNode.class);
-    when(configurationNode.virtual()).thenReturn(true);
-    when(configurationNode.raw(Mockito.<Object>any())).thenReturn(mock(ConfigurationNode.class));
-    when(configurationNode.getBoolean(anyBoolean())).thenReturn(true);
-    when(configurationNode.getInt(anyInt())).thenReturn(1);
-
-    ConfigurationNode configurationNode2 = mock(ConfigurationNode.class);
-    when(configurationNode2.empty()).thenReturn(true);
-    when(configurationNode2.virtual()).thenReturn(false);
-    when(configurationNode2.node(isA(Object[].class))).thenReturn(configurationNode);
-    when(configurationNode2.raw(Mockito.<Object>any())).thenReturn(mock(ConfigurationNode.class));
-
-    ConfigurationNode configurationNode3 = mock(ConfigurationNode.class);
-    when(configurationNode3.set(Mockito.<Object>any())).thenReturn(mock(ConfigurationNode.class));
-    when(configurationNode3.getInt(anyInt())).thenReturn(1);
-
-    ConfigurationNode node = mock(ConfigurationNode.class);
-    when(node.node(Mockito.<Iterable<?>>any())).thenReturn(configurationNode3);
-    when(node.node(isA(Object[].class))).thenReturn(configurationNode2);
-
-    ConfigurationNode configurationNode4 = mock(ConfigurationNode.class);
-    when(configurationNode4.getBoolean()).thenReturn(true);
-    when(configurationNode4.getInt()).thenReturn(1);
-
-    ConfigurationNode defaultsNode = mock(ConfigurationNode.class);
-    when(defaultsNode.node(isA(Object[].class))).thenReturn(configurationNode4);
-
-    // Act
-    setupResult.applyWorldConfigTransformations(contextMap, node, defaultsNode);
-
-    // Assert
-    verify(contextMap).require(isA(ContextKey.class));
-    verify(configurationNode2).empty();
-    verify(configurationNode4).getBoolean();
-    verify(configurationNode).getBoolean(true);
-    verify(configurationNode4).getInt();
-    verify(configurationNode3).getInt(-1);
-    verify(configurationNode).getInt(1);
-    verify(defaultsNode, atLeast(1)).node(isA(Object[].class));
-    verify(configurationNode2, atLeast(1)).node(isA(Object[].class));
-    verify(node, atLeast(1)).node(isA(Object[].class));
-    verify(node).node(isA(Iterable.class));
-    verify(configurationNode, atLeast(1)).raw(isNull());
-    verify(configurationNode2, atLeast(1)).raw(isNull());
-    verify(configurationNode3).set(isA(Object.class));
-    verify(configurationNode, atLeast(1)).virtual();
-    verify(configurationNode2, atLeast(1)).virtual();
-  }
-
-  /**
-   * Test {@link PaperConfigurations#applyWorldConfigTransformations(ContextMap, ConfigurationNode,
-   * ConfigurationNode)}.
-   *
-   * <ul>
-   *   <li>Given {@link ConfigurationNode} {@link ConfigurationNode#virtual()} return {@code false}.
-   * </ul>
-   *
-   * <p>Method under test: {@link PaperConfigurations#applyWorldConfigTransformations(ContextMap,
-   * ConfigurationNode, ConfigurationNode)}
-   */
-  @Test
-  @DisplayName(
-      "Test applyWorldConfigTransformations(ContextMap, ConfigurationNode, ConfigurationNode); given ConfigurationNode virtual() return 'false'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({
-    "void PaperConfigurations.applyWorldConfigTransformations(ContextMap, ConfigurationNode, ConfigurationNode)"
-  })
-  void testApplyWorldConfigTransformations_givenConfigurationNodeVirtualReturnFalse2()
-      throws Exception {
-    // Arrange
-    PaperConfigurations setupResult =
-        PaperConfigurations.setup(
-            MetricsPersister.PROFILING_RESULTS_DIR,
-            Paths.get(System.getProperty("java.io.tmpdir"), "test.txt"),
-            MetricsPersister.PROFILING_RESULTS_DIR,
-            OldUsersConverter.OLD_IPBANLIST);
-
-    ContextMap contextMap = mock(ContextMap.class);
-    when(contextMap.require(Mockito.<ContextKey<Object>>any()))
-        .thenReturn(new GameRules(FeatureFlags.DEFAULT_FLAGS));
-
-    ConfigurationNode configurationNode = mock(ConfigurationNode.class);
-    when(configurationNode.virtual()).thenReturn(true);
-
-    ConfigurationNode configurationNode2 = mock(ConfigurationNode.class);
-    when(configurationNode2.getInt()).thenReturn(1);
-    when(configurationNode2.virtual()).thenReturn(false);
-    when(configurationNode2.node(isA(Object[].class))).thenReturn(configurationNode);
-    when(configurationNode2.raw(Mockito.<Object>any())).thenReturn(mock(ConfigurationNode.class));
-    when(configurationNode2.getBoolean(anyBoolean())).thenReturn(true);
-    when(configurationNode2.getInt(anyInt())).thenReturn(1);
-
-    ConfigurationNode configurationNode3 = mock(ConfigurationNode.class);
-    when(configurationNode3.empty()).thenReturn(true);
-    when(configurationNode3.virtual()).thenReturn(false);
-    when(configurationNode3.node(isA(Object[].class))).thenReturn(configurationNode2);
-    when(configurationNode3.raw(Mockito.<Object>any())).thenReturn(mock(ConfigurationNode.class));
-
-    ConfigurationNode configurationNode4 = mock(ConfigurationNode.class);
-    when(configurationNode4.set(Mockito.<Object>any())).thenReturn(mock(ConfigurationNode.class));
-    when(configurationNode4.getInt(anyInt())).thenReturn(1);
-
-    ConfigurationNode node = mock(ConfigurationNode.class);
-    when(node.node(Mockito.<Iterable<?>>any())).thenReturn(configurationNode4);
-    when(node.node(isA(Object[].class))).thenReturn(configurationNode3);
-
-    ConfigurationNode configurationNode5 = mock(ConfigurationNode.class);
-    when(configurationNode5.getBoolean()).thenReturn(true);
-    when(configurationNode5.getInt()).thenReturn(1);
-
-    ConfigurationNode defaultsNode = mock(ConfigurationNode.class);
-    when(defaultsNode.node(isA(Object[].class))).thenReturn(configurationNode5);
-
-    // Act
-    setupResult.applyWorldConfigTransformations(contextMap, node, defaultsNode);
-
-    // Assert
-    verify(contextMap).require(isA(ContextKey.class));
-    verify(configurationNode3).empty();
-    verify(configurationNode5).getBoolean();
-    verify(configurationNode2).getBoolean(true);
-    verify(configurationNode5).getInt();
-    verify(configurationNode2, atLeast(1)).getInt();
-    verify(configurationNode4).getInt(-1);
-    verify(configurationNode2).getInt(1);
-    verify(defaultsNode, atLeast(1)).node(isA(Object[].class));
-    verify(configurationNode2, atLeast(1)).node(isA(Object[].class));
-    verify(configurationNode3, atLeast(1)).node(isA(Object[].class));
-    verify(node, atLeast(1)).node(isA(Object[].class));
-    verify(node).node(isA(Iterable.class));
-    verify(configurationNode2, atLeast(1)).raw(isNull());
-    verify(configurationNode3, atLeast(1)).raw(isNull());
-    verify(configurationNode4).set(isA(Object.class));
-    verify(configurationNode, atLeast(1)).virtual();
-    verify(configurationNode2, atLeast(1)).virtual();
-    verify(configurationNode3, atLeast(1)).virtual();
-  }
-
-  /**
-   * Test {@link PaperConfigurations#applyWorldConfigTransformations(ContextMap, ConfigurationNode,
-   * ConfigurationNode)}.
-   *
-   * <ul>
    *   <li>Then calls {@link ConfigurationNode#empty()}.
    * </ul>
    *
@@ -791,6 +619,176 @@ class PaperConfigurationsDiffblueTest {
     verify(configurationNode, atLeast(1)).raw(isNull());
     verify(configurationNode3).set(isA(Object.class));
     verify(configurationNode2, atLeast(1)).virtual();
+  }
+
+  /**
+   * Test {@link PaperConfigurations#applyWorldConfigTransformations(ContextMap, ConfigurationNode,
+   * ConfigurationNode)}.
+   *
+   * <ul>
+   *   <li>Then calls {@link ConfigurationNode#empty()}.
+   * </ul>
+   *
+   * <p>Method under test: {@link PaperConfigurations#applyWorldConfigTransformations(ContextMap,
+   * ConfigurationNode, ConfigurationNode)}
+   */
+  @Test
+  @DisplayName(
+      "Test applyWorldConfigTransformations(ContextMap, ConfigurationNode, ConfigurationNode); then calls empty()")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({
+    "void PaperConfigurations.applyWorldConfigTransformations(ContextMap, ConfigurationNode, ConfigurationNode)"
+  })
+  void testApplyWorldConfigTransformations_thenCallsEmpty2() throws Exception {
+    // Arrange
+    PaperConfigurations setupResult =
+        PaperConfigurations.setup(
+            MetricsPersister.PROFILING_RESULTS_DIR,
+            Paths.get(System.getProperty("java.io.tmpdir"), "test.txt"),
+            MetricsPersister.PROFILING_RESULTS_DIR,
+            OldUsersConverter.OLD_IPBANLIST);
+
+    ContextMap contextMap = mock(ContextMap.class);
+    when(contextMap.require(Mockito.<ContextKey<Object>>any()))
+        .thenReturn(new GameRules(FeatureFlags.DEFAULT_FLAGS));
+
+    ConfigurationNode configurationNode = mock(ConfigurationNode.class);
+    when(configurationNode.virtual()).thenReturn(true);
+    when(configurationNode.raw(Mockito.<Object>any())).thenReturn(mock(ConfigurationNode.class));
+    when(configurationNode.getBoolean(anyBoolean())).thenReturn(true);
+    when(configurationNode.getInt(anyInt())).thenReturn(1);
+
+    ConfigurationNode configurationNode2 = mock(ConfigurationNode.class);
+    when(configurationNode2.empty()).thenReturn(true);
+    when(configurationNode2.virtual()).thenReturn(false);
+    when(configurationNode2.node(isA(Object[].class))).thenReturn(configurationNode);
+    when(configurationNode2.raw(Mockito.<Object>any())).thenReturn(mock(ConfigurationNode.class));
+
+    ConfigurationNode configurationNode3 = mock(ConfigurationNode.class);
+    when(configurationNode3.set(Mockito.<Object>any())).thenReturn(mock(ConfigurationNode.class));
+    when(configurationNode3.getInt(anyInt())).thenReturn(1);
+
+    ConfigurationNode node = mock(ConfigurationNode.class);
+    when(node.node(Mockito.<Iterable<?>>any())).thenReturn(configurationNode3);
+    when(node.node(isA(Object[].class))).thenReturn(configurationNode2);
+
+    ConfigurationNode configurationNode4 = mock(ConfigurationNode.class);
+    when(configurationNode4.getBoolean()).thenReturn(true);
+    when(configurationNode4.getInt()).thenReturn(1);
+
+    ConfigurationNode defaultsNode = mock(ConfigurationNode.class);
+    when(defaultsNode.node(isA(Object[].class))).thenReturn(configurationNode4);
+
+    // Act
+    setupResult.applyWorldConfigTransformations(contextMap, node, defaultsNode);
+
+    // Assert
+    verify(contextMap).require(isA(ContextKey.class));
+    verify(configurationNode2).empty();
+    verify(configurationNode4).getBoolean();
+    verify(configurationNode).getBoolean(true);
+    verify(configurationNode4).getInt();
+    verify(configurationNode3).getInt(-1);
+    verify(configurationNode).getInt(1);
+    verify(defaultsNode, atLeast(1)).node(isA(Object[].class));
+    verify(configurationNode2, atLeast(1)).node(isA(Object[].class));
+    verify(node, atLeast(1)).node(isA(Object[].class));
+    verify(node).node(isA(Iterable.class));
+    verify(configurationNode, atLeast(1)).raw(isNull());
+    verify(configurationNode2, atLeast(1)).raw(isNull());
+    verify(configurationNode3).set(isA(Object.class));
+    verify(configurationNode, atLeast(1)).virtual();
+    verify(configurationNode2, atLeast(1)).virtual();
+  }
+
+  /**
+   * Test {@link PaperConfigurations#applyWorldConfigTransformations(ContextMap, ConfigurationNode,
+   * ConfigurationNode)}.
+   *
+   * <ul>
+   *   <li>Then calls {@link ConfigurationNode#empty()}.
+   * </ul>
+   *
+   * <p>Method under test: {@link PaperConfigurations#applyWorldConfigTransformations(ContextMap,
+   * ConfigurationNode, ConfigurationNode)}
+   */
+  @Test
+  @DisplayName(
+      "Test applyWorldConfigTransformations(ContextMap, ConfigurationNode, ConfigurationNode); then calls empty()")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({
+    "void PaperConfigurations.applyWorldConfigTransformations(ContextMap, ConfigurationNode, ConfigurationNode)"
+  })
+  void testApplyWorldConfigTransformations_thenCallsEmpty3() throws Exception {
+    // Arrange
+    PaperConfigurations setupResult =
+        PaperConfigurations.setup(
+            MetricsPersister.PROFILING_RESULTS_DIR,
+            Paths.get(System.getProperty("java.io.tmpdir"), "test.txt"),
+            MetricsPersister.PROFILING_RESULTS_DIR,
+            OldUsersConverter.OLD_IPBANLIST);
+
+    ContextMap contextMap = mock(ContextMap.class);
+    when(contextMap.require(Mockito.<ContextKey<Object>>any()))
+        .thenReturn(new GameRules(FeatureFlags.DEFAULT_FLAGS));
+
+    ConfigurationNode configurationNode = mock(ConfigurationNode.class);
+    when(configurationNode.virtual()).thenReturn(true);
+
+    ConfigurationNode configurationNode2 = mock(ConfigurationNode.class);
+    when(configurationNode2.getInt()).thenReturn(1);
+    when(configurationNode2.virtual()).thenReturn(false);
+    when(configurationNode2.node(isA(Object[].class))).thenReturn(configurationNode);
+    when(configurationNode2.raw(Mockito.<Object>any())).thenReturn(mock(ConfigurationNode.class));
+    when(configurationNode2.getBoolean(anyBoolean())).thenReturn(true);
+    when(configurationNode2.getInt(anyInt())).thenReturn(1);
+
+    ConfigurationNode configurationNode3 = mock(ConfigurationNode.class);
+    when(configurationNode3.empty()).thenReturn(true);
+    when(configurationNode3.virtual()).thenReturn(false);
+    when(configurationNode3.node(isA(Object[].class))).thenReturn(configurationNode2);
+    when(configurationNode3.raw(Mockito.<Object>any())).thenReturn(mock(ConfigurationNode.class));
+
+    ConfigurationNode configurationNode4 = mock(ConfigurationNode.class);
+    when(configurationNode4.set(Mockito.<Object>any())).thenReturn(mock(ConfigurationNode.class));
+    when(configurationNode4.getInt(anyInt())).thenReturn(1);
+
+    ConfigurationNode node = mock(ConfigurationNode.class);
+    when(node.node(Mockito.<Iterable<?>>any())).thenReturn(configurationNode4);
+    when(node.node(isA(Object[].class))).thenReturn(configurationNode3);
+
+    ConfigurationNode configurationNode5 = mock(ConfigurationNode.class);
+    when(configurationNode5.getBoolean()).thenReturn(true);
+    when(configurationNode5.getInt()).thenReturn(1);
+
+    ConfigurationNode defaultsNode = mock(ConfigurationNode.class);
+    when(defaultsNode.node(isA(Object[].class))).thenReturn(configurationNode5);
+
+    // Act
+    setupResult.applyWorldConfigTransformations(contextMap, node, defaultsNode);
+
+    // Assert
+    verify(contextMap).require(isA(ContextKey.class));
+    verify(configurationNode3).empty();
+    verify(configurationNode5).getBoolean();
+    verify(configurationNode2).getBoolean(true);
+    verify(configurationNode5).getInt();
+    verify(configurationNode2, atLeast(1)).getInt();
+    verify(configurationNode4).getInt(-1);
+    verify(configurationNode2).getInt(1);
+    verify(defaultsNode, atLeast(1)).node(isA(Object[].class));
+    verify(configurationNode2, atLeast(1)).node(isA(Object[].class));
+    verify(configurationNode3, atLeast(1)).node(isA(Object[].class));
+    verify(node, atLeast(1)).node(isA(Object[].class));
+    verify(node).node(isA(Iterable.class));
+    verify(configurationNode2, atLeast(1)).raw(isNull());
+    verify(configurationNode3, atLeast(1)).raw(isNull());
+    verify(configurationNode4).set(isA(Object.class));
+    verify(configurationNode, atLeast(1)).virtual();
+    verify(configurationNode2, atLeast(1)).virtual();
+    verify(configurationNode3, atLeast(1)).virtual();
   }
 
   /**
@@ -995,6 +993,51 @@ class PaperConfigurationsDiffblueTest {
     verify(configurationNode3).set(isA(Object.class));
     verify(configurationNode, atLeast(1)).virtual();
     verify(configurationNode2, atLeast(1)).virtual();
+  }
+
+  /**
+   * Test {@link PaperConfigurations#applyDefaultsAwareWorldConfigTransformations(ContextMap,
+   * ConfigurationNode, ConfigurationNode)}.
+   *
+   * <ul>
+   *   <li>Then calls {@link ConfigurationNode#getBoolean(boolean)}.
+   * </ul>
+   *
+   * <p>Method under test: {@link
+   * PaperConfigurations#applyDefaultsAwareWorldConfigTransformations(ContextMap, ConfigurationNode,
+   * ConfigurationNode)}
+   */
+  @Test
+  @DisplayName(
+      "Test applyDefaultsAwareWorldConfigTransformations(ContextMap, ConfigurationNode, ConfigurationNode); then calls getBoolean(boolean)")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({
+    "void PaperConfigurations.applyDefaultsAwareWorldConfigTransformations(ContextMap, ConfigurationNode, ConfigurationNode)"
+  })
+  void testApplyDefaultsAwareWorldConfigTransformations_thenCallsGetBoolean() throws Exception {
+    // Arrange
+    PaperConfigurations setupResult =
+        PaperConfigurations.setup(
+            MetricsPersister.PROFILING_RESULTS_DIR,
+            Paths.get(System.getProperty("java.io.tmpdir"), "test.txt"),
+            MetricsPersister.PROFILING_RESULTS_DIR,
+            OldUsersConverter.OLD_IPBANLIST);
+    ContextMap contextMap = mock(ContextMap.class);
+    ConfigurationNode worldNode = mock(ConfigurationNode.class);
+
+    ConfigurationNode configurationNode = mock(ConfigurationNode.class);
+    when(configurationNode.getBoolean(anyBoolean())).thenReturn(false);
+
+    ConfigurationNode defaultsNode = mock(ConfigurationNode.class);
+    when(defaultsNode.node(isA(Object[].class))).thenReturn(configurationNode);
+
+    // Act
+    setupResult.applyDefaultsAwareWorldConfigTransformations(contextMap, worldNode, defaultsNode);
+
+    // Assert
+    verify(configurationNode).getBoolean(false);
+    verify(defaultsNode).node(isA(Object[].class));
   }
 
   /**

@@ -272,7 +272,7 @@ class PaperDatapackRegistrarDiffblueTest {
     Pack pack =
         new Pack(
             location, resources, metadata, new PackSelectionConfig(true, Pack.Position.TOP, true));
-    discoveredPacks.put("foo", pack);
+    discoveredPacks.put("Key", pack);
     DirectoryValidator symlinkValidator = new DirectoryValidator(mock(PathMatcher.class));
 
     PaperDatapackRegistrar paperDatapackRegistrar =
@@ -284,7 +284,7 @@ class PaperDatapackRegistrarDiffblueTest {
 
     // Assert
     assertEquals(1, actualDiscoveredPacks.size());
-    DiscoveredDatapack getResult = actualDiscoveredPacks.get("foo");
+    DiscoveredDatapack getResult = actualDiscoveredPacks.get("Key");
     DatapackSource source = getResult.getSource();
     assertTrue(source instanceof DatapackSourceImpl);
     assertTrue(getResult instanceof PaperDiscoveredDatapack);
@@ -334,6 +334,45 @@ class PaperDatapackRegistrarDiffblueTest {
     assertNull(
         paperDatapackRegistrar.discoverPack(
             MetricsPersister.PROFILING_RESULTS_DIR, "42", mock(Consumer.class)));
+  }
+
+  /**
+   * Test {@link PaperDatapackRegistrar#discoverPack(Path, String, Consumer)} with {@code path},
+   * {@code id}, {@code configurer}.
+   *
+   * <ul>
+   *   <li>When Property is {@code java.io.tmpdir} is empty string.
+   * </ul>
+   *
+   * <p>Method under test: {@link PaperDatapackRegistrar#discoverPack(Path, String, Consumer)}
+   */
+  @Test
+  @DisplayName(
+      "Test discoverPack(Path, String, Consumer) with 'path', 'id', 'configurer'; when Property is 'java.io.tmpdir' is empty string")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({
+    "DiscoveredDatapack PaperDatapackRegistrar.discoverPack(Path, String, Consumer)"
+  })
+  void testDiscoverPackWithPathIdConfigurer_whenPropertyIsJavaIoTmpdirIsEmptyString()
+      throws IOException {
+    // Arrange
+    DirectoryValidator symlinkValidator = new DirectoryValidator(mock(PathMatcher.class));
+
+    PaperDatapackRegistrar paperDatapackRegistrar =
+        new PaperDatapackRegistrar(symlinkValidator, new HashMap<>());
+    PluginBootstrapContextImpl owner =
+        new PluginBootstrapContextImpl(
+            new PaperPluginMeta(),
+            MetricsPersister.PROFILING_RESULTS_DIR,
+            MinecraftServer.COMPONENT_LOGGER,
+            MetricsPersister.PROFILING_RESULTS_DIR);
+    paperDatapackRegistrar.setCurrentContext(owner);
+
+    // Act and Assert
+    assertNull(
+        paperDatapackRegistrar.discoverPack(
+            Paths.get(System.getProperty("java.io.tmpdir"), ""), "42", mock(Consumer.class)));
   }
 
   /**
@@ -449,6 +488,44 @@ class PaperDatapackRegistrarDiffblueTest {
         paperDatapackRegistrar.discoverPack(
             new PaperPluginMeta(),
             Paths.get(System.getProperty("java.io.tmpdir"), "test.txt"),
+            "42",
+            mock(Consumer.class)));
+  }
+
+  /**
+   * Test {@link PaperDatapackRegistrar#discoverPack(PluginMeta, Path, String, Consumer)} with
+   * {@code pluginMeta}, {@code path}, {@code id}, {@code configurer}.
+   *
+   * <p>Method under test: {@link PaperDatapackRegistrar#discoverPack(PluginMeta, Path, String,
+   * Consumer)}
+   */
+  @Test
+  @DisplayName(
+      "Test discoverPack(PluginMeta, Path, String, Consumer) with 'pluginMeta', 'path', 'id', 'configurer'")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({
+    "DiscoveredDatapack PaperDatapackRegistrar.discoverPack(PluginMeta, Path, String, Consumer)"
+  })
+  void testDiscoverPackWithPluginMetaPathIdConfigurer2() throws IOException {
+    // Arrange
+    DirectoryValidator symlinkValidator = new DirectoryValidator(mock(PathMatcher.class));
+
+    PaperDatapackRegistrar paperDatapackRegistrar =
+        new PaperDatapackRegistrar(symlinkValidator, new HashMap<>());
+    PluginBootstrapContextImpl owner =
+        new PluginBootstrapContextImpl(
+            new PaperPluginMeta(),
+            MetricsPersister.PROFILING_RESULTS_DIR,
+            MinecraftServer.COMPONENT_LOGGER,
+            MetricsPersister.PROFILING_RESULTS_DIR);
+    paperDatapackRegistrar.setCurrentContext(owner);
+
+    // Act and Assert
+    assertNull(
+        paperDatapackRegistrar.discoverPack(
+            new PaperPluginMeta(),
+            Paths.get(System.getProperty("java.io.tmpdir"), ""),
             "42",
             mock(Consumer.class)));
   }
@@ -615,6 +692,47 @@ class PaperDatapackRegistrarDiffblueTest {
                     System.getProperty("java.io.tmpdir"),
                     "Discovering packs is not supported outside of lifecycle events")
                 .toUri(),
+            "42",
+            mock(Consumer.class)));
+  }
+
+  /**
+   * Test {@link PaperDatapackRegistrar#discoverPack(URI, String, Consumer)} with {@code uri},
+   * {@code id}, {@code configurer}.
+   *
+   * <ul>
+   *   <li>When Property is {@code java.io.tmpdir} is empty string toUri.
+   * </ul>
+   *
+   * <p>Method under test: {@link PaperDatapackRegistrar#discoverPack(URI, String, Consumer)}
+   */
+  @Test
+  @DisplayName(
+      "Test discoverPack(URI, String, Consumer) with 'uri', 'id', 'configurer'; when Property is 'java.io.tmpdir' is empty string toUri")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({
+    "DiscoveredDatapack PaperDatapackRegistrar.discoverPack(URI, String, Consumer)"
+  })
+  void testDiscoverPackWithUriIdConfigurer_whenPropertyIsJavaIoTmpdirIsEmptyStringToUri()
+      throws IOException {
+    // Arrange
+    DirectoryValidator symlinkValidator = new DirectoryValidator(mock(PathMatcher.class));
+
+    PaperDatapackRegistrar paperDatapackRegistrar =
+        new PaperDatapackRegistrar(symlinkValidator, new HashMap<>());
+    PluginBootstrapContextImpl owner =
+        new PluginBootstrapContextImpl(
+            new PaperPluginMeta(),
+            MetricsPersister.PROFILING_RESULTS_DIR,
+            MinecraftServer.COMPONENT_LOGGER,
+            MetricsPersister.PROFILING_RESULTS_DIR);
+    paperDatapackRegistrar.setCurrentContext(owner);
+
+    // Act and Assert
+    assertNull(
+        paperDatapackRegistrar.discoverPack(
+            Paths.get(System.getProperty("java.io.tmpdir"), "").toUri(),
             "42",
             mock(Consumer.class)));
   }

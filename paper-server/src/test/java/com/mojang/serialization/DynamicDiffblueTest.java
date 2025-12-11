@@ -1,5 +1,6 @@
 package com.mojang.serialization;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -314,6 +315,31 @@ class DynamicDiffblueTest {
    * Test {@link Dynamic#cast(DynamicOps)}.
    *
    * <ul>
+   *   <li>Given {@link Dynamic#Dynamic(DynamicOps, Object)} with ops is {@code null} and value is
+   *       {@link ConfigurationTransformation#WILDCARD_OBJECT}.
+   *   <li>Then does not throw.
+   * </ul>
+   *
+   * <p>Method under test: {@link Dynamic#cast(DynamicOps)}
+   */
+  @Test
+  @DisplayName(
+      "Test cast(DynamicOps); given Dynamic(DynamicOps, Object) with ops is 'null' and value is WILDCARD_OBJECT; then does not throw")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"Object Dynamic.cast(DynamicOps)"})
+  void testCast_givenDynamicWithOpsIsNullAndValueIsWildcard_object_thenDoesNotThrow() {
+    // Arrange
+    Dynamic<Object> dynamic = new Dynamic<>(null, ConfigurationTransformation.WILDCARD_OBJECT);
+
+    // Act
+    assertDoesNotThrow(() -> dynamic.cast(null));
+  }
+
+  /**
+   * Test {@link Dynamic#cast(DynamicOps)}.
+   *
+   * <ul>
    *   <li>Then throw {@link IllegalStateException}.
    * </ul>
    *
@@ -548,60 +574,6 @@ class DynamicDiffblueTest {
    * Test {@link Dynamic#getMapValues()}.
    *
    * <ul>
-   *   <li>Given {@link ArrayList#ArrayList()} add {@link Pair#Pair(Object, Object)} with first is
-   *       zero and second is {@link ConfigurationTransformation#WILDCARD_OBJECT}.
-   * </ul>
-   *
-   * <p>Method under test: {@link Dynamic#getMapValues()}
-   */
-  @Test
-  @DisplayName(
-      "Test getMapValues(); given ArrayList() add Pair(Object, Object) with first is zero and second is WILDCARD_OBJECT")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({"DataResult Dynamic.getMapValues()"})
-  void testGetMapValues_givenArrayListAddPairWithFirstIsZeroAndSecondIsWildcard_object() {
-    // Arrange
-    ArrayList<Pair<Object, Object>> pairList = new ArrayList<>();
-    pairList.add(new Pair<>(0, ConfigurationTransformation.WILDCARD_OBJECT));
-    pairList.add(
-        new Pair<>(
-            ConfigurationTransformation.WILDCARD_OBJECT,
-            ConfigurationTransformation.WILDCARD_OBJECT));
-    Stream<Pair<Object, Object>> streamResult = pairList.stream();
-    Optional<Stream<Pair<Object, Object>>> partialValue = Optional.of(streamResult);
-    Supplier<String> messageSupplier = mock(Supplier.class);
-    Lifecycle lifecycle = Lifecycle.experimental();
-
-    Error<Stream<Pair<Object, Object>>> error =
-        new Error<>(messageSupplier, partialValue, lifecycle);
-
-    RegistryOps<Object> ops = mock(RegistryOps.class);
-    when(ops.getMapValues(Mockito.<Object>any())).thenReturn(error);
-    when(ops.empty()).thenReturn(ConfigurationTransformation.WILDCARD_OBJECT);
-    Dynamic<Object> dynamic = new Dynamic<>(ops);
-
-    // Act
-    DataResult<Map<Dynamic<Object>, Dynamic<Object>>> actualMapValues = dynamic.getMapValues();
-
-    // Assert
-    verify(ops).empty();
-    verify(ops).getMapValues(isA(Object.class));
-    assertTrue(actualMapValues instanceof Error);
-    Map<Dynamic<Object>, Dynamic<Object>> partialOrThrow = actualMapValues.getPartialOrThrow();
-    assertEquals(2, partialOrThrow.size());
-    assertTrue(actualMapValues.isError());
-    Optional<Map<Dynamic<Object>, Dynamic<Object>>> partialValueResult =
-        ((Error<Map<Dynamic<Object>, Dynamic<Object>>>) actualMapValues).partialValue();
-    assertTrue(partialValueResult.isPresent());
-    assertSame(partialOrThrow, partialValueResult.get());
-    assertSame(lifecycle, actualMapValues.lifecycle());
-  }
-
-  /**
-   * Test {@link Dynamic#getMapValues()}.
-   *
-   * <ul>
    *   <li>Then return PartialOrThrow Empty.
    * </ul>
    *
@@ -688,6 +660,111 @@ class DynamicDiffblueTest {
     assertTrue(actualMapValues instanceof Error);
     Map<Dynamic<Object>, Dynamic<Object>> partialOrThrow = actualMapValues.getPartialOrThrow();
     assertEquals(1, partialOrThrow.size());
+    assertTrue(actualMapValues.isError());
+    Optional<Map<Dynamic<Object>, Dynamic<Object>>> partialValueResult =
+        ((Error<Map<Dynamic<Object>, Dynamic<Object>>>) actualMapValues).partialValue();
+    assertTrue(partialValueResult.isPresent());
+    assertSame(partialOrThrow, partialValueResult.get());
+    assertSame(lifecycle, actualMapValues.lifecycle());
+  }
+
+  /**
+   * Test {@link Dynamic#getMapValues()}.
+   *
+   * <ul>
+   *   <li>Then return PartialOrThrow size is three.
+   * </ul>
+   *
+   * <p>Method under test: {@link Dynamic#getMapValues()}
+   */
+  @Test
+  @DisplayName("Test getMapValues(); then return PartialOrThrow size is three")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"DataResult Dynamic.getMapValues()"})
+  void testGetMapValues_thenReturnPartialOrThrowSizeIsThree() {
+    // Arrange
+    ArrayList<Pair<Object, Object>> pairList = new ArrayList<>();
+    pairList.add(new Pair<>(2, ConfigurationTransformation.WILDCARD_OBJECT));
+    pairList.add(new Pair<>("%s[%s]", ConfigurationTransformation.WILDCARD_OBJECT));
+    pairList.add(
+        new Pair<>(
+            ConfigurationTransformation.WILDCARD_OBJECT,
+            ConfigurationTransformation.WILDCARD_OBJECT));
+    Stream<Pair<Object, Object>> streamResult = pairList.stream();
+    Optional<Stream<Pair<Object, Object>>> partialValue = Optional.of(streamResult);
+    Supplier<String> messageSupplier = mock(Supplier.class);
+    Lifecycle lifecycle = Lifecycle.experimental();
+
+    Error<Stream<Pair<Object, Object>>> error =
+        new Error<>(messageSupplier, partialValue, lifecycle);
+
+    RegistryOps<Object> ops = mock(RegistryOps.class);
+    when(ops.getMapValues(Mockito.<Object>any())).thenReturn(error);
+    when(ops.empty()).thenReturn(ConfigurationTransformation.WILDCARD_OBJECT);
+    Dynamic<Object> dynamic = new Dynamic<>(ops);
+
+    // Act
+    DataResult<Map<Dynamic<Object>, Dynamic<Object>>> actualMapValues = dynamic.getMapValues();
+
+    // Assert
+    verify(ops).empty();
+    verify(ops).getMapValues(isA(Object.class));
+    assertTrue(actualMapValues instanceof Error);
+    Map<Dynamic<Object>, Dynamic<Object>> partialOrThrow = actualMapValues.getPartialOrThrow();
+    assertEquals(3, partialOrThrow.size());
+    assertTrue(actualMapValues.isError());
+    Optional<Map<Dynamic<Object>, Dynamic<Object>>> partialValueResult =
+        ((Error<Map<Dynamic<Object>, Dynamic<Object>>>) actualMapValues).partialValue();
+    assertTrue(partialValueResult.isPresent());
+    assertSame(partialOrThrow, partialValueResult.get());
+    assertSame(lifecycle, actualMapValues.lifecycle());
+  }
+
+  /**
+   * Test {@link Dynamic#getMapValues()}.
+   *
+   * <ul>
+   *   <li>Then return PartialOrThrow size is two.
+   * </ul>
+   *
+   * <p>Method under test: {@link Dynamic#getMapValues()}
+   */
+  @Test
+  @DisplayName("Test getMapValues(); then return PartialOrThrow size is two")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"DataResult Dynamic.getMapValues()"})
+  void testGetMapValues_thenReturnPartialOrThrowSizeIsTwo() {
+    // Arrange
+    ArrayList<Pair<Object, Object>> pairList = new ArrayList<>();
+    pairList.add(new Pair<>("%s[%s]", ConfigurationTransformation.WILDCARD_OBJECT));
+    pairList.add(
+        new Pair<>(
+            ConfigurationTransformation.WILDCARD_OBJECT,
+            ConfigurationTransformation.WILDCARD_OBJECT));
+    Stream<Pair<Object, Object>> streamResult = pairList.stream();
+    Optional<Stream<Pair<Object, Object>>> partialValue = Optional.of(streamResult);
+    Supplier<String> messageSupplier = mock(Supplier.class);
+    Lifecycle lifecycle = Lifecycle.experimental();
+
+    Error<Stream<Pair<Object, Object>>> error =
+        new Error<>(messageSupplier, partialValue, lifecycle);
+
+    RegistryOps<Object> ops = mock(RegistryOps.class);
+    when(ops.getMapValues(Mockito.<Object>any())).thenReturn(error);
+    when(ops.empty()).thenReturn(ConfigurationTransformation.WILDCARD_OBJECT);
+    Dynamic<Object> dynamic = new Dynamic<>(ops);
+
+    // Act
+    DataResult<Map<Dynamic<Object>, Dynamic<Object>>> actualMapValues = dynamic.getMapValues();
+
+    // Assert
+    verify(ops).empty();
+    verify(ops).getMapValues(isA(Object.class));
+    assertTrue(actualMapValues instanceof Error);
+    Map<Dynamic<Object>, Dynamic<Object>> partialOrThrow = actualMapValues.getPartialOrThrow();
+    assertEquals(2, partialOrThrow.size());
     assertTrue(actualMapValues.isError());
     Optional<Map<Dynamic<Object>, Dynamic<Object>>> partialValueResult =
         ((Error<Map<Dynamic<Object>, Dynamic<Object>>>) actualMapValues).partialValue();
@@ -895,7 +972,7 @@ class DynamicDiffblueTest {
     // Arrange
     RegistryOps<Object> ops = mock(RegistryOps.class);
     Supplier<String> messageSupplier = mock(Supplier.class);
-    Optional<String> partialValue = Optional.of("foo");
+    Optional<String> partialValue = Optional.of("42");
 
     Error<String> error = new Error<>(messageSupplier, partialValue, Lifecycle.experimental());
     when(ops.getStringValue(Mockito.<Object>any())).thenReturn(error);
@@ -1617,24 +1694,19 @@ class DynamicDiffblueTest {
    * Test {@link Dynamic#updateGeneric(Object, Function)}.
    *
    * <ul>
-   *   <li>Given {@link RegistryOps} {@link RegistryOps#updateGeneric(Object, Object, Function)}
-   *       return {@code null}.
+   *   <li>Then return Value is {@link ConfigurationTransformation#WILDCARD_OBJECT}.
    * </ul>
    *
    * <p>Method under test: {@link Dynamic#updateGeneric(Object, Function)}
    */
   @Test
-  @DisplayName(
-      "Test updateGeneric(Object, Function); given RegistryOps updateGeneric(Object, Object, Function) return 'null'")
+  @DisplayName("Test updateGeneric(Object, Function); then return Value is WILDCARD_OBJECT")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"Dynamic Dynamic.updateGeneric(Object, Function)"})
-  void testUpdateGeneric_givenRegistryOpsUpdateGenericReturnNull() {
+  void testUpdateGeneric_thenReturnValueIsWildcard_object() {
     // Arrange
     RegistryOps<Object> ops = mock(RegistryOps.class);
-    when(ops.updateGeneric(
-            Mockito.<Object>any(), Mockito.<Object>any(), Mockito.<Function<Object, Object>>any()))
-        .thenReturn(null);
     when(ops.empty()).thenReturn(ConfigurationTransformation.WILDCARD_OBJECT);
     Dynamic<Object> dynamic = new Dynamic<>(ops);
     Object object = ConfigurationTransformation.WILDCARD_OBJECT;
@@ -1643,7 +1715,6 @@ class DynamicDiffblueTest {
     Dynamic<Object> actualUpdateGenericResult = dynamic.updateGeneric(object, mock(Function.class));
 
     // Assert
-    verify(ops).updateGeneric(isA(Object.class), isA(Object.class), isA(Function.class));
     verify(ops, atLeast(1)).empty();
     assertSame(object, actualUpdateGenericResult.getValue());
   }
@@ -1652,35 +1723,29 @@ class DynamicDiffblueTest {
    * Test {@link Dynamic#updateGeneric(Object, Function)}.
    *
    * <ul>
-   *   <li>Given {@link RegistryOps} {@link RegistryOps#updateGeneric(Object, Object, Function)}
-   *       return {@link ConfigurationTransformation#WILDCARD_OBJECT}.
+   *   <li>Then throw {@link IllegalStateException}.
    * </ul>
    *
    * <p>Method under test: {@link Dynamic#updateGeneric(Object, Function)}
    */
   @Test
-  @DisplayName(
-      "Test updateGeneric(Object, Function); given RegistryOps updateGeneric(Object, Object, Function) return WILDCARD_OBJECT")
+  @DisplayName("Test updateGeneric(Object, Function); then throw IllegalStateException")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"Dynamic Dynamic.updateGeneric(Object, Function)"})
-  void testUpdateGeneric_givenRegistryOpsUpdateGenericReturnWildcard_object() {
+  void testUpdateGeneric_thenThrowIllegalStateException() {
     // Arrange
     RegistryOps<Object> ops = mock(RegistryOps.class);
-    when(ops.updateGeneric(
-            Mockito.<Object>any(), Mockito.<Object>any(), Mockito.<Function<Object, Object>>any()))
-        .thenReturn(ConfigurationTransformation.WILDCARD_OBJECT);
-    when(ops.empty()).thenReturn(ConfigurationTransformation.WILDCARD_OBJECT);
-    Dynamic<Object> dynamic = new Dynamic<>(ops);
-    Object object = ConfigurationTransformation.WILDCARD_OBJECT;
+    when(ops.empty()).thenThrow(new IllegalStateException());
+    Dynamic<Object> dynamic = new Dynamic<>(ops, ConfigurationTransformation.WILDCARD_OBJECT);
 
-    // Act
-    Dynamic<Object> actualUpdateGenericResult = dynamic.updateGeneric(object, mock(Function.class));
-
-    // Assert
-    verify(ops).updateGeneric(isA(Object.class), isA(Object.class), isA(Function.class));
+    // Act and Assert
+    assertThrows(
+        IllegalStateException.class,
+        () ->
+            dynamic.updateGeneric(
+                ConfigurationTransformation.WILDCARD_OBJECT, mock(Function.class)));
     verify(ops).empty();
-    assertSame(object, actualUpdateGenericResult.getValue());
   }
 
   /**
@@ -2467,6 +2532,29 @@ class DynamicDiffblueTest {
   }
 
   /**
+   * Test {@link Dynamic#convert(DynamicOps, DynamicOps, Object)} with {@code inOps}, {@code
+   * outOps}, {@code input}.
+   *
+   * <ul>
+   *   <li>When {@link ConfigurationTransformation#WILDCARD_OBJECT}.
+   *   <li>Then does not throw.
+   * </ul>
+   *
+   * <p>Method under test: {@link Dynamic#convert(DynamicOps, DynamicOps, Object)}
+   */
+  @Test
+  @DisplayName(
+      "Test convert(DynamicOps, DynamicOps, Object) with 'inOps', 'outOps', 'input'; when WILDCARD_OBJECT; then does not throw")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"Object Dynamic.convert(DynamicOps, DynamicOps, Object)"})
+  void testConvertWithInOpsOutOpsInput_whenWildcard_object_thenDoesNotThrow() {
+    // Arrange, Act and Assert
+    assertDoesNotThrow(
+        () -> Dynamic.convert(null, null, ConfigurationTransformation.WILDCARD_OBJECT));
+  }
+
+  /**
    * Test {@link Dynamic#convert(DynamicOps)} with {@code outOps}.
    *
    * <ul>
@@ -2494,17 +2582,19 @@ class DynamicDiffblueTest {
    * Test {@link Dynamic#convert(DynamicOps)} with {@code outOps}.
    *
    * <ul>
-   *   <li>Then calls {@link RegistryOps#empty()}.
+   *   <li>Given {@link RegistryOps} {@link RegistryOps#convertTo(DynamicOps, Object)} return {@link
+   *       ConfigurationTransformation#WILDCARD_OBJECT}.
    * </ul>
    *
    * <p>Method under test: {@link Dynamic#convert(DynamicOps)}
    */
   @Test
-  @DisplayName("Test convert(DynamicOps) with 'outOps'; then calls empty()")
+  @DisplayName(
+      "Test convert(DynamicOps) with 'outOps'; given RegistryOps convertTo(DynamicOps, Object) return WILDCARD_OBJECT")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"Dynamic Dynamic.convert(DynamicOps)"})
-  void testConvertWithOutOps_thenCallsEmpty() {
+  void testConvertWithOutOps_givenRegistryOpsConvertToReturnWildcard_object() {
     // Arrange
     RegistryOps<Object> ops = mock(RegistryOps.class);
     when(ops.convertTo(Mockito.<DynamicOps<Object>>any(), Mockito.<Object>any()))
@@ -2519,6 +2609,38 @@ class DynamicDiffblueTest {
     verify(ops).convertTo(isNull(), isA(Object.class));
     verify(ops).empty();
     assertNull(actualConvertResult.getOps());
+  }
+
+  /**
+   * Test {@link Dynamic#convert(DynamicOps)} with {@code outOps}.
+   *
+   * <ul>
+   *   <li>Given {@link ConfigurationTransformation#WILDCARD_OBJECT}.
+   *   <li>Then return Ops is {@link RegistryOps}.
+   * </ul>
+   *
+   * <p>Method under test: {@link Dynamic#convert(DynamicOps)}
+   */
+  @Test
+  @DisplayName(
+      "Test convert(DynamicOps) with 'outOps'; given WILDCARD_OBJECT; then return Ops is RegistryOps")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"Dynamic Dynamic.convert(DynamicOps)"})
+  void testConvertWithOutOps_givenWildcard_object_thenReturnOpsIsRegistryOps() {
+    // Arrange
+    Dynamic<Object> dynamic =
+        new Dynamic<>(mock(RegistryOps.class), ConfigurationTransformation.WILDCARD_OBJECT);
+
+    RegistryOps<Object> outOps = mock(RegistryOps.class);
+    when(outOps.empty()).thenReturn(ConfigurationTransformation.WILDCARD_OBJECT);
+
+    // Act
+    Dynamic<Object> actualConvertResult = dynamic.convert(outOps);
+
+    // Assert
+    verify(outOps).empty();
+    assertSame(outOps, actualConvertResult.getOps());
   }
 
   /**

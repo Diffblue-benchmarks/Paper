@@ -53,8 +53,8 @@ class V30_PacketIdsDiffblueTest {
    * Test {@link V30_PacketIds#visitPath(NodePath, ConfigurationNode)}.
    *
    * <ul>
-   *   <li>Given three.
-   *   <li>When {@link NodePath} {@link NodePath#size()} return three.
+   *   <li>Given {@link Integer#MIN_VALUE}.
+   *   <li>When {@link NodePath} {@link NodePath#get(int)} return {@link Integer#MIN_VALUE}.
    *   <li>Then return {@code null}.
    * </ul>
    *
@@ -62,11 +62,44 @@ class V30_PacketIdsDiffblueTest {
    */
   @Test
   @DisplayName(
-      "Test visitPath(NodePath, ConfigurationNode); given three; when NodePath size() return three; then return 'null'")
+      "Test visitPath(NodePath, ConfigurationNode); given MIN_VALUE; when NodePath get(int) return MIN_VALUE; then return 'null'")
   @Tag("ContributionFromDiffblue")
   @ManagedByDiffblue
   @MethodsUnderTest({"Object[] V30_PacketIds.visitPath(NodePath, ConfigurationNode)"})
-  void testVisitPath_givenThree_whenNodePathSizeReturnThree_thenReturnNull() {
+  void testVisitPath_givenMin_value_whenNodePathGetReturnMin_value_thenReturnNull() {
+    // Arrange
+    NodePath path = mock(NodePath.class);
+    when(path.size()).thenReturn(3);
+    when(path.get(anyInt())).thenReturn(Integer.MIN_VALUE);
+
+    // Act
+    Object[] actualVisitPathResult =
+        V30_PacketIds.INSTANCE.visitPath(path, mock(ConfigurationNode.class));
+
+    // Assert
+    verify(path).get(2);
+    verify(path).size();
+    assertNull(actualVisitPathResult);
+  }
+
+  /**
+   * Test {@link V30_PacketIds#visitPath(NodePath, ConfigurationNode)}.
+   *
+   * <ul>
+   *   <li>Given {@link ConfigurationTransformation#WILDCARD_OBJECT}.
+   *   <li>When {@link NodePath} {@link NodePath#get(int)} return {@link
+   *       ConfigurationTransformation#WILDCARD_OBJECT}.
+   * </ul>
+   *
+   * <p>Method under test: {@link V30_PacketIds#visitPath(NodePath, ConfigurationNode)}
+   */
+  @Test
+  @DisplayName(
+      "Test visitPath(NodePath, ConfigurationNode); given WILDCARD_OBJECT; when NodePath get(int) return WILDCARD_OBJECT")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"Object[] V30_PacketIds.visitPath(NodePath, ConfigurationNode)"})
+  void testVisitPath_givenWildcard_object_whenNodePathGetReturnWildcard_object() {
     // Arrange
     NodePath path = mock(NodePath.class);
     when(path.size()).thenReturn(3);

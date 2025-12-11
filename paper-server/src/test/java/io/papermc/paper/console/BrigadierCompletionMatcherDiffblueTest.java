@@ -181,6 +181,47 @@ class BrigadierCompletionMatcherDiffblueTest {
    * boolean, int, String)}.
    *
    * <ul>
+   *   <li>Given {@code true}.
+   *   <li>When {@link HashMap#HashMap()} {@code COMPLETE_MATCHER_TYPO} is {@code true}.
+   *   <li>Then calls {@link ArgumentList#word()}.
+   * </ul>
+   *
+   * <p>Method under test: {@link BrigadierCompletionMatcher#defaultMatchers(Map, boolean,
+   * CompletingParsedLine, boolean, int, String)}
+   */
+  @Test
+  @DisplayName(
+      "Test defaultMatchers(Map, boolean, CompletingParsedLine, boolean, int, String); given 'true'; when HashMap() 'COMPLETE_MATCHER_TYPO' is 'true'; then calls word()")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({
+    "void BrigadierCompletionMatcher.defaultMatchers(Map, boolean, CompletingParsedLine, boolean, int, String)"
+  })
+  void testDefaultMatchers_givenTrue_whenHashMapCompleteMatcherTypoIsTrue_thenCallsWord() {
+    // Arrange
+    BrigadierCompletionMatcher brigadierCompletionMatcher = new BrigadierCompletionMatcher();
+
+    HashMap<Option, Boolean> options = new HashMap<>();
+    options.put(Option.COMPLETE_MATCHER_TYPO, true);
+
+    ArgumentList line = mock(ArgumentList.class);
+    when(line.wordCursor()).thenReturn(1);
+    when(line.word()).thenReturn("Word");
+
+    // Act
+    brigadierCompletionMatcher.defaultMatchers(
+        options, false, line, true, -1, "Original Group Name");
+
+    // Assert
+    verify(line).word();
+    verify(line).wordCursor();
+  }
+
+  /**
+   * Test {@link BrigadierCompletionMatcher#defaultMatchers(Map, boolean, CompletingParsedLine,
+   * boolean, int, String)}.
+   *
+   * <ul>
    *   <li>When {@link HashMap#HashMap()} {@code COMPLETE_MATCHER_CAMELCASE} is {@code false}.
    * </ul>
    *
@@ -282,45 +323,6 @@ class BrigadierCompletionMatcherDiffblueTest {
     HashMap<Option, Boolean> options = new HashMap<>();
     options.put(Option.COMPLETE_MATCHER_TYPO, false);
     options.put(Option.COMPLETE_MATCHER_CAMELCASE, true);
-
-    ArgumentList line = mock(ArgumentList.class);
-    when(line.wordCursor()).thenReturn(1);
-    when(line.word()).thenReturn("Word");
-
-    // Act
-    brigadierCompletionMatcher.defaultMatchers(
-        options, false, line, true, -1, "Original Group Name");
-
-    // Assert
-    verify(line).word();
-    verify(line).wordCursor();
-  }
-
-  /**
-   * Test {@link BrigadierCompletionMatcher#defaultMatchers(Map, boolean, CompletingParsedLine,
-   * boolean, int, String)}.
-   *
-   * <ul>
-   *   <li>When {@link HashMap#HashMap()} {@code COMPLETE_MATCHER_TYPO} is {@code true}.
-   * </ul>
-   *
-   * <p>Method under test: {@link BrigadierCompletionMatcher#defaultMatchers(Map, boolean,
-   * CompletingParsedLine, boolean, int, String)}
-   */
-  @Test
-  @DisplayName(
-      "Test defaultMatchers(Map, boolean, CompletingParsedLine, boolean, int, String); when HashMap() 'COMPLETE_MATCHER_TYPO' is 'true'")
-  @Tag("ContributionFromDiffblue")
-  @ManagedByDiffblue
-  @MethodsUnderTest({
-    "void BrigadierCompletionMatcher.defaultMatchers(Map, boolean, CompletingParsedLine, boolean, int, String)"
-  })
-  void testDefaultMatchers_whenHashMapCompleteMatcherTypoIsTrue() {
-    // Arrange
-    BrigadierCompletionMatcher brigadierCompletionMatcher = new BrigadierCompletionMatcher();
-
-    HashMap<Option, Boolean> options = new HashMap<>();
-    options.put(Option.COMPLETE_MATCHER_TYPO, true);
 
     ArgumentList line = mock(ArgumentList.class);
     when(line.wordCursor()).thenReturn(1);

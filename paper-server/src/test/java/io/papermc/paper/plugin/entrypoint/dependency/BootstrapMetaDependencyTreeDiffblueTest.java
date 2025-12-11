@@ -1,5 +1,6 @@
 package io.papermc.paper.plugin.entrypoint.dependency;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -8,6 +9,7 @@ import com.diffblue.cover.annotations.ManagedByDiffblue;
 import com.diffblue.cover.annotations.MethodsUnderTest;
 import com.google.common.graph.MutableGraph;
 import io.papermc.paper.plugin.configuration.PluginMeta;
+import io.papermc.paper.plugin.provider.configuration.PaperPluginMeta;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -85,6 +87,32 @@ class BootstrapMetaDependencyTreeDiffblueTest {
   }
 
   /**
+   * Test {@link BootstrapMetaDependencyTree#registerDependencies(String, PluginMeta)}.
+   *
+   * <ul>
+   *   <li>When {@link PaperPluginMeta} (default constructor).
+   *   <li>Then does not throw.
+   * </ul>
+   *
+   * <p>Method under test: {@link BootstrapMetaDependencyTree#registerDependencies(String,
+   * PluginMeta)}
+   */
+  @Test
+  @DisplayName(
+      "Test registerDependencies(String, PluginMeta); when PaperPluginMeta (default constructor); then does not throw")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void BootstrapMetaDependencyTree.registerDependencies(String, PluginMeta)"})
+  void testRegisterDependencies_whenPaperPluginMeta_thenDoesNotThrow() {
+    // Arrange
+    BootstrapMetaDependencyTree bootstrapMetaDependencyTree = new BootstrapMetaDependencyTree();
+
+    // Act and Assert
+    assertDoesNotThrow(
+        () -> bootstrapMetaDependencyTree.registerDependencies("42", new PaperPluginMeta()));
+  }
+
+  /**
    * Test {@link BootstrapMetaDependencyTree#unregisterDependencies(String, PluginMeta)}.
    *
    * <ul>
@@ -106,5 +134,31 @@ class BootstrapMetaDependencyTreeDiffblueTest {
     assertThrows(
         IllegalStateException.class,
         () -> new BootstrapMetaDependencyTree().unregisterDependencies("42", null));
+  }
+
+  /**
+   * Test {@link BootstrapMetaDependencyTree#unregisterDependencies(String, PluginMeta)}.
+   *
+   * <ul>
+   *   <li>When {@link PaperPluginMeta} (default constructor).
+   *   <li>Then does not throw.
+   * </ul>
+   *
+   * <p>Method under test: {@link BootstrapMetaDependencyTree#unregisterDependencies(String,
+   * PluginMeta)}
+   */
+  @Test
+  @DisplayName(
+      "Test unregisterDependencies(String, PluginMeta); when PaperPluginMeta (default constructor); then does not throw")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void BootstrapMetaDependencyTree.unregisterDependencies(String, PluginMeta)"})
+  void testUnregisterDependencies_whenPaperPluginMeta_thenDoesNotThrow() {
+    // Arrange
+    BootstrapMetaDependencyTree bootstrapMetaDependencyTree = new BootstrapMetaDependencyTree();
+
+    // Act and Assert
+    assertDoesNotThrow(
+        () -> bootstrapMetaDependencyTree.unregisterDependencies("42", new PaperPluginMeta()));
   }
 }

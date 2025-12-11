@@ -1,5 +1,6 @@
 package io.papermc.paper.plugin.manager;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
@@ -79,6 +80,30 @@ class RuntimePluginEntrypointHandlerDiffblueTest {
         () ->
             runtimePluginEntrypointHandler.register(
                 mock(Entrypoint.class), mock(PluginProvider.class)));
+  }
+
+  /**
+   * Test {@link RuntimePluginEntrypointHandler#enter(Entrypoint)}.
+   *
+   * <ul>
+   *   <li>Then does not throw.
+   * </ul>
+   *
+   * <p>Method under test: {@link RuntimePluginEntrypointHandler#enter(Entrypoint)}
+   */
+  @Test
+  @DisplayName("Test enter(Entrypoint); then does not throw")
+  @Tag("ContributionFromDiffblue")
+  @ManagedByDiffblue
+  @MethodsUnderTest({"void RuntimePluginEntrypointHandler.enter(Entrypoint)"})
+  void testEnter_thenDoesNotThrow() {
+    // Arrange
+    RuntimePluginEntrypointHandler<ProviderStorage<JavaPlugin>> runtimePluginEntrypointHandler =
+        new RuntimePluginEntrypointHandler<>(
+            new MultiRuntimePluginProviderStorage(new BootstrapMetaDependencyTree()));
+
+    // Act and Assert
+    assertDoesNotThrow(() -> runtimePluginEntrypointHandler.enter(Entrypoint.PLUGIN));
   }
 
   /**
